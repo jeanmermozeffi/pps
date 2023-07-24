@@ -1,0 +1,151 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% import 'GestionBundle:Macros:html.html.twig' as _html %}
+{% block page_content %}
+<div class="row">
+    <!-- /.col -->
+    <div class="col-md-12">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#info" data-toggle="tab">{{ _html.text('profile.details') }}
+                        <!--Détails Utilisateur-->
+                    </a></li>
+            </ul>
+            <div class="tab-content">
+
+                <div class="active tab-pane" id="info">
+                    <div class="box-body">
+                        {#<a href="{{ path ('fos_user_change_password') }}" type="button"
+                            class="btn btn-success pull-left" title="Changer de mot de passe">
+                            <i class="fa fa-edit"></i> {{ _html.text('profile.change_password') }}
+                            <!--Changer de mot de passe-->
+                        </a>#}
+                        <a href="{{ path ('utilisateur_admin_profile_utilisateur_edit', {'id' : user.id}) }}"
+                            type="button" class="btn btn-warning pull-right" title="Modifier">
+                            <i class="fa fa-edit"></i> {{ _html.text('profile.edit') }}
+                            <!--Modifier -->
+                        </a>
+                    </div>
+
+                    <form class="form-horizontal">
+                        <div class="box-footer">
+
+                            <div class="box-header with-border">
+                                <div type="button" class="pull-left titre">{{ _html.text('profile.settings') }}
+                                    <!--Paramètre utilisateur-->
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pseudo" class="col-sm-4">{{ _html.text('username') }}</label>
+
+                                        <div class="col-sm-8">
+                                            <p>{{ user.username }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="col-sm-4">{{ _html.text('email') }}</label>
+
+                                        <div class="col-sm-8">
+                                            <p>{{ user.email }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="role" class="col-sm-4">{{ _html.text('role') }}</label>
+
+                                        <div class="col-sm-8">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 barre">
+                                    <div class="form-group">
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            {#<img id="blah"
+                                                src="{{ asset('bundles/avanzuadmintheme/img/avatar.png') }}" alt=""
+                                                width=120 height=120 class="dropzone" />#}
+                                            <img id="blah" class="profile-user-img img-responsive  dropzone" {% if
+                                                user.personne.photo is not null
+                                                %}src="{{ asset(user.personne.photo.webPath) }}"
+                                                alt="{{ user.personne.photo.alt }}" {% else
+                                                %}src="{{ asset('bundles/avanzuadmintheme/img/avatar.png') }}"
+                                                alt="User profile picture" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="box-footer">
+
+                            <div class="box-header with-border">
+                                <div type="button" class="pull-left titre">{{ _html.text('profile.user_info') }}r</div>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="nom" class="col-sm-4">{{ _html.text('profile.name') }}</label>
+
+                                        <div class="col-sm-8">
+                                            <p>{{ user.personne.nom }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="col-sm-4">{{ _html.text('profile.surname') }}</label>
+
+                                        <div class="col-sm-8">
+                                            <p>{{ user.personne.prenom }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contact" class="col-sm-4">{{ _html.text('profile.contact')
+                                            }}</label>
+
+                                        <div class="col-sm-8">
+                                            <p>{{ user.personne.contact }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email" class="col-sm-4">{{ _html.text('profile.age') }}</label>
+
+                                        <div class="col-sm-8">
+                                            <p>
+                                                {% if user.personne.getAge is defined %}{{ _html.text('profile.years',
+                                                null, {'%age%': user.personne.getAge}) }}{% endif %}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- /.nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
+</div>
+
+{% endblock %}
+
+{% block page_title %}
+Profil Utilisateur
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

@@ -1,0 +1,54 @@
+{% block page_content %}
+    <button class="btn btn-warning btn-sm btn-modal" type="button" data-toggle="modal" data-url="{{ path('admin_gestion_infirmier_edit', {id: infirmier.id}) }}" data-target="#modal-edit{{infirmier.id}}"><i class="fa fa-edit"></i></button>
+    <div class="modal fade" id="modal-edit{{infirmier.id}}">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Modifier infirmier</h4>
+                </div>..
+                {{ form_start(edit_form, {attr: {id: 'form_edit_' ~ infirmier.id}}) }}
+                   
+                    <div class="modal-body">
+                        <div class="box-body">
+                             <div class="ajax-feedback hide alert"></div>
+                            <fieldset>
+                                <legend>Informations Personnelles</legend>
+                                <div class="form-group">
+                                    <label for="{{ edit_form.medecin.personne.nom.vars.id }}">Nom</label>
+                                    {{ form_widget(edit_form.medecin.personne.nom,  {id: edit_form.medecin.personne.nom.vars.id ~ '_' ~  infirmier.id}) }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{ edit_form.medecin.personne.prenom.vars.id }}">Prénom </label>
+                                    {{ form_widget(edit_form.medecin.personne.prenom,  {id: edit_form.medecin.personne.prenom.vars.id ~ '_' ~  infirmier.id}) }}
+                                </div>
+                                 <div class="form-group">
+                                    <label for="{{ edit_form.medecin.personne.datenaissance.vars.id }}">Date de naissance</label>
+                                    {{ form_widget(edit_form.medecin.personne.datenaissance,  {id: edit_form.medecin.personne.datenaissance.vars.id ~ '_' ~  infirmier.id}) }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{ edit_form.medecin.contact.vars.id }}">Contact </label>
+                                    {{ form_widget(edit_form.medecin.contact,  {id: edit_form.medecin.contact.vars.id ~ '_' ~  infirmier.id}) }}
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="{{ edit_form.medecin.hopital.vars.id }}">Hopital</label>
+                                   {{ form_widget(edit_form.medecin.hopital, {id: edit_form.medecin.hopital.vars.id ~ '_' ~  infirmier.id}) }}
+                                </div>
+                            
+                            </fieldset>    
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+                        <input type="submit" class="btn btn-primary pull-right" value="Modifier" />
+                    </div>
+                    {{ form_widget(edit_form._token, {id: edit_form._token.vars.id ~ '_' ~ infirmier.id})}}
+                {{ form_end(edit_form, {render_rest: false}) }}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

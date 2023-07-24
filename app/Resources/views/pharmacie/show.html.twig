@@ -1,0 +1,72 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+
+{% block page_content %}
+    <div class="box">
+        <div class="box-body">
+            <a href="{{ path('admin_pharmacie_edit', {id: pharmacie.id}) }}" class="btn btn-success btn-sm">Modifier</a>
+            <div class="row">
+             <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ form.libPharmacie.vars.id }}"> Officine</label>
+                     {{ form_widget(form.libPharmacie) }}
+                </div>
+            </div>
+            <div class="col-md-3">
+                 <div class="form-group">
+                    <label for="{{ form.info.nomResponsable.vars.id }}"> Responsable</label>
+                     {{ form_widget(form.info.nomResponsable) }}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="{{ form.info.contacts.vars.id }}"> Contacts</label>
+                     {{ form_widget(form.info.contacts) }}
+                </div>
+            </div>
+            <div class="col-md-12">
+                 <div class="form-group">
+                    <label for="{{ form.info.localisationPharmacie.vars.id }}"> Localisation</label>
+                     {{ form_widget(form.info.localisationPharmacie) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ form.info.ville.vars.id }}"> Ville</label>
+                     {{ form_widget(form.info.ville) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                 <div class="form-group">
+                    <label for="{{ form.info.commune.vars.id }}"> Commune</label>
+                     {{ form_widget(form.info.commune) }}
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('dropzone/dist/min/bootstrap-filestyle.min.js') }}"></script>
+     <script src="{{ asset('bundles/gestion/js/fr.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/profil.js') }}"></script>
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+    <script>
+        
+    </script>
+
+{% endblock %}
+
+{% block page_title %}
+   Détails de la pharmacie
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

@@ -1,0 +1,179 @@
+<style type="text/Css">
+.clearfix:before, .clearfix:after {
+  content: " ";
+  display: table; }
+
+.clearfix:after {
+  clear: both; }
+
+  td p {margin-bottom: 0;margin-top: 0}
+  .table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px; 
+  border-collapse: collapse;
+}
+  .table > thead > tr > th,
+  .table > thead > tr > td,
+  .table > tbody > tr > th,
+  .table > tbody > tr > td,
+  .table > tfoot > tr > th,
+  .table > tfoot > tr > td {
+    padding: 8px;
+    line-height: 1.42857;
+    vertical-align: top;
+    border-top: 1px solid #000; }
+  .table > thead > tr > th {
+    vertical-align: bottom;
+
+}
+
+.table > tbody > tr > td {
+    vertical-align: top;
+
+}
+  .table-bordered {
+  border: 1px solid #000; }
+  .table-bordered > thead > tr > th,
+  .table-bordered > thead > tr > td,
+  .table-bordered > tbody > tr > th,
+  .table-bordered > tbody > tr > td,
+  .table-bordered > tfoot > tr > th,
+  .table-bordered > tfoot > tr > td {
+    border: 1px solid #000; }
+  .table-bordered > thead > tr > th,
+  .table-bordered > thead > tr > td {
+    border-bottom-width: 2px; }
+
+  @page {
+        /*margin: 0.5cm;
+        margin-top:2.5cm;
+        margin-bottom: 0.5cm;
+        /*font-family: Calibri,sans-serif;
+
+        /* Header frame starts within margin-top of @page */
+        @frame header {
+    -pdf-frame-content: headerContent; /* headerContent is the #id of the element */
+        top: 1cm;
+        margin-left: 1cm;
+        margin-right:1cm;
+        height:1cm;
+    }
+
+        /* Footer frame starts outside margin-bottom of @page */
+    @frame footer {
+    -pdf-frame-content: footerContent;
+    bottom: 0.5cm;
+    margin-left: 1cm;
+    margin-right: 1cm;
+    height: 1cm;
+    }
+    }
+</style>
+<page style="font-size: 12px"  backtop="5mm" backright="0" backleft="0" backbottom="5mm">
+
+   <table style="width:100%;font-family:dejavusans;" id="headerContent">
+    <tr>
+       <td style="width:80%">
+           <u><b>DEPISTAGE ET SUIVI DU DIABETE GESTATIONNEL: Projet AODCI/WDF 18/1590</b></u>
+       </td>
+       <td style="text-align:right">
+           Date: <b>{{ fiche.date|date('d/m/Y') }}</b> Numéro: <b>{{ fiche.reference }}</b>
+       </td>
+    </tr>
+   </table>
+   
+            <div  style="text-align:right;border-bottom:1px solid #DDD;margin-top: 10px;padding-bottom: 5px;">
+                MEDECIN TRAITANT<br>
+                Nom : {{ fiche.medecin.personne.nom }}<br>
+                Prenom : {{ fiche.medecin.personne.prenom }}<br>
+                Hôpital:  {{ fiche.hopital.nom }}<br>
+            </div>
+   <div style="margin-bottom: 20px;"></div>
+   <table style="width:100%;font-family:dejavusans;" class="table table-bordered">
+        <thead>
+        <tr>
+           <th style="text-align:center;border:1px solid #000;background-color:#DDDDDD;width:25%;">
+               Données administratives
+           </th>
+            <th style="text-align:center;border:1px solid #000;background-color:#DDDDDD;width:15%;">
+              Examen et première glycémie
+           </th>
+            <th style="text-align:center;border:1px solid #000;background-color:#DDDDDD;width:20%;">
+              24è-28è semaine d'aménorrhée<br>
+              Hyperglycémie provoquée par voie orale (HGPO)
+           </th>
+            <th style="text-align:center;border:1px solid #000;background-color:#DDDDDD;width:15%;">
+               Complications Obstétricales
+           </th>
+            <th style="text-align:center;border:1px solid #000;background-color:#DDDDDD;width:15%;">
+               Traitement
+           </th>
+            <th style="text-align:center;border:1px solid #000;background-color:#DDDDDD;width:10%;">
+               Suivi
+           </th>
+
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border:1px solid #000;width:25%;padding:5px;vertical-align:top">
+                    <div><b><u>Identité</u></b></div>
+                    <p>Nom: {{ fiche.patient.personne.nom }}</p>
+                    <p>Prénoms: {{ fiche.patient.personne.prenom }}</p>
+                    <p>Date de naissance: {{ fiche.patient.personne.datenaissance|date('d/m/Y') }} ({{ fiche.patient.personne.getAge }} ans)</p>
+                    <p>Domicile: {{ fiche.patient.lieuhabitation}}</p>
+                    <p>Contacts: {{ fiche.patient.contact }}</p>
+                    <div style="margin-top:5px;"><b>CPN: {{ fiche.cpn }}</b></div>
+                    <div style="margin-top:15px;"><b><u>Antécédents</u></b></div>
+                    {% for antecedent in fiche.antecedents %}
+                        <p><b>{{ antecedent.libelle }}</b>:  {{ antecedent.valeur ? 'Oui': 'Non' }} </p>
+                    {% endfor %}
+                     <div style="margin-top:20px"></div>
+                    <p><b>Gestité</b>: {{ fiche.gestite }} <b>Parité</b>: {{ fiche.parite }}</p>
+                    <p><b>Age gestationnel (SA)</b>: {{ fiche.ageGestationnel}}</p>
+                </td>
+                <td style="border:1px solid #000;width:15%;padding:5px;vertical-align:top">
+                    <div><b><u>Paramètres cliniques</u></b></div>
+                    {% for constante in fiche.constantes %}
+                        <p><b>{{ constante.libelle }}</b>: {{ constante.valeur }}</p>
+                    {% endfor %}
+                     <div style="margin-top:20px"></div>
+                    {% for glycemie in fiche.glycemies %}
+                        <p>{{ glycemie.libelle}}: {{ glycemie.valeur}}</p>
+                    {% endfor %}
+                </td>
+                <td style="border:1px solid #000;width:20%;padding:5px;vertical-align:top">
+                   <p>HGPO: {{ fiche.hgpo ? 'Oui': 'Non' }} </p>
+                   <p>{{ fiche.typeHgpo }} </p>
+                    {% for gc in fiche.gcs %}
+                        <p>{{ gc.libelle}}: {{ gc.valeur}}</p>
+                    {% endfor %}
+                    <div style="margin-top:20px"></div>
+                    {% for analyse in fiche.analyses %}
+                        <p>{{ analyse.libelle}}: {{ analyse.valeur}}</p>
+                    {% endfor %}
+                </td>
+                <td style="border:1px solid #000;width:15%;padding:5px;vertical-align:top">
+                    {% for complication in fiche.complications %}
+                        <div style="margin-bottom:25px">
+                        <b>-{{ complication.libelle }}</b>
+                        <p>{{ complication.details}}</p>
+                    </div>
+                    {% endfor %}
+                </td>
+                <td style="border:1px solid #000;width:15%;padding:5px;vertical-align:top">
+                    <p>{{ fiche.traitement }}</p>
+                </td>
+                <td style="border:1px solid #000;width:10%;vertical-align:top">
+                  
+                </td>
+
+            </tr>
+        </tbody>
+            
+
+   </table>
+
+
+</page>

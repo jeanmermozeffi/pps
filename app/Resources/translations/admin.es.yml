@@ -1,0 +1,75 @@
+rdv:
+  new: Nueva cita
+  search: Encuentra una cita
+  details: 
+  cancelled: Cita cancelada
+  patient: Presencia real del paciente
+  no_delete: No se puede modificar esta cita. Fue cancelado o ya validado
+
+btn:
+  validate: Validar
+  back: Regreso
+  cancel: Anular
+  emergency: informe una emergencia
+  suivi_constante: Constantes de seguimiento
+  user_account: Mi cuenta de usuario
+  profile_medicale: Perfil médico
+  rappel_vaccin: Recordatorios de vacunas
+
+admin:
+  welcome: Bienvenido a tu área de usuario
+  is_logged_in: Conectado
+  alert_medicament: Se han ofrecido medicamentos alternativos en %sub%
+  total_waiting_consultation: <a href="%link%">%total_sub% consulta (s) </a>
+  no_data: Sin datos
+  last_measures: Últimas constantes
+
+
+registration:
+  title: Creación de cuenta
+  has_account: Yo ya soy un miembro
+  registration_text: Creación de cuenta
+  terms: Acepto los <a href="%link%">términos y condiciones</a>
+  form:
+    placeholder: 
+      username: Iniciar sesión
+      email: Correo electrónico
+      contact: Número de teléfono
+      plainPassword:
+        first: Contraseña
+        second: Escriba la contraseña otra vez
+security:
+  password: contraseña olvidada
+  login_text: Conéctate a tu espacio
+  title: Iniciar sesión
+  form:
+    placeholder:
+      _username: Iniciar sesión
+      _password: Contraseña
+
+consultation:
+  new: Nueva consulta
+  patient_waiting: Paciente (s) en espera de consultas
+  no_patient_waiting: Ningún paciente en la fila en este momento
+
+
+Légende: Leyenda
+Tableau de bord: Salpicadero
+RDV et Rappels de vaccins: Citas y recordatorios de vacunas
+
+
+profile:
+  details: Détails utilisateur
+  change_password: Modification du mot de passe
+  edit: Modifier
+  name: Nom
+  surname: Prénom(s)
+  contact: Numéro de téléphone
+  age: Âge
+  years: "%age% ans"
+  user_info: Informations sur l'utilisateur
+
+username: Pseudo
+email: Adresse e-mail
+password: Mot de passe
+role: Rôle(s)

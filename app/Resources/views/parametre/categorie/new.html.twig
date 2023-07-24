@@ -1,0 +1,36 @@
+{% block page_content %}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Création </h4>
+    </div>
+    {{ form_start(form, {'attr': {'role':'form', 'class': ''}}) }}
+        <div class="modal-body">
+            {{ form_errors(form) }}
+            {% include 'ajax/response.html.twig' %}
+
+            <div class="form-body">
+                {{ form_widget(form) }}
+            </div>
+        </div>
+        <div class="modal-footer">
+            {% include 'ajax/loader.html.twig' %}
+           
+            <button type="submit" class="btn btn-primary  btn-ajax pull-left">Créer</button>
+             <button type="button" class="btn btn-default  pull-left" data-dismiss="modal">Fermer</button>
+        </div>
+    {{ form_end(form) }}
+            
+{% endblock %}
+
+{% block javascripts %}
+   <script src="{{ asset('public/js/admin.js') }}"></script>
+ {% endblock %}   
+{% block javascripts_inline %}
+    <script>
+        init_select2();
+    </script>
+     
+{% endblock %}

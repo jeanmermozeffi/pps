@@ -1,0 +1,48 @@
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">{{ message }}</h3>
+
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+    <div class="box-body">
+        {% if total is defined and consultation is defined %}
+            {{ consultation }} / {{ total }} patient(s) ayant au moins consulté une fois avec le PASS
+        {#<canvas id="medicament" style="height:250px"></canvas>#}
+        {% endif %}
+        {% if annees|default([]) %}
+            <form method="get" class="form-submit">
+                <label for="annee_{{ objet.container}}">Année</label>
+                <select id="annee_{{ objet.container}}" name="annee">
+                {% for _annee in annees %}
+                    <option value="{{ _annee }}" {% if _annee == annee %}selected{% endif %}>{{ _annee }}</option>
+                {% endfor %}
+                </select>
+            </form>
+        {% endif %}
+        <div id="{{ objet.container }}" class="chart">
+        </div>
+        
+    </div>
+    <!-- /.box-body -->
+</div>
+
+{% block javascripts %}
+{#
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/obhighcharts/js/highcharts/highcharts.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/obhighcharts/js/highcharts/modules/exporting.js') }}"></script>
+#}
+    <script type="text/javascript">
+        {% if objet.ob is defined %}
+            {{ chart(objet.ob) }}
+        {% endif %}
+        $('.form-submit').find('select').on('change', function () {
+            $(this).closest('form').submit();
+        });
+    </script>
+
+{% endblock %}

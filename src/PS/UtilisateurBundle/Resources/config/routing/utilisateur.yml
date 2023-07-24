@@ -1,0 +1,48 @@
+admin_config_utilisateur_index:
+    path:     /
+    defaults: { _controller: "UtilisateurBundle:Utilisateur:index" }
+
+admin_config_utilisateur_show:
+    path:     /{id}/show
+    defaults: { _controller: "UtilisateurBundle:Utilisateur:show" }
+    methods:  GET
+
+admin_config_utilisateur_deactivate:
+    path:     /{id}/deactivate
+    defaults: { _controller: "UtilisateurBundle:Utilisateur:deactivate" }
+
+admin_config_utilisateur_new:
+    path:     /new
+    defaults: { _controller: "UtilisateurBundle:Utilisateur:new" }
+    methods:  [GET, POST]
+
+admin_config_utilisateur_unregister:
+    path:     /unregister
+    defaults: { _controller: "UtilisateurBundle:Utilisateur:unregister" }
+    methods:  GET
+
+    
+admin_config_utilisateur_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "UtilisateurBundle:Utilisateur:edit" }
+    methods:  [GET, POST]
+
+admin_config_utilisateur_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "UtilisateurBundle:Utilisateur:delete" }
+    methods:  DELETE
+
+admin_config_utilisateur_edit_profil:
+    path:     /{id}/profil
+    defaults: { _controller: "UtilisateurBundle:Profile:edit" }
+    methods:  [GET, POST]
+
+admin_config_utilisateur_patient:
+    path:     /{id}/patient
+    defaults: { _controller: "UtilisateurBundle:Utilisateur:patient" }
+    methods:  [GET, POST]
+
+admin_config_utilisateur_sms_verif:
+    path: /{id}/code
+    defaults: { _controller: "UtilisateurBundle:Utilisateur:code" }
+    methods:  [GET, POST]

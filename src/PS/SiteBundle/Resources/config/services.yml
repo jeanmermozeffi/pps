@@ -1,0 +1,7 @@
+parameters:
+#    parametre.example.class: SM\ParametreBundle\Example
+
+services:
+#    parametre.example:
+#        class: %parametre.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

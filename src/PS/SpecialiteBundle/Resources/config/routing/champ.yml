@@ -1,0 +1,23 @@
+admin_specialite_champ_index:
+    path:     /
+    defaults: { _controller: "PSSpecialiteBundle:Champ:index" }
+
+admin_specialite_champ_list:
+    path:     /{id}/liste
+    defaults: { _controller: "PSSpecialiteBundle:Champ:grid" }
+
+admin_specialite_champ_new:
+    path:     /{id}/new
+    defaults: { _controller: "PSSpecialiteBundle:Champ:new" }
+
+admin_specialite_champ_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PSSpecialiteBundle:Champ:edit" }
+
+admin_specialite_champ_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PSSpecialiteBundle:Champ:delete" }
+
+admin_specialite_champ_show:
+    path:     /{id}/show/{etape}
+    defaults: { _controller: "PSSpecialiteBundle:Champ:show", etape: null }

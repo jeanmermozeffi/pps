@@ -1,0 +1,773 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% trans_default_domain 'admin' %}
+{% import 'GestionBundle:Macros:html.html.twig' as _html %}
+{% from 'GestionBundle:Macros:macro.html.twig' import affections, allergies, assurances, telephones, vaccinations, medecins, traitements, associes,antecedent_familial %}
+{% import 'widget/macro.html.twig' as psm %}
+ {% form_theme edit_form 'widget/fields_mousso_horizontal.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+      <link rel="stylesheet" href="{{ asset('public/css/parsley.css') }}" />
+{% endblock %}
+
+{% block page_content %}
+    <div class="alert alert-warning">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">X</a>
+        <span>Les informations collectées serviront en cas d’urgence, à pouvoir : </span>
+        <ul style="margin: 10px auto">
+            <li>Identifier le patient</li>
+            <li>Informer les proches</li>
+            <li class="">Renseigner les secours</li>
+            <li class="">Apportez les premiers soins</li>
+        </ul>
+        <p>Des notifications d’enrôlement, de consultation de vos informations, de vos rdv médicaux vous seront envoyez pas SMS.</p>
+        <p>Vous avez la possibilité de porter des modifications sur vos informations.</p>
+        <p>Vous avez la possibilité d’annuler votre adhésion au PASS POSTE SANTE</p>
+        <p>Vous pouvez nous contactez au 25 20 00 68 44 ou sur https://passpostesante.ci/</p>
+    </div>
+
+    <div class="row">
+        <section class="col-md-12">
+            <!-- general form elements -->
+            <div class="nav-tabs-custom">
+                
+                <div class="tab-content">
+
+                    <div class="active tab-pane" id="ajouter">
+                        <div class="box-body">
+                            {{ form_errors(edit_form )}}
+                            {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate', 'data-parsley-validate': true} }) }}
+                            <div id="list-associe" data-prototype="{{ associes(edit_form.associes.vars.prototype)|e }}"></div>
+                                <div id="list-allergie"
+                                     data-prototype="{{ allergies(edit_form.allergies.vars.prototype)|e }}"></div>
+
+                                     {#<div id="list-antecedent-familial"
+                                     data-prototype="{{ antecedent_familial(edit_form.familiaux.vars.prototype, true, true)|e }}"></div>#}
+                                <div id="list-affection"
+                                     data-prototype="{{ affections(edit_form.affections.vars.prototype)|e }}"></div>
+                                <div id="list-assurance"
+                                     data-prototype="{{ assurances(edit_form.ligneAssurances.vars.prototype)|e }}"></div>
+                                <div id="list-telephone"
+                                     data-prototype="{{ telephones(edit_form.telephones.vars.prototype)|e }}"></div>
+                                <div id="list-vaccination"
+                                     data-prototype="{{ vaccinations(edit_form.vaccinations.vars.prototype)|e }}"></div>
+                                 <div id="list-medecin"
+                                     data-prototype="{{ medecins(edit_form.medecins.vars.prototype)|e }}"></div>
+                                <div id="list-traitement"
+                                     data-prototype="{{ traitements(edit_form.traitements.vars.prototype)|e }}"></div>
+                                
+                                <div class="box-footer">
+                                    
+                                    <div class="col-md-6">
+
+                                        <div class="box-body">
+                                            {% if app.request.attributes.get('_route') == 'admin_gestion_patient_new' %}
+                                            {{ form_row(edit_form.email) }}
+                                                
+                                            {% endif %}
+                                            {# {{ form_row(edit_form.identifiant) }}
+                                            {{ form_row(edit_form.pin) }} #}
+                                            {{ form_row(edit_form.personne.nom) }}
+                                            {{ form_row(edit_form.personne.prenom) }}
+                                             {% if edit_form.lien is defined and is_associated %}
+                                             
+                                                {{ form_row(edit_form.lien) }}
+                                                
+                                            {% endif %}
+
+                                            {{ form_row(edit_form.personne.datenaissance) }}
+                                            {{ form_row(edit_form.sexe) }}
+                                            {# {{ form_row(edit_form.ethnie) }} #}
+                                            {{ form_row(edit_form.poids) }}
+                                            {{ form_row(edit_form.taille) }}
+                                            
+                                        </div>
+                                        <!-- /.box-body -->
+
+
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <div class="box-body patient_img col-sm-offset-3">
+                                            <div class="form-group">
+                                                <img id="blah" class="profile-user-img img-responsive  dropzone" width=180 height=180
+                                                {% if _patient is not defined %}
+                                                    {% if patient.personne and patient.personne.photo %}
+                                                        src="{{ asset(patient.personne.photo.webPath) }}" alt="{{ patient.personne.photo.alt }}"
+                                                    {% else %}src="{{ asset('bundles/avanzuadmintheme/img/avatar.png') }}" alt="User profile picture"
+                                                    {% endif %}
+                                                {% endif %}
+                                                    
+                                                />
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                    {{ form_widget(edit_form.personne.photo) }}
+                                                    <p class="help-block">{{ 'Limite ( %limite% )' | trans({'%limite%': limit}) }}</p>
+
+                                            </div>
+
+                                        </div>
+                                        <!-- /.box-body -->
+
+
+                                    </div>
+
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="col-md-6 barre-right">
+                                        {{ form_row(edit_form.statut) }}
+                                         <div class="form-group">
+                                                
+                                                {{ form_label(edit_form.groupeSanguin) }}
+                                                
+                                                <div class="col-sm-8">
+                                                {{ form_widget(edit_form.groupeSanguin) }}
+                                                {{ form_errors(edit_form.groupeSanguin) }}
+                                                <p class="small"><span class="fa fa-info-circle"></span> {{ _html.text('patient.warning_gs', 'messages')  }}</p>
+                                                </div>
+                                                
+                                            </div>
+
+
+                                        {{ form_row(edit_form.nombreEnfant) }}
+
+                                       {{ form_row(edit_form.personne.contact) }}
+                                       {{ form_row(edit_form.profession) }}
+                                       {{ form_row(edit_form.societe) }}
+                                       {{ form_row(edit_form.regime) }} 
+
+                                        
+                                        
+                                            <div class="form-group">
+                                               {% if app.user and app.user.personne.corporate and  edit_form.personne.corporate is not defined  %}
+                                                <label class="control-label col-sm-4">Corporate</label>
+                                                <div class="col-sm-8">
+                                                    <p>{{ app.user.personne.corporate.raisonSociale }}</p>
+                                                </div>
+                                            {% endif %}
+                                            
+
+                                            
+                                            {% if edit_form.personne.corporate is defined %}
+                                           
+                                                
+                                                {{ form_label(edit_form.personne.corporate) }}
+                                                
+                                                <div class="col-sm-8">
+                                                   {{ form_widget(edit_form.personne.corporate) }}     
+                                                </div>
+                                           
+                                            {% endif %}   
+                                            </div>
+                                             {{ form_row(edit_form.matricule) }}
+
+                                        
+                                       
+                                    </div>
+
+                                    <div class="col-md-6 ">
+                                        
+                                         {{ form_row(edit_form.pays) }}
+                                          {{ form_row(edit_form.region) }}
+                                          {{ form_row(edit_form.ville) }}
+                                       {{ form_row(edit_form.adresse) }}
+
+                                         {{ form_row(edit_form.lieuhabitation) }}
+                                         {{ form_row(edit_form.nationalite) }}
+                                         {{ form_row(edit_form.religion) }}
+
+                                        
+                                    </div>
+
+
+                                </div>
+                                <div class="box-footer">
+                                    <!-- Affections box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right"
+                                                        data-widget="collapse"
+                                                        data-toggle="tooltip" style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-flash"></i>
+
+                                            <h3 class="box-title">
+                                                {{ 'Autres informations' | trans({}) }}
+                                            </h3>
+                                        </div>
+                                        
+                                        <div class="box-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                   
+                                                    {{ form_widget(edit_form.attribut) }}
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+                                <div class="box-footer">
+                                    <!-- Affections box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right"
+                                                        data-widget="collapse"
+                                                        data-toggle="tooltip" style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-flash"></i>
+
+                                            <h3 class="box-title">
+                                                {{ 'Personnes à contacter' | trans({}) }}
+                                            </h3>
+                                        </div>
+                                        <div class="box-footer no-border">
+                                            <button type="button" class="btn btn-default add_telephone"
+                                                    id="add_telephone">
+                                                <i class="fa fa-plus"></i>
+                                                {{ 'Ajouter' | trans({}) }}
+                                            </button>
+                                        </div>
+                                        <p class="text-info">
+                                            <span class="fa fa-info"></span> {{ _html.text('Il est recommandé que vous spécifiez au moins une personne à contacter') }}
+                                        </p>
+                                        <p class="text-info">
+                                            <span class="fa fa-warning"></span>{{ _html.text('Il est recommandé que vous spécifiez au moins une personne à contacter') }}
+                                        </p>
+                                        <div class="box-body">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{ _html.text('Nom') }}</th>
+                                                    <th>{{ _html.text('Numero') }}</th>
+                                                    <th>{{ _html.text('Lien') }}</th>
+                                                    <th>{{ _html.text('Action') }}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_telephone" class="collection list_telephone">
+                                                {% for item in edit_form.telephones %}
+                                                    {{ telephones(item|e) }}
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+                                <div class="box-footer">
+                                    <!-- Affections box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right"
+                                                        data-widget="collapse"
+                                                        data-toggle="tooltip" style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-flash"></i>
+
+                                            <h3 class="box-title">
+                                                {{ _html.text('patient.medecins.title') }}
+                                            </h3>
+                                        </div>
+                                        <div class="box-footer no-border">
+                                            <button type="button" class="btn btn-default add_medecin"
+                                                    id="add_medecin">
+                                                <i class="fa fa-plus"></i>
+                                                {{ _html.text('btn.add_line') }}
+                                            </button>
+                                        </div>
+                                        <div class="box-body">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                     {{ _html.table_row([
+                                                         'patient.medecins.medecin',
+                                                         'patient.medecin.specialite',
+                                                         'patient.medecins.contact',
+                                                         'patient.medecins.hopital'
+                                                         ]
+                                                         , {action: true}) 
+                                                    }}
+                                                    
+                                                    
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_medecin" class="collection list_medecin">
+                                                {% for item in edit_form.medecins %}
+                                                    {{ medecins(item|e) }}
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+
+
+                                <div class="box box-solid ">
+                                    {{ psm.box_header('comptes associés') }}
+                                   
+                                    <div class="box-body">
+                                         {{ psm.proto_add_button('ajouter une ligne', 'add_associe') }}
+                                        <p class="text-info">
+                                            <span class="fa fa-info"></span>{{ _html.text('Le compte patient associé doit exister') }}
+                                        </p>
+                                        <div class=" table-responsive">
+                                            <table class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        {{ psm.row_headers(['identifiant', 'code PIN', 'lien']) }}
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="list_associe" class="collection list_associe">
+                                                    {% for key, item in edit_form.associes %}
+                                                        {{ associes(item|e, key, _associes|default([])) }}
+                                                    {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="box-footer">
+                                    <!-- Affections box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right"
+                                                        data-widget="collapse"
+                                                        data-toggle="tooltip" style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-flash"></i>
+
+                                            <h3 class="box-title">
+                                                {{ _html.text('patient.assurances.title') }}
+                                            </h3>
+                                        </div>
+                                        <div class="box-footer no-border">
+                                            <button type="button" class="btn btn-default add_assurance"
+                                                    id="add_assurance">
+                                                <i class="fa fa-plus"></i>
+                                                {{ _html.text('btn.add_line') }}
+                                            </button>
+                                        </div>
+                                        <div class="box-body">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    
+                                                    {{ _html.table_row([
+                                                         'patient.assurances.assurance',
+                                                         'patient.assurances.numero',
+                                                        
+                                                            'patient.assurances.taux',
+                                                         ]
+                                                         , {action: true}) 
+                                                    }}
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_assurance" class="collection list_assurance">
+                                                {% for item in edit_form.ligneAssurances %}
+                                                    {{ assurances(item|e) }}
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+
+                                <div class="box-footer">
+                                    <!-- Affections box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right"
+                                                        data-widget="collapse"
+                                                        data-toggle="tooltip" style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-flash"></i>
+
+                                            <h3 class="box-title">
+                                                {{ _html.text('patient.allergies.title') }}
+                                            </h3>
+                                        </div>
+                                        <div class="box-footer no-border">
+                                            <button type="button" class="btn btn-default add_allergie"
+                                                    id="add_allergie">
+                                                <i class="fa fa-plus"></i>
+                                               {{ _html.text('btn.add_line') }}
+                                            </button>
+                                        </div>
+                                        <div class="box-body">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    {{ _html.table_row([
+                                                         'patient.allergies.allergie',
+                                                         'patient.allergies.commentaire',
+                                                        
+                                                        
+                                                         ]
+                                                         , {action: true}) 
+                                                    }}
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_allergie" class="collection list_allergie">
+                                                {% for item in edit_form.allergies %}
+                                                    {{ allergies(item|e) }}
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+
+                                          {#<div class="box-footer">
+                                <!-- Affections box -->
+                                <div class="box box-solid ">
+                                    <div class="box-header bg-light-blue-gradient">
+                                        <!-- tools box -->
+                                        <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+
+                                        <i class="fa fa-flash"></i>
+
+                                        <h3 class="box-title">
+                                            Antécédents Familiaux
+                                        </h3>
+                                    </div>
+                                    <div class="box-footer no-border">
+                                        <button type="button" class="btn btn-default add_antecedent_familial"
+                                                id="add_antecedent_familial">
+                                            <i class="fa fa-plus"></i>
+                                            Ajouter
+                                        </button>
+                                    </div>
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Lien</th>
+                                                <th>Antécédent</th>
+                                                <th>{{ _html.text('Action') }}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_antecedent_familial" class="collection list_antecedent_familial">
+                                            {% for item in edit_form.familiaux %}
+                                                
+                                                {{ antecedent_familial(item|e, true, true) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body-->
+
+                                </div>
+                                <!-- /.box -->
+
+                            </div>#}
+
+                                <div class="box-footer">
+                                    <!-- Affections box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right"
+                                                        data-widget="collapse"
+                                                        data-toggle="tooltip" style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-flash"></i>
+
+                                            <h3 class="box-title">
+                                                {{ _html.text('patient.affections.title') }}
+                                            </h3>
+                                        </div>
+                                        {% if patient %}
+                                        <a href="{{ path('gestion_suivi_historique_patient', {id: patient.id}) }}" class="btn btn-success">Suivi/Evolution</a>
+                                    {% endif %}
+                                        <div class="box-footer no-border">
+                                            <button type="button" class="btn btn-default add_affection"
+                                                    id="add_affection">
+                                                <i class="fa fa-plus"></i>
+                                                {{ _html.text('btn.add_line') }}
+                                            </button>
+                                        </div>
+                                        <div class="box-body">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    {{ _html.table_row([
+                                                         'patient.affections.affection',
+                                                         'patient.affections.commentaire',
+                                                          'patient.affections.date',
+                                                        
+                                                         ]
+                                                         , {action: true}) 
+                                                    }}
+                                                   
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_affection" class="collection list_affection">
+                                                {% for item in edit_form.affections %}
+                                                    {{ affections(item|e) }}
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+                                <div class="box-footer ">
+                                    <!-- Affections box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right"
+                                                        data-widget="collapse"
+                                                        data-toggle="tooltip" style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-flash"></i>
+
+                                            <h3 class="box-title">
+                                                {{ _html.text('patient.traitements.title') }}
+                                            </h3>
+                                        </div>
+                                        <div class="box-footer no-border">
+                                            <button type="button" class="btn btn-default add_traitement"
+                                                    id="add_traitement">
+                                                <i class="fa fa-plus"></i>
+                                                {{ _html.text('btn.add_line') }}
+                                            </button>
+                                        </div>
+                                        <div class="box-body">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                     {{ _html.table_row([
+                                                         'patient.traitements.libelle',
+                                                         'patient.traitements.date',
+                                                         'patient.traitements.fin',
+                                                         ]
+                                                         , {action: true}) 
+                                                    }}
+                                                   
+                                                  
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_traitement" class="collection list_traitement">
+                                                {% for item in edit_form.traitements %}
+                                                    {{ traitements(item|e) }}
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+
+                                <div class="box-footer">
+                                    <!-- Affections box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right"
+                                                        data-widget="collapse"
+                                                        data-toggle="tooltip" style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-flash"></i>
+
+                                            <h3 class="box-title">
+                                                {{ _html.text('patient.vaccinations.title') }}
+                                            </h3>
+                                        </div>
+                                        <div class="box-footer no-border">
+                                            <button type="button" class="btn btn-default add_vaccin"
+                                                    id="add_vaccin">
+                                                <i class="fa fa-plus"></i>
+                                                {{ _html.text('btn.add_line') }}
+                                            </button>
+                                        </div>
+                                        <div class="box-body">
+                                            <div class="table-responsive">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                     {{ _html.table_row([
+                                                         'patient.vaccinations.name',
+                                                         'patient.vaccinations.details',
+                                                         'patient.vaccinations.date',
+                                                         'patient.vaccinations.rappel'
+                                                         ]
+                                                         , {action: true}) 
+                                                    }}
+                                                   
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_vaccin" class="collection list_vaccin">
+                                                {% for item in edit_form.vaccinations %}
+                                                    {{ vaccinations(item|e) }}
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                            </div>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+
+                                <div class="box-footer">
+                                     {{ form_row(edit_form.condition) }} 
+                                     {% if not is_granted('ROLE_CUSTOMER') and patient %}
+                                      {{ form_row(edit_form.resent_login) }} 
+                                      {% endif %}
+                                    {{ form_widget(edit_form.submit,{'attr':{'class':'btn btn-warning pull-right'}}) }}
+                                    <!-- /.box -->
+                                </div>
+
+                             {{ form_widget(edit_form._token) }}
+                            {{ form_end(edit_form, {render_rest: false}) }}
+                        </div>
+
+                    </div>
+                    <!-- /.tab-pane -->
+
+                </div>
+                <!-- /.tab-content -->
+            </div>
+        </section>
+    </div>
+
+{% endblock %}
+
+{% block javascripts_inline %}
+    <script src="{{ asset('public/js/patient.js') }}"></script>
+    <script>
+       
+      init_date_picker('#{{ edit_form.personne.datenaissance.vars.id }}');
+      init_select2();
+      $('#{{ edit_form.pays.vars.id }}').change(function () {
+            var paysSelector = $(this);
+            var villeSelector = $('#{{ edit_form.ville.vars.id }}');
+             console.log(100);
+            
+
+
+            if (paysSelector.val()) {
+                $.ajax({
+                    url: "{{ path('admin_parametre_pays_ville') }}",
+                    type: "GET",
+                    dataType: "JSON",
+                    data: {
+                        pays: paysSelector.val(),
+        
+                    },
+                    success: function (ville) {
+                        const data = ville.map((_ville) => {
+                            return {id: _ville.id, text: _ville.name}
+                        });
+                        init_select2($('#{{ edit_form.ville.vars.id }}'), 'Choisir une ville', 'body', data, false);
+                       
+                    },
+                    error: function (err) {
+                        alert("An error ocurred while loading data ...");
+                    }
+                });
+            }
+
+            //var medecinSelect = $("#ps_gestionbundle_rdv_medecin");
+
+
+           
+                
+            
+            
+            // Request the medecins of the selected specialite.
+            
+        });
+    </script>
+
+{% endblock %}
+
+{% block page_title %}
+    Patient
+{% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}

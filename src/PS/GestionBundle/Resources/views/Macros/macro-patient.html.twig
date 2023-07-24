@@ -1,0 +1,100 @@
+{% macro affections(affection) %}
+    <tr class="prototype_affections even pointer">
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_widget(affection.affection)}}</div>
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_widget(affection.commantaire)}}</div>
+            </div>
+        </td>
+        <td></td>
+    </tr>
+{% endmacro %}
+
+{% macro allergies(allergie) %}
+    <tr class="prototype_allergies even pointer">
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_widget(allergie.allergie)}}</div>
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_widget(allergie.commantaire)}}</div>
+            </div>
+        </td>
+        <td></td>
+    </tr>
+{% endmacro %}
+
+{% macro assurances(assurance) %}
+    <tr class="prototype_assurances even pointer">
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_widget(assurance.assurance)}}</div>
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_widget(assurance.numero) }}</div>
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_widget(assurance.taux) }}</div>
+            </div>
+        </td>
+        <td>
+
+        </td>
+    </tr>
+{% endmacro %}
+
+{% macro vaccinations(vaccination) %}
+    <tr class="prototype_vaccinations even pointer">
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_widget(vaccination.date)}}</div>
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_widget(vaccination.vaccin) }}</div>
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_widget(vaccination.rappel) }}</div>
+            </div>
+        </td>
+        <td>
+
+        </td>
+    </tr>
+{% endmacro %}
+
+{% macro telephones(telephone) %}
+    <tr class="prototype_telephones even pointer">
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_widget(telephone.nom) }}</div>
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_widget(telephone.numero) }}</div>
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_widget(telephone.lien) }}</div>
+            </div>
+        </td>
+        <td>
+
+        </td>
+    </tr>
+{% endmacro %}

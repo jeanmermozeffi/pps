@@ -1,0 +1,63 @@
+{% block page_content %}
+    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit{{corporate.id}}" data-url="{{ edit_form.vars.action }} "><i class="fa fa-edit"></i></button>
+    <div class="modal fade" id="modal-edit{{corporate.id}}">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Modification</h4>
+                </div>
+                {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'}}) }}
+                   
+                    <div class="modal-body">
+                        <div class="box-body">
+                            <div class="form-group">
+                                {% if corporate.logo %}
+                                <div class="image-preview center-block bg-image" style="background-image: url('{{ asset('uploads/' ~ corporate.logo) }}')"></div>
+                                <div class="clearfix"></div>
+                                {% endif %}
+                                
+                                <label for="{{ edit_form.logo.vars.id ~ '_' ~  corporate.id }}" class="col-sm-4">Logo</label>
+                                <div class="col-sm-8">
+                                    {{ form_widget(edit_form.logo, {id: edit_form.logo.vars.id ~ '_' ~  corporate.id}) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ edit_form.raisonSociale.vars.id ~ '_' ~  corporate.id }}" class="col-sm-4">Raison sociale</label>
+
+                                <div class="col-sm-8">
+                                    {{ form_widget(edit_form.raisonSociale, {id: edit_form.raisonSociale.vars.id ~ '_' ~  corporate.id}) }}
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label for="{{ edit_form.contact.vars.id ~ '_' ~  corporate.id }}" class="col-sm-4">Contact(s)</label>
+
+                                <div class="col-sm-8">
+                                    {{ form_widget(edit_form.contact, {id: edit_form.contact.vars.id ~ '_' ~  corporate.id}) }}
+                                </div>
+                            </div>
+                            {% if edit_form.corporateParent is defined %}
+                            <div class="form-group">
+                                <label for="{{ edit_form.corporateParent.vars.id ~ '_' ~  corporate.id }}" class="col-sm-4">Corporate parent</label>
+
+                                <div class="col-sm-8">
+                                    {{ form_widget(edit_form.corporateParent, {id: edit_form.corporateParent.vars.id ~ '_' ~  corporate.id}) }}
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+                        <input type="submit" class="btn btn-primary pull-right" value="Modifier" />
+                    </div>
+                    {{ form_widget(edit_form._token, {id: edit_form._token.vars.id ~ '_' ~ corporate.id })}}
+                {{ form_end(edit_form, {render_rest: false}) }}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

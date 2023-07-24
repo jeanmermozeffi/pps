@@ -1,0 +1,19 @@
+admin_specialite_stats_index:
+    path:     /
+    defaults: { _controller: "PSSpecialiteBundle:Statistique:index" }
+
+admin_specialite_stats_list:
+    path:     /{id}/liste
+    defaults: { _controller: "PSSpecialiteBundle:Statistique:list" }
+
+admin_specialite_stats_new:
+    path:     /{id}/new
+    defaults: { _controller: "PSSpecialiteBundle:Statistique:new" }
+
+admin_specialite_stats_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PSSpecialiteBundle:Statistique:edit" }
+
+admin_specialite_stats_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PSSpecialiteBundle:Statistique:delete" }

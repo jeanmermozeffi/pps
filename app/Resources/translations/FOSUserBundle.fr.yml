@@ -1,0 +1,28 @@
+layout:
+  logout: Déconnexion
+  login: Connexion
+  register: Inscription
+  logged_in_as: Connecté en tant que %username%
+  profile: Profil
+
+resetting:
+    password_already_requested: Un nouveau mot de passe a déjà été demandé pour cet utilisateur dans les dernières 24 heures.
+    check_email: |
+        Un e-mail a été envoyé. Il contient un lien sur lequel il vous faudra cliquer pour réinitialiser votre mot de passe.
+        Remarque : Vous ne pouvez demander un nouveau mot de passe que toutes les %tokenLifetime% heures.
+
+        Si vous ne recevez pas un email, vérifiez votre dossier spam ou essayez à nouveau.
+    invalid_username: Le nom d'utilisateur "%username%" n'existe pas.
+    username: Nom d'utilisateur
+    submit: Réinitialiser le mot de passe
+    email:
+        subject: 'Réinitialisation de votre mot de passe'
+        message_mobile: |
+            Bonjour %username% !
+
+            Pour réinitialiser votre mot de passe, merci de vous rendre sur %confirmationUrl%
+
+            Si vous utilisez l'application mobile. Veuillez utilisez ce code %code%
+
+            Cordialement,
+            L'équipe du PSM

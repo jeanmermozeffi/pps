@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Votre profil</title>
+    <meta name="description" content="Site officiel du Pass Santé">
+    
+    <link rel="shortcut Icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,300i,400,700" rel="stylesheet">
+    <meta name="author" content="MCM">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ asset('bundles/site/v2/css/bootstrap.min.css') }} " />
+    <link rel="stylesheet" href="{{ asset('bundles/site/v2/css/font-awesome.min.css') }} " />
+    <link rel="stylesheet" href="{{ asset('bundles/site/v2/css/animate.min.css') }} " />
+    <link rel="stylesheet" href="{{ asset('bundles/site/v2/css/input-hoshi.css') }} " />
+    <link rel="stylesheet" href="{{ asset('bundles/site/v2/css/main.css') }} " />
+    <link rel="stylesheet" href="{{ asset('bundles/site/v2/css/profil.css') }} " />
+    <script src="{{ asset('bundles/site/v2/js/modernizr.js') }}"></script>
+</head>
+<body>
+    <div class="page" id="profil">
+        <section class="container position-vertical-align">
+            <div class="logo-wrapper text-center mx-auto">
+                <a href="{{ path('homepage') }}">
+                    <img src="{{ asset('bundles/site/v2/images/logo.png') }}" class="img-fluid">
+                </a>
+            </div>
+            <div class="row">
+                <form method="POST" id="profil-form" action="{{ path('patient_profil') }}" class="col-10 col-sm-8 col-md-4 col-xl-4 mx-auto">
+                    <div class="form-inner">
+                        {{ form_row(form._token) }}
+                        {% for type, flash_messages in app.session.flashBag.all %}
+                        {% for flash_message in flash_messages %}
+                            {% if type == 'notice_patient' %}
+                                <div class="alert alert-danger">
+                                    {{ flash_message }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        {% endfor %}
+                        {{ form_widget(form.identifiant, {attr: {class: 'form-control', autofocus: true}}) }}
+                        {{ form_rest(form) }}
+                        <button class="btn btn-block bg-primary color-white mt-2 btn-shadow" type="submit">
+                            Valider
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <footer class="clearfix">
+            <div class="copyright text-center">
+                <p class="text-muted"><a href="{{ path('homepage') }}"><span class="fa fa-home"></span> Accueil</a> | &copy; 2018 &mdash;<span class="notranslate"><strong>PASS SANTÉ</strong></span> . Fait avec <span class="fa fa-heart color-primary"></span>  par <a href="//mcm-ci.com" class="color-primary"><strong><abbr title="Maurice Communication marketing">MCM</abbr></strong></a></p>
+            </div>
+        </footer>
+    </div>
+
+    
+    <script>
+        
+    </script>
+    <!--<script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>-->
+        
+</body>
+</html>

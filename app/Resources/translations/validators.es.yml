@@ -1,0 +1,6 @@
+rdv:
+  pin: ingrese el código PIN
+  identifiant: ingrese el ID
+  libRendezVous:
+    required: Ingrese el motivo de la cita
+    max: La etiqueta no debe superar los {{limit}} caracteres

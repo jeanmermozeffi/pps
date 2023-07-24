@@ -1,0 +1,26 @@
+{% block page_content %}
+    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-hopital-{{ corporate.id }}"><i class="fa fa-medkit"></i></button>
+    <div class="modal fade" id="modal-hopital-{{ corporate.id }}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Hopitaux</h4>
+                </div>
+                {{ form_start(form) }}
+                    <div class="modal-body">
+                        <div class="box-body">
+                            {{ form_widget(form.hopitaux, {id: form.hopitaux.vars.id ~ '_' ~ corporate.id }) }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+                        <input type="submit" class="btn btn-primary pull-right" value="Créer" />
+                    </div>
+                     {{ form_widget(form._token, {id: form._token.vars.id ~ '_hopital_' ~ corporate.id })}}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

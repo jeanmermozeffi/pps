@@ -1,0 +1,74 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+      <link rel="stylesheet" href="{{ asset('public/css/parsley.css') }}" />
+{% endblock %}
+{% block page_content %}
+    {% macro identifiant_prototype(identifiant) %}
+      
+            <label class="col-sm-2">&nbsp;</label>
+            <div class="col-sm-5">
+                {{ form_widget(identifiant, {attr: {placeholder: 'XXXX/XXXX'}}) }}
+                {{ form_errors(identifiant) }}
+            </div>
+        
+    {% endmacro %}
+    <div class="box">
+        <div class="box-body">
+            
+            {{ form_errors(form) }}
+            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'data-parsley-validate': true} }) }}
+                <div class="form-group">
+                    <label for="identifiant" class="col-sm-2">Couple ID du parent (Identifiant/PIN)</label>
+                    <div class="col-sm-5">
+                        {{ form_widget(form.identifiant, {attr: {placeholder: 'XXXX/XXXX'}}) }}
+                    </div>
+                </div>
+                <a href="#" class="add-identifant" data-list="#identifiant-fields-list">Ajouter un identifiant</a>
+                <div id="identifiant-fields-list" class="list-unstyled"
+                    data-prototype="{{ _self.identifiant_prototype(form.identifiants.vars.prototype)|e }}"
+                    data-widget-tags="{{ '<div class="form-group"></div>'|e }}">
+                    {% for identifiant in form.identifiant %}
+                        {{ _self.identifiant_prototype(identifiant) }}
+                    {% endfor %}
+                </div>
+                
+                <button class=" btn btn-default">Associer</button>
+            {{ form_end(form) }}
+        
+            
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+    <script>
+        jQuery(document).ready(function () {
+            jQuery('.add-identifant').click(function (e) {
+            e.preventDefault();
+            var list = jQuery(jQuery(this).attr('data-list'));
+            // Try to find the counter of the list
+            var counter = list.data('widget-counter') | list.children().length;
+            // If the counter does not exist, use the length of the list
+            if (!counter) { counter = list.children().length; }
+            // grab the prototype template
+            var newWidget = list.attr('data-prototype');
+            // replace the "__name__" used in the id and name of the prototype
+            // with a number that's unique to your emails
+            // end name attribute looks like name="contact[emails][2]"
+            newWidget = newWidget.replace(/__name__/g, counter);
+            // Increase the counter
+            counter++;
+            // And store it, the length cannot be used if deleting widgets is allowed
+            list.data(' widget-counter', counter);
+            // create a new list element and add it to the list
+            var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+            newElem.appendTo(list);
+            });
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+    {% block page_content %}
+     <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-danger">
+                <div class="box-header">
+                    <!-- Horizontal Form -->
+                    <div class="">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Demande crédit Santé - Banque {% if banque %}({{ banque.sigle }}){% endif %}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="alert alert-info">
+                        <span class="fa fa-info-circle"></span> Veuillez sélectionner une banque où vous avez un compte domicilié
+                    </div>
+                    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+                    {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                    {{ form_end(form) }}
+                     
+                   
+                </div>
+            </div>
+            {% for pack in packs %}
+                        <div class="box box-warning">
+                        <div class="box-header with-border">
+                          <h3 class="box-title">{{ pack.libelle }}</h3>
+
+                          <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                          </div>
+                          <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <section>
+                              <h4>Description</h4>
+                              <div>{{ pack.description }}</div>
+                          </section>
+                        
+                          <section>
+                              <h4>Conditions</h4>
+                              <div>{{ pack.condition }}</div>
+                          </section>
+                          
+                          
+                          
+                          <a href="{{ path('gestion_demandecredit_new', {pack: pack.id}) }}" class="btn-sm btn-success" data-toggle="modal" data-target="#modal-table">Demande de crédit</a>
+                         
+                        </div>
+                        <!-- /.box-body -->
+                      </div>
+                    {% endfor %}
+                 
+                   <div class="navigation">
+                        {{ knp_pagination_render(packs) }}
+                    </div>
+        </div>
+    </div>
+    
+    {% endblock %}
+{% block javascripts_inline %}
+    <script>
+    const $banque =  $('#{{ form.banque.vars.id }}');
+    init_select2($banque);
+    $banque.change(function() {
+            document.location.href = Routing.generate('gestion_demandecredit_ls_banque', {'banque': $(this).val()})
+        });
+    </script>
+     
+{% endblock %}

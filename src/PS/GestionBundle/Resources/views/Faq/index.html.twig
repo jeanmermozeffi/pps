@@ -1,0 +1,83 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+
+
+{% block page_content %}
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <!-- general form elements -->
+
+            <div class="box box-primary">
+
+                <div class="box-header">
+
+                    <!-- Horizontal Form -->
+
+                    <div class="">
+
+                        <div class="box-header with-border">
+
+                            <h3 class="box-title">FAQ</h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="box-body">
+
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ADMIN_SUP') %}{{ render(controller('GestionBundle:Faq:new')) }}{% endif %}
+
+                    <div class="list-group">
+
+                        {% for faq in faqs %}
+
+                            <div class="list-group-item">
+
+                                <h4 class="list-group-item-heading">{{ faq.question }}</h4>
+
+                                <div class="list-group-item-text">
+
+                                    {{ faq.reponse | nl2br }}
+
+                                    <div style="margin-top: 3px">
+
+                                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ADMIN_SUP') %}
+
+                                    {{ render(controller('GestionBundle:Faq:edit', {id: faq.id})) }}
+
+                                     {{ render(controller('GestionBundle:Faq:delete', {id: faq.id})) }}
+
+                                      {% endif %}
+
+                                    </div>
+
+                                   
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                    {{ knp_pagination_render(faqs) }} 
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block title %}FAQ{% endblock %}
+
+{% block page_title %}FAQ{% endblock %}

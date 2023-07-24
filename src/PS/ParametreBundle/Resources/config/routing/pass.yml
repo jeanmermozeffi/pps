@@ -1,0 +1,48 @@
+admin_config_pass_index:
+    path:     /
+    defaults: { _controller: "ParametreBundle:Pass:index" }
+    methods:  [GET,POST]
+
+admin_config_pass_show:
+    path:     /{id}/show
+    defaults: { _controller: "ParametreBundle:Pass:show" }
+    methods:  GET
+
+
+admin_config_pass_generate:
+    path:     /generate
+    defaults: { _controller: "ParametreBundle:Pass:generate" }
+    methods:  [GET, POST]
+
+admin_config_pass_export:
+    path:     /export
+    defaults: { _controller: "ParametreBundle:Pass:export" }
+    methods:  [GET, POST]
+
+admin_config_pass_import:
+    path:     /import
+    defaults: { _controller: "ParametreBundle:Pass:import" }
+    methods:  [GET, POST]
+
+admin_config_pass_new:
+    path:     /new
+    defaults: { _controller: "ParametreBundle:Pass:new" }
+    methods:  [GET, POST]
+
+admin_config_pass_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ParametreBundle:Pass:edit" }
+    methods:  [GET, POST]
+
+admin_config_pass_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ParametreBundle:Pass:delete" }
+    methods:  [GET,DELETE]
+
+admin_config_pass_delete_modal:
+    path: /{id}/delete-modal
+    defaults: {_controller: ParametreBundle:Pass:deleteModal }
+
+admin_config_pass_grid:
+    path: /grid
+    defaults: {_controller: ParametreBundle:Pass:grid }

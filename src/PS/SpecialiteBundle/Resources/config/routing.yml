@@ -1,0 +1,44 @@
+ps_specialite_homepage:
+    path:     /
+    defaults: { _controller: PSSpecialiteBundle:Default:index }
+
+
+
+admin_specialite_type:
+    resource: "@PSSpecialiteBundle/Resources/config/routing/typechamp.yml"
+    prefix:   /parametre/typechamp
+
+
+
+admin_specialite_stats:
+    resource: "@PSSpecialiteBundle/Resources/config/routing/stats.yml"
+    prefix:   /parametre/stats
+
+admin_specialite_champ:
+    resource: "@PSSpecialiteBundle/Resources/config/routing/champ.yml"
+    prefix:   /parametre/champ
+
+
+admin_specialite_etape:
+    resource: "@PSSpecialiteBundle/Resources/config/routing/etape.yml"
+    prefix:   /parametre/etape
+
+admin_specialite_fiche:
+    resource: "@PSSpecialiteBundle/Resources/config/routing/fiche.yml"
+    prefix:   /fiche
+
+index:
+    path:     /index
+    defaults: { _controller: PSSpecialiteBundle:Statistique:index }
+
+new:
+    path:     /new
+    defaults: { _controller: PSSpecialiteBundle:Statistique:new }
+
+edit:
+    path:     /edit
+    defaults: { _controller: PSSpecialiteBundle:Statistique:edit }
+
+delete:
+    path:     /delete
+    defaults: { _controller: PSSpecialiteBundle:Statistique:delete }

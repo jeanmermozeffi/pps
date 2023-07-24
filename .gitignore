@@ -1,0 +1,15 @@
+###> symfony/framework-bundle ###
+/app/config/parameters.yml
+/web/uploads/*
+/web/bundles/*
+.well-known.zip
+/app/cache/
+/app/logs/
+/data/
+/vendor/
+/.vscode/
+/*.sql
+/*.png
+
+/.php-version
+/.idea

@@ -1,0 +1,56 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block page_content %}
+
+    {% block javascripts_head %}
+        <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/obhighcharts/js/highcharts/highcharts.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/obhighcharts/js/highcharts/modules/exporting.js') }}"></script>
+    {% endblock %}
+    <div class="row">
+        <div class="col-md-6">
+            <!-- AREA CHART -->
+            {{ render(controller("GestionBundle:Statistique:genre")) }}
+            {{ render(controller("GestionBundle:Statistique:age")) }}
+            {{ render(controller("GestionBundle:Statistique:assurance")) }}
+            {{ render(controller("GestionBundle:Statistique:region")) }}
+            {{ render(controller("GestionBundle:Statistique:inscription", {annee: annee})) }}
+            <!-- /.box -->
+
+        </div>
+        <!-- /.col (LEFT) -->
+        <div class="col-md-6">
+            <!-- LINE CHART -->
+            {{ render(controller("GestionBundle:Statistique:affection")) }}
+            {{ render(controller("GestionBundle:Statistique:allergie")) }}
+            {{ render(controller("GestionBundle:Statistique:groupeSanguin")) }}
+            {{ render(controller("GestionBundle:Statistique:pharmacie")) }}
+
+{#
+            {{ render(controller("GestionBundle:Statistique:medicament")) }}
+#}
+            {{ render(controller("GestionBundle:Statistique:vaccin")) }}
+             {{ render(controller("GestionBundle:Statistique:consultation")) }}
+            <!-- /.box -->
+
+        </div>
+         <div class="col-md-6">
+            <!-- LINE CHART -->
+            
+
+
+            <!-- /.box -->
+
+        </div>
+    <!-- /.col (RIGHT) -->
+    </div>
+{% endblock %}
+
+
+
+{% block page_title %}
+    Tableau de Statistiques
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% from 'GestionBundle:Macros:macro.html.twig' import info_patient %}
+{% block page_content %}
+
+<div class="row">
+
+        <section class="col-md-3 connectedSortable">
+
+           {{ info_patient(patient, true) }}
+
+
+        </section>
+
+        <section class="col-md-9">
+             <div class="box box-solid">
+                <div class="box-header bg-light-blue-gradient">
+                    <h3 class="box-title">Ordonnances</h3>
+                </div>
+                <div class="box-body">
+                    <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                        <th>Hôpital</th>
+                                        <th>Médecin</th>
+                                        <th>Motif</th>
+                                        <th>Diagnostic</th>
+                                       
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="resultats_recherche">
+                                    {% for consultation in consultations %}
+                                        
+                                        <tr>
+                                            <td>{{ consultation.dateConsultation|date("d/m/Y") }}</td>
+                                            <td>
+                                                {% if consultation.medecin.hopital.nom is defined %}
+                                                    {{ consultation.medecin.hopital.nom }}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if consultation.medecin.personne.nom is defined %}
+                                                    {{ consultation.medecin.personne.nom }}
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ consultation.motif}}</td>
+                                            <td>{{ consultation.diagnostique }}</td>
+                                           
+                                            <td>
+                                                <a href="{{ path('admin_pharmacie_medicament',{'patient': patient.id, 'id': consultation.id}) }}" type="button" class="btn btn-default" title="Médicament">
+                                                    <i class="fa fa-list-alt"></i>
+                                                </a>
+                                                
+                                            </td>
+                                        </tr>
+                                    
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                                {# display navigation #}
+                    <div class="navigation">
+                        
+                    </div>
+
+                </div>
+            </div>     
+        </section>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/notify.js') }}"></script>
+
+{% endblock %}
+
+    {% block page_title %}
+        Liste - Ordonnances
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}

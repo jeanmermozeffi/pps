@@ -1,0 +1,24 @@
+admin_parametre_hopital_index:
+    path:     /
+    defaults: { _controller: "ParametreBundle:Hopital:index" }
+  
+
+admin_parametre_hopital_show:
+    path:     /{id}/show
+    defaults: { _controller: "ParametreBundle:Hopital:show" }
+    methods:  GET
+
+admin_parametre_hopital_new:
+    path:     /new
+    defaults: { _controller: "ParametreBundle:Hopital:new" }
+    methods:  [GET, POST]
+
+admin_parametre_hopital_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ParametreBundle:Hopital:edit" }
+    methods:  [GET, POST]
+
+admin_parametre_hopital_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ParametreBundle:Hopital:delete" }
+    methods:  DELETE

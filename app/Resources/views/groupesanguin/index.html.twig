@@ -1,0 +1,114 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <div class="col-md-12">
+                        <!-- Horizontal Form -->
+                        <div class="">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Liste des groupeSanguins</h3>
+                            </div>
+                            <!-- box-header -->
+                            <!-- form start -->
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-8 col-sm-offset-2">
+                                            <label for="nom" class="col-sm-2 control-label">Nom</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control ng-pristine ng-untouched ng-valid" id="nom" placeholder="Nom">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- box-body -->
+
+                                <!-- box-footer -->
+                            </form>
+                        </div>
+                        <!-- box -->
+                    </div>
+
+                </div>
+                <div class="box-footer">
+                    {{ render(controller('ParametreBundle:Groupesanguin:new')) }}                </div>
+                <div class="box-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Code</th>
+                                <th>Libelle</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for groupeSanguin in groupeSanguins %}
+                            <tr>
+                                <td>{{ groupeSanguin.id }}</td>
+                                <td>{{ groupeSanguin.code }}</td>
+                                <td>{{ groupeSanguin.libelle }}</td>
+                                <td>                                                                                    {{ render(controller('ParametreBundle:Groupesanguin:show', { 'id':groupeSanguin.id })) }}                                                                                                                                                                    {{ render(controller('ParametreBundle:Groupesanguin:edit', { 'id':groupeSanguin.id })) }}                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete{{groupeSanguin.id }}"><i class="fa fa-remove"></i></button>
+                                    <div class="modal " id="modal-delete{{groupeSanguin.id}}">
+
+                                        <div class="modal-dialog modal-sm">
+                                            <div class="modal-content">
+                                                <style>
+                                                    #modal-delete{{groupeSanguin.id}} {
+                                                        text-align: center;
+                                                        padding: 0!important;
+                                                    }
+
+                                                    #modal-delete{{groupeSanguin.id}}:before {
+                                                        content: '';
+                                                        display: inline-block;
+                                                        height: 100%;
+                                                        vertical-align: middle;
+                                                        margin-right: -4px;
+                                                    }
+
+                                                    #modal-delete{{groupeSanguin.id}} .modal-dialog {
+                                                        display: inline-block;
+                                                        text-align: left;
+                                                        vertical-align: middle;
+                                                    }
+                                                </style>
+                                                <div class="modal-body">
+                                                    Souhaitez-vous supprimer définitivement <span style="color: red">{{groupeSanguin.code }}</span>?
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <a href="{{ path ('admin_parametre_groupesanguin_delete',{'id':groupeSanguin.id}) }}" data-toggle="modal" type="button" class="bouton btn btn-danger" >Supprimer</a>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                                </div>
+                                            </div>
+                                            <!-- modal-content -->
+                                        </div>
+                                        <!-- modal-dialog -->
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                                        <div class="navigation">
+                        {{ knp_pagination_render(groupeSanguins) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+    {% block page_title %}
+    Groupesanguin
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}

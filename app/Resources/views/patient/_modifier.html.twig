@@ -1,0 +1,512 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% from 'GestionBundle:Macros:macro.html.twig' import affections, allergies, assurances, telephones, vaccinations %}
+
+{% block page_content %}
+    <div class="row">
+        <section class="col-md-12">
+            <!-- general form elements -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="{{ path ('admin_gestion_patient_new') }}">Modifier Patient</a></li>
+                </ul>
+                <div class="tab-content">
+
+                    <div class="active tab-pane" id="ajouter">
+                        <div class="box-body">
+                            {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+                                <div id="list-allergie"
+                                     data-prototype="{{ allergies(edit_form.allergies.vars.prototype)|e }}"></div>
+                                <div id="list-affection"
+                                     data-prototype="{{ affections(edit_form.affections.vars.prototype)|e }}"></div>
+                                <div id="list-assurance"
+                                     data-prototype="{{ assurances(edit_form.assurances.vars.prototype)|e }}"></div>
+                                <div id="list-telephone"
+                                     data-prototype="{{ telephones(edit_form.telephones.vars.prototype)|e }}"></div>
+                                <div id="list-vaccination"
+                                     data-prototype="{{ vaccinations(edit_form.vaccinations.vars.prototype)|e }}"></div>
+
+                                <div class="box-footer">
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre">Informations Patient</div>
+                                        <a href="{{ path ('admin_gestion_patient_info') }}" type="button"
+                                           class="btn btn-default pull-right" title="Afficher">
+                                            <i class="fa fa-list-alt"></i> Afficher
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label class="col-sm-4 control-label">Identifiant</label>
+
+                                                    <div class="col-sm-8">
+                                                        {{ form_widget(edit_form.identifiant) }}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label class="col-sm-4 control-label">Pin</label>
+
+                                                    <div class="col-sm-8">
+                                                        {{ form_widget(edit_form.pin) }}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label class="col-sm-4 control-label">Nom</label>
+
+                                                    <div class="col-sm-8">
+                                                        {{ form_widget(edit_form.personne.nom) }}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label class="col-sm-4 control-label">Prenom(s)</label>
+
+                                                    <div class="col-sm-8">
+                                                        {{ form_widget(edit_form.personne.prenom) }}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label class="col-sm-4 control-label">Date Naissance </label>
+
+                                                    <div class="col-sm-8">
+                                                        {{ form_widget(edit_form.personne.datenaissance) }}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label class="col-sm-4 control-label">Sexe</label>
+
+                                                    <div class="col-sm-8">
+                                                        {{ form_widget(edit_form.sexe) }}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- /.box-body -->
+
+
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <div class="box-body patient_img col-sm-offset-3">
+                                            <div class="form-group">
+                                                <img id="blah" class="profile-user-img img-responsive  dropzone" width=180 height=180
+                                                        {% if patient.personne.photo is not null %}
+                                                            src="{{ asset(patient.personne.photo.webPath) }}" alt="{{ patient.personne.photo.alt }}"
+                                                        {% else %}src="{{ asset('bundles/avanzuadmintheme/img/avatar.png') }}" alt="User profile picture"
+                                                        {% endif %}
+                                                />
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                    {{ form_widget(edit_form.personne.photo) }}
+
+                                            </div>
+
+                                        </div>
+                                        <!-- /.box-body -->
+
+
+                                    </div>
+
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="col-md-6 barre-right">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-4 control-label">Groupe Sanguin</label>
+
+                                                <div class="col-sm-8">
+                                                    {{ form_widget(edit_form.groupeSanguin) }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-4 control-label">Enfant(s)</label>
+
+                                                <div class="col-sm-8">
+                                                    {{ form_widget(edit_form.nombreEnfant) }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-4 control-label">Contact</label>
+
+                                                <div class="col-sm-8">
+                                                    {{ form_widget(edit_form.contact) }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-4 control-label">Profession</label>
+
+                                                <div class="col-sm-8">
+                                                    {{ form_widget(edit_form.profession) }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-4 control-label">Entreprise</label>
+
+                                                <div class="col-sm-8">
+                                                    {{ form_widget(edit_form.societe) }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 ">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-4 control-label">Ville</label>
+
+                                                <div class="col-sm-8">
+                                                    {{ form_widget(edit_form.ville) }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-4 control-label">Adresse</label>
+
+                                                <div class="col-sm-8">
+                                                    {{ form_widget(edit_form.adresse) }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-4 control-label">Lieu d'habitation</label>
+
+                                                <div class="col-sm-8">
+                                                    {{ form_widget(edit_form.lieuhabitation) }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="box-footer">
+                                    <!-- Affections box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right"
+                                                        data-widget="collapse"
+                                                        data-toggle="tooltip" style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-flash"></i>
+
+                                            <h3 class="box-title">
+                                                Personnes à contacter
+                                            </h3>
+                                        </div>
+                                        <div class="box-footer no-border">
+                                            <button type="button" class="btn btn-default add_telephone"
+                                                    id="add_telephone">
+                                                <i class="fa fa-plus"></i>
+                                                Ajouter
+                                            </button>
+                                        </div>
+                                        <div class="box-body">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Nom</th>
+                                                    <th>Numero</th>
+                                                    <th>Lien</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_telephone" class="collection list_telephone">
+                                                {% for item in edit_form.telephones %}
+                                                    {{ telephones(item|e) }}
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+
+                                <div class="box-footer">
+                                    <!-- Affections box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right"
+                                                        data-widget="collapse"
+                                                        data-toggle="tooltip" style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-flash"></i>
+
+                                            <h3 class="box-title">
+                                                Assurances
+                                            </h3>
+                                        </div>
+                                        <div class="box-footer no-border">
+                                            <button type="button" class="btn btn-default add_assurance"
+                                                    id="add_assurance">
+                                                <i class="fa fa-plus"></i>
+                                                Ajouter Assurance
+                                            </button>
+                                        </div>
+                                        <div class="box-body">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Assurance</th>
+                                                    <th>Numero</th>
+                                                    <th>Taux</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_assurance" class="collection list_assurance">
+                                                {% for item in edit_form.assurances %}
+                                                    {{ assurances(item|e) }}
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+
+                                <div class="box-footer">
+                                    <!-- Affections box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right"
+                                                        data-widget="collapse"
+                                                        data-toggle="tooltip" style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-flash"></i>
+
+                                            <h3 class="box-title">
+                                                Allergies
+                                            </h3>
+                                        </div>
+                                        <div class="box-footer no-border">
+                                            <button type="button" class="btn btn-default add_allergie"
+                                                    id="add_allergie">
+                                                <i class="fa fa-plus"></i>
+                                                Ajouter Allergie
+                                            </button>
+                                        </div>
+                                        <div class="box-body">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Allergie</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_allergie" class="collection list_allergie">
+                                                {% for item in edit_form.allergies %}
+                                                    {{ allergies(item|e) }}
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+
+                                <div class="box-footer">
+                                    <!-- Affections box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right"
+                                                        data-widget="collapse"
+                                                        data-toggle="tooltip" style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-flash"></i>
+
+                                            <h3 class="box-title">
+                                                Affections
+                                            </h3>
+                                        </div>
+                                        <div class="box-footer no-border">
+                                            <button type="button" class="btn btn-default add_affection"
+                                                    id="add_affection">
+                                                <i class="fa fa-plus"></i>
+                                                Ajouter Affection
+                                            </button>
+                                        </div>
+                                        <div class="box-body">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Affection</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_affection" class="collection list_affection">
+                                                {% for item in edit_form.affections %}
+                                                    {{ affections(item|e) }}
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+
+                                <div class="box-footer">
+                                    <!-- Affections box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right"
+                                                        data-widget="collapse"
+                                                        data-toggle="tooltip" style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-flash"></i>
+
+                                            <h3 class="box-title">
+                                                Vaccinations
+                                            </h3>
+                                        </div>
+                                        <div class="box-footer no-border">
+                                            <button type="button" class="btn btn-default add_vaccin"
+                                                    id="add_vaccin">
+                                                <i class="fa fa-plus"></i>
+                                                Ajouter Vaccin
+                                            </button>
+                                        </div>
+                                        <div class="box-body">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Vaccin</th>
+                                                    <th>Date</th>
+                                                    <th>Rappel</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_vaccin" class="collection list_vaccin">
+                                                {% for item in edit_form.vaccinations %}
+                                                    {{ vaccinations(item|e) }}
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+
+                                <div class="box-footer">
+                                    {{ form_widget(edit_form.submit,{'attr':{'class':'btn btn-warning pull-right'}}) }}
+                                    <!-- /.box -->
+                                </div>
+
+                            {{ form_end(edit_form) }}
+                        </div>
+
+                    </div>
+                    <!-- /.tab-pane -->
+
+                </div>
+                <!-- /.tab-content -->
+            </div>
+        </section>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('public/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('dropzone/dist/min/bootstrap-filestyle.min.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/patient.js') }}"></script>
+
+{% endblock %}
+
+{% block page_title %}
+    Patient
+{% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}

@@ -1,0 +1,20 @@
+rdv:
+  form:
+    specialite: Especialidad
+    identifiant: ID
+    pin: PIN
+    placeholder:
+      specialite: Elija una especialidad
+    libRendezVous: Razón de la cita
+    statutRendezVous: Presencia real del paciente
+    dateRendezVous: Fecha y hora de la cita 
+
+
+rules:
+  password:
+    length: "%num% carateres"
+    special: "%num% caratere especial"
+    number: "%num% figura"
+    upper_lower: "%num% Mayúscula y minúscula"
+  username:
+    valid: Caracteres alfanuméricos y _

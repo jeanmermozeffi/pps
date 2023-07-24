@@ -1,0 +1,33 @@
+    {% block page_content %}
+    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-details{{infirmier.id}}"><i class="fa fa-list-alt"></i></button>
+    <div class="modal fade" id="modal-details{{infirmier.id}}">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Details infirmier</h4>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label>Nom</label>
+                            <p class="help-block">{{ infirmier.medecin.personne.nomComplet }}</p>
+                        </div>
+                        <div class="form-group">
+                            <label>Hopital</label>
+                            <p class="help-block">{{ infirmier.medecin.hopital.nom|default('Non renseigné') }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Annuler</button>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}

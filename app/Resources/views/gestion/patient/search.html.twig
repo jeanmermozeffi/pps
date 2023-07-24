@@ -1,0 +1,67 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block page_content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+
+            <div class="box box-danger">
+                <div class="box-header">
+                    <div class="col-md-12">
+                        <!-- /.box-header -->
+
+                            <div class="login-box">
+                                <div class="login-box-header">
+                                    {% for flashMessage in app.session.flashBag.get('patient') %}
+                                        <div class="alert alert-success fade in">
+                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                            {{ flashMessage }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="login-box-body">
+                                 {% form_theme form 'bootstrap_3_layout.html.twig' %}
+                                {{ form_start(form) }}
+                                   
+                                        {{ form_row(form.identifiant) }}
+                                    
+                                        {{ form_row(form.pin) }}
+
+                                   
+                                    {% if form.reference is defined %}
+                                         {{ form_row(form.reference) }}
+                                    {% endif %}
+
+                                    
+
+                                        {{ form_row(form.submit,{'attr':{'class':'btn btn-primary btn-block'}}) }}
+
+                                   
+
+                                {{ form_end(form) }}
+                                </div>
+
+                            </div>
+
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+    {% block page_title %}
+        Recherche Patient
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}
+

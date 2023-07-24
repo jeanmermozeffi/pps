@@ -1,0 +1,24 @@
+admin_parametre_telephone_index:
+    path:     /
+    defaults: { _controller: "ParametreBundle:Telephone:index" }
+    methods:  GET
+
+admin_parametre_telephone_show:
+    path:     /{id}/show
+    defaults: { _controller: "ParametreBundle:Telephone:show" }
+    methods:  GET
+
+admin_parametre_telephone_new:
+    path:     /new
+    defaults: { _controller: "ParametreBundle:Telephone:new" }
+    methods:  [GET, POST]
+
+admin_parametre_telephone_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ParametreBundle:Telephone:edit" }
+    methods:  [GET, POST]
+
+admin_parametre_telephone_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ParametreBundle:Telephone:delete" }
+    methods:  DELETE

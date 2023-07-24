@@ -1,0 +1,70 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+  {% block c_stylesheets %}
+  <style>
+    .label-title {
+       
+        border-top: 2px solid #000;
+        background-color: #DDD;
+        margin-top: 25px;
+        display: block;
+        padding-left: 10px;
+    }
+  </style>
+  {% endblock %}
+{% block page_content %}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+        {% from 'GestionBundle:Macros:macro.html.twig' import  info_patient %}
+
+<div class="row" xmlns="http://www.w3.org/1999/html">
+
+        <section class="col-md-3 connectedSortable">
+
+           {{ info_patient(ficheDepistageCancer.patient, true) }}
+
+        </section>
+         <section class="col-md-9">
+            <div class="box box-solid">
+                <div class="box-body">
+                    <a class="btn btn-default"   href="{{ path('gestion_fichedepistagecancer_index', {id: ficheDepistageCancer.patient.id}) }}"
+                           ><i class="fa fa-calendar"></i> Historique </a>
+             {{ form_start(form, {'attr': {'role':'form', 'class': ''}}) }}
+             
+             <div class="row">
+                <div class="col-md-6">{{ form_row(form.taille) }}</div>
+                <div class="col-md-6">{{ form_row(form.poids) }}</div>
+            </div>
+            <div class="form-group">
+                <label class="label-title control-label required">Cancer du sein – Que peut-on faire soi-même ?</label>
+                {{ form_row(form.autoExamen) }}
+                {{ form_row(form.controleExamenMedecin) }}
+                {{ form_row(form.dateDerniereMamno) }}
+            </div>
+             {{ form_widget(form) }}
+              <button type="submit" class="btn btn-primary pull-left">Enregistrer</button>
+               {{ form_end(form) }}
+           </div>
+       </div>
+        </section>
+</div>
+   
+   
+        
+            
+{% endblock %}
+{% block javascripts_inline %}
+    <script>
+        init_select2();
+        init_date_picker('#{{ form.dateDerniereMamno.vars.id }}', 'down', (start, e) => {
+                    //$this.val(start.format('DD/MM/YYYY'));
+        }, null, null, false);
+
+        $('#{{ form.dateDerniereMamno.vars.id }}').on('apply.daterangepicker', function (ev, picker) {
+            $(this).val(picker.startDate.format('DD/MM/YYYY'));
+        });
+    </script>
+     
+{% endblock %}
+
+    {% block page_title %}
+        Modification - Fiche de Dépistage Cancer
+    {% endblock %}

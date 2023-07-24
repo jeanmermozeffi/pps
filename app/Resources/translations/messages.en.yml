@@ -1,0 +1,273 @@
+home:
+  title: Welcome to official website of PASS SANTE
+  button:
+    submit: Submit
+  banner:
+    title0: Pass<span class="fa fa-plus-square text-primary"></span>Sante
+    #title1: Your e-sante solution & COVID-19 alert, monitoring and pre-diagnosis tool
+  menu:
+    title1: Your e-sante solution
+    home: Home
+    pass: Pass Sante
+    partners: Partners
+    contact: Contact us
+    login: Login
+    account: My Account
+    register: Register
+    surveillance: Monitoring
+    sensibilisation: Awareness
+    login_register: Login/Register
+    pharmacie: E-Pharmacy
+    distrib: Distribution Network
+    franchise: Franchises
+    presentation: Presentation
+    hiw: How it works ?
+    pharmacie_garde: All-night drugstore
+    download_app: PASS SANTE app
+  footer:
+    footer1:
+      title: "#PASS SANTE"
+      menu:
+        register: Register
+    footer2:
+      title: Health centres
+    footer3:
+      title: Download our app
+    copyright: Built with <span class="fa fa-heart color-primary"></span>  by <a href="//mcm-ci.com"><strong><abbr title="Maurice Communication marketing">MCM</abbr></strong></a>
+  btn:
+    submit: Submit
+    send: Send
+    logout: Logout
+  form:
+    id: Enter your ID
+    pin: Enter your PIN
+    lang:
+      chose_lang: Chose a language
+      fr: French
+      en: English
+    contact:
+      contact: Phone Number
+      name: Name
+      email: Email
+      subject: Object
+      message: Message
+      categorie: Category
+      dropdown_categories:
+        technical: Technical problems
+        info: Informations
+        convention: Convention application (Health Centres, Schools, Pharmacies, Insurance)
+        franchise: Franchise application
+        other: Other
+      form_message:
+        success: Your email has been successfully sent
+        error: Error while sending email, please retry
+  section:
+    award:
+      title: Awards
+    vip:
+      title: THEY ARE WITH US
+    distrib:
+      title: Distribution <b>Network</b>
+      content1: >
+        PASS SANTE is available at MCM's head office in Marcory Sainte-Thérèse. You can contact us at +22508289006 for more info.
+      content2: >
+        It is also available in our pharmacies, partner health centers and franchises.
+    pass:
+      title: Get The PASS
+      content0: >
+      Individuals or professionals, get your PASS by contacting us: Individuals or professionals, get your PASS by contacting us at the  <a href="tel:+22508289006" class="color-white">+22508289006</a>/<a href="tel:+22554631663" class="color-white">+22554631663</a> or writing us at  <a href="mailto:dg@mcm-ci.com" class="color-white">dg@mcm-ci.com</a>
+      content1: You can use our contact form for more informations
+    contact:
+      title: Contact <b>us</b>
+    profile:
+      title: Your profile
+      intro: Please return your bracket or use your card (eventually)
+    partners:
+      title: Our <b>partners</b>
+    temoignage:
+      title: Testimonies
+      temoignage1:
+        content: >
+          PASS SANTE is an innovative solution more than a TIC solution is a real response to the problem of desert medical... It of fast, reliable and convenient
+        author: Anicet M. Dally (Social Media Manager)
+      temoignage2:
+        content: >
+          With PASS SANTE, I have insurance to be supported in an emergency. And especially for my children, I am more reassured when I know that they will be supported because the Pass speaks for them.
+        author: Bogba Degne Mireille (Management Assistant)
+      temoignage3:
+        content: >
+          It is a jewel that is the electronic health record for anyone downwind in which one can have all the medical information; blood, and other critical information for its efficient management and effective group.
+        author: Gnanhi Zakpa Richmond (Radiotherapist )
+      temoignage4:
+        content: >
+          Beyond the technical Aspect, is the dimension of awareness and transformation of the approach of the other vision of health in Africa that has me impressed. 
+          Indeed, in addition to being a functional tool, which enhances the ability to support patients, Pass Santé Mousso, implies a coordination of different public and private service for its optimal use.
+        author: >
+          Mbépongo Dédy Bilamba (marketing and communication consultant, Marketing Director of the Africa Festival 2016 Web )
+
+    presentation:
+      part_video: Press the button to play the video
+      section0:
+        title: Presentation
+        content: >
+          <strong>PASS SANTE MOUSSO</strong> is a jewel (bracelet, medallion) and/or a connected card associated with an online platform.
+          It allows its owner to take his personal and medical data with him everywhere and make it available, if necessary, to medical and emergency personnel.
+          It is digital personalized medical record, a tool for response to emergency care.
+
+      section1:
+        title: Why ?
+        content: >
+          <ul>
+            <li>The difficulty of the medical follow-up of a patient when he / she changes health center. It is necessary to have its history to better take care of it.</li>
+            <li>The difficulty of taking care of people who arrive at the unconscious emergencies. The lack of medical information can be a factor in poor quality management and a source of medical errors..</li>
+          </ul>
+      section2:
+        title: Features
+        content: >
+          <ul>
+            <li>COVID-19 alert, monitoring and pre-diagnosis tool</li>
+            <li>Medical Profile (Sanguin Group, Contact Persons, Allergies, Vaccines, etc.)</li>
+            <li>Making appointments</li>
+            <li>Alerts reminders (Vaccine, SMS appointment)</li>
+            <li>Medical History</li>
+            <li>Medical Prescriptions</li>
+            <li>Follow-up consultation with your loved ones by associated accounts</li>
+          </ul>
+      section3:
+        title: Advantages
+        content: >
+          <p>It improves the care of patients, reduces the risk of medical errors due to lack of patient information and above all allows for continuous and quality medical supervision</p>
+      section4:
+        title: Target
+        n_content: >
+          <ul class="list-target">
+            <li>
+                Women, children, men, chronically ill, etc.
+            </li>
+            <li>
+                People with COVID-19
+            </li>
+            <li>
+                Health professionals
+            </li>
+            <li>
+               pharmacists
+            </li>
+            <li>
+                Organizations
+            </li>
+            <li>
+                Etc.
+            </li>
+          </ul>
+        content:
+          content0:
+            title: Man, woman, children
+            label: It serves as a health book. It carries the information for support.
+          content1:
+            title: Health centres
+            label: It gives access to medical history for a better support and avoids medical errors.
+          content2:
+            title: Enterprise
+            label: Employees have insurance to be supported at all times especially those construction, electricity etc.
+          content3:
+            title: School
+            label: Informs about the State of health of our children and students, and reassures the parent
+          content4:
+            title: Insurance
+            label: >
+              Offers innovative services (availability of data) to improve the State of health and follow-up of participants
+          content5:
+            title: Pharmacy
+            label: Access to medical prescriptions and medical history of the patients
+
+    innovation:
+      titl0: PASS SANTE MOUSSO
+      title: Medical innovation
+      section0:
+        virsion: >
+          Our objective is to provide the populations with a solution which improves their medical care.
+        pdg: Director General of MCM
+        titl0: Patients
+        content0: Important event management system SMS notification.
+        content1: Improve adherence and therapeutic education.
+        content2: Health book
+        content3: Connected objects (Jewelry)
+        title1: HEALTH PROFESSIONALS
+        content4: Patient record management system.
+        content5: Patient monitoring tools
+        content6: Time saving and efficiency.
+      technique:
+        h1: Technical service, always attentive to your needs 24 hours a day!
+        label: to answer you as quickly as possible.
+      first_circle:
+        title: Data security and anonymization
+        content:
+          ligne1: Medical data secured thanks to my ID, my unique PIN and my MARTICULE.
+          ligne2: Data anonymization ':' We anonymize all your information.
+          ligne3: Secure medical history.
+          ligne4: Data anonymization ':' Patient consultation notifications.
+      second_circle:
+        title: Improvement of medical care
+        content:
+          ligne1: Communication between patient and healthcare professionals.
+          ligne2: Facilitates remote care of Patients.
+          ligne3: Allow to stay in contact with the doctor and to make an online consultation.
+          ligne4: Avoid repeated examinations.
+          ligne5: Allows patients and healthcare professionals to optimize their medical care.
+          ligne6: Remote monitoring of patients.
+      third_circle:
+        title1: Associated account
+        content:
+          ligne1: Attach the child's file to its mother; like a mother-child notebook to help reduce maternal and infant mortality.
+        title2: 24/7 Discussion with the entire care team
+
+    parteners:
+      label: <span> OUR </span> PARTNERS
+      titl0: FOR THE PASS SANTE
+      title: They trust us
+
+api:
+  profil_not_found: Profile not found
+  medecin_not_found: Medecin avec cet ID inexistant
+  patient_not_found: Patient inexistant
+  access_denied: Vous n\'avez pas les permissions pour accéder à cette ressource
+
+sensibilisation:
+  section0:
+    title1: Prevention measure
+    content: >
+      Coronavirus disease 2019 (COVID-19) is an infectious ‎ due to a recently discovered coronavirus ‎. 
+      ‎The majority of people with COVID-19 ‎ will experience only mild or ‎ mild symptoms and will recover without special treatment.
+
+  section1:
+    title1: AWARENESS
+
+  language:
+    title: LOCAL LANGUAGE
+    section1:
+      country: Senegal
+  actions:
+    section1:
+      title: Often wash your hands.
+      content: Use soap and  water, or a hydroalcoholic solution
+
+    section2:
+      title: Maintain social distance.
+      content: Stay away from anyone who coughs  or sneezes.
+
+    section3:
+      title: Avoid touching your face.
+      content: Do not touch his eyes, nose or mouth.
+
+    section4:
+      title: Use a mask.
+      content: In case of cough or sneezing, cover  mouth and nose with the bend of the elbow or with a  handkerchief.
+
+    section5:
+      title: Ask for medical care.
+      content: If you are not feeling well, stay home if you are in doubt, consult a doctor
+
+    section6:
+      title: Stay informed
+      content: Keep up-to-date to find out where the virus spreads on a large scale.

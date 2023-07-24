@@ -1,0 +1,51 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% from 'macros/examen.html.twig' import ligne_examen %}
+{% import 'widget/macro.html.twig' as psm %}
+{% block stylesheets %}
+    {{ parent() }}
+     {{ form_stylesheet(form) }}
+{% endblock %}
+{% block page_content %}
+    {{ form_start(form, {'attr': {'role':'form', 'class': ''}}) }}
+    <div class="row">
+        
+        <section class="col-md-12">
+
+            <div class="box box-success hide">
+            <div class="box-header with-border">
+              <h3 class="box-title">Removable</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              The body of the box
+            </div>
+            <!-- /.box-body -->
+          </div>
+            {{ form_row(form.dateResultat) }}
+            {% for key, item in form.lignes %}
+                {{ ligne_examen(item|e, key, examen.lignes) }}
+            {% endfor %}
+        </section>
+    </div>
+    <button class="btn btn-success">Valider</button>
+    {{ form_widget(form._token) }}
+    {{ form_end(form, {render_rest: false}) }}
+{% endblock %}
+{% block javascripts_inline %}
+    <script>
+        init_date_picker();
+    </script>
+     
+{% endblock %}
+{% block page_title %}
+        Fiche de suivi examens
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}

@@ -1,0 +1,128 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% from 'GestionBundle:Macros:macro.html.twig' import info_patient %}
+{% import 'GestionBundle:Macros:html.html.twig' as _html %}
+{% block page_content %}
+{% set domain = 'consultation' %}
+<div class="row" xmlns="http://www.w3.org/1999/html">
+
+        <section class="col-md-3 connectedSortable">
+
+{{ info_patient(patient, true, true) }}
+
+        </section>
+
+        <section class="col-md-9">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="{{ path ('admin_consultation_liste',{'id': patient.id}) }}">{{ _html.text('Liste consultation', domain) }}</a></li>
+                    {% if is_granted('ROLE_MEDECIN') and not user.assurance %}
+                    <li><a href="{{ path ('admin_consultation_new',{'id': patient.id}) }}">{{ _html.text('Nouvelle consultation', domain) }}</a></li>
+                    {% endif %}
+                </ul>
+                <div class="tab-content">
+
+                    <div class="active tab-pane" id="nouvelle">
+
+                        <div>
+
+                            
+                            <div class="box-footer">
+                            </div>
+
+                            <div class="box-body">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        {{ _html.table_row(['Date', 'Hôpital', 'Médecin', 'Motif', 'Diagnostic', 'Spécialité'], {action: true}) }}
+                                    </tr>
+                                    </thead>
+                                    <tbody id="resultats_recherche">
+                                    {% for consultation in consultations %}
+                                        <tr>
+                                            <td>{{ consultation.dateConsultation|date("d/m/Y") }}</td>
+                                            <td>
+                                                {% if consultation.medecin.hopital.nom is defined %}
+                                                    {{ consultation.medecin.hopital.nom }}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if consultation.medecin.personne.nom is defined %}
+                                                    {{ consultation.medecin.personne.nom }}
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ consultation.motif}}</td>
+                                            <td>{{ consultation.diagnostique }}</td>
+                                            <td>{{ consultation.specialite.nom }}</td>
+                                            <td>
+
+                                               
+                                                {% if is_granted('ROLE_MEDECIN_CONSEIL', user) %}
+                                                 <a href="{{ path ('admin_consultation_info',{'patient': patient.id, 'consultation': consultation.id}) }}" type="button" class="btn btn-default" title="Afficher">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                {% else %}
+                                                 <a href="{{ path ('admin_consultation_show',{'id': patient.id, 'id1': consultation.id}) }}" type="button" class="btn btn-default" title="Afficher">
+                                                    <i class="fa fa-list-alt"></i>
+                                                </a>
+                                                
+                                                {#<a href="{{ path ('admin_consultation_edit',{'id': patient.id, 'id1': consultation.id}) }}" type="button" class="btn btn-warning" title="Modifier">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                 <a href="{{ path ('admin_consultation_rdv',{'id': consultation.id}) }}" type="button" class="btn btn-danger" title="RDV">
+                                                    <i class="fa fa-calendar"></i>
+                                                </a>#}
+                                                {% endif %}
+                                                <a href="{{ path ('admin_consultation_ordonnance',{'patient': patient.id, 'consultation': consultation.id}) }}" type="button" class="btn btn-default" title="Afficher">
+                                                    <i class="fa fa-medkit"></i>
+                                                </a>
+                                                <a href="{{ path ('admin_consultation_preview_print',{'id': patient.id, 'id1': consultation.id}) }}" type="button" class="btn btn-danger" title="Imprimer">
+                                                    <i class="fa fa-print"></i>
+                                                </a>
+                                                
+                                            </td>
+                                            {#<td>
+
+
+                                                <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                                            </td>#}
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+
+                                {# display navigation #}
+                                <div class="navigation">
+                                    {{ knp_pagination_render(consultations) }}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /.tab-pane -->
+
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+        </section>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/notify.js') }}"></script>
+
+{% endblock %}
+
+    {% block page_title %}
+        Consultation :: Liste
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+ {% block c_stylesheets %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+  integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+  crossorigin=""></script>
+
+  
+ {% endblock %}
+{% block page_content %}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+        {% from 'GestionBundle:Macros:macro.html.twig' import  info_patient %}
+
+<div class="row" xmlns="http://www.w3.org/1999/html">
+
+        
+         <section class="col-md-12">
+            <div class="box box-solid">
+                <div class="box-body">
+             {{ form_start(form, {'attr': {'role':'form', 'class': ''}}) }}
+             {{ form_widget(form) }}
+              <button type="submit" class="btn btn-primary pull-left">Enregistrer</button>
+               {{ form_end(form) }}
+           </div>
+       </div>
+        <div id="map" style="width:100%;height:10px"> </div>
+        </section>
+</div>
+   
+   
+        
+            
+{% endblock %}
+{% block javascripts_inline %}
+    <script>
+         init_select2('#{{ form.pays.vars.id }}');
+          init_select2('#{{ form.ville.vars.id }}');
+          var map = L.map('map').setView([5.316667, -4.033333], 13);
+          map.locate({/*watch: true, */enableHighAccuracy: true});
+
+          //var geocodeService = L.esri.Geocoding.geocodeService();
+
+          map.on('locationfound', function (a) {
+
+             /*geocodeService.reverse().latlng(e.latlng).run(function (error, result) {
+              if (error) {
+                return;
+              }
+
+              L.marker(result.latlng).addTo(map).bindPopup(result.address.Match_addr).openPopup();
+            });*/
+             
+            $.getJSON('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+a.latitude+'&lon='+a.longitude, function(data){
+                $('#{{ form.localisation.vars.id }}').val(data.display_name);
+            });
+          });
+    </script>
+     
+{% endblock %}
+
+    {% block page_title %}
+        Nouvelle urgence
+    {% endblock %}

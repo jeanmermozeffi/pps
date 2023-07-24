@@ -1,0 +1,37 @@
+admin_parametre_pays_index:
+    path:     /
+    defaults: { _controller: "ParametreBundle:Pays:index" }
+    methods:  [GET, POST]
+
+admin_parametre_pays_show:
+    path:     /{id}/show
+    defaults: { _controller: "ParametreBundle:Pays:show" }
+    methods:  GET
+
+admin_parametre_pays_new:
+    path:     /new
+    defaults: { _controller: "ParametreBundle:Pays:new" }
+    methods:  [GET, POST]
+
+
+
+admin_parametre_pays_ville:
+    path:     /ville
+    defaults: { _controller: "ParametreBundle:Pays:ville" }
+    methods:  [GET, POST]
+
+
+admin_parametre_pays_import:
+    path:     /import
+    defaults: { _controller: "ParametreBundle:Pays:import" }
+    methods:  [GET, POST]
+
+admin_parametre_pays_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ParametreBundle:Pays:edit" }
+    methods:  [GET, POST]
+
+admin_parametre_pays_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ParametreBundle:Pays:delete" }
+    methods:  DELETE

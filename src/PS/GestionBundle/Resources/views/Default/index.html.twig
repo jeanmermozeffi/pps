@@ -1,0 +1,365 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% import 'GestionBundle:Macros:html.html.twig' as _html %}
+{% set _locale = app.request.locale %}
+{% set domain = 'admin' %}
+{#% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('public/css/fullcalendar.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('public/css/fullcalendar.print.min.css') }}"  media='print'  />
+{% endblock %#}
+{% block page_title %}
+  {{ _html.text('Tableau de bord') }} {% if is_granted('ROLE_CUSTOMER') %}-{{ _html.text('RDV et Rappels de vaccins') }}{% endif %}
+{% endblock %}
+{% block page_content %}
+    <p>{{ _html.text('admin.welcome') }}</p>
+    {% if is_granted('ROLE_CUSTOMER') %}
+        {% if not is_granted('ROLE_IS_PREMIUM') %}
+            <div class="alert alert-warning">Il semble que vous utilisez la version gratuite du PASS SANTE. Pour plus de fonctionnalités, obtenez un bracelet PASS MOUSSO </div>
+             {{
+            _html.button_links([
+                {
+                    label: 'btn.profile_medicale',
+                    route: 'admin_gestion_patient_info',
+                    route_params: {},
+                    attributes: {'class': 'btn btn-default'}
+                },
+                {
+                    label: 'btn.user_account',
+                    route: 'fos_user_profile_show',
+                     route_params: {},
+                    attributes: {'class': 'btn btn-default'}
+                }
+
+            ])
+        }}
+        {% else %}
+        
+        {{
+            _html.button_links([
+                {
+                    label: 'btn.profile_medicale',
+                    route: 'admin_gestion_patient_info',
+                    route_params: {},
+                    attributes: {'class': 'btn btn-default'}
+                },
+                {
+                    label: 'btn.user_account',
+                    route: 'fos_user_profile_show',
+                     route_params: {},
+                    attributes: {'class': 'btn btn-default'}
+                },
+                {
+                    label: 'btn.suivi_constante',
+                    route: 'gestion_patientconstante_index',
+                    route_params: {},
+                    attributes: {'class': 'btn btn-success'}
+                }
+
+            ])
+        }}
+        {% endif %}
+       
+    {% endif %}
+    {#% if not app.user.personne.corporate %}
+    <a href="{{ path('admin_pharmacie_garde') }}" class="btn btn-default">Pharmacies de garde</a>
+    {% endif %#}
+    {% if is_granted('ROLE_MEDECIN') and not is_granted('ROLE_ADMIN') %}
+        <div class="alert alert-info hide">
+        <p>Vous avez <a href="{{ path('admin_consultation_historique', {statut: -1}) }}"><span class="badge badge-success">{{ totalAttentes|default(0) }}</span></a> consultation(s) en attente</p>
+        <p>Vous avez <span class="badge badge-success">{{ totalRendezVous|default(0) }}</span> rendez-vous en attente aujourd'hui</p>
+    </div>
+        {% if totalSub %}
+        <div class="alert alert-info">
+            {% set link = path('admin_consultation_historique', {statut: 1}) %}
+            {% set sub = _html.text('admin.total_waiting_consultation', 'admin', {'%link%': link, '%total_sub%': totalSub}, true) %}
+            <p>{{ _html.text('admin.alert_medicament', 'admin', {'%sub%': sub}, true) }}</p>
+        </div>
+        {% endif %}
+    {% endif %}
+    {% if is_granted('ROLE_MEDECIN') %}
+        <div class="row">
+             <div class="col-md-6">
+                 <a href="{{ path('admin_gestion_rdv_add') }}" class="btn btn-success">{{ _html.text('rdv.new') }}</a>
+                <a href="{{ path('admin_gestion_rdv_search') }}" class="btn btn-primary">{{ _html.text('rdv.search') }}</a>
+                 {% set __map = {'#016daf': 'rdv.new', '#ff0000': 'rdv.cancelled', '#50af01': 'rdv.patient'} %}
+                <h4>{{ _html.text('Légende') }}</h4>
+                
+                <ul class="list-unstyled">
+                    {% for color, lib in __map %}
+                    <li><span style="color:{{color}};width:15px;height:15px;border:2px solid {{ color }};display:inline-block;background-color:{{color}};vertical-align:middle"></span><span style="display:inline-block;vertical-align:middle;margin-left: 10px;">{{ _html.text(lib) }}</span></li>
+                {% endfor %}
+                {% if is_granted('ROLE_CUSTOMER') %}
+                    {% set color = '#f1c232' %}
+                    <li><span style="color:{{color}};width:15px;height:15px;border:2px solid {{ color }};display:inline-block;background-color:#f1c232;vertical-align:middle"></span><span style="display:inline-block;vertical-align:middle;margin-left: 10px;">{{ _html.text('Rappel de Vaccin') }}</span></li>
+                {% endif %}
+                </ul>
+                <div id="calendar-events"></div>
+            </div>
+            <div class="col-md-6">
+                 <a href="{{ path('admin_consultation_search') }}" class="btn btn-success">{{ _html.text('consultation.new') }}</a>
+                <div class="list-group">
+                    <div class="list-group-item-heading">
+                        <h4>{{ _html.text('consultation.patient_waiting') }}</h4>
+                    </div>
+                    {% for consultation in listeConsultations %}
+                        <a href="{{ path('admin_consultation_edit', {id: consultation.patient.id, id1: consultation.id}) }}" class="list-group-item">{{ consultation.patient.personne.nomComplet }}</a>
+                    {% else %}
+                        <div class="list-group-item text-center">{{ _html.text('consultation.no_patient_waiting') }}</div>
+                    {% endfor %}
+
+                </div>
+                {#<div class="list-group">
+                    <div class="list-group-item-heading">
+                        <h4>Soumissions de questionnaires</h4>
+                    </div>
+                    {% for soumission in soumissions %}
+                        <a href="{{ path('gestion_patientquestionnaire_show', {id: soumission.id}) }}" class="list-group-item">{{ soumission.patient.personne.nomComplet }} (<strong>{{ soumission.questionnaire.libelle }}</strong> - {% if soumission.statut %}Déjà traité{% endif %}) {{ soumission.date|date('d/m/Y H:i') }} </a>
+                    {% else %}
+                        <div class="list-group-item text-center">Aucune soumission</div>
+                    {% endfor %}
+
+                </div>#}
+            </div>
+           
+        </div>
+    {% elseif is_granted('ROLE_CREATE_PATIENT', app.user) %}
+         <a href="{{ path('admin_gestion_patient_new') }}"
+            type="button"
+            class="btn btn-info" title="Nouveau">
+            <i class="fa fa-user-plus"></i> Enrolement Patient
+        </a>
+        {% if is_granted('ROLE_RECEPTION') %}
+             <a href="{{ path('gestion_admission_index') }}"
+            type="button"
+            class="btn btn-success">
+            <i class="fa fa-plus"></i> Admission Patient
+        </a>
+        {% endif %}
+    {% endif %}
+    {% if is_granted('ROLE_IS_PREMIUM', app.user) %}
+        <div class="row">
+            <div class="col-md-7">
+                {% set __map = {'#016daf': 'rdv.new', '#ff0000': 'rdv.cancelled', '#50af01': 'rdv.patient'} %}
+                <h4>{{ _html.text('Légende') }}</h4>
+                
+                <ul class="list-unstyled">
+                    {% for color, lib in __map %}
+                    <li><span style="color:{{color}};width:15px;height:15px;border:2px solid {{ color }};display:inline-block;background-color:{{color}};vertical-align:middle"></span><span style="display:inline-block;vertical-align:middle;margin-left: 10px;">{{ _html.text(lib) }}</span></li>
+                {% endfor %}
+                
+                    {% set color = '#f1c232' %}
+                    <li><span style="color:{{color}};width:15px;height:15px;border:2px solid {{ color }};display:inline-block;background-color:#f1c232;vertical-align:middle"></span><span style="display:inline-block;vertical-align:middle;margin-left: 10px;">{{ _html.text('btn.rappel_vaccin') }}</span></li>
+               
+                </ul>
+                <div id="calendar-events"></div>
+            </div>
+            <div class="col-md-5">
+               {#<div class="list-group">
+                    <div class="list-group-item-heading">
+                        <h4>Questionnaires</h4>
+                    </div>
+                  
+                    {% for questionnaire in questionnaires %}
+                        <a href="{{ path('gestion_questionnairedepistage_donnee', {id: questionnaire.id}) }}" class="list-group-item">{{ questionnaire.libelle }}</a>
+                    {% else %}
+                        <div class="list-group-item text-center">Aucun questionnaire</div>
+                    {% endfor %}
+                   
+                </div>#}
+                <div class="list-group">
+                    <div class="list-group-item-heading">
+                        <h4>{{ _html.text('admin.last_measures') }}</h4>
+                    </div>
+                    
+                    {% for constante in constantes %}
+                        <div class="list-group-item">
+                            {{ constante.libelle }}
+                            <span class="pull-right">{{ constante.valeur }} {{ constante.unite }}</span>
+                        </div>
+                    {% else %}
+                        <div class="list-group-item text-center">{{ _html.text('admin.no_data') }}</div>
+                    {% endfor %}
+                    
+                </div>
+            </div>
+            
+        </div>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ path('admin_gestion_patient_index') }}"
+                  
+                    class="btn btn-warning" title="Nouveau">
+                    <i class="fa fa-th-list"></i> Liste des patients
+                </a>
+                {# 
+                    <a href="{{ path('admin_gestion_patient_new') }}"
+                        class="btn btn-success" title="Nouveau">
+                        <i class="fa fa-user-plus"></i> Enrolement Patient
+                    </a>
+                    <a href="{{ path('admin_gestion_patient_photo') }}"
+                   
+                    class="btn btn-info">
+                    <i class="fa fa-camera"></i> Gestion des Photos
+                </a>
+                <a href="{{ path('gestion_fichedepistagecancer_index_index') }}"
+                    class="btn btn-info">
+                    <i class="fa fa-file"></i> Fiches de dépistages Cancer du Sein
+                </a>
+                <a href="{{ path('gestion_infopatientcancercol_index_index') }}" class="btn btn-info">
+                    <i class="fa fa-file"></i> Fiches dépistage Cancer du Col de l'Utérus
+                </a>#}
+            </div>
+            {% set max = 10 %}
+            {#<h1>Les {{ max }} derniers patients</h1>
+            {{ render(controller('GestionBundle:Patient:index', {max: max, view: "recent"})) }}#}
+        </div>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN_SUP') %}
+        <div class="row">
+            <div class="col-md-12">
+                 <a href="{{ path('admin_gestion_patient_new') }}"
+                   
+                    class="btn btn-success" title="Nouveau">
+                    <i class="fa fa-user-plus"></i> Enrolement Patient
+                </a>
+                <a href="{{ path('admin_gestion_patient_index') }}"
+                  
+                    class="btn btn-warning" title="Nouveau">
+                    <i class="fa fa-th-list"></i> Liste des patients
+                </a>
+                {#<a href="{{ path('admin_gestion_patient_photo') }}"
+                   
+                    class="btn btn-info">
+                    <i class="fa fa-camera"></i> Gestion des Photos
+                </a>
+                <a href="{{ path('gestion_fichedepistagecancer_index_index') }}"
+                    class="btn btn-info">
+                    <i class="fa fa-file"></i> Fiches de dépistages Cancer du Sein
+                </a>
+                <a href="{{ path('gestion_infopatientcancercol_index_index') }}" class="btn btn-info">
+                    <i class="fa fa-file"></i> Fiches dépistage Cancer du Col de l'Utérus
+                </a>#}
+            </div>
+            {% set max = 10 %}
+            {#<h1>Les {{ max }} derniers patients</h1>
+            {{ render(controller('GestionBundle:Patient:index', {max: max, view: "recent"})) }}#}
+        </div>
+    {% endif %}
+{% endblock %}
+{% block javascripts_inline %}
+    
+  
+    
+    {% if is_granted('ROLE_VIEW_RDV')  %}
+        <script src="{{ asset('public/js/moment.min.js') }}"></script>
+      
+    {% endif %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script>
+        {% if is_granted('ROLE_VIEW_RDV')  %}
+        $(document).ready(function () {
+           var calendar = new FullCalendar.Calendar(document.getElementById('calendar-events'), {
+                locale: '{{ _locale }}',
+                events: "{{ path('admin_gestion_rdv_list') }}",
+                initialView: 'dayGridWeek',
+                 eventClick: function (info) {
+                     
+                    if (info.event.extendedProps.statut_rendez_vous == 0) {
+                        document.location.href = Routing.generate('admin_gestion_rdv_edit', {id: info.event.id})
+                    }
+                },
+                
+                eventDidMount: function(eventObj) {
+
+                    const event = eventObj.event;
+                    const $el = $(eventObj.el);
+
+                   
+                    const props = event.extendedProps;
+
+                    console.log(event);
+                    
+                    const start = moment(event.start).format('LLLL');
+                    let content = '';
+                    let title = event.lib;
+                    {% if is_granted('ROLE_MEDECIN') and not is_granted('ROLE_ADMIN') %}
+                        content += `<p>Patient(e): ${event.title}<\/p>`;
+                    {% else %}
+                        if (eventObj.statut_rendez_vous == 2) {
+                            content += `<p>Vaccin: ${event.title}<\/p>`;
+                        } else {
+                            content += `<p>Medecin: ${event.title}<\/p>`;
+                        }
+                        
+                    {% endif %}
+                    content += `<p>Date: ${start}</p>
+                    <p>Motif: ${props.lib}</p>
+                    `;
+                    
+
+                    const colors = {'-1': '#ff0000', '0': '#016daf', '1': '#50af01', '2': '#f1c232'};
+
+
+                    if (props.statut_rendez_vous == -1) {
+                        $el.find('.fc-time').remove();
+                        $el.find('.fc-title').text($el.find('.fc-title').text() + ' (Annulé)');
+                        content += '<p class="text-danger"><strong>' + props.motif_annulation_rendez_vous + '<\/strong><\p>';
+                        title += ' (<span class="text-danger">Annulé<\span>)';
+                       
+                    } else if (props.statut_rendez_vous == 0) {
+                        //$el.css({'backgroundColor': props.color, 'color': '#fff'});
+                    } else if (props.statut_rendez_vous == 1) {
+                        //$el.css({'backgroundColor': props.color, 'color': '#fff'});
+                    } else if (props.statut_rendez_vous == 2) {
+                        //$el.css({'backgroundColor': props.color, 'color': '#fff'});
+                        eventObj.event.url = Routing.generate('admin_gestion_rdv_edit', {id: event.id});
+                    }
+                    if (colors[props.statut_rendez_vous]) {
+                         $el.css({'backgroundColor': colors[props.statut_rendez_vous], 'color': '#fff'});
+                    } else {
+                        $el.css({'backgroundColor': '#016daf', 'color': '#fff'});
+                    }
+
+                    $el.find('.fc-daygrid-event-dot').css('borderColor', '#fff');
+                    
+                    $el.popover({
+                        title: title,
+                        content: content,
+                        trigger: 'hover',
+                        placement: 'top',
+                        html: true,
+                        container: 'body'
+                    });
+
+                    return eventObj;
+                },
+                
+                themeSystem: 'bootstrap3',
+                editable: true,
+                //draggable: true,
+                dateClick: function (calEvent) {
+                    console.log(calEvent);
+                    /*const timestamp = moment(calEvent).format('DD/MM/YYYY')
+                    document.location = "{{ path('admin_gestion_rdv_add') }}?d=" + encodeURIComponent(timestamp);*/
+                },
+                
+                headerToolbar: {
+                    left: 'prev,next',
+                    center: 'title',
+                    //right: 'month,agendaWeek,agendaDay'
+                },
+               
+                
+            });
+
+             calendar.render();
+        });
+
+       
+    {% endif %}
+         
+    </script>
+{% endblock %}

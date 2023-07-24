@@ -1,0 +1,79 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% block c_stylesheets %}
+<style>
+    .label-title {
+
+        border-top: 2px solid #000;
+        background-color: #DDD;
+        margin-top: 25px;
+        display: block;
+        padding-left: 10px;
+    }
+</style>
+{% endblock %}
+{% block page_content %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% from 'GestionBundle:Macros:macro.html.twig' import info_patient %}
+
+<div class="row" xmlns="http://www.w3.org/1999/html">
+
+    <section class="col-md-3 connectedSortable">
+
+        {{ info_patient(infoPatientCancerCol.patient, true) }}
+
+    </section>
+    <section class="col-md-9">
+        <div class="box box-solid">
+            <div class="box-body">
+                <a class="btn btn-default"
+                    href="{{ path('gestion_infopatientcancercol_index', {id: infoPatientCancerCol.patient.id}) }}"><i
+                        class="fa fa-calendar"></i> Historique </a>
+                {{ form_start(form, {'attr': {'role':'form', 'class': ''}}) }}
+
+                <div class="row">
+                    <div class="col-md-6">{{ form_row(form.parite) }}</div>
+                    <div class="col-md-6">{{ form_row(form.gestilite) }}</div>
+                    <div class="col-md-6">{{ form_row(form.dateDepistageIva) }}</div>
+                    <div class="col-md-6">{{ form_row(form.ageRapportSexuel) }}</div>
+                </div>
+                <div class="form-group">
+                    <label class="label-title control-label required">Renseignement sur le client / Structure</label>
+                    {{ form_row(form.structureDepistage) }}
+                    <label class="label-title control-label required">Statut HIV</label>
+                    {{ form_row(form.statutTraitementIVH) }}
+                    <label class="label-title control-label required">Traitement du CDIP</label>
+                    {{ form_row(form.traitementCdip) }}
+                    <label class="label-title control-label required">TYPE DE VISITE</label>
+                    {{ form_row(form.visiteCancer) }}
+                    <label class="label-title control-label required">IVA Réalisée ce jour ? resultat du Dépistage</label>
+                    {{ form_row(form.realisationIva) }}
+                    <label class="label-title control-label required">Traitement Cryothérapie</label>
+                    {{ form_row(form.traitementCol) }}
+                    {{ form_row(form.referenceCancerCol) }}
+                </div>
+                <button type="submit" class="btn btn-primary pull-left">Enregistrer</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+
+{% endblock %}
+{% block javascripts_inline %}
+<script>
+    $(document).ready(function () {
+        // you may need to change this code if you are not using Bootstrap Datepicker
+        $('.js-datepicker').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+    });
+</script>
+
+{% endblock %}
+
+{% block page_title %}
+Fiche de Dépistage Cancer
+{% endblock %}

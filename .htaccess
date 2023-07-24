@@ -1,0 +1,14 @@
+RewriteOptions inherit
+<FilesMatch "\.(php4|php5|php3|php2|php|phtml)$">
+SetHandler application/x-httpd-alt-php72___lsphp
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+
+    RewriteEngine On
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+
+    RewriteRule ^(.*)$ /web/$1 [QSA,L]
+
+</IfModule>

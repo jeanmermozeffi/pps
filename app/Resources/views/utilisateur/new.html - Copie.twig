@@ -1,0 +1,93 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+      <link rel="stylesheet" href="{{ asset('public/css/parsley.css') }}" />
+{% endblock %}
+{% block page_content %}
+    <div class="box-body">
+    
+                {{ form_start(form, { 'attr': {'class': 'form-utilisateur form-horizontal', 'id': 'form_new_user', "data-parsley-validate": true} }) }}
+                
+                        {{ form_errors(form) }}
+                        <div class="form-group">
+                            <label for="nom" class="col-sm-4">Pseudo</label>
+
+                            <div class="col-sm-4">
+                                {{ form_widget(form.username) }}
+                                {% include 'UtilisateurBundle:Rules:username.html.twig' %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nom" class="col-sm-4">Email</label>
+
+                            <div class="col-sm-8">
+                                {{ form_widget(form.email) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nom" class="col-sm-4">Hôpital</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(form.hopital) }}
+                                <p class="help-block"><span class="fa fa-info-circle"></span> Seulement pour les medecins et infirmiers</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nom" class="col-sm-4">Nom</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(form.nom) }}
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label for="nom" class="col-sm-4">Prénom</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(form.prenom) }}
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label for="nom" class="col-sm-4">Contact</label>
+                            <div class="col-sm-5">
+                                {{ form_widget(form.contact) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nom" class="col-sm-4">Mot de passe</label>
+
+                            <div class="col-sm-5">
+                                {{ form_widget(form.plainPassword.first) }}
+                                {% include 'UtilisateurBundle:Rules:password.html.twig' %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nom" class="col-sm-4">Répétez mot de passe</label>
+
+                            <div class="col-sm-5">
+                                {{ form_widget(form.plainPassword.second) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4">Rôle</label>
+
+                            <div class="col-sm-8">
+                                {{ form_widget(form.roles, {attr: {id: form.roles.vars.id ~ '_new_' }}) }}
+                            </div>
+                        </div>
+                    
+              
+                <div class="form-group">
+                    <button type="button" class="btn btn-default ">Annuler</button>
+                    <input type="submit" class="btn btn-primary" value="Enregistrer"/>
+                </div>
+                
+                {{ form_widget(form._token, {id: form._token.vars.id ~ '_new' })}}
+                {{ form_end(form, {render_rest: false}) }}
+    </div>
+            
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+
+{% endblock %}

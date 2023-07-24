@@ -1,0 +1,325 @@
+{% extends 'SiteBundle:Default:base.html.twig' %}
+
+ {% block css %}
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.4.1/dist/css/uikit.min.css" />
+
+    <link rel="stylesheet" href="{{ asset('public/css/sensibilisa.css') }} " />
+
+    <style>.fixed-top {
+
+   
+
+    z-index: 1000;
+
+}</style>
+
+ {% endblock %}
+
+{% block site_header_class %}no-banner{% endblock %}
+
+{% block content %}
+
+    <section class="pb-2">
+
+    <div class="jumbotron hero1 d-flex justify-content-center">
+
+       <div class="container row" uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 600">
+
+           <div class="col-md-6" uk-scrollspy-class="uk-animation-slide-left-small">
+
+                <div>
+
+                    <div class="row align-items-center" >
+
+                        <div class="col-md-5"><h2 class="text-light font-weight-bold">{{ 'sensibilisation.section0.title1' | trans }}</h2></div>
+
+                        <div class="col-md-5"><h2 class="text-white text-center font-weight-bold covt p-1">COVID-19</h2></div>
+
+                    </div>
+
+                    <div>
+
+                        <p class="uk-text-justify pcovid">{{ 'sensibilisation.section0.content' | trans }}</p>                    
+
+                    </div>
+
+                </div>
+
+           </div>
+
+           <div class="col-md-6"  uk-scrollspy-class="uk-animation-slide-top-small">
+
+               <div class="d-flex justify-content-end">
+
+                   <img src="{{ asset('uploads/Mac.png') }}" alt=""  style="width: 70%;" class="d-none d-sm-block macimage img-fluid position-absolute">
+
+               </div>
+
+           </div>
+
+       </div>
+
+    </div>
+
+</section>
+
+    <h1 class="text-center mt-5 font-weight-bold stext" uk-scrollspy="cls: uk-animation-fade;">{{ 'sensibilisation.section1.title1' | trans }}</h1>
+
+    <div class="mb-5  mt-5 d-flex justify-content-center">
+
+        <a href="#pnud" class='pulse uk-padding' uk-toggle> <p class="text-white" uk-icon="icon: bell; ratio:2;"></p></a>
+
+    </div>
+
+    <section class="hero2 py-5">
+
+        <div class="container py-3">
+
+            <div class="row justify-content-around" uk-scrollspy="target: > div; cls: uk-animation-slide-left-medium; delay: 500">
+
+                <div class="m-3 col-md-4 shadow-lg p-2 bg-white cca">
+
+                    <div class="card-body text-center">
+
+                        <div><img src="{{ asset('uploads/1.png') }}" width="150"></div>
+
+                        <h5 class="stext font-weight-bold uk-margin-remove"> {{ 'sensibilisation.actions.section1.title' | trans }}</h5>
+
+                        <p class="sp uk-margin-remove">
+
+                             {{ 'sensibilisation.actions.section1.content' | trans }}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="m-3 col-md-4 shadow-lg p-2 bg-white cca">
+
+                    <div class="card-body text-center">
+
+                        <div><img src="{{ asset('uploads/2.png') }}" width="150"></div>
+
+                        <h5 class="stext font-weight-bold uk-margin-remove"> {{ 'sensibilisation.actions.section2.title' | trans }}</h5>
+
+                        <p class="sp uk-margin-remove">
+
+                            {{ 'sensibilisation.actions.section2.content' | trans }}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="m-3 col-md-4 shadow-lg p-2 bg-white cca">
+
+                    <div class="card-body text-center">
+
+                        <div><img src="{{ asset('uploads/3.png') }}" width="150"></div>
+
+                        <h5 class="stext font-weight-bold uk-margin-remove"> {{ 'sensibilisation.actions.section3.title' | trans }}</h5>
+
+                        <p class="sp uk-margin-remove">
+
+                             {{ 'sensibilisation.actions.section3.content' | trans }}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="hero3 py-5">
+
+        <div class="container py-3">
+
+            <div class="row justify-content-around"  uk-scrollspy="target: > div; cls: uk-animation-slide-top-medium; delay: 500">
+
+                <div class="m-3 col-md-4 shadow-lg p-2 bg-white cca">
+
+                    <div class="card-body text-center">
+
+                        <div><img src="{{ asset('uploads/4.png') }}" width="150"></div>
+
+                        <h5 class="stext font-weight-bold uk-margin-remove"> {{ 'sensibilisation.actions.section4.title' | trans }}</h5>
+
+                        <p class="sp uk-margin-remove">
+
+                            {{ 'sensibilisation.actions.section4.content' | trans }}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="m-3 col-md-4 shadow-lg p-2 bg-white cca">
+
+                    <div class="card-body text-center">
+
+                        <div><img src="{{ asset('uploads/5.png') }}" width="150"></div>
+
+                        <h5 class="stext font-weight-bold uk-margin-remove"> {{ 'sensibilisation.actions.section5.title' | trans }}</h5>
+
+                        <p class="sp uk-margin-remove">
+
+                           {{ 'sensibilisation.actions.section5.content' | trans }} ‎ ‎
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="m-3 col-md-4 shadow-lg p-2 bg-white cca">
+
+                    <div class="card-body text-center">
+
+                        <div><img src="{{ asset('uploads/6.png') }}" width="150"></div>
+
+                        <h5 class="stext font-weight-bold uk-margin-remove"> {{ 'sensibilisation.actions.section6.title' | trans }}</h5>
+
+                        <p class="sp uk-margin-remove">
+
+                            {{ 'sensibilisation.actions.section6.content' | trans }}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+        <div id="pnud" class="uk-modal-full" uk-modal>
+
+            <div class="uk-modal-dialog">
+
+                <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+
+                <div class="uk-grid-collapse uk-child-width-1-2@s uk-flex-middle" uk-grid>
+
+                    <div class="uk-background-cover" style="background-image: url('{{ asset("uploads/covback.jpg") }}');" uk-height-viewport></div>
+
+                    <div class="uk-padding-large">
+
+                        <h1 class="font-weight-bold text-uppercase mb-5">{{ 'sensibilisation.language.title' | trans }}</h1>
+
+                        <div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
+
+                            <div>
+
+                                <div class="uk-card hero1 uk-card-hover uk-card-body uk-light">
+
+                                    <h3 class="uk-card-title text-center uk-margin-remove">WOLOF</h3>
+
+                                    <p class="uk-text-muted text-center uk-margin-remove">{{ 'sensibilisation.language.section1.country' | trans }}</p>
+
+                                    <div class="uk-flex uk-flex-center mt-3">
+
+                                        <a href="#" id="playwolof"  class="wolof" uk-toggle="target: .wolof; animation: uk-animation-slide-bottom-small; duration: 300;" ><span uk-icon="icon: play; ratio: 2" class="aplay playic"></span></a>
+
+                                        <a href="#" id="pausewolof" class="wolof" uk-toggle="target: .wolof; animation: uk-animation-slide-bottom-small; duration: 300;" hidden><span uk-icon="icon: close; ratio: 2" class="aplay playic"></span></a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div>
+
+                                <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light">
+
+                                    <h3 class="uk-card-title text-center  uk-margin-remove">MORE</h3>
+
+                                    <p class="uk-text-muted text-center uk-margin-remove">Burkina Faso</p>
+
+                                    <div class="uk-flex uk-flex-center mt-3">
+
+                                        <a href="#" id="playmore"  class="more" uk-toggle="target: .more; animation: uk-animation-slide-bottom-small; duration: 300;" ><span uk-icon="icon: play; ratio: 2" class="aplay playic"></span></a>
+
+                                        <a href="#" id="pausemore" class="more" uk-toggle="target: .more; animation: uk-animation-slide-bottom-small; duration: 300;" hidden><span uk-icon="icon: close; ratio: 2" class="aplay playic"></span></a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div>
+
+                                <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light">
+
+                                    <h3 class="uk-card-title text-center  uk-margin-remove">عربي</h3>
+
+                                    <p class="uk-text-muted text-center uk-margin-remove">العربية الدولية</p>
+
+                                    <div class="uk-flex uk-flex-center mt-3">
+
+                                        <a href="#" id="playarabe"  class="arabe" uk-toggle="target: .arabe; animation: uk-animation-slide-bottom-small; duration: 300;" ><span uk-icon="icon: play; ratio: 2" class="aplay playic"></span></a>
+
+                                        <a href="#" id="pausearabe" class="arabe" uk-toggle="target: .arabe; animation: uk-animation-slide-bottom-small; duration: 300;" hidden><span uk-icon="icon: close; ratio: 2" class="aplay playic"></span></a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div>
+
+                                <div class="uk-card hero1 uk-card-hover uk-card-body uk-light">
+
+                                    <h3 class="uk-card-title text-center  uk-margin-remove">DIOULA</h3>
+
+                                    <p class="uk-text-muted text-center uk-margin-remove">Malinké</p>
+
+                                    <div class="uk-flex uk-flex-center mt-3">
+
+                                        <a href="#" id="playdioula"  class="dioula" uk-toggle="target: .dioula; animation: uk-animation-slide-bottom-small; duration: 300;" ><span uk-icon="icon: play; ratio: 2" class="aplay playic"></span></a>
+
+                                        <a href="#" id="pausedioula" class="dioula" uk-toggle="target: .dioula; animation: uk-animation-slide-bottom-small; duration: 300;" hidden><span uk-icon="icon: close; ratio: 2" class="aplay playic"></span></a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+{% endblock %}
+
+ {% block js %}
+
+ <script src="https://cdn.jsdelivr.net/npm/uikit@3.4.1/dist/js/uikit.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.4.1/dist/js/uikit-icons.min.js"></script>
+
+ <script src="{{ asset('public/js/lespays.js') }}"></script>
+
+ {% endblock %}

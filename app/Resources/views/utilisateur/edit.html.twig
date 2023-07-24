@@ -1,0 +1,142 @@
+{% block page_content %}
+     {% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %}
+    
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Modifier utilisateur</h4>
+                </div>
+
+                {{ form_start(edit_form, { 'attr': {'class': 'utilisateur form-horizontal', 'data-parsley-validate': true} }) }}
+                <div class="modal-body">
+                   
+                    {% include 'ajax/response.html.twig' %}
+                    <div class="">
+                        <div class="form-group">
+                            <label for="nom_{{utilisateur.id}}" class="col-sm-4">Pseudo</label>
+
+                            <div class="col-sm-8">
+                                {{ form_widget(edit_form.username, {id: edit_form.username.vars.id ~ '_' ~  utilisateur.id}) }}
+                                 {% include 'UtilisateurBundle:Rules:username.html.twig' %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nom" class="col-sm-4">Email</label>
+
+                            <div class="col-sm-8">
+                                {{ form_widget(edit_form.email, {id: edit_form.email.vars.id ~ '_' ~  utilisateur.id }) }}
+                            </div>
+                        </div>
+                        {% if edit_form.roles is defined %}
+                        <div class="form-group">
+                            <label class="col-sm-4">Rôle</label>
+
+                            <div class="col-sm-8">
+                                {{ form_widget(edit_form.roles, {id: edit_form.roles.vars.id ~ '_edit_' ~  utilisateur.id }) }}
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if edit_form.hopital is defined %}
+                         <div class="form-group hide">
+                            <label for="{{ edit_form.hopital.vars.id }}" class="col-sm-4">Hopital</label>
+                            <div class="col-sm-8">
+                                
+                                {{ form_widget(edit_form.hopital, {id: edit_form.hopital.vars.id ~ '_' ~  utilisateur.id }) }}
+                                <p class="help-block small"><span class="fa fa-info-circle"></span> Seulement pour les medecins et infirmiers</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                         {% if edit_form.assurance is defined %}
+                        <div class="form-group hide">
+                            <label for="{{ edit_form.assurance.vars.id }}" class="col-sm-4">Assurance</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(edit_form.assurance, {id: edit_form.assurance.vars.id ~ '_' ~  utilisateur.id }) }}
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if edit_form.specialites is defined %}
+                        <div class="form-group hide">
+                            <label for="{{ edit_form.specialites.vars.id }}" class="col-sm-4">Spécialtés</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(edit_form.specialites, {id: edit_form.specialites.vars.id ~ '_' ~  utilisateur.id }) }}
+                                <p class="help-block small"><span class="fa fa-info-circle"></span> Seulement pour les medecins</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if edit_form.pharmacie is defined %}
+                        <div class="form-group hide">
+                            <label for="nom" class="col-sm-4">Pharmacie</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(edit_form.pharmacie, {id: edit_form.pharmacie.vars.id ~ '_' ~  utilisateur.id }) }}
+                                <p class="help-block small"><span class="fa fa-info-circle"></span> Seulement pour les pharmaciens</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if edit_form.personne.corporate is defined %}
+                        <div class="form-group">
+                            <label for="{{ edit_form.personne.corporate.vars.id }}" class="col-sm-4">Corporate</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(edit_form.personne.corporate, {id: edit_form.personne.corporate.vars.id ~ '_' ~  utilisateur.id }) }}
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if edit_form.pharmacie is defined or edit_form.hopital is defined %}
+                        {% endif %}
+                        <div class="form-group">
+                            <label for="nom" class="col-sm-4">Nom</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(edit_form.personne.nom, {id: edit_form.personne.nom.vars.id ~ '_' ~  utilisateur.id }) }}
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label for="nom" class="col-sm-4">Prénom</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(edit_form.personne.prenom, {id: edit_form.personne.prenom.vars.id ~ '_' ~  utilisateur.id }) }}
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label for="nom" class="col-sm-4">Contact</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(edit_form.personne.contact, {id: edit_form.personne.contact.vars.id ~ '_' ~  utilisateur.id }) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nom" class="col-sm-4">Mot de passe</label>
+
+                            <div class="col-sm-8">
+                                {{ form_widget(edit_form.plainPassword.first, {id: edit_form.plainPassword.first.vars.id ~ '_' ~  utilisateur.id}) }}
+                                 {% include 'UtilisateurBundle:Rules:password.html.twig' %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nom" class="col-sm-4">Répétez mot de passe</label>
+
+                            <div class="col-sm-8">
+                                {{ form_widget(edit_form.plainPassword.second, {id: edit_form.plainPassword.second.vars.id ~ '_' ~  utilisateur.id }) }}
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    
+                </div>
+                <div class="modal-footer">
+                    {% include 'ajax/loader.html.twig' %}
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <input type="submit" class="btn btn-primary  btn-ajax" value="Modifier"/>
+                </div>
+                {{ form_widget(edit_form._token, {id: edit_form._token.vars.id ~ '_' ~ utilisateur.id })}}
+                {{ form_end(edit_form, {render_rest: false}) }}
+            
+{% endblock %}
+
+{% block javascripts_inline %}
+    <script src="{{ asset('public/js/admin.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+
+    <script>
+         init_select2('select');
+        setUserFields('#modal-table');
+    </script>
+     
+{% endblock %}

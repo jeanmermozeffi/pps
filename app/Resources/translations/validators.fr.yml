@@ -1,0 +1,45 @@
+password:
+
+  require_special: Votre mot de passe doit être composé d'au moins un caractère spécial.
+
+  require_lower_upper: Votre mot de passe doit être composé d'au moins une lettre majuscule et miniscule.
+
+  require_number: Votre mot de passe doit être composé d'au moins 1 chiffre.
+
+  require_lower: Votre mot de passe doit être composé d'une lettre miniscule.
+
+  require_upper: Votre mot de passe doit être composé d'une lettre majuscule.
+
+  require_casediff: Votre mot de passe doit être composé d'au moins une lettre majuscule et miniscule.
+
+  minlength: Votre mot de passe doit être composé d'au moins {{length}} caractères. 
+
+
+
+username:
+
+  alphanumeric: 'La chaîne "{{ string }}" contient des caractères illégaux: Il doit contenir des caractères alphanumériques et _'
+
+
+
+pass:
+
+  id_pin_not_found: Le couple Identifiant + Pin n\'existe pas dans notre BDD ou n'est pas actif ou a déjà été utilisé
+
+  not_same_corporate: Vous ne pouvez pas modifier l'affiliation de ce patient
+
+  pass.not_in_corporate: Le coupe ID + PIN appartient à un corporate différent de celui que vous avez choisi
+
+
+rdv:
+  pin: Veuillez renseigner le code PIN
+  identifiant: Veuillez renseigner l'ID
+  libRendezVous:
+    required: Veuillez renseigner motif du RDV
+    max: Le motif ne doit pas excéder {{ limit }} caractères
+
+
+patient:
+  duplicate_matricule: Ce matricule est déjà associé à un patient
+  duplicate_id: Ce ID est déjà associé au compte d'un patient
+  invalid_sexe: Veuillez choisir entre F et H

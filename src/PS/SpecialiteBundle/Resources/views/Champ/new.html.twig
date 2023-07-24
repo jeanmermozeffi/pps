@@ -1,0 +1,74 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% macro prop_input(name, label) %}
+    <div class="form-group">
+        <label>{{ label }}</label>
+    </div>
+{% endmacro %}
+
+
+{% block page_content %}
+    {{ form_start(form,{attr: {id: 'form_champ_new'}}) }}
+    <div class="box">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form_row(form.libChamp) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.etape) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.typeChamp) }}
+                </div>
+                
+                <div class="col-md-12">
+                    {{ form_row(form.valeurAutoriseeChamp) }}
+                </div>
+                <div class="col-md-12">
+                    {{ form_row(form.valeurChampDefaut) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.champParent) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.valeurChampParent)}}
+                </div>
+                
+                
+                <div class="col-md-12">
+                    {{ form_row(form.champRequis)}}
+                </div>
+                <div class="col-md-12">
+                    {{ form_row(form.validationGroup)}}
+                </div>
+            </div>
+            <button class="btn btn-success">Valider</button>
+        </div>
+    </div>
+    {{ form_widget(form._token)}}
+    {{ form_end(form, {render_rest: false}) }}
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('dropzone/dist/min/bootstrap-filestyle.min.js') }}"></script>
+     <script src="{{ asset('bundles/gestion/js/fr.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/profil.js') }}"></script>
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+    <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+    <script>
+        $('#form_champ_new').find('select').select2();
+    </script>
+
+{% endblock %}
+
+{% block page_title %}
+  Nouveau
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

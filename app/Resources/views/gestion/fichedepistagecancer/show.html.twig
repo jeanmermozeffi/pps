@@ -1,0 +1,70 @@
+
+  {% block c_stylesheets %}
+  <style>
+    .label-title {
+       
+        border-top: 2px solid #000;
+        background-color: #DDD;
+        margin-top: 25px;
+        display: block;
+        padding-left: 10px;
+    }
+  </style>
+  {% endblock %}
+{% block page_content %}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+        {% from 'GestionBundle:Macros:macro.html.twig' import  info_patient %}
+
+<div class="row" xmlns="http://www.w3.org/1999/html" style="padding: 20px;">
+
+        <section class="col-md-3 connectedSortable">
+
+           {{ info_patient(ficheDepistageCancer.patient, true) }}
+
+        </section>
+         <section class="col-md-9">
+            <div class="box box-solid">
+                <div class="box-body">
+                    <a class="btn btn-default"   href="{{ path('gestion_fichedepistagecancer_index', {id: ficheDepistageCancer.patient.id}) }}"
+                           >
+                        <i class="fa fa-calendar"> </i>
+                         Historique 
+                    </a>
+             {{ form_start(form, {'attr': {'role':'form', 'class': ''}}) }}
+             <div class="row">
+                <div class="col-md-6">{{ form_row(form.taille) }}</div>
+                <div class="col-md-6">{{ form_row(form.poids) }}</div>
+            </div>
+            <div class="form-group">
+                <label class="label-title control-label required">Cancer du sein – Que peut-on faire soi-même ?</label>
+                {{ form_row(form.autoExamen) }}
+                {{ form_row(form.controleExamenMedecin) }}
+                {{ form_row(form.dateDerniereMamno) }}
+            </div>
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+           </div>
+       </div>
+    </section>
+    
+</div> 
+<div class="modal-footer">
+    <button type="button" class="btn dark btn-default" data-dismiss="modal">Fermer</button>
+    <!--<button type="button" class="btn green">Save changes</button>-->
+</div>
+{% endblock %}
+
+{% block javascripts_inline %}
+    <script>
+        init_select2();
+    </script>
+     
+{% endblock %}
+
+{% block page_title %}
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h4>Détails - Fiche de Dépistage Cancer</h4>
+        </div>
+    </div>
+{% endblock %}

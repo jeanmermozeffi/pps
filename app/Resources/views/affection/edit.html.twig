@@ -1,0 +1,59 @@
+{% block page_content %}
+    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit{{ affection.id }}"><i
+                class="fa fa-edit"></i></button>
+    <div class="modal fade" id="modal-edit{{ affection.id }}">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Modifier affection</h4>
+                </div>
+
+                {{ form_start(edit_form, { 'attr': {'class': ''} }) }}
+                <div class="modal-body">
+
+                        <div class="box-body">
+                               {{ form_widget(edit_form) }}
+                                
+                            </div>
+
+                </div>
+                <div class="modal-footer">
+                    
+                   
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                     <button class="btn btn-primary pull-left">Valider</button>
+                </div>
+                
+                {{ form_end(edit_form) }}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+{% endblock %}
+{#{% block page_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Modifier affection</h3>
+                </div>
+                {{ form_start(edit_form) }}
+                    <div class="box-body">
+                        {{ form_widget(edit_form) }}
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" class="btn btn-primary" value="Modifier" />
+                    </div>
+                {{ form_end(edit_form) }}
+
+                                        <a href="{{ path('admin_parametre_affection_index') }}" class="btn btn-default">Retour à la liste</a>            {{ form_start(delete_form) }}
+                <input type="submit" class="btn btn-danger pull-right" value="Supprimer">
+            {{ form_end(delete_form) }}</div>
+        </div>
+    </div>
+{% endblock %}#}

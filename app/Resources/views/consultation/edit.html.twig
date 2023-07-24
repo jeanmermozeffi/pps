@@ -1,0 +1,684 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% form_theme form 'widget/fields_mousso_horizontal.html.twig' %}
+{% import 'GestionBundle:Macros:html.html.twig' as _html %}
+{% from 'GestionBundle:Macros:macro.html.twig' import analyses, consultation_affections, medicaments, allergie_traitement, info_patient,  fonctionnels, physiques, signes, constante, antecedent_personnel, antecedent_familial, antecedent %}
+{% block stylesheets %}
+    {{ parent() }}
+     {{ form_stylesheet(form) }}
+     <style>
+        .box-footer {border: 1px solid #fff !important;}
+        .box-footer .box {box-shadow: none;}
+
+     </style>
+{% endblock %}
+{% block page_content %}
+{% set domain = 'consultation' %}
+<div class="row" xmlns="http://www.w3.org/1999/html">
+
+        <section class="col-md-3 connectedSortable">
+
+           {{ info_patient(patient, true, true, true) }}
+
+        </section>
+
+        <!-- /.col -->
+        <section class="col-md-9">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li><a href="{{ path ('admin_consultation_liste',{'id': patient.id}) }}">{{ _html.text('Historique de consultations', domain) }}</a></li>
+                  
+                </ul>
+                <div class="tab-content">
+
+                    <div class="active tab-pane" id="nouvelle">
+                        {{ form_errors(form) }}
+                        <!-- general form elements -->
+                        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+                         <div id="list-analyse" data-prototype="{{ analyses(form.analyses.vars.prototype)|e }}"></div>
+                        <div id="list-affection"
+                             data-prototype="{{ consultation_affections(form.affections.vars.prototype)|e }}"></div>
+                        <div id="list-signe-physique"
+                             data-prototype="{{ signes(form.fonctionnels.vars.prototype, 'physique')|e }}"></div>
+                        <div id="list-antecedent-familial"
+                             data-prototype="{{ antecedent(form.familiaux.vars.prototype, 'familial')|e }}"></div>
+                         <div id="list-antecedent-personnel"
+                             data-prototype="{{ antecedent(form.personnels.vars.prototype, 'personnel')|e }}"></div>
+                        <div id="list-signe-fonctionnel"
+                             data-prototype="{{ signes(form.physiques.vars.prototype, 'fonctionnel')|e }}"></div>
+                             <div id="list-medicament"
+                             data-prototype="{{ medicaments(form.medicaments.vars.prototype)|e }}"></div>
+                         {#<div id="list-vaccin"
+                             data-prototype="{{ vaccin(form.vaccins.vars.prototype)|e }}"></div>#}
+                              <div id="list-constante" data-prototype="{{ constante(form.constantes.vars.prototype)|e }}" ></div>
+                              <div id="list-file"  data-prototype="{{ _html.fichier(form.fichiers.vars.prototype)|e }}"></div>
+                        <div class="">
+                             <div class="box-footer">
+                                <div class="col-md-12 ">
+                                    {{ form_errors(form) }}
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre">{{ _html.text('Assurance et Spécialité', domain) }}</div>
+                                    </div>
+
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                {{ form_row_inline(form.assurance) }}
+                                               
+                                            </div>
+                                            <div class="col-md-6">
+                                               
+                                                {{ form_row_inline(form.specialite) }}
+                                            </div>
+                                                
+                                            
+                                            
+                                           
+                                             <div class="col-md-12">
+                                                <div class="box-header with-border">
+                                                    <div type="button" class="pull-left titre">{{ _html.text('Constantes', domain) }}</div>
+                                                </div>
+
+                                                <div class="box-body">
+                                                    <div class="row">
+                                                        {% for key, item in form.constantes %}
+                                                            
+                                                            {{ constante(item|e, key, constantes) }}
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {#<div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="col-sm-4 control-label">Tension <span class="red">*</span></label>
+
+                                                        <div class="col-sm-8">
+                                                            {{ form_widget(form.tension) }}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="col-sm-4 control-label">Poids(kg) <span
+                                                                    class="red">*</span></label>
+
+                                                        <div class="col-sm-8">
+                                                            {{ form_widget(form.poids) }}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="col-sm-4 control-label">T(°C) <span
+                                                                    class="red">*</span></label>
+
+                                                        <div class="col-sm-8">
+                                                            {{ form_widget(form.temperature) }}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>#}
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+
+
+                                </div>
+
+                                <div class="col-md-12">
+
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre success">{{ _html.text('Autres Informations',domain) }}</div>
+                                    </div>
+
+                                    <div class="box-body">
+                                        
+                                            
+                                            {% if form.medecin is defined %}
+                                                 {{ form_row_inline(form.medecin) }}
+                                            {% endif %}
+                                       
+                                         {{ form_row_inline(form.motif) }}
+                                        
+                                        
+
+                                    </div>
+                                    <!-- /.box-body -->
+
+
+                                </div>
+
+                            </div>
+                           
+                                 
+                             <div class="box-footer">
+                                <!-- Affections box -->
+                                <div class="box box-solid">
+                                    <div class="box-header bg-light-blue-gradient">
+                                         <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+                                        <h3 class="box-title">{{ _html.text('Fichiers de consultations')}}</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <button type="button" class="btn btn-default add_file btn-sm" id="add_file">
+                                            <i class="fa fa-plus"></i> {{ _html.text('Ajouter un fichier', domain) }}
+                                        </button>
+                                        <div class="alert alert-info">
+                                            {{ _html.text('Formats autorisés: <strong>%ext%</strong>', domain, {'%ext%': 'pdf,jpeg,jpg,pdf'}, true) }}
+                                        </div>
+                                        <div id="list_files" class="collection list_files">
+                                            {% for item in form.fichiers %}
+                                                {{ _html.fichier(item|e) }}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <div class="box-footer">
+                                <!-- Affections box -->
+                                <div class="box box-solid ">
+                                    <div class="box-header bg-light-blue-gradient">
+                                        <!-- tools box -->
+                                        <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+
+                                        <i class="fa fa-flash"></i>
+
+                                        <h3 class="box-title">
+                                            Signes fonctionnels
+                                        </h3>
+                                    </div>
+                                    <div class="box-footer no-border">
+                                        <button type="button" class="btn btn-default add_signe_fonctionnel"
+                                                id="add_signe_fonctionnel">
+                                            <i class="fa fa-plus"></i>
+                                            {{ _html.text('Ajouter') }}
+                                        </button>
+                                    </div>
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                {{ _html.table_row('Signe', {action: true}) }}
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_signe_fonctionnel" class="collection list_signe_fonctionnel">
+                                            {% for item in form.fonctionnels %}
+                                                
+                                                {{ fonctionnels(item|e) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body-->
+
+                                </div>
+                                <!-- /.box -->
+
+                            </div>
+                             <div class="box-footer">
+                                <!-- Medicaments box -->
+                                <div class="box" style="border-top: none;">
+                                     <div class="box-body">
+                                        {{ form_row_inline(form.histoire) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                <!-- Affections box -->
+                                <div class="box box-solid ">
+                                    <div class="box-header bg-light-blue-gradient">
+                                        <!-- tools box -->
+                                        <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+
+                                        <i class="fa fa-flash"></i>
+
+                                        <h3 class="box-title">
+                                           {{ _html.text('Antécédents Personnels') }}
+                                        </h3>
+                                    </div>
+                                    <h5>{{ _html.text('Antécédents personnels connus') }}</h5>
+                                         <ul>
+                                        {% for antecedent in patient.ligneAntecedents if antecedent.type == 'personnel' %}
+                                            <li>{{ antecedent.antecedent }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    <div class="box-footer no-border">
+                                        <button type="button" class="btn btn-default add_antecedent_personnel"
+                                                id="add_antecedent_personnel">
+                                            <i class="fa fa-plus"></i>
+                                           {{ _html.text('Ajouter') }}
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                {{ _html.table_row('Antécédent', {action: true}) }}
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_antecedent_personnel" class="collection list_antecedent_personnel">
+                                            {% for item in form.personnels %}
+                                                
+                                                {{ antecedent_personnel(item|e) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body-->
+
+                                </div>
+                                <!-- /.box -->
+
+                            </div>
+                            <div class="box-footer">
+                                <!-- Affections box -->
+                                <div class="box box-solid ">
+                                    <div class="box-header bg-light-blue-gradient">
+                                        <!-- tools box -->
+                                        <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+
+                                        <i class="fa fa-flash"></i>
+
+                                        <h3 class="box-title">
+                                            {{ _html.text('Antécédents Familiaux') }}
+                                        </h3>
+                                    </div>
+                                    <h5>{{ _html.text('Antécédents familiaux connus') }}</h5>
+                                        <ul>
+                                        {% for antecedent in patient.ligneAntecedents if antecedent.type == 'familial' %}
+                                            <li>{{ antecedent.antecedent }} ( {{ antecedent.lien }} )</li>
+                                            {% endfor %}
+                                        </ul>
+                                    <div class="box-footer no-border">
+                                        <button type="button" class="btn btn-default add_antecedent_familial"
+                                                id="add_antecedent_familial">
+                                            <i class="fa fa-plus"></i>
+                                            {{ _html.text('Ajouter') }}
+                                        </button>
+                                    </div>
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                               {{ _html.table_row(['Lien de parenté', 'Antécédent'], {action: true}) }}
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_antecedent_familial" class="collection list_antecedent_familial">
+                                            {% for item in form.familiaux %}
+                                                
+                                                {{ antecedent_familial(item|e) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body-->
+
+                                </div>
+                            </div>
+                                
+
+                            
+                            <div class="box-footer">
+                                <!-- Affections box -->
+                                <div class="box box-solid ">
+                                    <div class="box-header bg-light-blue-gradient">
+                                        <!-- tools box -->
+                                        <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+
+                                        <i class="fa fa-flash"></i>
+
+                                        <h3 class="box-title">
+                                            Signes Physiques
+                                        </h3>
+                                    </div>
+                                    <div class="box-footer no-border">
+                                        <button type="button" class="btn btn-default add_signe_physique"
+                                                id="add_signe_physique">
+                                            <i class="fa fa-plus"></i>
+                                           {{ _html.text('Ajouter') }}
+                                        </button>
+                                    </div>
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                               {{ _html.table_row(['Signe'], {action: true}) }}
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_signe_physique" class="collection list_signe_physique">
+                                            {% for item in form.physiques %}
+                                                
+                                                {{ physiques(item|e) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body-->
+
+                                </div>
+                                <!-- /.box -->
+
+                            </div>
+
+    
+                             <div class="box-footer">
+                                <!-- Medicaments box -->
+                                <div class="box box-solid ">
+                                     <div class="box-body">
+                                        {{ form_row_inline(form.diagnostique) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer">
+
+                                <!-- Analyses box -->
+                                <div class="box box-solid ">
+                                    <div class="box-header bg-light-blue-gradient">
+                                        <!-- tools box -->
+                                        <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+
+                                        <i class="fa fa-search-plus"></i>
+
+                                        <h3 class="box-title">
+                                            Examens/Explorations
+                                        </h3>
+                                    </div>
+                                    <div class="box-footer no-border">
+                                        <button type="button" class="btn btn-default add_analyse" id="add_analyse">
+                                            <i class="fa fa-plus"></i>
+                                           {{ _html.text('Ajouter') }}
+                                        </button>
+                                    </div>
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                {{ _html.table_row(['Analyse', 'Description'], {action: true}) }}
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_analyse" class="collection list_analyse">
+                                            {% for item in form.analyses %}
+                                                {{ analyses(item|e) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body-->
+
+                                </div>
+                                <!-- /.box -->
+
+                            </div>
+                              <div class="box-footer">
+                                <!-- Medicaments box -->
+                                <div class="box box-solid ">
+                                     <div class="box-body">
+                                        {{ form_row_inline(form.diagnostiqueFinal) }}
+                                         {{ form_row_inline(form.hospitalisation) }}
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="box-footer">
+                                <!-- Affections box -->
+                                <div class="box box-solid ">
+                                    <div class="box-header bg-light-blue-gradient">
+                                        <!-- tools box -->
+                                        <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+
+                                        <i class="fa fa-flash"></i>
+
+                                        <h3 class="box-title">
+                                           {{ _html.text('Affections chroniques') }}
+                                        </h3>
+                                    </div>
+                                    <div class="box-footer no-border">
+                                        <button type="button" class="btn btn-default add_affection"
+                                                id="add_affection">
+                                            <i class="fa fa-plus"></i>
+                                             {{ _html.text('Ajouter') }}
+                                        </button>
+                                    </div>
+                                    <h5>{{ _html.text('Affections connues du patient') }}</h5>
+                                        {% for affection in patient.affections %}
+                                            {% if loop.index == 1 %}
+                                                <ul>
+                                            {% endif %}
+                                            <li>{{ affection.affection }}</li>
+                                            {% if loop.last %}
+                                                </ul>
+                                            {% endif %}
+                                        {% endfor %}
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                               {{ _html.table_row(['Affection'], {action: true}) }}
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_affection" class="collection list_affection">
+                                            {% for item in form.affections %}
+                                                
+                                                {{ consultation_affections(item|e) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body-->
+
+                                </div>
+                                <!-- /.box -->
+
+                            </div>
+
+                            <div class="box-footer">
+                                <!-- Medicaments box -->
+                                <div class="box box-solid ">
+                                    <div class="box-header bg-light-blue-gradient">
+                                        <!-- tools box -->
+                                        <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+
+                                        <i class="fa fa-medkit"></i>
+
+                                        <h3 class="box-title">
+                                             {{ _html.text('Ordonnance') }}
+                                        </h3>
+                                    </div>
+                                    <div class="box-footer no-border">
+                                        <button type="button" class="btn btn-default add_medicament"
+                                                id="add_medicament">
+                                            <i class="fa fa-plus"></i>
+                                            {{ _html.text('Ajouter', 'consultation') }}
+                                        </button>
+                                        {{ allergie_traitement(patient) }}
+                                    </div>
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                {{ _html.table_row(['Médicament', 'Posologie', 'Détails'], {action: true}) }}
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_medicament" class="collection list_medicament">
+                                            {% for item in form.medicaments %}
+                                                {{ medicaments(item|e) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body-->
+
+                                </div>
+                                <!-- /.box -->
+
+                            </div>
+
+                            
+                            <div class="box-footer">
+                                <div class="box-body">
+                                    {{ form_row_inline(form.observation, {attr: {'rows': 8}}) }}
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                <div class="box-header with-border">
+                                    <div type="button" class="pull-left titre">RDV</div>
+                                </div>
+                                <div class="box-body">
+                                    {{ form_row_inline(form.rdv.libRendezVous) }}
+                                    {{ form_row_inline(form.rdv.dateRendezVous) }}
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                
+                                {{ form_widget(form.submit,{'attr':{'class':'btn btn-primary'}}) }}
+                                <!-- /.box -->
+                            </div>
+                            {{ form_widget(form._token) }}
+                            {{ form_end(form, {render_rest: false}) }}
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+        </section>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+     <script src="{{ asset('bundles/gestion/js/consultation.min.js') }}"></script>
+
+{% endblock %}
+{% block javascripts_inline %}
+    {{ parent() }}
+     {{ form_javascript(form) }}
+      <script>
+       init_select2('#{{ form.assurance.vars.id }}');
+     var $container = $('.list_files');
+    const $addLink = $('#add_file');
+    $addLink.click(function(e) {
+        addFile($container);
+        $('.btn-ajax').prop('disabled', $('.prototype_file').length == 0);
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+    });
+    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+    var index = $container.find('div.prototype_file').length;
+    var filestyle_options = {placeholder: 'No file', buttonText: 'Choisir'};
+    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+    /*if (index == 0) {
+     addimputation($container);
+     } else {*/
+    if (index > 0) {
+        // Pour chaque echantillon déjà existante, on ajoute un lien de suppression
+        $container.children('div.prototype_file').each(function() {
+            const $this = $(this);
+            init_fstyle($(this).find(":file"));
+
+            addDeleteLink($(this));
+        });
+    }
+    // La fonction qui ajoute un formulaire Categorie
+    function addFile($container) {
+        // Dans le contenu de l'attribut « data-prototype », on remplace :
+        // - le texte "__name__label__" qu'il contient par le label du champ
+        // - le texte "__name__" qu'il contient par le numéro du champ
+        var $prototype = $($("div#list-file").attr('data-prototype').replace(/__name__label__/g, 'file ' + (index + 1)).replace(/__name__/g, index));
+        // On ajoute au prototype un lien pour pouvoir supprimer la prestation
+        addDeleteLink($prototype);
+        // On ajoute le prototype modifié à la fin de la balise <div>
+        $container.append($prototype);
+
+        init_fstyle($prototype.find(":file"));
+
+
+    
+        index++;
+    }
+    // La fonction qui ajoute un lien de suppression d'une prestation
+    function addDeleteLink($prototype) {
+        // Création du lien
+        $deleteLink = $('<a href="#" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i></a>');
+        // Ajout du lien
+        $prototype.find(".del-col").not('.has-file').append($deleteLink);
+        // Ajout du listener sur le clic du lien
+        $deleteLink.click(function(e) {
+            const $parent = $(this).closest('.prototype_file');
+            $parent.remove();
+            if (index > 0) {
+                index -= 1;
+            }
+
+            //$('.btn-ajax').prop('disabled', $('.prototype_file').length == 0);
+            e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        });
+    }
+    </script>
+{% endblock %}
+
+    {% block page_title %}
+        Consultation :: MàJ
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}
+

@@ -1,0 +1,27 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+    {% block page_content %}
+     <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-danger">
+                <div class="box-header">
+                    <!-- Horizontal Form -->
+                    <div class="">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Liste des admissions</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                     <a href="#" onclick="return {{ grid.hash }}_reset();" class="btn btn-success"><i class="fa fa-repeat"></i></a>
+                    <a class="btn btn-default" data-toggle="modal" data-target="#modal-table"
+                            href="{{ path('gestion_admission_new') }}"
+                           ><i class="fa fa-plus"></i> Nouveau </a>
+                    {{ grid(grid, 'grid/blocks_js.jquery.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% endblock %}

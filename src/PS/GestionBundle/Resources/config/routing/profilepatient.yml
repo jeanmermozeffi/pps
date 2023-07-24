@@ -1,0 +1,8 @@
+admin_gestion_profilepatient_index:
+    path:     /
+    defaults: { _controller: "GestionBundle:ProfilePatient:index" }
+
+admin_gestion_profilepatient_index_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "GestionBundle:ProfilePatient:edit" }
+    methods:  [GET, POST]

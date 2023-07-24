@@ -1,0 +1,51 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+
+{% block stylesheets %}
+     {{ form_stylesheet(form) }}
+{% endblock %}
+
+
+{% block page_content %}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+        {{ form_start(form, {attr: {class: 'form_horizontal'}}) }}
+     <div class="row">
+        <section class="col-md-12">
+           <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Nouveau suivi</h3>
+                    <div class="box-tools pull-right">
+                      <!-- Buttons, labels, and many other things can be placed here! -->
+                      <!-- Here is a label for example -->
+                      
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                  <!-- /.box-header -->
+                <div class="box-body">
+                    {{ form_widget(form) }}
+                </div>
+                <div class="box-footer">
+                    <button class="btn btn-primary" type="submit">Valider</button>
+                </div>
+                  <!-- /.box-body -->
+                  
+                  <!-- box-footer -->
+            </div>
+                <!-- /.box -->
+        </section>
+    </div>
+     {{ form_end(form) }}
+            
+{% endblock %}
+
+{% block javascripts %}
+   <script src="{{ asset('public/js/admin.js') }}"></script>
+ {% endblock %}   
+{% block javascripts_inline %}
+     {{ form_javascript(form) }}
+    <script>
+        init_date_picker();
+    </script>
+     
+{% endblock %}

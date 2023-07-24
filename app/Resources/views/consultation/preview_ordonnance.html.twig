@@ -1,0 +1,20 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <iframe src="{{ path('admin_consultation_ordonnance_print',{'id': id}) }}"  width="100%" height="700px"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block page_title %}
+    Impression ordonnance
+{% endblock %}

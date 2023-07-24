@@ -1,0 +1,24 @@
+admin_parametre_lignevaccin_index:
+    path:     /
+    defaults: { _controller: "ParametreBundle:LigneVaccin:index" }
+    methods:  GET
+
+admin_parametre_lignevaccin_show:
+    path:     /{id}/show
+    defaults: { _controller: "ParametreBundle:LigneVaccin:show" }
+    methods:  GET
+
+admin_parametre_lignevaccin_new:
+    path:     /new
+    defaults: { _controller: "ParametreBundle:LigneVaccin:new" }
+    methods:  [GET, POST]
+
+admin_parametre_lignevaccin_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ParametreBundle:LigneVaccin:edit" }
+    methods:  [GET, POST]
+
+admin_parametre_lignevaccin_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ParametreBundle:LigneVaccin:delete" }
+    methods:  DELETE

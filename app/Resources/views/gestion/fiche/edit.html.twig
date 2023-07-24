@@ -1,0 +1,271 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% form_theme form 'widget/fields_mousso_horizontal.html.twig' %}
+{% from 'GestionBundle:Macros:macro.html.twig' import  info_patient %}
+{% import 'macros/fiche.html.twig' as _fiche %}
+{% block stylesheets %}
+    {{ parent() }}
+     {{ form_stylesheet(form) }}
+{% endblock %}
+{% block page_content %}
+    <div class="row" xmlns="http://www.w3.org/1999/html">
+
+        <section class="col-md-3 connectedSortable">
+
+            {{ info_patient(suivi.patient) }}
+
+        </section>
+
+        <!-- /.col -->
+        <section class="col-md-9">
+            <div class="nav-tabs-custom">
+                
+                <div class="tab-content">
+
+                    <div class="active tab-pane" id="nouvelle">
+                        
+                        <!-- general form elements -->
+                        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+                        <div id="list-constante" data-prototype="{{ _fiche.fiche_constante(form.constantes.vars.prototype)|e }}"></div>
+                        <div id="list-complication" data-prototype="{{ _fiche.fiche_complication(form.complications.vars.prototype)|e }}"></div>
+                        <div id="list-analyse" data-prototype="{{ _fiche.fiche_analyse(form.analyses.vars.prototype)|e }}"></div>
+                          <div id="list-antecedent" data-prototype="{{ _fiche.fiche_antedecedent(form.antecedents.vars.prototype)|e }}"></div>
+                        <div id="list-glycemie" data-prototype="{{ _fiche.fiche_glycemie(form.glycemies.vars.prototype)|e }}"></div>
+                             <div id="list-gc" data-prototype="{{ _fiche.fiche_gc(form.gcs.vars.prototype)|e }}"></div>
+                        
+                        <div class="">
+                            <div class="box box-warning box-solid">
+                                <div class="box-header with-border">
+                                  <h3 class="box-title">Données administratives</h3>
+
+                                  <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                  </div>
+                                  <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    {#{ form_row(form.cpn, {label_attr: {class: 'radio-inline'}}) }#}
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre">Antécédents</div>
+                                    </div>
+                                     <button type="button" class="btn btn-default add_antecedent add_line"
+                                                id="add_antecedent">
+                                            <i class="fa fa-plus"></i>
+                                            Ajouter autre
+                                        </button>
+                                     <table class="table  table-condensed table-antecedent">
+                                            <thead>
+                                              <tr>
+                                              <th>&nbsp;</th>
+                                              <th>&nbsp;</th>
+                                              <th>&nbsp;</th></tr>
+                                            </thead>
+                                            <tbody id="list_antecedent" class="collection list_antecedent">
+                                            {% for key, item in form.antecedents %}
+                                                
+                                                {{ _fiche.fiche_antedecedent(item|e, key, fiche.antecedents, true) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    <div class="row">
+                                        <div class="col-md-4">{{ form_row_inline(form.gestite) }}</div>
+                                        <div class="col-md-4">{{ form_row_inline(form.parite) }}</div>
+                                        <div class="col-md-4">{{ form_row_inline(form.ageGestationnel) }}</div>
+                                    </div>
+                                    
+                                </div>
+                                <!-- /.box-body -->
+                              </div>
+                              <div class="box box-warning box-solid">
+                                <div class="box-header with-border">
+                                  <h3 class="box-title">Examen et Première glycémie</h3>
+
+                                  <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                  </div>
+                                  <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre">Paramètres cliniques</div>
+                                    </div>
+                                    <button type="button" class="btn btn-default add_constante add_line"
+                                                id="add_constante">
+                                            <i class="fa fa-plus"></i>
+                                            Ajouter autre
+                                        </button>
+                                     <table class="table  table-condensed table-constante">
+                                            
+                                            <tbody id="list_constante" class="collection list_constante">
+                                            {% for key, item in form.constantes %}
+                                                
+                                                {{ _fiche.fiche_constante(item|e, key, fiche.constantes, true) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                     <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre">Glycémies</div>
+                                    </div>
+                                     <button type="button" class="btn btn-default add_glycemie add_line"
+                                                id="add_glycemie">
+                                            <i class="fa fa-plus"></i>
+                                            Ajouter autre
+                                        </button>
+                                     <table class="table table-condensed table-glycemie">
+                                            
+                                            <tbody id="list_glycemie" class="collection list_glycemie">
+                                            {% for key, item in form.glycemies %}
+                                                
+                                                {{ _fiche.fiche_glycemie(item|e, key, fiche.glycemies, true) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                </div>
+                                <!-- /.box-body -->
+                              </div>
+                               <div class="box box-warning box-solid">
+                                <div class="box-header with-border">
+                                  <h3 class="box-title">24è - 28è semaine d'aménhorée: Hypoglycémie Provoquée par Voie Orale (HGPO)</h3>
+
+                                  <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                  </div>
+                                  <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                  <div class="row">
+                                  <div class="col-md-6">
+                                    {{ form_row_inline(form.hgpo) }}
+                                  </div>
+                                  <div class="col-md-6">
+                                    {{ form_row_inline(form.typeHgpo) }}
+                                  </div>
+                                    </div>
+                                    <button type="button" class="btn btn-default add_gc add_line"
+                                                id="add_gc">
+                                            <i class="fa fa-plus"></i>
+                                            Ajouter autre
+                                        </button>
+                                     <table class="table table-condensed table-gc">
+                                            
+                                            <tbody id="list_gc" class="collection list_gcs">
+                                            {% for key, item in form.gcs %}
+                                                
+                                                {{ _fiche.fiche_gc(item|e, key, fiche.gcs, true) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                      <div type="button" class="pull-left titre">Examens</div>
+                                      <table class="table table-condensed table-analyse">
+                                            
+                                            <tbody id="list_analyse" class="collection list_analyse">
+                                            {% for key, item in form.analyses %}
+                                                
+                                                {{ _fiche.fiche_analyse(item|e, key, fiche.analyses, true) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    
+                                </div>
+                                <!-- /.box-body -->
+                              </div>
+                              <div class="box box-warning box-solid">
+                                <div class="box-header with-border">
+                                  <h3 class="box-title">Complications Obstétricales</h3>
+
+                                  <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                  </div>
+                                  <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                     <button type="button" class="btn btn-default add_complication add_line"
+                                                id="add_complication">
+                                            <i class="fa fa-plus"></i>
+                                            Ajouter autre
+                                        </button>
+                                     <table class="table table-condensed table-gc">
+                                            
+                                            <tbody id="list_complication" class="collection list_complication">
+                                            {% for key, item in form.complications %}
+                                                
+                                                {{ _fiche.fiche_complication(item|e, key, fiche.complications, true) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+
+                                    
+                                </div>
+                                <!-- /.box-body -->
+                              </div>
+                               <div class="box box-warning box-solid">
+                                <div class="box-header with-border">
+                                  <h3 class="box-title">Traitement</h3>
+
+                                  <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                  </div>
+                                  <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                   {{ form_row(form.traitement) }}
+                                </div>
+                                <!-- /.box-body -->
+                              </div>
+                              <div class="box-footer">
+                                <button type="reset" class="btn btn-default">
+                                    Effacer
+                                </button>
+                                 <button class="btn btn-warning">
+                                    Valider
+                                </button>
+                                
+                                <!-- /.box -->
+                            </div>
+
+                            {{ form_widget(form._token) }}
+                            {{ form_end(form, {render_rest: false}) }}
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+        </section>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts_inline %}
+  <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+     <script src="{{ asset('public/js/fiche.min.js') }}"></script>
+    {{ parent() }}
+     {{ form_javascript(form) }}
+{% endblock %}
+
+    {% block page_title %}
+       Modification - Dépistage et Suivi du diabète gestationnel
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}
+

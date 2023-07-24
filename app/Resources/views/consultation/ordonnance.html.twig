@@ -1,0 +1,194 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% from 'GestionBundle:Macros:macro.html.twig' import info_patient %}
+
+{% block page_content %}
+
+<div class="row">
+    <div class="col-md-12">
+        <a href="{{ path('admin_consultation_liste', {id: patient.id})}}" class="btn btn-default">
+            {{'ordonnance.back' | trans}}</a>
+    </div>
+        <section class="col-md-3 connectedSortable">
+
+            <!-- Profile Image -->
+            <div class="box box-solid">
+                <div class="box-header bg-light-blue-gradient">
+                    <!-- tools box -->
+                    <div class=" box-tools">
+                        <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                data-toggle="tooltip"  style="margin-right: 5px;">
+                            <i class="fa fa-minus"></i></button>
+                    </div>
+                    <!-- /. tools -->
+
+                    <i class="fa fa-user"></i>
+
+                    <h3 class="box-title">
+                        {{ 'consultation.form.info.tilte' | trans }}
+                    </h3>
+                </div>
+                <div class="box-body box-profile">
+                    {{ info_patient(patient) }}
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+        </section>
+
+        <form method="post">
+        <section class="col-md-9">
+            
+            <div class="box box-solid">
+                <div class="box-header bg-light-blue-gradient">
+                    <h3 class="box-title">{{'consultation.form.medicament.nom' | trans}}</h3>
+                </div>
+
+                <div class="box-body">
+                    
+                    <p>{{'consultation.form.info.medecin' | trans}}: 
+                        <strong>{{ consultation.medecin.personne.nomComplet }}</strong> | {{ consultation.medecin.personne.contact}}</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4> {{'ordonnance.allergie' | trans}} </h4>
+                            <ul>
+                                {% for allergie in patient.allergies %}
+                                    <li>{{ allergie.allergie }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                         <div class="col-md-6">
+                            <h4>{{'ordonnance.traitementTilte' | trans}}</h4>
+                            <ul>
+                                {% for traitement in patient.traitements %}
+                                    <li>{{ traitement.libTraitement }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>{{'consultation.medicament.nom' | trans}}</th>
+                                
+                                <th>{{'consultation.medicament.prix' | trans}}</th>
+                               
+                                <th>{{'consultation.medicament.commentaire' | trans}}</th>
+                               
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            {% set total = 0 %}
+                            {% for medicament in medicaments  %}
+                                {% set prixMedicament = medicament.lastOperation.prixMedicament|default(0) %}
+                                {% set total = total + prixMedicament %}
+                                <tr>
+                                    <td>
+                                        {{ medicament.medicament }} / {{ medicament.details }} ({{ medicament.posologie }})
+                                        {#<a href="#" data-target="substitition-{{ medicament.id }}" class="open-sub">Substitution</a>
+                                        <div class="substitition-{{ medicament.id }} small hide">
+                                            <div class="form-group">
+                                                <label>Médicament de substitution</label>
+                                                <input type="text" name="substitition[{{ medicament.id }}" class="form-control input-sm">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Posologie</label>
+                                                <input type="text" name="posologie[{{ medicament.id }}" class="form-control input-sm">
+                                            </div>
+                                        </div>#}
+                                    </td>
+                                    
+                                    <td width="20%" class="col-price">
+                                        {{ prixMedicament }}
+                                    </td>
+                                    
+                                    <td>
+                                        {{ medicament.lastOperation.commentaire|default('') }}
+                                    </td>
+                                    
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td colspan="2">Total</td>
+                                <td class="text-right"><span id="total_medicament">{{ total }}</span></td>
+                                <td colspan="1">&nbsp;</td>
+                            </tr>
+                        </tbody>        
+                    </table> 
+                    {#<div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Montant versé</label>
+                                <input type="number" name="montantVerse" value="0" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Monnaie rendue</label>
+                                <input type="number" name="montantRendu" value="0" class="form-control">
+                            </div>
+                        </div>
+                    </div>#}
+                    
+                </div>
+            </div>
+            
+             
+
+        </section>
+        </form>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/notify.js') }}"></script>
+    <script>
+        $('#id_pharmacie').select2({tags: true});
+        $('.open-sub').on('click', function () {
+            $(this).next('div').toggleClass('hide');
+        });
+
+        $('.ck-status').on('click', function () {
+            var $this = $(this);
+            //$this.closest('td').next('.col-price').find('input').prop('disabled', !$this.is(':checked'));
+        });
+
+
+
+        var $total = $('#total_medicament');
+        var oldTotalValue = +$total.data('currentValue');
+            
+        //var currentTotal = 
+        
+        
+
+        $('.input-price').on('input', function () {
+            var $this = $(this);
+            var $inputs = $('.input-price').not($this);
+            var currentTotal = 0;
+
+            $inputs.each(function () {
+                currentTotal += +this.value;
+            });
+
+            
+
+         
+            
+            $total.text(currentTotal + +($this.val()));
+        });
+    </script>
+{% endblock %}
+
+    {% block page_title %}
+        Medicaments Ordonnance {{ consultation.refConsultation }}
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}

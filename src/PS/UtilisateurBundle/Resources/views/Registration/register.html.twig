@@ -1,0 +1,220 @@
+
+
+{% extends "admin/login.html.twig" %}
+{% import 'GestionBundle:Macros:html.html.twig' as _html %}
+{% block stylesheet %}
+
+    <link rel="stylesheet" href="{{ asset('bundles/site/v2/css/parsley.min.css') }}" />
+
+{% endblock %}
+
+
+
+{#{% form_theme form ':widget:fields-register.html.twig' %}#}
+
+
+
+{% block fos_user_content %}
+
+    
+
+    {#{% if message %}
+
+        <div>{{ message|trans({}, 'FOSUserBundle') }}</div>
+
+    {% endif %}#}
+
+
+
+    <form  action="{{ path("fos_user_registration_register") }}" method="post" data-parsley-validate>
+
+        {{ form_errors(form) }}
+
+        {#{{ form_row(form.username) }}
+
+        {{ form_row(form.email) }}
+
+        {{ form_row(form.plainPassword) }}#}
+
+
+
+        <div class="form-group has-feedback">
+
+            {{ form_widget(form.username, { 'attr': {'placeholder': _html.text('registration.form.placeholder.username'), 'maxlength': 255, 'pattern': ".{2,}", 'class': 'validate-username'}}) }}
+
+            {#<input type="text" id="fos_user_registration_form_username" class="form-control" placeholder="Pseudo" name="fos_user_registration_form[username]" required="required" maxlength="255" pattern=".{2,}">#}
+
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+
+            {% include 'UtilisateurBundle:Rules:username.html.twig' %}
+
+        </div>
+
+        <div class="form-group has-feedback">
+
+            {{ form_widget(form.email, { 'attr': {'placeholder': _html.text('registration.form.placeholder.email')}}) }}
+
+            {#<input type="email" id="fos_user_registration_form_email" class="form-control" placeholder="Email" name="fos_user_registration_form[email]" required="required">#}
+
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+
+        </div>
+
+        <div class="form-group has-feedback">
+
+            {{ form_widget(form.contact, { 'attr': {'placeholder': _html.text('registration.form.placeholder.contact')}}) }}
+
+            {#<input type="email" id="fos_user_registration_form_email" class="form-control" placeholder="Email" name="fos_user_registration_form[email]" required="required">#}
+
+            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+
+        </div>
+
+        <div class="form-group has-feedback validate-password-group">
+
+            {{ form_widget(form.plainPassword.first, { 'attr': {'placeholder': _html.text('registration.form.placeholder.plainPassword.first'), 'class': 'validate-password', 'data-toggle': 'password'}}) }}
+
+            {#<input type="password" id="fos_user_registration_form_plainPassword_first" class="form-control" placeholder="Mot de passe" name="fos_user_registration_form[plainPassword][first]" required="required">#}
+
+             <span class="glyphicon glyphicon-lock form-control-feedback toggle-password hide" title="Montrer"></span>
+
+            {% include 'UtilisateurBundle:Rules:password.html.twig' %}
+
+        </div>
+
+        <div class="form-group has-feedback">
+
+            {{ form_widget(form.plainPassword.second, { 'attr': {'placeholder': _html.text('registration.form.placeholder.plainPassword.second'), 'data-parsley-equalto': '#fos_user_registration_form_plainPassword_first', 'data-parsley-trigger': 'input', 'data-parsley-equalto-message': 'Vos deux mots de passe ne correspondent pas', 'data-toggle': 'password'}}) }}
+
+            {#<input type="password" id="fos_user_registration_form_plainPassword_second" class="form-control" placeholder="Ressaisir le mot de passe" name="fos_user_registration_form[plainPassword][second]" required="required">#}
+
+           <span class="glyphicon glyphicon-log-in form-control-feedback toggle-password hide" title="Montrer"></span>
+
+        </div>
+
+        <div class="form-group has-feedback">
+
+            <div class="checkbox">
+
+                <label for="{{ form.condition.vars.id }}">
+
+                    <input type="checkbox" id="{{ form.condition.vars.id }}" name="{{ form.condition.vars.full_name }}" class=" checkbox" value="{{ form.condition.vars.value }}" required data-parsley-required-message="Veuillez accepter nos CGV" {% if form.condition.vars.data == 1 %}checked{% endif %} />
+                    {{ _html.text('registration.terms', 'admin', {'%link%': asset('uploads/CGV.docx')}, true) }}
+                    
+
+                   
+
+                </label>    
+
+            </div>
+
+
+
+        </div>
+
+        {% if form._token is defined %}
+
+            {{ form_row(form._token) }}
+
+        {% endif %}
+
+       
+
+        <div class="row">
+
+            <div class="col-xs-8">
+
+                {#<div class="checkbox icheck">
+
+                    <label>
+
+                        <input type="checkbox"> J'accepte less <a href="#">conditions et règlements</a>
+
+                    </label>
+
+                </div>#}
+
+            </div>
+
+            <!-- /.col -->
+
+            <div class="col-xs-4">
+
+                <button type="submit" class="btn btn-primary btn-block btn-flat" id="submit" name="_submit">
+
+                    {{ 'registration.submit'|trans({}, 'FOSUserBundle') }}
+
+                </button>
+
+            </div>
+
+            <!-- /.col -->
+
+            {#<input id="modal--2" type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />#}
+
+
+
+        </div>
+
+    </form>
+
+
+
+    <!-- /.social-auth-links -->
+
+
+
+    <a href="{{ path("fos_user_security_login") }}" class="text-center">{{ _html.text('registration.has_account') }}</a>
+
+
+
+    <div class="modal fade" id="conditions" role="dialog">
+
+    <div class="modal-dialog">
+
+
+
+      <!-- Modal content-->
+
+      <div class="modal-content">
+
+        <div class="modal-header">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4><span class="glyphicon glyphicon-lock"></span> Termes et conditions</h4>
+
+        </div>
+
+        <div class="modal-body">
+
+          
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div> 
+
+
+
+{% endblock fos_user_content %}
+
+
+
+{% block javascript %} 
+
+    <script src="{{ asset('bundles/site/v2/js/parsley.min.js') }}"></script>
+
+    <script src="{{ asset('bundles/site/v2/js/i18n/fr.js') }}"></script>
+
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+
+{% endblock %}
+{% block title %}Créer un compte{% endblock %}
+
+
+{% block entete %}{{ _html.text('registration.registration_text') }}{% endblock %}
+

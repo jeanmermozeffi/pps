@@ -1,0 +1,103 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% import 'GestionBundle:Macros:html.html.twig' as _html %}
+{% block stylesheets %}
+    {{ parent() }}
+     {{ form_stylesheet(form) }}
+{% endblock %}
+{% block page_content %}
+    {{ form_start(form, {attr: {class: 'form_horizontal'}}) }}
+     <div class="row">
+        <section class="col-md-12">
+           <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ _html.text('rdv.new') }}</h3>
+                    <div class="box-tools pull-right">
+                      <!-- Buttons, labels, and many other things can be placed here! -->
+                      <!-- Here is a label for example -->
+                      
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                  <!-- /.box-header -->
+                <div class="box-body">
+                    {{ form_errors(form) }}
+                    
+                    {% if form.specialite is defined %}
+                      {{ form_row(form.specialite) }}
+                    {% endif %}
+                    {% if form.medecin is defined %}
+                      {{ form_row(form.medecin) }}
+                    {% endif %}
+
+                    {{ form_row(form.dateRendezVous) }}
+                    {% if form.identifiant is defined %}
+                    {{ form_row(form.identifiant) }}
+                    {% endif %}
+                    {% if form.pin is defined %}
+                    {{ form_row(form.pin) }}
+                    {% endif %}
+                    {{ form_row(form.libRendezVous) }}
+                    
+                    {{ form_row(form._token)}}
+                   
+                </div>
+                <div class="box-footer">
+                    <button class="btn btn-primary" type="submit">{{ _html.text('btn.validate') }}</button>
+                </div>
+                  <!-- /.box-body -->
+                  
+                  <!-- box-footer -->
+            </div>
+                <!-- /.box -->
+        </section>
+    </div>
+     {{ form_end(form, {render_rest: false}) }}
+
+     
+{% endblock %}
+{% block javascripts_inline %}
+    {{ parent() }}
+     {{ form_javascript(form) }}
+
+     <script>
+
+     $('#ps_gestionbundle_rdv_specialite').change(function () {
+            var specialiteSelector = $(this);
+
+            var medecinSelect = $("#ps_gestionbundle_rdv_medecin");
+
+
+            if (medecinSelect.length) {
+                $.ajax({
+                    url: "{{ path('admin_parametre_specialite_medecin') }}",
+                    type: "GET",
+                    dataType: "JSON",
+                    data: {
+                        specialite: specialiteSelector.val()
+                    },
+                    success: function (medecins) {
+                        
+
+                        // Remove current options
+                        medecinSelect.html('');
+                        
+                        // Empty value ...
+                        medecinSelect.append('<option value> Selection un medecin  ' + specialiteSelector.find("option:selected").text() + ' ...</option>');
+                        
+                        
+                        $.each(medecins, function (key, medecin) {
+                            medecinSelect.append('<option value="' + medecin.id + '">' + medecin.name + '</option>');
+                        });
+                    },
+                    error: function (err) {
+                        alert("An error ocurred while loading data ...");
+                    }
+                });
+            }
+            
+            // Request the medecins of the selected specialite.
+            
+        });
+      
+     </script>
+{% endblock %}

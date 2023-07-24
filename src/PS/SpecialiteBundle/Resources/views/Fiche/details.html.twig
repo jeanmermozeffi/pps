@@ -1,0 +1,53 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+    {% block stylesheets %}
+    {{ parent() }}
+     
+     <style>
+     .radio-inline label {font-weight: normal;}
+     .form-group {margin-bottom: 5px;}
+     /*.form-horizontal .mleft.is-parent {margin-left: 30px;}
+     .form-horizontal .mleft{margin-left: 80px;}*/
+     </style>
+{% endblock %}
+{% block page_content %}
+    <div class="btn-group" role="group" aria-label="Basic example">
+        {% for etape in etapes %}
+            <a href="{{ path('admin_specialite_fiche_details', {fiche: fiche.id, etape: etape.id}) }}" class="btn btn-default btn-sm">{{ etape.libEtape }}</a>
+        {% endfor %}
+    </div>
+    {% if etape %}
+    {{ form_start(form, {'attr': {id: 'form_fiche'}}) }}
+    <div class="alert alert-success ajax-success hide"></div>
+    <div class="alert alert-danger ajax-error hide"></div>
+    {{ form_widget(form._token, {id: form._token.vars.id ~ '_' ~ etape.id }) }}
+    {{ form_widget(form) }}
+
+    <div class="loader text-center hide">
+        <i class="fa fa-spinner fa-pulse"></i>
+    </div>
+    
+    {{ form_end(form) }}
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('dropzone/dist/min/bootstrap-filestyle.min.js') }}"></script>
+     <script src="{{ asset('bundles/gestion/js/fr.js') }}"></script>
+     <script src="{{ asset('public/js/jquery.form.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/profil.js') }}"></script>
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+     <script src="{{ asset('bundles/specialite/js/fields.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+    
+
+{% endblock %}
+
+{% block page_title %}
+  Données de la fiche
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

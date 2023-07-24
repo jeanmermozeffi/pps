@@ -1,0 +1,24 @@
+admin_parametre_affection_index:
+    path:     /
+    defaults: { _controller: "ParametreBundle:Affection:index" }
+    methods:  GET
+
+admin_parametre_affection_show:
+    path:     /{id}/show
+    defaults: { _controller: "ParametreBundle:Affection:show" }
+    methods:  GET
+
+admin_parametre_affection_new:
+    path:     /new
+    defaults: { _controller: "ParametreBundle:Affection:new" }
+    methods:  [GET, POST]
+
+admin_parametre_affection_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ParametreBundle:Affection:edit" }
+    methods:  [GET, POST]
+
+admin_parametre_affection_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ParametreBundle:Affection:delete" }
+    methods:  DELETE

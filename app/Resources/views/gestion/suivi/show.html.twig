@@ -1,0 +1,58 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% from 'GestionBundle:Macros:macro.html.twig' import  info_patient %}
+{% import 'macros/fiche.html.twig' as _fiche %}
+
+{% block page_content %}
+    <div class="row" xmlns="http://www.w3.org/1999/html">
+
+        <section class="col-md-3 connectedSortable">
+
+            {{ info_patient(suivi.patient, true) }}
+
+        </section>
+
+        <!-- /.col -->
+        <section class="col-md-9">
+            <div class="nav-tabs-custom">
+                
+                <div class="tab-content">
+
+                    <a href="{{  path('gestion_suivi_new_patient', {patient: patient.id}) }}" class="btn-success btn">Nouveau</a>
+
+                    <div class="active tab-pane" id="nouvelle">
+                        
+                      <p>Affection: <strong>{{ suivi.affection.affection }}</strong></p>
+                      <p>Medecin: <strong>{{ suivi.medecin.personne.nomComplet }}</strong></p>
+                      <p>Date: <strong>{{ suivi.date|date('d/m/Y') }}</strong></p>
+                      <p>Hopital: <strong>{{ suivi.hopital.nom }}</strong></p>
+                      <h4>Détails</h4>
+                      <p>{{ suivi.details}}
+                    </div>
+                    <!-- /.tab-pane -->
+
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+        </section>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts_inline %}
+  <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+     <script src="{{ asset('public/js/fiche.min.js') }}"></script>
+    {{ parent() }}
+
+{% endblock %}
+
+    {% block page_title %}
+      Historique Suivi
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}
+

@@ -1,0 +1,14 @@
+password:
+  require_special: Your password must include at least one special character.
+  require_lower_upper: Your password must include one lower and upper case letter.
+  require_number: Your password must include at least one number.
+  require_lower: Your password must include one lower case letter.
+  require_upper: Your password must include one upper case letter.
+  require_casediff: Your password must include both upper and lower case letters.
+  minlength: Your password must be at least {{length}} characters long. 
+
+username:
+  alphanumeric: 'The string "{{ string }}" contains an illegal character: it can only contain letters or dash (_).'
+
+pass:
+  id_pin_not_found: The ID + Pin couple does not exist in our database or is not active or has already been used 

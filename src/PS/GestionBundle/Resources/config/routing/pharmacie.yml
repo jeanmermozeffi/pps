@@ -1,0 +1,67 @@
+admin_pharmacie_search:
+    path:     /search
+    defaults: { _controller: "GestionBundle:Pharmacie:search" }
+    methods:  [GET, POST]
+
+admin_pharmacie_index:
+    path:     /
+    defaults: { _controller: "GestionBundle:Pharmacie:index" }
+
+admin_pharmacie_add:
+    path:     /add
+    defaults: { _controller: "GestionBundle:Pharmacie:new" }
+
+
+admin_pharmacie_verif:
+    path: /verif/{consultation}
+    defaults: {_controller: "GestionBundle:Pharmacie:verificationMedicament", consultation: null}
+
+
+admin_pharmacie_export:
+    path:     /export
+    defaults: { _controller: "GestionBundle:Pharmacie:export" }
+
+admin_pharmacie_garde:
+    path:     /garde
+    defaults: { _controller: "GestionBundle:Pharmacie:gardePharmacie" }
+
+
+admin_pharmacie_liste:
+    path:     /liste
+    defaults: { _controller: "GestionBundle:Pharmacie:listeMedicaments" }
+
+admin_pharmacie_dispo:
+    path:     /disponibilite
+    defaults: { _controller: "GestionBundle:Pharmacie:disponibiliteMedicaments" }
+
+admin_pharmacie_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "GestionBundle:Pharmacie:edit" }
+
+
+admin_pharmacie_show:
+    path:     /{id}/show
+    defaults: { _controller: "GestionBundle:Pharmacie:show" }
+
+admin_pharmacie_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "GestionBundle:Pharmacie:delete" }
+
+
+admin_pharmacie_historique:
+    path:     /historique
+    defaults: { _controller: "GestionBundle:Pharmacie:historique" }
+    methods:  GET
+
+admin_pharmacie_ordonnance:
+    path: /ordonnances/{id}
+    defaults: { _controller: "GestionBundle:Pharmacie:ordonnance", id: null }
+
+admin_pharmacie_medicament:
+    path: /medicaments/{patient}/{id}
+    defaults: { _controller: 'GestionBundle:Pharmacie:medicament'}
+
+admin_pharmacie_historique_med:
+    path: /medicaments/historique/{patient}/{id}
+    defaults: { _controller: 'GestionBundle:Pharmacie:historique'}
+

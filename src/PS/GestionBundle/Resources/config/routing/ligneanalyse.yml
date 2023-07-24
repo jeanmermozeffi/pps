@@ -1,0 +1,24 @@
+admin_gestion_ligneanalyse_index:
+    path:     /
+    defaults: { _controller: "GestionBundle:LigneAnalyse:index" }
+    methods:  GET
+
+admin_gestion_ligneanalyse_show:
+    path:     /{id}/show
+    defaults: { _controller: "GestionBundle:LigneAnalyse:show" }
+    methods:  GET
+
+admin_gestion_ligneanalyse_new:
+    path:     /new
+    defaults: { _controller: "GestionBundle:LigneAnalyse:new" }
+    methods:  [GET, POST]
+
+admin_gestion_ligneanalyse_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "GestionBundle:LigneAnalyse:edit" }
+    methods:  [GET, POST]
+
+admin_gestion_ligneanalyse_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "GestionBundle:LigneAnalyse:delete" }
+    methods:  DELETE

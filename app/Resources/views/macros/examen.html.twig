@@ -1,0 +1,16 @@
+
+{% macro ligne_examen(ligne, key, lignes) %}
+   {% import 'widget/macro.html.twig' as psm %}
+        <div class="box-footer">
+            <div class="box box-solid ">
+                {{ psm.box_header(lignes[key].libelle) }}
+                <div class="box-body table-responsive">
+                    <div class="hide"> {{ form_row(ligne.libelle) }}</div>
+                {{ form_row(ligne.details) }}
+                {{ form_row(ligne.diagnostic) }}
+                </div>
+            </div>
+        </div>
+   
+   
+{% endmacro %}

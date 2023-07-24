@@ -1,0 +1,30 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+    {% block page_content %}
+     <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-danger">
+                <div class="box-header">
+                    <!-- Horizontal Form -->
+                    <div class="">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Liste des abonnements et Achats</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                     <a href="#" onclick="return {{ grid.hash }}_reset();" class="btn btn-success"><i class="fa fa-repeat"></i></a>
+                    {% if not last_abo or last_abo.pack.alias == 'PACK_FREE' %}
+                        {% set pass = last_abo ? last_abo.pass.id : null %}
+                        <a href="{{ path('admin_gestion_abonnement_commande', {pass: pass}) }}" class="btn btn-success">Abonnement - Achat Bracelet/Carte</a>
+                        
+                    {% endif %}
+                    
+                    {{ grid(grid, 'grid/blocks_js.jquery.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% endblock %}

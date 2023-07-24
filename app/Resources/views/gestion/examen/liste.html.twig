@@ -1,0 +1,72 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% from 'macros/patient.html.twig' import info_patient, allergie_traitement %}
+{% block stylesheets %}
+    {{ parent() }}
+    
+{% endblock %}
+{% block page_content %}
+
+<div class="row" xmlns="http://www.w3.org/1999/html">
+
+        <section class="col-md-3 connectedSortable">
+
+            <!-- Profile Image -->
+            <div class="box box-solid">
+                <div class="box-header bg-light-blue-gradient">
+                    <!-- tools box -->
+                    <div class=" box-tools">
+                        <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                data-toggle="tooltip"  style="margin-right: 5px;">
+                            <i class="fa fa-minus"></i></button>
+                    </div>
+                    <!-- /. tools -->
+
+                    <i class="fa fa-user"></i>
+
+                    <h3 class="box-title">
+                        Patient
+                    </h3>
+                </div>
+                <div class="box-body box-profile">
+                    {{ info_patient(consultation.patient) }}
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+        </section>
+
+        <!-- /.col -->
+        <section class="col-md-9">
+            <form method="POST" action="{{ path('gestion_examen_examen', {consultation: consultation.id}) }}">
+            <p>Medecin traitant: <strong>{{ consultation.medecin.personne.nomComplet }}</strong></p>
+            <p>Hopital: <strong>{{ consultation.hopital.nom }}</strong></p>
+            <div class="alert alert-success">Veuillez cocher les examens à effectuer et cliquer sur "Suivant"</div>
+            <div class="list-group">
+                {% for key, examen in examens %}
+                    <div class="list-group-item"><input type="checkbox" name="examen[]" value="{{ examen.analyse }}" checked="checked"> {{ examen.analyse }}</div>
+                {% endfor %}
+            </div>
+            <button class="btn btn-info">Suivant</button>
+            </form>
+            <!-- /.nav-tabs-custom -->
+        </section>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+{% block javascripts_inline %}
+    <script src="{{ asset('bundles/gestion/js/consultation.min.js') }}"></script>
+    
+{% endblock %}
+
+    {% block page_title %}
+        Liste des examens
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}
+

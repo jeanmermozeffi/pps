@@ -1,0 +1,36 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <!-- Horizontal Form -->
+                    <div class="">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Champs des statistiques spécialité {{ specialite.nom }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <a href="{{ path ('admin_specialite_stats_list', {id: specialite.id}) }}" class="btn btn-success"><i class="fa fa-repeat"></i></a>
+
+                     {{ render(controller('PSSpecialiteBundle:Statistique:new', {'id': specialite.id})) }}
+
+                     
+                    {{ grid(grid) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts_inline %}
+     <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+    <script>
+        $('modal').find('select').select2();
+    </script>
+{% endblock %}
+{% block page_title %}
+  Champs Stats par spécialité
+{% endblock %}

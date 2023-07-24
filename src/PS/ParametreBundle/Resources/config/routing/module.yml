@@ -1,0 +1,15 @@
+admin_parametre_module_index:
+    path:     /
+    defaults: { _controller: ParametreBundle:Module:index }
+
+admin_parametre_module_new:
+    path:     /new
+    defaults: { _controller: ParametreBundle:Module:new }
+
+admin_parametre_module_edit:
+    path:     /{module}/edit
+    defaults: { _controller: ParametreBundle:Module:edit }
+
+admin_parametre_module_delete:
+    path:     /{module}/delete
+    defaults: { _controller: ParametreBundle:Module:delete }

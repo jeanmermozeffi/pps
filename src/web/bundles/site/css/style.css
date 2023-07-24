@@ -1,0 +1,135 @@
+@charset "utf-8";
+/* CSS Document */
+@font-face {
+  font-family: 'raleway';
+  src: url('../fonts/raleway/Raleway-BlackItalic.ttf');
+  src: url('../fonts/raleway/Raleway-BlackItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'raleway';
+  src: url('../fonts/raleway/Raleway-LightItalic.ttf');
+  src: url('../fonts/raleway/Raleway-LightItalic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'raleway';
+  src: url('../fonts/raleway/Raleway-Bold.ttf');
+  src: url('../fonts/raleway/Raleway-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'raleway';
+  src: url('../fonts/raleway/Raleway-Light.ttf');
+  src: url('../fonts/raleway/Raleway-Light.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+/**/
+body{
+	font-family:raleway;
+}
+.MR8{
+	margin-right:8px;
+}
+span{
+	font-family:FontAwesome;
+}
+/*#wrapper{
+	max-width:1280px;²
+	margin:auto;
+}
+*/
+/*#logo{
+	padding-top:10px;}
+*/
+.contain-to-grid{
+  	border-bottom:#ddd solid 3px; 
+	color:#000;
+}
+.top-bar-section{
+	font-family:raleway;
+	font-size:18px;
+}
+.sf-menu{
+	*font-size:24px;
+}
+.banner{
+	text-align:center;
+	alignment-adjust:central;
+ 	border-bottom:#ddd solid 3px; 
+}
+.param-menu ul li{
+	list-style:none;
+	padding:2px 4px;
+}
+section, footer{
+	padding:20px 0 30px 0;
+}
+#contenu section h3{
+	color:#bf432b;
+	text-align: justify;
+}
+.panel{
+	border:none;
+	background-color:transparent;
+}
+.panel h5{
+	font-family:raleway;
+	*font-weight:bold;
+	font-size:30px;
+	color:#bf432b;
+}
+.panel p{
+	text-align:justify;
+}
+.button {
+	font-family:raleway;
+}
+section#prestation, section#adresses{
+	background-color:#eee;
+}
+section#application{
+	background-color:#fff;
+}
+section#presentation p{
+	font-size:36px;
+}
+section.top-bar-section, section#foot-powered{
+	padding:0px;
+}
+img.profil{
+	border:#eee solid 1px;
+	-moz-border-radius:15px;
+	padding:3px;
+}
+div#sm_parametrebundle_patient_dateNaissance select{
+	display: inline-block;
+}
+footer{
+	background-color:#bf432b;
+	color:#FFF;
+}
+.fa-plus-square-o{
+	color:red;
+}
+footer h3{
+	color:#333;
+}
+footer a{
+	color:#eee;
+}
+footer #foot-prest ul, footer #foot-plan ul, footer #foot-contact ul, .prestation > ul{
+	list-style:none;
+}
+#foot-sociaux{
+	text-align:center;
+	padding:15px 0 15px 0;
+}
+#foot-powered{
+	*text-align:right;
+	background-color:#393939;
+}

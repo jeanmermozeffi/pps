@@ -1,0 +1,24 @@
+admin_parametre_type_etat_index:
+    path:     /
+    defaults: { _controller: "ParametreBundle:TypeEtat:index" }
+    methods:  [GET,POST]
+
+admin_parametre_type_etat_show:
+    path:     /{id}/show
+    defaults: { _controller: "ParametreBundle:TypeEtat:show" }
+    methods:  GET
+
+admin_parametre_type_etat_new:
+    path:     /new
+    defaults: { _controller: "ParametreBundle:TypeEtat:new" }
+    methods:  [GET, POST]
+
+admin_parametre_type_etat_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ParametreBundle:TypeEtat:edit" }
+    methods:  [GET, POST]
+
+admin_parametre_type_etat_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ParametreBundle:TypeEtat:delete" }
+    methods:  DELETE

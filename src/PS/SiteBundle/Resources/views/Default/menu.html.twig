@@ -1,0 +1,160 @@
+<!-- Top Bar-->
+
+{% from 'SiteBundle:Default:macro.html.twig' import form_id_pin %}
+<div class="top">
+    <div class="row">
+        <div class="container">
+            {{ form_id_pin(form, lang, true) }}
+            <div class="col-md-3 col-xs-12">
+
+                <div class="logo">
+
+                    <a href="index.html"><img alt="" src="{{ asset('bundles/site/v3/images/logo.png')}}"></a>
+
+                </div>
+
+            </div>
+
+            
+
+            <div class="col-md-9 col-xs-12">
+
+                <ul class="nav nav-pills pull-right">
+                    <li class=""> 
+                        <a href="https://vente.paiementpro.net/paiement-carte-de-santÉ/880" class="btn btn-sm btn-new">
+                            <i class="fa fa-money"></i> {{ 'Achat timbre csn' | trans }}
+                        </a>
+                    </li>
+                    {% if not app.user %}
+
+                    <li class=""> 
+                        <a href="{{ path("fos_user_security_login") }}" class="btn btn-sm btn-new">
+                            <i class="fa fa-user"></i> {{ 'home.menu.login' | trans }}
+                        </a>
+                    </li>
+
+                        <li class="">
+                            <a href="{{ path("admin_gestion_patient_new") }}" class="btn btn-sm btn-new">
+                                <i class="fa fa-user-plus"></i> Créer mon compte patient
+                            </a>
+                        </li>
+{#}
+                    <li> <a href="{{ path("fos_user_registration_register") }}" class="btn btn-sm btn-default"><i
+
+                                class="fa fa-pencil"></i> {{ 'home.menu.register' | trans }} </a>
+
+                    </li>#}
+
+                    {% else %}
+{#}
+                    <li> <a href="{{ path("fos_user_registration_register") }}" class="btn btn-sm btn-default"><i
+
+                                class="fa fa-pencil"></i> {{ 'home.menu.account' | trans }} </a>
+                    </li>
+#}
+                    <li class=""> <a href="{{ path("psm_logout") }}" class="btn btn-sm btn-new"><i
+
+                                class="fa fa-user"></i> {{ 'home.menu.logout' | trans }}</a>
+
+                    </li>
+
+                    {% endif %}
+
+                    <li> <a id="js-pharmagarde" href="https://www.abidjan.net/sante/pharmacies/"
+
+                            class="btn btn-sm btn-default image-clignote ">
+
+                            <i class=" fa fa-medkit" aria-hidden="true"></i>
+
+                            {{ 'home.menu.pharmacie_garde' | trans }}</a>
+
+                    </li>
+
+                    <li>
+
+                        {% set lang = app.request.locale|default('FR') %}
+
+                        {% set langs = ['fr', 'en', 'es'] %}
+
+                        <a href="#" class="btn btn-sm btn-default" id="btnLang" data-toggle="dropdown"
+
+                            aria-haspopup="true" aria-expanded="false" role="button"><i class="fa fa-globe"></i>
+
+                            {{ lang }} <span class="caret"></span></a>
+
+
+
+                        <ul class="dropdown-menu dropdown-lang" aria-labelledby="btnLang">
+
+                            {% for _lang in langs %}
+
+                            <li><a href="{{ path('homepage', {_locale: _lang}) }}"
+
+                                    style="display:block;padding:5px 10px" {% if lang == _lang %}class="active"
+
+                                    {% endif %}>{{ _lang }}</a></li>
+
+                            {% endfor %}
+
+                        </ul>
+
+                    </li>
+
+                    <!-- <li> <a id="js-pharmagarde" href="{{ path('homepage') }}" class="btn btn-sm btn-default ">
+
+                            <i class=" fa fa-medkit" aria-hidden="true"></i> Devenir Partenaire </a>
+
+                    </li> -->
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- End of Top Bar-->
+
+
+
+<!-- Main Menu -->
+
+<div class="main_menu">
+
+    <div class="row">
+        <div class="container">
+            <div class="col-sm-8">
+                <nav id="desktop-menu">
+                    <ul class="sf-menu" id="navigation">
+                        <li class="current"> <a href="{{ path('homepage') }}#">{{ 'home.menu.home' | trans }}</a>
+                        </li>
+                        <li>
+                            <a class="js-scrollTo" href="#contact-info">{{ 'home.menu.contact' | trans }}
+                            </a>
+                        </li>
+                        <li> <a href="#partenaires">Nos partenaires</a></li>
+                        <li> <a href="{{ path('site_faq') }}">FAQ</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+
+
+            <div class="col-sm-12 col-md-4 form-id-block-wrapper">
+
+               {{ form_id_pin(form, lang) }}
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- End of Main Menu -->

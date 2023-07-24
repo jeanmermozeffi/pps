@@ -1,0 +1,158 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% from 'GestionBundle:Macros:macro.html.twig' import info_patient, constante  %}
+
+{% form_theme form 'widget/fields_mousso_horizontal.html.twig' %}
+{% block page_content %}
+
+<div class="row" xmlns="http://www.w3.org/1999/html">
+
+        <section class="col-md-3 connectedSortable">
+
+             {{ info_patient(patient, true) }}
+
+        </section>
+
+        <!-- /.col -->
+        <section class="col-md-9">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                   
+                    <li class="active"><a href="{{ path ('admin_gestion_infirmier_patient') }}">Nouvelles
+                            constantes</a></li>
+                </ul>
+                <div class="tab-content">
+
+                    <div class="active tab-pane" id="nouvelle">
+                        {{ form_errors(form) }}
+                        <!-- general form elements -->
+                        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+                        
+                        <div class="">
+                            {#<div class="right col-md-3">
+                                {{ form_widget(form.dateConsultation) }}
+                            </div>#}
+                            <!-- /.box-header -->
+                            <div class="box-footer">
+
+                                 <div class="col-md-5">
+
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre success">Médecin Traitant</div>
+                                    </div>
+
+                                    <div class="box-body">
+                                        {{ form_row_inline(form.medecin) }}
+                                        {{ form_row_inline(form.specialite) }}
+                                        
+
+                                        
+
+                                    </div>
+                                    <!-- /.box-body -->
+
+
+                                </div>
+
+                               
+                                <div class="col-md-7 barre ">
+
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre">Constantes</div>
+                                    </div>
+
+                                    <div class="box-body">
+                                         {% for key, item in form.constantes %}
+                                            {{ constante(item|e, key, constantes) }}
+                                        {% endfor %}
+                                        
+                                    </div>
+                                    <!-- /.box-body -->
+
+
+                                </div>
+
+                               
+                            </div>
+                            {% if not consultation.id %}
+                            <div class="box-footer">
+                                {{ form_widget(form.submit,{'attr':{'class':'btn btn-primary'}}) }}
+                                
+                                <!-- /.box -->
+                            </div>
+                            {% endif %}
+                             {{ form_widget(form._token, {id: form._token.vars.id ~ '_new' })}}
+                            
+                            {{ form_end(form, {render_rest: false}) }}
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+        </section>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/main.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+{% endblock %}
+{% block javascripts_inline %}
+    {{ parent() }}
+     {{ form_javascript(form) }}
+
+     <script>
+
+     $('#{{ form.medecin.vars.id }}').change(function () {
+            var medecinSelector = $(this);
+
+            var oldSpecialite = "{{ consultation.specialite.id|default(0) }}";
+
+            if (medecinSelector.val()) {
+                $.ajax({
+                url: Routing.generate('admin_config_medecin_specialites', {id: medecinSelector.val()}),
+                type: "GET",
+                dataType: "JSON",
+                
+                success: function (specialites) {
+                    var specialiteSelect = $("#{{ form.specialite.vars.id }}");
+
+                    // Remove current options
+                    specialiteSelect.html('');
+
+                   
+                    
+                    
+                    $.each(specialites, function (key, specialite) {
+                        specialiteSelect.append('<option value="' + specialite.id + '">' + specialite.name + '</option>');
+                    });
+                },
+                error: function (err) {
+                    console.warn("An error ocurred while loading data ...");
+                }
+            });
+            }
+            
+            // Request the medecins of the selected specialite.
+            
+        }).trigger('change');
+      
+     </script>
+{% endblock %}
+
+    {% block page_title %}
+        {{ title }}
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}
+

@@ -1,0 +1,3 @@
+admin_statistique_index:
+    path:     /
+    defaults: { _controller: "GestionBundle:Statistique:index" }

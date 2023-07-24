@@ -1,0 +1,183 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% form_theme form 'widget/bootstrap_3_horizontal_layout_4_8.html.twig' %}
+{% import 'GestionBundle:Macros:html.html.twig' as _html %}
+{% block stylesheets %}
+    {{ parent() }}
+      <link rel="stylesheet" href="{{ asset('public/css/parsley.css') }}" />
+      <style>
+        .bg-image {
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .image-preview {
+            height: 100px;
+            width: 150px;
+        }
+      </style>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <!-- /.col -->
+        <div class="col-md-12">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#info" data-toggle="tab">{{ _html.text('profile.edit') }} <!--Modifier Profil--></a></li>
+                </ul>
+                <div class="tab-content">
+
+                    <div class="active tab-pane" id="info">
+                        <div class="box-footer">
+                            {#<a href="{{ path ('fos_user_change_password') }}" type="button"
+                               class="btn btn-success pull-left" title="Changer de mot de passe">
+                                <i class="fa fa-edit"></i> Changer de mot de passe
+                            </a>#}
+                            <a href="{{ path ('utilisateur_admin_profile_utilisateur_show')}}" type="button" class="btn btn-default pull-right" title="Afficher">
+                                <i class="fa fa-list-alt"></i> {{ _html.text('profile.details') }}
+                            </a>
+                        </div>
+                        {% if errors %}
+                            <div class="alert alert-danger">
+                                {% for error in errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'data-parsley-validate': true} }) }}
+                        <div class="box-footer">
+                            <div class="box-header with-border">
+                                <div type="button" class="pull-left titre">{{ _html.text('profile.login_settings') }}</div>
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="box-body">
+                                    {{ form_row(form.username, { 'attr': {'maxlength': 255, 'pattern': ".{2,}", 'class': 'validate-username'}}) }}
+                                   <div class="col-md-8 col-md-offset-4">
+                                        {% include 'UtilisateurBundle:Rules:username.html.twig' %}
+                                    </div>
+                                   
+                                   {{ form_row(form.email) }}
+                                    {{ form_row(form.plainPassword.first, { 'attr': {'class': 'validate-password'}}) }}
+                                    
+                                    <div class="col-md-8 col-md-offset-4">
+                                        {% include 'UtilisateurBundle:Rules:password.html.twig' %}
+                                    </div>
+                                    {{ form_row(form.plainPassword.second, { 'attr': {'data-parsley-equalto': '#' ~ form.plainPassword.first.vars.id, 'data-parsley-trigger': 'input', 'data-parsley-equalto-message': 'Vos deux mots de passe ne correspondent pas'}}) }}
+                                   
+                                </div>
+                                <!-- /.box-body -->
+
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="box-body patient_img col-sm-offset-3">
+                                    <div class="form-group">
+                                        <img id="blah" class="profile-user-img img-responsive  dropzone" {% if user.personne.photo is not null %}src="{{ asset(user.personne.photo.webPath) }}" alt="{{ user.personne.photo.alt }}"{% else %}src="{{ asset('bundles/avanzuadmintheme/img/avatar.png') }}" alt="User profile picture"{% endif %}>
+                                        {#<img id="blah"
+                                             src="{{ asset('bundles/avanzuadmintheme/img/avatar.png') }}"
+                                             alt="" width=180
+                                             height=180 class="profile-user-img img-responsive dropzone"/>#}
+
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_widget(form.personne.photo) }}
+
+                                    </div>
+
+                                </div>
+                                <!-- /.box-body -->
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="box-footer">
+
+                            <div class="box-header with-border">
+                                <div type="button" class="pull-left titre">{{ _html.text('profile.user_id') }}</div>
+                            </div>
+                            <div class="alert alert-warning">
+                                <span class="fa fa-warning"></span> {{ _html.text('admin.required_fields') }}
+                            </div>
+                            <div class="box-body">
+                                <div class="col-md-6">
+                                    
+                                     {{ form_row(form.personne.nom) }}
+                                    {{ form_row(form.personne.prenom) }}
+                                     {{ form_row(form.personne.datenaissance) }}
+                                    
+                                    {% if form.corporate is defined %}
+                                     {{ form_row(form.personne.corporate) }}
+                                    {% endif %}
+                                      {{ form_row(form.personne.contact) }}
+                                     
+
+                                   
+                                    <div class="form-group">
+                                        {{ form_label(form.personne.signature) }}
+                                        {% set signatureURL =  app.request.schemeAndHttpHost ~ app.request.baseUrl ~ '/data/' %}
+                                        {% set signature =  signatureURL ~ app.user.personne.signature %}
+                                        <div class="col-sm-8">
+                                             <div class="image-preview center-block bg-image {% if not app.user.personne.signature %}hide{% endif %}" {% if app.user.personne.signature %}style="background-image: url('{{ signature }}'){% endif %}"></div>
+                                            {{ form_widget(form.personne.signature) }}
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="box-footer">
+                            <input type="submit" class="btn btn-warning pull-right" value="Modifier"/>
+                        </div>
+                        {{ form_widget(form._token) }}
+                        {{ form_end(form,{render_rest: false}) }}
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('dropzone/dist/min/bootstrap-filestyle.min.js') }}"></script>
+    <script src="{{ asset('bundles/gestion/js/fr.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/profil.js') }}"></script>
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+    <script>
+        $('input:file:last').on('change',function() {
+            var $this = $(this);
+            var files = $this[0].files;
+            if (files.length > 0) {
+                var file = files[0];
+                var img_src = window.URL.createObjectURL(file);
+                $('.image-preview').removeClass('hide').css('backgroundImage', 'url(' + img_src + ')');
+            }
+        });
+    </script>
+
+{% endblock %}
+
+{% block page_title %}
+     {{ _html.text('profile.edit_title') }}
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

@@ -1,0 +1,24 @@
+admin_gestion_hospitalisation_index:
+    path:     /
+    defaults: { _controller: "GestionBundle:Hospitalisation:index" }
+    methods:  GET
+
+admin_gestion_hospitalisation_show:
+    path:     /{id}/show
+    defaults: { _controller: "GestionBundle:Hospitalisation:show" }
+    methods:  GET
+
+admin_gestion_hospitalisation_new:
+    path:     /new
+    defaults: { _controller: "GestionBundle:Hospitalisation:new" }
+    methods:  [GET, POST]
+
+admin_gestion_hospitalisation_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "GestionBundle:Hospitalisation:edit" }
+    methods:  [GET, POST]
+
+admin_gestion_hospitalisation_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "GestionBundle:Hospitalisation:delete" }
+    methods:  DELETE

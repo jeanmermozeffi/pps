@@ -1,0 +1,64 @@
+<!-- User Account: style can be found in dropdown.less -->
+
+{% import "AvanzuAdminThemeBundle:layout:macros.html.twig" as macro %}
+
+{% set photo = '' %}
+
+{% if app.user.personne.photo %}
+
+    {% set photo = asset(app.user.personne.photo.webPath) %}
+
+{% endif %}
+
+<li class="dropdown user user-menu">
+
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+        {{ macro.avatar(photo, '', 'user-image') }}
+
+        <span class="hidden-xs">{{ app.user.username }}</span>
+
+    </a>
+
+    <ul class="dropdown-menu">
+
+        <!-- User image -->
+
+        <li class="user-header">
+
+            {{ macro.avatar(photo, app.user.username) }}
+
+            <p>
+
+                {{ app.user.personne.nomComplet|default(app.user.username) }}
+
+                <small>{{ 'Dernière connexion %date%'|trans({'%date%': app.user.lastLogin|date('d/m/Y') }, 'AvanzuAdminTheme') }}</small>
+
+            </p>
+
+        </li>
+
+        
+
+        <!-- Menu Footer-->
+
+        <li class="user-footer">
+
+           <div class="pull-left">
+
+                <a href="{{ path('utilisateur_admin_profile_utilisateur_show', {'userid' : app.user.id}) }}" class="btn btn-default btn-flat">{{'layout.profile'|trans({}, 'FOSUserBundle')}}</a>
+
+            </div>
+
+            <div class="pull-right">
+
+                <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
+
+            </div>
+
+        </li>
+
+    </ul>
+
+</li>
+

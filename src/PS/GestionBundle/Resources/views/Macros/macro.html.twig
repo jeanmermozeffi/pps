@@ -1,0 +1,1190 @@
+{% macro affections(affections) %}
+    {% import 'GestionBundle:Macros:html.html.twig' as _html %}
+    <tr class="prototype_affections even pointer">
+
+        <td width="40%">
+
+            <div class="form-group">
+
+                <div class="col-md-12">
+
+                    {{ form_row(affections.affection, {label: false}) }}
+
+                </div>
+
+                <div class="col-md-4">
+
+                  {{ _html.text('Visibilité') }} {{ form_row(affections.visible, {label: false}) }}
+
+                </div>
+
+                
+
+            </div>
+
+        </td>
+
+
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(affections.commentaire, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+         <td width="15%">
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(affections.date, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td width="5%" class="del-col"></td>
+
+    </tr>
+
+{% endmacro %}
+
+{% macro consultation_affections(affections, show_delete) %}
+    {% import 'GestionBundle:Macros:html.html.twig' as _html %}
+   {% set delete = show_delete is same as(null) ? true : show_delete %}
+
+    <tr class="prototype_affections even pointer">
+
+        <td width="40%">
+
+            <div class="form-group">
+
+                <div class="col-md-12">
+
+                    {{ form_row(affections.affection, {label: false}) }}
+
+                </div>
+
+               
+
+                
+
+            </div>
+
+        </td>
+
+
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(affections.commentaire, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        {% if delete %}
+
+        <td width="5%" class="del-col"></td>
+
+        {% endif %}
+
+    </tr>
+
+{% endmacro %}
+
+{% macro signes(signes, type, show_delete) %}
+    {% import 'GestionBundle:Macros:html.html.twig' as _html %}
+    {% set delete = show_delete is same as(null) ? true : show_delete %}
+
+    <tr class="prototype_signe_{{ type }} even pointer">
+
+        <td width="90%">
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(signes.signe) }}</div>
+
+                <div class="hide">{{ form_widget(signes.type, {value: type})}}
+
+            </div>
+
+        </td>
+
+        {% if delete %}
+
+        <td class="del-col"></td>
+
+        {% endif %}
+
+    </tr>
+
+{% endmacro %}
+
+
+
+
+
+{% macro fonctionnels(signes, show_delete) %}
+
+   {{ _self.signes(signes, 'fonctionnel', show_delete) }}
+
+{% endmacro %}
+
+
+
+{% macro physiques(signes, show_delete) %}
+
+   {{ _self.signes(signes, 'physique', show_delete) }}
+
+{% endmacro %}
+
+
+
+
+
+{% macro antecedent(antecedent, type, show_delete, show_lien) %}
+    {% import 'GestionBundle:Macros:html.html.twig' as _html %}
+    {% set delete = show_delete is same as(null) ? true : show_delete %}
+
+    <tr class="prototype_antecedent_{{ type }} even pointer">
+
+        {% if show_lien %}
+
+             <td width="30%">
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(antecedent.lien) }}</div>
+
+            </div>
+
+        </td>
+
+    {% endif %}
+
+        <td width="{% if show_lien %}60%{% else %}90%{% endif %}">
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(antecedent.antecedent) }}</div>
+
+                <div class="hide">{{ form_widget(antecedent.type, {value: type})}}
+
+            </div>
+
+        </td>
+
+        
+
+       
+
+         {% if delete %}
+
+        <td class="del-col"></td>
+
+        {% endif %}
+
+    </tr>
+
+{% endmacro %}
+
+
+
+
+
+{% macro antecedent_personnel(antecedent, show_delete) %}
+
+   {{ _self.antecedent(antecedent, 'personnel', show_delete) }}
+
+{% endmacro %}
+
+
+
+{% macro antecedent_familial(antecedent, show_delete, show_lien) %}
+
+   {{ _self.antecedent(antecedent, 'familial', show_delete, show_lien) }}
+
+{% endmacro %}
+
+{% macro  vaccin(vaccin, show_delete) %}
+
+    {% set delete = show_delete is same as(null) ? true : show_delete %}
+
+        <tr class="prototype_vaccin even pointer">
+
+            <td>
+
+                <div class="form-group">
+
+                    <div class="col-md-12">{{ form_row(vaccin.vaccin, {label: false}) }}</div>
+
+                </div>
+
+            </td>
+
+            
+
+            <td>
+
+                <div class="form-group">
+
+                    <div class="col-md-12">{{ form_row(vaccin.commentaire, {label: false}) }}</div>
+
+                </div>
+
+            </td>
+
+            <td class="del-col">
+
+
+
+            </td>
+
+        </tr>
+
+    {% endmacro %}
+
+
+
+{% macro  constante(constante, key,  constantes) %}
+    
+    {% if constantes %}
+
+   
+
+        <div class="col-sm-6">
+
+            <div class="form-group">
+
+                <label class="col-sm-12" for="{{ constante.valeur.vars.id }}">
+
+                    {{ constantes[key].libelle }} ( {{ constantes[key].unite }} )
+
+                    <div class="hide">
+
+                        {{ form_row(constante.constante, {label: false}) }}
+
+                    </div>
+
+                </label>
+
+                <div class="col-md-12">{{ form_row(constante.valeur, {label: false}) }}</div>
+
+            </div>
+
+        </div>
+
+
+
+    {% endif %}
+
+
+
+{% endmacro %}
+
+{% macro attributs(attributs) %}
+
+    <tr class="prototype_affections even pointer">
+
+        <td width="40%">
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(attributs.attribut) }}</div>
+
+            </div>
+
+        </td>
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(attributs.valeur) }}</div>
+
+            </div>
+
+        </td>
+
+        <td></td>
+
+    </tr>
+
+{% endmacro %}
+
+
+
+{% macro analyses(analyses, show_file, show_delete) %}
+
+    {% set delete = show_delete is same as(null) ? true : show_delete %}
+
+    <tr class="prototype_analyses even pointer">
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(analyses.analyse, {label: false})}}</div>
+
+                
+
+            </div>
+
+        </td>
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(analyses.libelle, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        {% if show_file %}
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(analyses.resultat, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+    {% endif %}
+
+    {% if delete %}
+
+        <td width="5%" class="del-col">
+
+
+
+        </td>
+
+         {% endif %}
+
+    </tr>
+
+{% endmacro %}
+
+
+
+
+
+{% macro patient_attr(headers, form, key, title, id) %}
+
+     <div class="box-footer" id="{{ id }}">
+
+        <div class="box box-solid ">
+
+            <div class="box-header bg-light-blue-gradient">
+
+                <div class=" box-tools">
+
+                    <button type="button" class="btn btn-primary btn-sm pull-right"
+
+                        data-row="collapse"
+
+                        data-toggle="tooltip" style="margin-right: 5px;">
+
+                        <i class="fa fa-minus"></i>
+
+                    </button>
+
+                </div>
+
+                <h3 class="box-title">{{ title }}</h3>
+
+            </div>
+
+            <div class="box-footer no-border">
+
+                <button type="button" class="btn btn-default add_{{ id }}"id="add_{{ id }}">
+
+                    <i class="fa fa-plus"></i>
+
+                    Ajouter
+
+                </button>
+
+            </div>
+
+            <div class="box-body table-responsive">
+
+                <table id="table-{{ id }}" class="table table-bordered table-striped">
+
+                    <thead>
+
+                        <tr>
+
+                            {% for header in headers %}
+
+                                <th>{{ header }}</th>
+
+                            {% endfor %}
+
+                             <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="list_{{ id }}" class="collection list_{{ id }}">
+
+                        {% for item in attribute(form, key) %}
+
+                            {{ attribute(_self, key, item|e) }}
+
+                        {% endfor %}
+
+                    </tbody>
+
+
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endmacro %}
+
+
+
+{% macro medecins(medecins) %}
+
+    <tr class="prototype_medecins even pointer">
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(medecins.medecin, {label: false})}}</div>
+
+            </div>
+
+        </td>
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(medecins.specialite, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+         <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(medecins.contact, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(medecins.hopital, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td width="5%" class="del-col">
+
+
+
+        </td>
+
+    </tr>
+
+{% endmacro %}
+
+{% macro associes(associe,key, data) %}
+
+    
+
+    <tr class="prototype_associes prototype_row even pointer">
+
+        <td width="15%">
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(associe.identifiant, {value: data|length ? data[key].identifiant: null, label: false})}}</div>
+
+            </div>
+
+        </td>
+
+        <td width="15%">
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(associe.pin, {value: data|length ? data[key].pin: null, label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td width="65%">
+
+         
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(associe.lien, {label: false}) }}</div>
+
+            </div>
+
+             <div class="form-group hide">
+
+                <div class="col-md-12">{{ form_row(associe.associe, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        
+
+        <td width="5%" class="del-col">
+
+
+
+        </td>
+
+    </tr>
+
+{% endmacro %}
+
+
+
+    {% macro medicaments(medicaments, show_delete) %}
+
+        {% set delete = show_delete is same as(null) ? true : show_delete %}
+
+
+
+        <tr class="prototype_medicaments even pointer">
+
+            <td>
+
+                <div class="form-group">
+
+                    <div class="col-md-12">{{ form_row(medicaments.medicament, {label: false}) }}</div>
+
+                </div>
+
+            </td>
+
+            <td>
+
+                <div class="form-group">
+
+                    <div class="col-md-12">{{ form_row(medicaments.posologie, {label: false}) }}</div>
+
+                </div>
+
+            </td>
+
+            <td>
+
+                <div class="form-group">
+
+                    <div class="col-md-12">{{ form_row(medicaments.details, {label: false}) }}</div>
+
+                </div>
+
+            </td>
+
+            {% if delete %}
+
+            <td width="5%" class="del-col">
+
+
+
+            </td>
+
+        {% endif %}
+
+        </tr>
+
+    {% endmacro %}
+
+
+
+{% macro allergies(allergies) %}
+
+    <tr class="prototype_allergies even pointer">
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(allergies.allergie, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(allergies.commentaire, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td width="5%" class="del-col"></td>
+
+    </tr>
+
+{% endmacro %}
+
+{% macro telephones(telephones) %}
+
+    <tr class="prototype_telephones even pointer">
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">
+                    {{ form_row(telephones.nom, {label: false}) }}
+                    {% if not is_granted('ROLE_CUSTOMER') %}
+                    {{ form_row(telephones.sms) }}
+                    {% endif %}
+                </div>
+
+            </div>
+
+        </td>
+
+        <td width="20%">
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(telephones.numero, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(telephones.lien, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td width="5%" class="del-col">
+
+
+
+        </td>
+
+    </tr>
+
+{% endmacro %}
+
+
+
+{% macro assurances(assurances) %}
+
+    <tr class="prototype_assurances even pointer">
+
+        <td width="50%">
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(assurances.assurance, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(assurances.numero, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(assurances.taux, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+
+
+        <td class="del-col" width="5%">
+
+
+
+        </td>
+
+    </tr>
+
+{% endmacro %}
+
+
+
+{% macro vaccinations(vaccinations) %}
+
+    <tr class="prototype_vaccinations even pointer">
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(vaccinations.vaccin, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(vaccinations.details, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td width="15%">
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(vaccinations.date, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td width="15%">
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(vaccinations.rappel, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td width="5%" class="del-col">
+
+
+
+        </td>
+
+    </tr>
+
+{% endmacro %}
+{% macro info_patient(patient, show_contacts, show_affections, show_allergies) %}
+      {% import 'GestionBundle:Macros:html.html.twig' as _html %}
+    <div class="box box-solid">
+                <div class="box-header bg-light-blue-gradient">
+                    <!-- tools box -->
+                    <div class=" box-tools">
+                        <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                data-toggle="tooltip"  style="margin-right: 5px;">
+                            <i class="fa fa-minus"></i></button>
+                    </div>
+                    <!-- /. tools -->
+
+                    <i class="fa fa-user"></i>
+
+                    <h3 class="box-title">
+                        {{ _html.text('Information Patient') }}
+                    </h3>
+                </div>
+                <div class="box-body box-profile">
+                     <img class="profile-user-img img-responsive img-circle" {% if patient.personne.photo is not null %}src="{{ asset(patient.personne.photo.webPath) }}" alt="{{ patient.personne.photo.alt }}" {% else %}src="{{ asset('bundles/avanzuadmintheme/img/avatar.png') }}" alt="User profile picture" {% endif %}>
+
+    <h3 class="profile-username text-center">{{ patient.personne.nom }} {{ patient.personne.prenom }}</h3>
+
+    <p class="text-muted text-center">{{ patient.profession }} / {{ patient.societe }}</p>
+
+    <ul class="list-group list-group-unbordered">
+        <li class="list-group-item">
+            <b>{{ _html.text('Groupe Sanguin') }}</b> <span class="pull-right">{{ patient.groupeSanguin.libelle|default('N/A') }}</span>
+        </li>
+        <li class="list-group-item">
+            <b>{{ _html.text('Statut Drépano') }}</b> <span class="pull-right">{{ patient.statut.libelle|default('N/A') }}</span>
+        </li>
+
+        <li class="list-group-item">
+            <b>{{ _html.text('Âge') }}</b> <span class="pull-right">{{ _html.text('%age% an(s)', null, {'%age%': patient.personne.getAge}) }}</span>
+        </li>
+        <li class="list-group-item">
+            <b>{{ _html.text('Sexe') }}</b>
+            <span class="pull-right">
+                {% if patient.sexe == 'F' %}
+                    Femme
+                {% elseif patient.sexe == 'M' %}
+                    Homme
+                {% endif %}
+            </span>
+        </li>
+
+        <li class="list-group-item">
+            <b>{{ _html.text('Contact') }}</b> <span class="pull-right">{{ patient.personne.contact }}</span>
+        </li>
+
+    </ul>
+     
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            {% if show_contacts %}
+            <div class="box box-solid">
+                <div class="box-header bg-success">
+                    <!-- tools box -->
+                    <div class=" box-tools">
+                        <button type="button" class="btn btn-success btn-xs pull-right" data-widget="collapse"
+                                data-toggle="tooltip"  style="margin-right: 5px;">
+                            <i class="fa fa-minus"></i></button>
+                    </div>
+                    <!-- /. tools -->
+
+                    <i class="fa fa-phone"></i>
+
+                    <h3 class="box-title">
+                        {{ _html.text('Personnes à contacter') }}
+                    </h3>
+                </div>
+                <div class="box-body box-profile">
+                     
+    <ul class="list-group list-group-unbordered">
+        {% for telephone in patient.telephones %}
+
+        <li class="list-group-item">
+            <b>{{ telephone.nom }}</b> <span class="pull-right">{{ telephone.numero }}</span>
+        </li>
+    {% endfor %}
+
+    </ul>
+     
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+{% endif %}
+   
+{% if show_allergies %}
+            <div class="box box-solid">
+                <div class="box-header bg-danger">
+                    <!-- tools box -->
+                    <div class=" box-tools">
+                        <button type="button" class="btn btn-danger btn-xs pull-right" data-widget="collapse"
+                                data-toggle="tooltip"  style="margin-right: 5px;">
+                            <i class="fa fa-minus"></i></button>
+                    </div>
+                    <!-- /. tools -->
+
+                    <i class="fa fa-circle"></i>
+
+                    <h3 class="box-title">
+                       {{ _html.text('Allergies') }}
+                    </h3>
+                </div>
+                <div class="box-body box-profile">
+                     
+    <ul class="list-group list-group-unbordered">
+        {% for allergie in patient.allergies %}
+
+        <li class="list-group-item">
+            <b>{{ allergie.allergie }}</span>
+        </li>
+    {% endfor %}
+
+    </ul>
+     
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+{% endif %}
+{% if show_affections %}
+            <div class="box box-solid">
+                <div class="box-header bg-warning">
+                    <!-- tools box -->
+                    <div class=" box-tools">
+                        <button type="button" class="btn btn-warning btn-xs pull-right" data-widget="collapse"
+                                data-toggle="tooltip"  style="margin-right: 5px;">
+                            <i class="fa fa-minus"></i></button>
+                    </div>
+                    <!-- /. tools -->
+
+                    <i class="fa fa-circle"></i>
+
+                    <h3 class="box-title">
+                        {{ _html.text('Affections') }}
+                    </h3>
+                </div>
+                <div class="box-body box-profile">
+                     
+    <ul class="list-group list-group-unbordered">
+        {% for affection in patient.affections %}
+
+        <li class="list-group-item">
+            <b>{{affection.affection }}</b>
+        </li>
+    {% endfor %}
+
+    </ul>
+     
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+{% endif %}
+   
+
+{% endmacro %}
+
+{% macro _assurances(assurances) %}
+
+    <tr class="prototype_assurances even pointer">
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(assurances.assurance, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(assurances.numero, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(assurances.taux, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+
+
+        <td width="5%" class="del-col">
+
+
+
+        </td>
+
+    </tr>
+
+{% endmacro %}
+
+{% macro allergie_traitement(patient) %}
+{% import 'GestionBundle:Macros:html.html.twig' as _html %}
+<div class="row">
+
+    <div class="col-md-12">
+
+                                                <h5>{{ _html.text('Allergies du patient') }}</h5>
+
+                                                <ul class="list-unstyled">
+
+                                                    {% for allergie in patient.allergies %}
+
+                                                        <li>-<strong>{{ allergie.allergie }}</strong></li>
+
+                                                    {% endfor %}
+
+                                                </ul>
+
+                                            </div>
+
+                                            <div class="col-md-6 hide">
+
+                                                <h5>{{ _html.text('Traitements suivis') }}</h5>
+
+                                                <ul class="list-unstyled">
+
+                                                    {% for traitement in patient.traitements %}
+
+                                                        <li>-<strong>{{ traitement.libelle }}</strong></li>
+
+                                                    {% endfor %}
+
+                                                </ul>
+
+                                            </div>
+
+</div>
+
+{% endmacro %}
+
+
+
+
+
+
+
+{% macro traitements(traitements) %}
+
+    <tr class="prototype_traitements even pointer">
+
+        <td width="65%">
+
+            <div class="form-group">
+
+                <div class="col-md-12">
+
+                    {{ form_row(traitements.libelle, {label: false}) }}
+
+                </div>
+
+                <div class="col-md-5">
+
+                   Visibilité {{ form_row(traitements.visible, {label: false}) }}
+
+                </div>
+
+                
+
+            </div>
+
+        </td>
+
+         
+
+        <td width="15%">
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(traitements.dateDebut, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td width="15%">
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(traitements.dateFin, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td width="5%" class="del-col">
+
+
+
+        </td>
+
+    </tr>
+
+{% endmacro %}
+
+
+
+
+
+{% macro fiche_traitement(traitement) %}
+
+    <tr class="prototype_allergies even pointer">
+
+        <td>
+
+            <div class="form-group">
+
+                <div class="col-md-12">{{ form_row(traitement.libelle, {label: false}) }}</div>
+
+            </div>
+
+        </td>
+
+        <td width="5%" class="del-col"></td>
+
+    </tr>
+
+{% endmacro %}
+
+
+
+{% macro  fiche_examen(examen, key,  examens) %}
+
+    {% if examens %}
+
+   
+
+        <div class="row" style="margin-bottom: 5px;">
+
+            <div class="col-md-8">
+
+                <label class="col-sm-12" for="{{ examen.valeur.vars.id }}">
+
+                    {{ examen.examen.vars.data.libelle }}
+
+                    <div class="hide">
+
+                        {{ form_row(examen.examen, {label: false}) }}
+
+                    </div>
+
+                </label>
+
+                
+
+            </div>
+
+            <div class="col-md-4">{{ form_row(examen.valeur, {label: false}) }}</div>
+
+        </div>
+
+
+
+    {% endif %}
+
+
+
+{% endmacro %}
+

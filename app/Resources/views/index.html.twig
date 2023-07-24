@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Pass Santé Mousso">
+    <meta name="keywords" content="santé médicale, santé biométrique, santé digital, pass santé mousso, e-santé, e-health, bracelet médical">
+    <meta name="author" content="MCM">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <title>Bienvenue sur le site officiel du PASS SANTE MOUSSO </title>
+
+    <link type="image/x-icon" rel="shortcut icon" href="{{ app.request.schemeAndHttpHost ~ app.request.baseUrl ~ '/favicon.ico' }}?v=2">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/parametre/css/flaticon.css') }}" media="screen">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/parametre/css/minify.css') }}" media="screen">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/parametre/css/animated.hoshi.minify.css') }}" media="screen">
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/parametre/css/minify.devices.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/parametre/css/psm.minify.min.css') }}" media="screen">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/parametre/css/animate.css') }}" media="screen">
+
+    <script type="text/javascript" src="{{ asset('bundles/parametre/js/jquery-3.2.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/parametre/js/jquery.parallax-santemousso.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/parametre/js/santemousso.modal.hen.js') }}"></script>
+    {% block style %}{% endblock %}
+</head>
+<body>
+
+    <div id="santemousso-main">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script type="text/javascript" src="{{ asset('bundles/parametre/js/animated.hoshi.js') }}"></script>
+</body>
+</html>

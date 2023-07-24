@@ -1,0 +1,81 @@
+admin_consultation_search:
+    path:     /search
+    defaults: { _controller: "GestionBundle:Consultation:search" }
+    methods:  [GET, POST]
+
+admin_consultation_index:
+    path:     /
+    defaults: { _controller: "GestionBundle:Consultation:index" }
+    methods:  GET
+
+admin_consultation_show:
+    path:     /{id}/{id1}/show
+    defaults: { _controller: "GestionBundle:Consultation:show" }
+    methods:  GET
+
+
+admin_consultation_info:
+    path:     /{patient}/{consultation}/info
+    defaults: { _controller: "GestionBundle:Consultation:info" }
+    methods:  [GET, POST]
+
+admin_consultation_actions:
+    path:     /{id}/actions
+    defaults: { _controller: "GestionBundle:Consultation:actions" }
+    methods:  GET
+
+admin_consultation_new:
+    path:     /new/{id}
+    defaults: { _controller: "GestionBundle:Consultation:new", id: null }
+    methods:  [GET, POST]
+
+admin_consultation_liste:
+    path:     /liste/{id}
+    defaults: { _controller: "GestionBundle:Consultation:liste", id: null }
+    methods:  [GET, POST]
+
+
+admin_consultation_edit:
+    path:     /{id}/{id1}/edit
+    defaults: { _controller: "GestionBundle:Consultation:edit" }
+    methods:  [GET, POST]
+
+admin_consultation_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "GestionBundle:Consultation:delete" }
+    methods:  DELETE
+
+admin_consultation_historique_show:
+    path:     /{id}/{id1}/historique
+    defaults: { _controller: "GestionBundle:Consultation:historiqueShow" }
+    methods:  GET
+
+admin_consultation_historique:
+    path:     /historique
+    defaults: { _controller: "GestionBundle:Consultation:historique" }
+    methods:  [GET, POST]
+
+admin_consultation_ordonnance:
+    path:     /{patient}/{consultation}/ordonnance
+    defaults: { _controller: "GestionBundle:Consultation:ordonnance" }
+    methods:  [GET, POST]
+
+admin_consultation_print:
+    path:     /{id}/print_consultation
+    defaults: { _controller: "GestionBundle:Consultation:imprimerConsultation" }
+    methods:  [GET, POST]
+
+admin_consultation_preview_print:
+    path:     /{id}/{id1}/preview_consultation
+    defaults: { _controller: "GestionBundle:Consultation:previewConsultation" }
+    methods:  [GET, POST]
+
+admin_consultation_ordonnance_print:
+    path:     /{id}/print_ordonnance
+    defaults: { _controller: "GestionBundle:Consultation:imprimerOrdonnance" }
+    methods:  [GET, POST]
+
+admin_consultation_ordonnance_preview_print:
+    path:     /{id}/{id1}/preview_ordonnance
+    defaults: { _controller: "GestionBundle:Consultation:previewOrdonnance" }
+    methods:  [GET, POST]

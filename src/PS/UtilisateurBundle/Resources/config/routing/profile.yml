@@ -1,0 +1,8 @@
+utilisateur_admin_profile_utilisateur_edit:
+    path:     /edit
+    defaults: { _controller: psm_profile_controller:editAction }
+
+
+utilisateur_admin_profile_utilisateur_show:
+    path:     /
+    defaults: { _controller: psm_profile_controller:showAction }

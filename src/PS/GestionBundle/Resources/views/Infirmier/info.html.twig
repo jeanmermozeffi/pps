@@ -1,0 +1,62 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+      <link rel="stylesheet" href="{{ asset('public/css/parsley.css') }}" />
+{% endblock %}
+{% block title %}Informations personnelles{% endblock %}
+{% block page_title %}{{ block('title') }}{% endblock %}
+{% block page_content %}
+    <div class="box">
+        <div class="box-body">
+            {{ form_errors(form) }}
+              {{ form_start(form, { 'attr': {'class': 'utilisateur form-horizontal', 'data-parsley-validate': true} }) }}           
+                        <div class="form-group">
+                            <label for="{{ form.medecin.personne.nom.vars.id }}" class="col-sm-4">Nom</label>
+
+                            <div class="col-sm-8">
+                                {{ form_widget(form.medecin.personne.nom, {id: form.medecin.personne.nom.vars.id}) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.medecin.personne.nom.vars.id }}" class="col-sm-4">Prénom(s)</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(form.medecin.personne.prenom, {id: form.medecin.personne.prenom.vars.id}) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.medecin.personne.datenaissance.vars.id }}" class="col-sm-4">Date de naissance</label>
+                            <div class="col-sm-4">
+                                 {{ form_widget(form.medecin.personne.datenaissance,  {id: form.medecin.personne.datenaissance.vars.id ~ '_' ~  infirmier.id}) }}
+                            </div>
+                           
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.medecin.hopital.vars.id }}" class="col-sm-4">Hôpital</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(form.medecin.hopital, {id: form.medecin.hopital.vars.id}) }}
+                            </div>
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="{{ form.medecin.contact.vars.id }}" class="col-sm-4">Contact</label>
+
+                            <div class="col-sm-8">
+                                {{ form_widget(form.medecin.contact, {id: form.medecin.contact.vars.id}) }}
+                            </div>
+                        </div>
+                        
+                {{ form_widget(form._token, {id: form._token.vars.id})}}
+                <button class=" btn btn-default">Valider</button>
+                {{ form_end(form, {render_rest: false}) }}
+            
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+
+{% endblock %}

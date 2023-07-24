@@ -1,0 +1,211 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% form_theme form 'widget/fields_mousso_horizontal.html.twig' %}
+{% from 'GestionBundle:Macros:macro.html.twig' import  info_patient, constante, fiche_examen, fiche_traitement, allergie_traitement %}
+
+{% block stylesheets %}
+    {{ parent() }}
+     {{ form_stylesheet(form) }}
+{% endblock %}
+{% block page_content %}
+    <div class="row" xmlns="http://www.w3.org/1999/html">
+
+        <section class="col-md-3 connectedSortable">
+
+            {{ info_patient(patient, true) }}
+
+        </section>
+
+        <!-- /.col -->
+        <section class="col-md-9">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li><a href="{{ path ('gestion_ficheaffection_liste',{'patient': patient.id}) }}" target="_blank">Historique des consultations</a></li>
+                    
+                </ul>
+                <div class="tab-content">
+
+                    <div class="active tab-pane" id="nouvelle">
+                        
+                        <!-- general form elements -->
+                        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+
+                        <div id="list-medicament"
+                             data-prototype="{{ fiche_traitement(form.traitements.vars.prototype)|e }}"></div>
+                        
+                        <div class="">
+                          {% if patient.ligneAntecedents %}
+                           <h4>Antécédents</h4>
+                                        {% for antecedent in patient.ligneAntecedents %}
+                                            {% if loop.index == 1 %}
+                                                <ul>
+                                            {% endif %}
+                                            <li>{{ antecedent.lien }} : {{ antecedent.antecedent.libelle }}</li>
+                                            {% if loop.last %}
+                                                </ul>
+                                            {% endif %}
+                                        {% endfor %}
+                              {% endif %}
+                            <div class="box box-warning box-solid">
+                                <div class="box-header with-border">
+                                  <h3 class="box-title">Constantes</h3>
+
+                                  <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                  </div>
+                                  <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                     <div class="row">
+                                                        {% for key, item in form.constantes %}
+                                                            
+                                                            {{ constante(item|e, key, constantes) }}
+                                                        {% endfor %}
+                                                    </div>
+                                    
+                                </div>
+                                <!-- /.box-body -->
+                              </div>
+                              <div class="box box-warning box-solid">
+                                <div class="box-header with-border">
+                                  <h3 class="box-title">Examens biologiques</h3>
+
+                                  <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                  </div>
+                                  <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    
+                                                        {% for key, item in form.biologiques %}
+                                                            
+                                                            {{ fiche_examen(item|e, key, biologiques) }}
+                                                        {% endfor %}
+                                                    
+                                    
+                                </div>
+                                <!-- /.box-body -->
+                              </div>
+                              {{ form_row_inline(form.compteRendu)}}
+                              <div class="box box-warning box-solid">
+                                <div class="box-header with-border">
+                                  <h3 class="box-title">Examens Cliniques</h3>
+
+                                  <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                  </div>
+                                  <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    
+                                                        {% for key, item in form.cliniques %}
+                                                            
+                                                            {{ fiche_examen(item|e, key, cliniques) }}
+                                                        {% endfor %}
+                                                    
+                                    
+                                </div>
+                                <!-- /.box-body -->
+                              </div>
+                              <div class="box box-warning box-solid">
+                                <div class="box-header with-border">
+                                  <h3 class="box-title">Traitement</h3>
+
+                                  <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                  </div>
+                                  <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                  <button type="button" class="btn btn-default add_medicament"
+                                                id="add_medicament">
+                                            <i class="fa fa-plus"></i>
+                                            Ajouter Traitement
+                                        </button>
+
+
+                                        <h4>Derniers Traitements</h4>
+                                        {% if last_fiche %}
+                                        {% for traitement in last_fiche.traitements %}
+                                            {% if loop.index == 1 %}
+                                                <ul>
+                                            {% endif %}
+                                            <li>{{ traitement.libelle }}</li>
+                                            {% if loop.last %}
+                                                </ul>
+                                            {% endif %}
+                                        {% endfor %}
+                                          {% endif %}
+
+                                        
+
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Traitement</th>
+                                               
+                                                
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_medicament" class="collection list_medicament">
+                                              {% for key, item in form.traitements %}
+                                                            
+                                                            {{ fiche_traitement(item|e) }}
+                                                        {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    
+                                                      
+                                                    
+                                    
+                                </div>
+                                <div class="box-footer">
+                                <button type="reset" class="btn btn-default">
+                                    Effacer
+                                </button>
+                                 <button class="btn btn-warning">
+                                    Valider
+                                </button>
+                                <!-- /.box-body -->
+                              </div>
+
+                            {{ form_widget(form._token) }}
+                            {{ form_end(form, {render_rest: false}) }}
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+        </section>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts_inline %}
+  <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+     <script src="{{ asset('bundles/gestion/js/consultation.min.js') }}"></script>
+    {{ parent() }}
+     {{ form_javascript(form) }}
+{% endblock %}
+
+    {% block page_title %}
+     Nouvelle consultation
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}
+

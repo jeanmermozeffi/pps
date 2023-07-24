@@ -1,0 +1,64 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block page_content %}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+        {% from 'GestionBundle:Macros:macro.html.twig' import  info_patient %}
+
+<div class="row" xmlns="http://www.w3.org/1999/html">
+
+        <section class="col-md-3 connectedSortable">
+
+           {{ info_patient(patient.patient, true) }}
+
+        </section>
+         <section class="col-md-9">
+            <div class="box box-solid">
+                <div class="box-body">
+
+                  {% if is_granted('ROLE_MEDECIN') and patient.statut == false %}
+              <a class="btn btn-default" 
+                            href="{{ path('gestion_patientquestionnaire_traitement', {id: patient.id}) }}">Diagnostic </a>
+              {% endif %}
+
+                   {{ form_widget(form) }}
+             
+              {% if is_granted('ROLE_MEDECIN') and patient.statut == false  %}
+              <a class="btn btn-default" 
+                            href="{{ path('gestion_patientquestionnaire_traitement', {id: patient.id}) }}">Diagnostic </a>
+              {% endif %}
+           
+           {% if patient.traitements|length %}
+            <div class="list-group">
+               <div class="list-group-item-heading">
+                        <h4>Diagnostic(s)</h4>
+                    </div>
+              {% for traitement in patient.traitements %}
+                <div class="list-group-item">
+                   <p class="m-0"><small><span class="fa fa-user"></span> {{ traitement.medecin.personne.nomComplet }}</small></p>
+                          <p class="m-0"><small><span class="fa fa-map-marker"></span> {{  traitement.hopital.nom }} </small></p>
+                   <p><strong>{{ traitement.diagnostic.libelle|default('-') }}</strong></p>
+                  <p>Autres recommendations: {{ traitement.info }}</p>
+                 
+            </div>
+          {% endfor %}
+       </div>
+     {% endif %}
+     </div>
+     </div>
+        </section>
+</div>
+   
+   
+        
+            
+{% endblock %}
+{% block javascripts_inline %}
+    <script>
+       
+    </script>
+     
+{% endblock %}
+
+    {% block page_title %}
+        Détails
+    {% endblock %}

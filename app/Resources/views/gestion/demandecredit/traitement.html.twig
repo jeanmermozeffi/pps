@@ -1,0 +1,100 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+    {% block page_content %}
+     <div class="row">
+        <div class="col-md-12">
+           {% if not is_granted('ROLE_CUSTOMER') %}
+            <!-- general form elements -->
+            <div class="box box-danger">
+                <div class="box-header">
+                    <!-- Horizontal Form -->
+                    <div class="">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Traitement de la demande</h3>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="box-body">
+                    <p>Demandeur: {{ demandeCredit.patient.personne.nomComplet }}</p>
+                    <p>Contact: {{ demandeCredit.patient.personne.contact }}</p>
+                    <p>Pack: <strong><a href="{{ path('gestion_packcredit_show', {id: demandeCredit.pack.id}) }}" data-toggle="modal" data-target="#modal-table">{{ demandeCredit.pack.libelle}}</a> </strong></p>
+                    <p>Montant demandé: <strong>{{ demandeCredit.montant }} FCFA</strong></p>
+
+                    {% if demandeCredit.etat in [0, 2] %}
+                    
+                    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+                    {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        <button class="btn btn-success">Valider</button>
+                    {{ form_end(form) }}
+
+                    {% else %}
+                       {% if demandeCredit.etat == 1 and not demandeCredit.ligne %}   
+                        <a href="{{ path('gestion_demandecredit_credit', {id: demandeCredit.id}) }}" class="btn btn-success"><span class="fa fa-money"></span> Octroi du crédit</a>
+                        {% endif %}
+                    {% endif %}
+                     
+                   
+                </div>
+                    
+                    
+             
+            </div>
+           {% endif %}
+             <div class="box box-danger">
+                <div class="box-header">
+                    <!-- Horizontal Form -->
+                    <div class="">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Suivi du traitement</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <ul class="timeline">
+                      {% for historique in historiques %}
+                        <!-- timeline time label -->
+                        <li class="time-label">
+                            <span class="bg-red">
+                                10 Feb. 2014
+                            </span>
+                        </li>
+                        <!-- /.timeline-label -->
+
+                        <!-- timeline item -->
+                        <li>
+                            <!-- timeline icon -->
+                            <i class="fa fa-envelope bg-blue"></i>
+                            <div class="timeline-item">
+                                <span class="time"><i class="fa fa-clock-o"></i> {{ historique.date|date('H:i') }}</span>
+
+                                <h3 class="timeline-header"><a href="#">{{ historique.utilisateur.personne.nomComplet }}</a> {{ historique.libelle }}</h3>
+
+                                <div class="timeline-body">
+                                    {{ historique.details }}
+                                </div>
+
+                                <div class="timeline-footer hide">
+                                    <a class="btn btn-primary btn-xs">...</a>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- END timeline item -->
+
+                      {% endfor %}
+
+                    </ul>
+                </div>
+            </div>
+         
+        </div>
+    </div>
+    
+    {% endblock %}
+{% block javascripts_inline %}
+    <script>
+   
+    </script>
+     
+{% endblock %}

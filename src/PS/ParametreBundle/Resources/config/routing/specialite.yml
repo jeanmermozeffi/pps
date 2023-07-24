@@ -1,0 +1,33 @@
+admin_parametre_specialite_index:
+    path:     /
+    defaults: { _controller: "ParametreBundle:Specialite:index" }
+
+admin_parametre_specialite_liste:
+    path:     /liste
+    defaults: { _controller: "ParametreBundle:Specialite:liste" }
+
+
+admin_parametre_specialite_medecin:
+    path:     /medecins
+    defaults: { _controller: "ParametreBundle:Specialite:medecin" }
+
+
+admin_parametre_specialite_show:
+    path:     /{id}/show
+    defaults: { _controller: "ParametreBundle:Specialite:show" }
+    methods:  GET
+
+admin_parametre_specialite_new:
+    path:     /new
+    defaults: { _controller: "ParametreBundle:Specialite:new" }
+    methods:  [GET, POST]
+
+admin_parametre_specialite_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ParametreBundle:Specialite:edit" }
+    methods:  [GET, POST]
+
+admin_parametre_specialite_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ParametreBundle:Specialite:delete" }
+    methods:  DELETE

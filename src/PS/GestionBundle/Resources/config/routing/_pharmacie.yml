@@ -1,0 +1,65 @@
+admin_pharmacie_search:
+    path:     /search
+    defaults: { _controller: "GestionBundle:Pharmacie:search" }
+    methods:  [GET, POST]
+
+admin_pharmacie_index:
+    path:     /
+    defaults: { _controller: "GestionBundle:Pharmacie:index" }
+    methods:  GET
+
+admin_pharmacie_show:
+    path:     /{id}/{id1}/show
+    defaults: { _controller: "GestionBundle:Pharmacie:show" }
+    methods:  GET
+
+admin_pharmacie_new:
+    path:     /{id}/new
+    defaults: { _controller: "GestionBundle:Pharmacie:new" }
+    methods:  [GET, POST]
+
+admin_pharmacie_liste:
+    path:     /{id}/liste
+    defaults: { _controller: "GestionBundle:Pharmacie:liste" }
+    methods:  [GET, POST]
+
+
+admin_pharmacie_edit:
+    path:     /{id}/{id1}/edit
+    defaults: { _controller: "GestionBundle:Pharmacie:edit" }
+    methods:  [GET, POST]
+
+admin_pharmacie_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "GestionBundle:Pharmacie:delete" }
+    methods:  DELETE
+
+admin_pharmacie_historique_show:
+    path:     /{id}/{id1}/historique
+    defaults: { _controller: "GestionBundle:Pharmacie:historiqueShow" }
+    methods:  GET
+
+admin_pharmacie_historique:
+    path:     /historique
+    defaults: { _controller: "GestionBundle:Pharmacie:historique" }
+    methods:  [GET, POST]
+
+admin_pharmacie_print:
+    path:     /{id}/print_consultation
+    defaults: { _controller: "GestionBundle:Pharmacie:imprimerPharmacie" }
+    methods:  [GET, POST]
+
+admin_pharmacie_preview_print:
+    path:     /{id}/{id1}/preview_consultation
+    defaults: { _controller: "GestionBundle:Pharmacie:previewConsultation" }
+    methods:  [GET, POST]
+
+admin_pharmacie_ordonnance_print:
+    path:     /{id}/print_ordonnance
+    defaults: { _controller: "GestionBundle:Pharmacie:imprimerOrdonnance" }
+    methods:  [GET, POST]
+
+admin_pharmacie_ordonnance_preview_print:
+    path:     /{id}/{id1}/preview_ordonnance
+    defaults: { _controller: "GestionBundle:Pharmacie:previewOrdonnance" }
+    methods:  [GET, POST]

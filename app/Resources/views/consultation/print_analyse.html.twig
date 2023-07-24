@@ -1,0 +1,229 @@
+<style type="text/css">
+    table{width: 100%; border-collapse: collapse;}
+    table td{min-height: 100px}
+    .text-left{text-align: left;}
+    .text-right{text-align: right;}
+    .text-center{text-align: center;}
+    .italique{font-style: italic;}
+    .separator{width: 100%; height: 10px;}
+    .pad5{padding-left: 5px}
+
+    .header td{width: 33%; vertical-align: top; border: solid 1px #000; padding: 5px;}
+
+    .signature td{width: 50%; vertical-align: top; border: none; padding: 5px;}
+
+    .general td{width: 50%; vertical-align: top; border:none; padding: 5px;}
+
+    .client td{border-right: solid 1px #000; border-left: solid 1px #000;}
+    .client td.libelle{width: 33%;}
+    .client td.infos{width: 66%;}
+    .client td.first{border-top: solid 1px #000;}
+    .client td.last{border-bottom: solid 1px #000;}
+
+    .content th.code, .content th.quantite{width: 7%}
+    .content th.nature{width: 46%}
+    .content th.date{width: 36%}
+    .content td.last{border-bottom: solid 1px #000;}
+    .content td{border-right: solid 1px #000; border-left: solid 1px #000; padding: 5px;}
+    .content th{border: solid 1px #000; padding: 5px; background-color: #ccc; color: #000}
+
+    .motif td{width:14.1%; border: solid 1px #000; text-align: center;}
+    .motif td.titre{border: none;}
+
+    .analyse td{width: 33%; text-align: center;}
+
+    .signature td.note{font-size: 9px;}
+
+    #footerContent{font-size: 11px}
+
+    .sigle{font-size: 25px;}
+    /* Page margins are defined using CSS */
+    @page {
+        margin: 1cm;
+        margin-top:2.5cm;
+        margin-bottom: 2.5cm;
+
+        /* Header frame starts within margin-top of @page */
+        @frame header {
+    -pdf-frame-content: headerContent; /* headerContent is the #id of the element */
+        top: 1cm;
+        margin-left: 1cm;
+        margin-right:1cm;
+        height:1cm;
+    }
+
+        /* Footer frame starts outside margin-bottom of @page */
+    @frame footer {
+    -pdf-frame-content: footerContent;
+    bottom: 0.5cm;
+    margin-left: 1cm;
+    margin-right: 1cm;
+    height: 1cm;
+    }
+    }
+</style>
+
+<page backtop="" backright="0" backleft="0" backbottom="10mm">
+    <table class="header">
+        <tr>
+            <td class="text-center sigle">
+                {# <img id="blah" {% if structure is not empty %} src="{{ asset(structure.logo.webPath) }}" {% else %} src="" {% endif %} width=250/> #}
+                <br>
+                LANADA /  {{entities.laboratoire.sigle}} {##}
+            </td>
+            <td class="text-center">
+                <strong style="font-size:20px">FICHE DE DEMANDE D'ESSAI</strong>
+            </td>
+            <td class="text-right">
+                <table class="general">
+                    <tr>
+                        <td class="text-left pad5">Reference:</td>
+                        <td class="text-left pad5">{# {{entities.reference}} #}E-FDE-019</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left pad5">Revision:</td>
+                        <td class="text-left pad5">01</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left pad5">Date:</td>
+                        <td class="text-left pad5">{{entities.date|date("d/m/Y")}}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left pad5">Page:</td>
+                        <td class="text-left pad5">1/1</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <table class="client">
+        <tr>
+            <td class="first libelle pad5">Société:</td>
+            <td class="first infos pad5">{{entities.client.nom}}</td>
+        </tr>
+        <tr>
+            <td class="pad5">Personne à contacter:</td>
+            <td class="pad5">{{entities.client.contact}}</td>
+        </tr>
+        <tr>
+            <td class="pad5">Telephone:</td>
+            <td class="pad5">{{entities.client.telephone}}</td>
+        </tr>
+        <tr>
+            <td class="last pad5">Adresse du demandeur:</td>
+            <td class="last pad5">{{entities.client.siegesociale}}</td>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <table class="general">
+        <tr>
+            <td>
+                Date et heure de réception: <strong>{{entities.date|date('d/m/Y')}}</strong>
+            </td>
+            <td>
+                Delais d'exécution: {# {{entities.delais}} #}
+            </td>
+        </tr>
+    </table>
+
+    <table class="content">
+        <thead>
+        <tr class="">
+            <th class="column-title code text-center">Code</th>
+            <th class="column-title nature text-center">Nature et Etat de l'échantillon</th>
+            <th class="column-title quantite text-center">Quantité</th>
+            <th class="column-title date text-center">Date de prélèvement</th>
+        </tr>
+        </thead>
+        <tbody id="list_ligne" class="">
+        {% set i = 0 %}
+        {% for item in entities.echantillon %}
+            {% set i = i + 1 %}
+            <tr class="">
+                <td class="column-title text-left">{{ item.code }}</td>
+                <td class="column-title text-left">{# {{i}} #}&nbsp;-&nbsp;{{ item.nature }} {{ item.etat }}</td>
+                <td class="column-title text-right">{{ item.quantite }}</td>
+                <td class="column-title text-right">{{ item.quantite }}</td>
+            </tr>
+        {% endfor %}
+        {% for j in i..9 %}
+            <tr class="">
+                <td class="column-title text-left {% if loop.last %} last {% endif %}"></td>
+                <td class="column-title text-left {% if loop.last %} last {% endif %}">{# {{j+1}}- #}&nbsp;</td>
+                <td class="column-title text-right {% if loop.last %} last {% endif %}"></td>
+                <td class="column-title text-right {% if loop.last %} last {% endif %}"></td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    <div class="separator"></div>
+
+    <table class="motif">
+        <tr>
+            <td rowspan="2" class="titre">Motif de la demande</td>
+            <td>Autocontrole</td>
+            <td>Controle officiel</td>
+            <td>Expertise</td>
+            <td>Intoxication</td>
+            <td>Enquete/Recherche</td>
+            <td>Autres</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <table class="analyse">
+        {% for key, item in resultat %}
+            <tr>
+                <td class="head">{{ key }}</td>
+                <td class="head">
+                    {% for value in item %}
+                        - {{ value }}<br>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <div class="separator"></div>
+
+
+    <page_footer>
+        <table class="signature">
+            <tr>
+                <td class="text-left">Nom et visa de l'opérateur</td>
+                <td class="text-right">Nom et visa de l'agent {# {{entities.laboratoire.sigle}} #}</td>
+            </tr>
+            <tr>
+                <td class="text-left"><br><br><br><br><br></td>
+                <td class="text-right"><br><br><br><br><br></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-center note">
+                    <i>"La signature de ce document atteste que le client a pris connaissance et approuve l'offre du laboratoire en termes de méthodes, de delais et de coût des essais."</i>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <div id="footerContent" class="text-center">
+            Siège social: Plateau Imm. Les Harmonies - 04 BP 612 Abidjan 04 / Tel: (225) 20 22 58 38 / 20 22 58 43 Fax: (225) 20 22 71 17<br>
+            Etablissement Public à caractère Administratif, créé par Décret n° 91-760 du 14 Novembre 1991 Et modifié par Décret n° 99-439 du 07 juillet 1999<br>
+            Compte Contribuable n° 92 19 895 - G / E-mail: lanada@globeaccess.net
+        </div>
+    </page_footer>
+</page>

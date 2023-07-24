@@ -1,0 +1,144 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('public/css/parsley.css') }}" />
+    
+{% endblock %}
+{% block page_content %}
+    <form method="GET" class="form-horizontal">
+        <div class="form-group">
+            <label for="corporate" class="control-label col-md-2">Corporate</label>
+            <div class="col-md-5">
+                <select id="corporate" name="corporate" class="form-control input-sm">
+                    <option value="">--------</option>
+                    {% for _corporate in corporates %}
+                        <option value="{{ _corporate.id }}" {% if _corporate.id == corporate %}selected{% endif %}>{{ _corporate.raisonSociale }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-5">
+                <button>Valider</button>
+            </div>
+        </div>
+    </form>
+
+    {{ form_start(form, {attr: {class: 'form_horizontal'}}) }}
+     <div class="row">
+        <section class="col-md-12">
+           <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Nouveau SMS</h3>
+                    <div class="box-tools pull-right">
+                      <!-- Buttons, labels, and many other things can be placed here! -->
+                      <!-- Here is a label for example -->
+                      
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                  <!-- /.box-header -->
+                <div class="box-body">
+                    <p>{{ availableUnits }} SMS restants</p>
+                    {% for message in app.getSession().getFlashBag().get('message') %}
+                        <div class="alert alert-success">{{ message }}</div>
+                    {% endfor %}
+                    {% if errors %}
+                        <div class="alert alert-danger">
+                            {% for error in errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <p>{{ contacts | length }} contacts</p>
+                    {% if corporate and contacts|length %}
+                        <div class="row">
+                            <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" name="debut" id="debut" placeholder="Date de début" class="form-control datepicker" />
+                            </div>
+                            </div>
+                            <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" name="fin" id="fin" placeholder="Date de fin" class="form-control datepicker" />
+                            </div>
+                            </div>
+                        </div>
+                        <a href="{{ path('admin_gestion_sms_excel', {corporate: corporate}) }}" class="btn btn-xs btn-default btn-export">Exporter</a>
+                        <a href="{{ path('admin_gestion_sms_excel', {corporate: corporate, mode: 'parent'}) }}" class="btn btn-xs btn-success btn-export btn-parent">Exporter la liste des parents</a>
+                        
+                    {% endif %}
+                    {{ form_errors(form) }}
+                    {{ form_row(form.contacts, {attr: {rows: 6}}) }}
+                    {{ form_row(form.limit) }}
+                    {{ form_row(form.message, {attr: {rows: 6}}) }}
+                    {{ form_row(form.condition) }}
+                    {{ form_row(form._token) }}
+                   
+                </div>
+                <div class="box-footer">
+                    <button class="btn btn-primary send-sms" type="submit">Valider</button>
+                </div>
+                  <!-- /.box-body -->
+                  
+                  <!-- box-footer -->
+            </div>
+                <!-- /.box -->
+        </section>
+    </div>
+     {{ form_end(form, {render_rest: false}) }}
+{% endblock %}
+{% block javascripts_inline %}
+    <script>
+        var corporate = $('#corporate').val();
+        var $btn_export = $('.btn-export');
+        init_date_picker('#debut', null, function (e, start) {
+            $('#debut').val(start.format('DD/MM/YYYY'));
+            var fin = $('#fin').val();
+            var params = {fin: fin, debut: start.format('DD/MM/YYYY'), corporate: corporate};
+            
+
+            $('.btn-export').each(function (element) {
+                const $element = $(this);
+               
+                if ($element.hasClass('btn-parent')) {
+                    params['mode'] = 'parent';
+                }
+
+                $element.attr('href', Routing.generate('admin_gestion_sms_excel', params));
+            });
+        }, null, null, false);
+
+
+        init_date_picker('#fin', null, function (e, start) {
+            $('#fin').val(start.format('DD/MM/YYYY'));
+            var debut = $('#debut').val();
+            var params = {fin: start.format('DD/MM/YYYY'), debut: debut, corporate: corporate};
+           $('.btn-export').each(function (element) {
+               const $element = $(this);
+                if ($element.hasClass('btn-parent')) {
+                    params['mode'] = 'parent';
+                }
+
+                $element.attr('href', Routing.generate('admin_gestion_sms_excel', params));
+            });
+        }, null, null, false);
+
+
+
+        $('.send-sms').on('click', function (e) {
+            var $condition = $('#{{ form.condition.vars.id }}');
+            var $this = $(this);
+            if ($condition.is(':checked')) {
+                if (confirm('Voulez-vous vraiment envoyer ces SMS aux numéros sélectionnés ?')) {
+                    $this.closest('form').submit();
+                } else {
+                    e.preventDefault();
+                }
+            } else {
+                alert('Veuillez cocher la case de confirmation');
+                 e.preventDefault();
+            }
+        });
+    </script>
+{% endblock %}

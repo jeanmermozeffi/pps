@@ -1,0 +1,114 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <div class="col-md-12">
+                        <!-- Horizontal Form -->
+                        <div class="">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Liste des allergies</h3>
+                            </div>
+                            <!-- box-header -->
+                            <!-- form start -->
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-8 col-sm-offset-2">
+                                            <label for="nom" class="col-sm-2 control-label">Nom</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control ng-pristine ng-untouched ng-valid" id="nom" placeholder="Nom">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- box-body -->
+
+                                <!-- box-footer -->
+                            </form>
+                        </div>
+                        <!-- box -->
+                    </div>
+
+                </div>
+                <div class="box-footer">
+                    {{ render(controller('ParametreBundle:Allergie:new')) }}                </div>
+                <div class="box-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nom</th>
+                                <th>Details</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for allergie in allergies %}
+                            <tr>
+                                <td>{{ allergie.id }}</td>
+                                <td>{{ allergie.nom }}</td>
+                                <td>{{ allergie.details }}</td>
+                                <td>                                                                                    {{ render(controller('ParametreBundle:Allergie:show', { 'id':allergie.id })) }}                                                                                                                                                                    {{ render(controller('ParametreBundle:Allergie:edit', { 'id':allergie.id })) }}                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete{{allergie.id }}"><i class="fa fa-remove"></i></button>
+                                    <div class="modal " id="modal-delete{{allergie.id}}">
+
+                                        <div class="modal-dialog modal-sm">
+                                            <div class="modal-content">
+                                                <style>
+                                                    #modal-delete{{allergie.id}} {
+                                                        text-align: center;
+                                                        padding: 0!important;
+                                                    }
+
+                                                    #modal-delete{{allergie.id}}:before {
+                                                        content: '';
+                                                        display: inline-block;
+                                                        height: 100%;
+                                                        vertical-align: middle;
+                                                        margin-right: -4px;
+                                                    }
+
+                                                    #modal-delete{{allergie.id}} .modal-dialog {
+                                                        display: inline-block;
+                                                        text-align: left;
+                                                        vertical-align: middle;
+                                                    }
+                                                </style>
+                                                <div class="modal-body">
+                                                    Souhaitez-vous supprimer définitivement <span style="color: red">{{allergie.nom }}</span>?
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <a href="{{ path ('admin_parametre_allergie_delete',{'id':allergie.id}) }}" data-toggle="modal" type="button" class="bouton btn btn-danger" >Supprimer</a>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                                </div>
+                                            </div>
+                                            <!-- modal-content -->
+                                        </div>
+                                        <!-- modal-dialog -->
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                                        <div class="navigation">
+                        {{ knp_pagination_render(allergies) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+    {% block page_title %}
+    Allergie
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}

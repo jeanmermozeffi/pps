@@ -1,0 +1,56 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+
+{% block page_content %}
+    <div class="row">
+        <!-- /.col -->
+        <div class="col-md-12">
+            
+            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'data-parsley-validate': true} }) }}
+            <div class="form-group">
+                
+                <div class="col-sm-12">
+                    <div class="alert alert-info">
+                        <a href="{{ asset('uploads/format_fichier_medicaments.xlsx') }}">Voir le Fichier Exemple</a>
+                    </div>
+                    <label class="col-sm-4 control-label">Fichier (format xls/xslx)</label>
+                    <div class="col-sm-8">
+                        {{ form_widget(form.file) }}
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="col-sm-8 col-sm-offset-4">
+                    <input type="submit" class="btn btn-success" value="Valider"/>
+                </div>
+            </div>
+            {{ form_end(form) }}
+            <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('dropzone/dist/min/bootstrap-filestyle.min.js') }}"></script>
+    <script src="{{ asset('bundles/gestion/js/fr.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/profil.js') }}"></script>
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+    <script>
+        
+    </script>
+
+{% endblock %}
+
+{% block page_title %}
+   Exporter un fichier (Disponibilité des médicaments)
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

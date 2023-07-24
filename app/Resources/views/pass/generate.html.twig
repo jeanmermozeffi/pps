@@ -1,0 +1,39 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block page_content %}
+    <div class="row">
+        <!-- /.col -->
+        <div class="col-md-12">
+            <div class="alert alert-warning"><span class="fa fa-warning"></span> Un très grand nombre (au délà de 100) peut prendre extrêmement de temps</div>
+            {{ form_errors(form)}}
+            {% if errors|length %}
+                <div class="alert alert-danger">
+                    {% for error in errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {{ form_start(form, { 'attr': {'data-parsley-validate': true} }) }}
+            
+                {{ form_widget(form) }}
+                   
+           
+                    <input type="submit" class="btn btn-success" value="Valider"/>
+                
+            {{ form_end(form) }}
+            <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+
+
+{% block page_title %}
+   Générer des PASS
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

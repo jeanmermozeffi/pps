@@ -1,0 +1,45 @@
+{% if objet.data %}
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">{{ message }}</h3>
+
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+    <div class="box-body">
+        {% if total is defined and consultation is defined %}
+            {{ consultation }} / {{ total }} patient(s) ayant au moins consulté une fois avec le PASS
+        {#<canvas id="medicament" style="height:250px"></canvas>#}
+        {% endif %}
+
+        {% if total is defined and (corporate is defined and corporate) %}
+            <p>{{ total.s | default(0) }} PASS</p>
+        {% endif %}
+        <div id="{{ objet.container }}" class="chart">
+        </div>
+        
+    </div>
+    <!-- /.box-body -->
+</div>
+{% else %}
+<div id="{{ objet.container }}" class="chart hide"></div>
+{% endif %}
+
+{% block javascripts_inline %}
+{#
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/obhighcharts/js/highcharts/highcharts.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/obhighcharts/js/highcharts/modules/exporting.js') }}"></script>
+#}
+    <script type="text/javascript">
+        {% if objet.ob is defined %}
+            {{ chart(objet.ob) }}
+        {% endif %}
+
+        
+    </script>
+
+{% endblock %}

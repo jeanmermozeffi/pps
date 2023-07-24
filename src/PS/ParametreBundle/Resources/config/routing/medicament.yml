@@ -1,0 +1,24 @@
+admin_parametre_medicament_index:
+    path:     /
+    defaults: { _controller: "ParametreBundle:Medicament:index" }
+    methods:  GET
+
+admin_parametre_medicament_show:
+    path:     /{id}/show
+    defaults: { _controller: "ParametreBundle:Medicament:show" }
+    methods:  GET
+
+admin_parametre_medicament_new:
+    path:     /new
+    defaults: { _controller: "ParametreBundle:Medicament:new" }
+    methods:  [GET, POST]
+
+admin_parametre_medicament_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ParametreBundle:Medicament:edit" }
+    methods:  [GET, POST]
+
+admin_parametre_medicament_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ParametreBundle:Medicament:delete" }
+    methods:  DELETE

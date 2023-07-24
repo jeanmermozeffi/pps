@@ -1,0 +1,280 @@
+<style type="text/css">
+    fieldset {
+        min-width: 0;
+        padding: 0;
+        padding-left: 10px;
+        margin: 0;
+        border: solid 1px #aaaaaa;
+    }
+    fieldset table{
+        padding-bottom: 15px;
+    }
+    legend {
+        display: block;
+        width: 100%;
+        padding: 0;
+        margin-bottom: 20px;
+        font-size: 16px;
+        line-height: inherit;
+        color: #333;
+        border: 0;
+    }
+    .rci{
+        width: 100%;
+        padding-bottom: 5px;
+        border-bottom: solid 1px #aaaaaa;
+    }
+    .udt{
+        width: 100%;
+    }
+    table{width: 100%; border-collapse: collapse; border: none}
+    table td{min-height: 100px}
+    .text-left{text-align: left;}
+    .text-right{text-align: right;}
+    .text-center{text-align: center;}
+    .border-top{border-top: solid 1px #000000}
+    .titre0{width: 20%}
+    .titre1{width: 20%}
+    .titre{font-size: 21px;font-weight: bold; width: 60%}
+    .left{float: left}
+    .right{float: right}
+    .republic{font-size: 12px}
+    .italique{font-style: italic;}
+    .separator{width: 100%; height: 10px;}
+    .pad5{padding-left: 5px}
+
+    .header td{width: 33%; vertical-align: top; border: 0; padding: 5px;}
+
+    .signature td{width: 50%; vertical-align: top; border: none; padding: 5px;}
+
+    .general td{width: 50%; vertical-align: top; border:none; padding: 5px;}
+
+    .client td{border-right: solid 1px #000; border-left: solid 1px #000;}
+    .client td.libelle{width: 33%;}
+    .client td.infos{width: 66%;}
+    .client td.first{border-top: solid 1px #000;}
+    .client td.last{border-bottom: solid 1px #000;}
+
+    .content th.code, .content th.quantite{width: 7%}
+    .content th.nature{width: 46%}
+    .content th.date{width: 36%}
+    .content td.last{border-bottom: solid 1px #000;}
+    .content td{border-right: solid 1px #000; border-left: solid 1px #000; padding: 5px;}
+    .content th{border: solid 1px #000; padding: 5px; background-color: #ccc; color: #000}
+
+    .motif td{width:14.1%; border: solid 1px #000; text-align: center;}
+    .motif td.titre{border: none;}
+
+    .analyse td{width: 33%; text-align: center;}
+
+    .signature td.note{font-size: 9px;}
+
+    #footerContent{font-size: 11px}
+
+    .sigle{font-size: 25px;}
+    /* Page margins are defined using CSS */
+    @page {
+        margin: 1cm;
+        margin-top:2.5cm;
+        margin-bottom: 2.5cm;
+
+        /* Header frame starts within margin-top of @page */
+        @frame header {
+    -pdf-frame-content: headerContent; /* headerContent is the #id of the element */
+        top: 1cm;
+        margin-left: 1cm;
+        margin-right:1cm;
+        height:1cm;
+    }
+
+        /* Footer frame starts outside margin-bottom of @page */
+    @frame footer {
+    -pdf-frame-content: footerContent;
+    bottom: 0.5cm;
+    margin-left: 1cm;
+    margin-right: 1cm;
+    height: 1cm;
+    }
+    }
+</style>
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/bootstrap/dist/css/bootstrap.min.css') }}" />
+{% endblock %}
+
+<page backtop="" backright="0" backleft="0" backbottom="10mm">
+
+    <table class="header">
+        <tr>
+            <td class="text-center">
+                MINISTERE DE LA SANTE ET DE LA LUTTE CONTRE LE SIDA
+            </td>
+            <td class="text-center right">
+
+            </td>
+            <td class="text-center right">
+                <span>REPUBLIQUE DE CÔTE D'IVOIRE</span>
+                <span>UNION - DISCIPLINE - TRAVAIL</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center">
+                <span class="rci">{% if consultation.medecin.hopital %}{{ consultation.medecin.hopital.nom }}{% else %}HOPITAL{% endif %}</span>
+                <span class="udt">Tèl : 22 44 00 00</span>
+            </td>
+            <td class="text-center right">
+
+            </td>
+            <td class="text-center right">
+                Abidjan, le {{ consultation.dateConsultation|date("d/m/Y") }}
+            </td>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <table>
+        <tr>
+            <th class="titre0">
+            </th>
+            <th class="text-center titre">
+                FICHE DE CONSULTATION
+            </th>
+            <th class="titre1">
+            </th>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <div class="patient">
+        <fieldset>
+            <legend>INFORMATIONS PATIENT</legend>
+            <table class="">
+                <tr>
+                    <td>Nom : {{ consultation.patient.personne.nom }}</td>
+                </tr>
+                <tr>
+                    <td>Prenom : {{ consultation.patient.personne.prenom }}</td>
+                </tr>
+                <tr>
+                    <td>Âge : {{ consultation.patient.personne.age }} ans</td>
+                </tr>
+            </table>
+        </fieldset>
+
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="patient">
+        <fieldset>
+            <legend>CONSTANTES</legend>
+            <table class="">
+                <tr>
+                    <td>Poids : {{ consultation.poids }}</td>
+                </tr>
+                <tr>
+                    <td>Temperature : {{ consultation.temperature }}</td>
+                </tr>
+                <tr>
+                    <td>
+                        Tension : {{ consultation.tension }}
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="patient">
+        <fieldset>
+            <legend>AUTRES INFORMATIONS</legend>
+            <table class="">
+                <tr>
+                    <td>Spécialité : {{ consultation.specialite.nom }}</td>
+                </tr>
+                <tr>
+                    <td>Motif : {{ consultation.motif }}</td>
+                </tr>
+            </table>
+        </fieldset>
+
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="patient">
+        <fieldset>
+            <legend>DIAGNOSTIC (AFFECTIONS)</legend>
+            <table class="">
+                {% for key, item in consultation.affections %}
+                <tr>
+                    <td>{{ item.affection }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </fieldset>
+
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="patient">
+        <fieldset>
+            <legend>ORDONNANCE (LISTE DE MEDICAMENTS)</legend>
+            <table class="">
+                {% set i = 0 %}
+                {% for key, item in consultation.medicaments %}
+                    {% set i = i + 1 %}
+                <tr>
+                    <td>{{ i }} - {{ item.medicament }} : {{ item.posologie }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </fieldset>
+
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="patient">
+        <fieldset>
+            <legend>ANALYSES</legend>
+            <table class="">
+                {% set i = 0 %}
+                {% for key, item in consultation.analyses %}
+                {% set i = i + 1 %}
+                <tr>
+                    <td>{{ i }} - {{ item.analyse }} : {{ item.libelle }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </fieldset>
+
+    </div>
+
+    <page_footer>
+        <table class="signature">
+            <tr>
+                <td class="text-left">Nom et visa du patient</td>
+                <td class="text-right">Nom et visa du médécin {# {{entities.laboratoire.sigle}} #}</td>
+            </tr>
+            <tr>
+                <td class="text-left"><br><br><br><br><br></td>
+                <td class="text-right"><br><br><br><br><br></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-center note">
+                    <i>"La signature de ce document atteste que le client a pris connaissance et approuve les termes de la plateforme."</i>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <div id="footerContent" class="text-center">
+            PASS+SANTE | LA SANTE N'A PAS DE PRIX, CAR NOUS N'AVONS QU'UNE VIE
+        </div>
+    </page_footer>
+</page>

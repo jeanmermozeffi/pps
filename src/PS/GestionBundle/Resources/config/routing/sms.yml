@@ -1,0 +1,48 @@
+admin_gestion_sms_index:
+    path:     /
+    defaults: { _controller: GestionBundle:Sms:index }
+
+admin_gestion_sms_import:
+    path:     /import
+    defaults: { _controller: GestionBundle:Sms:import }
+
+admin_gestion_sms_export:
+
+    path:     /export/{corporate}
+
+    defaults: { _controller: GestionBundle:Sms:export }
+
+
+
+admin_gestion_sms_excel:
+
+    path:     /excel/{corporate}
+
+    defaults: { _controller: GestionBundle:Sms:excel }
+    options:
+        expose: true
+
+
+
+admin_gestion_sms_new:
+
+    path:     /new
+
+    defaults: { _controller: GestionBundle:Sms:new }
+
+
+
+admin_gestion_sms_send:
+
+    path:     /send
+
+    defaults: { _controller: GestionBundle:Sms:send }
+
+
+
+admin_gestion_sms_stats:
+
+    path:     /stats
+
+    defaults: { _controller: GestionBundle:Sms:stats }
+

@@ -1,0 +1,145 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+
+{% block page_content %}
+       <div class="row">
+        <section class="col-md-3 connectedSortable">
+
+            <!-- Profile Image -->
+            <div class="box box-solid">
+                <div class="box-header bg-light-blue-gradient">
+                    <!-- tools box -->
+                    <div class=" box-tools">
+                        <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                data-toggle="tooltip"  style="margin-right: 5px;">
+                            <i class="fa fa-minus"></i></button>
+                    </div>
+                    <!-- /. tools -->
+
+                    <i class="fa fa-user"></i>
+
+                    <h3 class="box-title">
+                        Information Patient
+                    </h3>
+                </div>
+                <div class="box-body box-profile">
+                    <img class="profile-user-img img-responsive img-circle" {% if consultation.patient.personne.photo is not null %}src="{{ asset(consultation.patient.personne.photo.webPath) }}" alt="{{ consultation.patient.personne.photo.alt }}"{% else %}src="{{ asset('bundles/avanzuadmintheme/img/avatar.png') }}" alt="User profile picture"{% endif %}>
+
+                    <h3 class="profile-username text-center">{{ consultation.patient.personne.getNomComplet }}</h3>
+
+                    <p class="text-muted text-center">{{ consultation.patient.profession }} / {{ consultation.patient.societe }}</p>
+
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Groupe Sanguin</b> <a class="pull-right">{{ consultation.patient.groupeSanguin.libelle }}</a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <b>Date de naissance</b> <a class="pull-right">{{ consultation.patient.personne.dateNaissance|date("d/m/Y") }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Sexe</b>
+                            <a class="pull-right">
+                                {% if consultation.patient.sexe == 'F' %}
+                                    Femme
+                                {% elseif consultation.patient.sexe == 'M' %}
+                                    Homme
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Enfant(s)</b> <a class="pull-right">{{ consultation.patient.nombreEnfant }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Contact</b> <a class="pull-right">{{ consultation.patient.personne.contact }}</a>
+                        </li>
+                    </ul>
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+        </section>
+        <!-- /.col -->
+        <section class="col-md-9 connectedSortable">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                   
+
+                    <li><a href="{{ path ('admin_consultation_liste',{'id': consultation.patient.id}) }}">Liste consultation</a></li>
+               
+                    {% if consultation.medecin.personne.utilisateur.id == app.user.id %}
+                    <li>
+                        <a href="{{ path ('admin_consultation_edit',{'id': consultation.patient.id, 'id1': consultation.id}) }}" type="button">
+                        <i class="fa fa-edit"></i> Modifier Consultation
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <div class="tab-content">
+
+                    <div class="active tab-pane" id="nouvelle">
+                        <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        
+                        <th>Médecin/Infirmier</th>
+                        
+                        <th>Actions</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                    {% for action in actions %}
+                        <tr>
+                            <td>
+                               {{ action.dateHistorique|date('d/m/Y à H:i') }}
+                            </td>
+                            
+                            <td>
+                                {% if 'ROLE_MEDECIN' in action.utilisateur.roles %}
+                                    {{ action.utilisateur.personne.medecin.nomComplet|default(action.utilisateur.username)}} (Medecin)
+                                {% elseif 'ROLE_INFIRMIER' in action.utilisateur.roles %}
+                                     {{ action.utilisateur.personne.nomComplet|default(action.utilisateur.username)}} (Infirmier)
+                                {% endif %}
+                            </td>
+                            
+                            <td>
+                                {{ action.libHistorique }}
+                            </td>
+                
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+                    </div>
+                    <!-- /.tab-pane -->
+
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+        </section>
+        <!-- /.col -->
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/main.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/notify.js') }}"></script>
+
+{% endblock %}
+
+    {% block page_title %}
+        Consultation :: Actions
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}
+

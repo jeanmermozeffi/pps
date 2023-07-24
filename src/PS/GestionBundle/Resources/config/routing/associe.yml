@@ -1,0 +1,37 @@
+gestion_admin_patient_associe_index:
+  path:     /
+  defaults: { _controller: "GestionBundle:CompteAssocie:index" }
+  methods:  [GET, POST]
+
+gestion_admin_patient_associe_cpte_edit:
+  path:     /edit/{id}
+  defaults: { _controller: "GestionBundle:CompteAssocie:edit" }
+  methods:  [GET, POST]
+
+gestion_admin_patient_associe_cpte_new:
+  path:     /new
+  defaults: { _controller: "GestionBundle:CompteAssocie:new" }
+  methods:  [GET, POST]
+
+gestion_admin_patient_associe_association_new:
+  path:     /association
+  defaults: { _controller: "GestionBundle:CompteAssocie:association" }
+  methods:  [GET, POST]
+
+gestion_admin_patient_associe_cpte_password:
+  path:     /password
+  defaults: { _controller: "GestionBundle:CompteAssocie:password" }
+  methods:  [GET, POST]
+
+gestion_admin_patient_associe_cpte_historique:
+  path:     /historique/{id}
+  defaults: { _controller: "GestionBundle:CompteAssocie:historique" }
+  methods:  [GET]
+
+
+gestion_admin_patient_associe_cpte_consultation:
+  path:     /consultation/{id}/{consultation}
+  defaults: { _controller: "GestionBundle:CompteAssocie:consultation" }
+  methods:  [GET]
+
+

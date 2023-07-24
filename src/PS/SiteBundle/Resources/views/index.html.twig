@@ -1,0 +1,91 @@
+<!doctype html>
+<html class="no-js" lang="fr">
+  	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{% block title %}Sant&eacute; Mousso{% endblock %}</title>
+		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerfoundation/css/foundation.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/parametre/css/font-awesome.css') }}" media="screen">
+		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/parametre/css/style.css') }}" media="screen">
+		
+		<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery-migrate.min.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('bundles/bmatznerfoundation/js/foundation.min.js') }}"></script>		
+		<script type="text/javascript" src="{{ asset('bundles/bmatznermodernizr/js/modernizr.min.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('bundles/bmatznermodernizr/js/modernizr.foundation.min.js') }}"></script>
+
+	</head>
+
+	<body>
+		<!--<div id="wrapper">-->
+		
+			<div class="contain-to-grid sticky">
+				<nav class="top-bar" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1>
+								<a href="{{ path('parametre_homepage') }}">
+									{#SANTE<span class="fa-plus-square-o"></span>MOUSSO#}
+									<img src="{{ asset('bundles/parametre/images/logo.png') }}" alt="Sant&eacute; mousso" />
+								</a>
+							</h1>
+						</li>
+						<li class="toggle-topbar menu-icoon"><a href="#">Menu</a></li>
+					</ul>
+					<section class="top-bar-section">
+						<ul class="right">
+							<li><a href="{{ path('parametre_homepage') }}">Accueil</a></li>
+							<li><a href="{{ path('site_apropos') }}">A Propos</a></li>
+							<li><a href="{{ path('site_contact') }}">Contacts</a></li>
+							{% include "UtilisateurBundle::connexion.html.twig" %}
+						</ul>
+					</section>
+				</nav>
+			</div>
+			{% include "ParametreBundle:Parametre:ParametreMenu.html.twig" %}
+			{% block content %}
+			{% endblock %}
+			<footer>
+				<div class="row">
+					<div id="foot-plan" class="large-4 columns">
+						<h3><span class=" fa-sitemap MR8"></span>Plan du site</h3>
+						<ul>
+							<li><a href="{{ path('parametre_homepage') }}">Accueil</a></li>
+							<li><a href="{{ path('site_apropos') }}">A Propos</a></li>
+							<li><a href="{{ path('site_contact') }}">Contact</a></li>
+						</ul>
+					</div>
+					<div id="foot-prest" class="large-4 columns">
+						<h3><span class=" fa-users MR8"></span>Supports</h3>
+						<ul>
+							<li><a href="#">FAQ</a></li>
+							<li><a href="#">Contactez-nous</a></li>
+							<li><a href="#">Production</a></li>
+							<li><a href="#">N&deg; d'urgence</a></li>
+						</ul>
+					</div>
+					<div id="foot-contact" class="large-4 columns">
+						<h3><span class=" fa-map-marker MR8"></span>Contact</h3>
+						<ul>
+							<li>E-mail: info@santemousso.net</li>
+							<li>Web: www.santemousso.net</li>
+							<li>Tel: 21 00 29 57</li>
+							<li>Cel: 08 28 90 06</li>
+							<img src="{{ asset('bundles/parametre/images/facebook.png') }}" />
+							<img src="{{ asset('bundles/parametre/images/gplus.png') }}" />
+							<img src="{{ asset('bundles/parametre/images/twitter.png') }}" />
+							{#<img src="{{ asset('bundles/parametre/images/youtube.png') }}" />#}
+						</ul>
+					</div>
+				</div>
+				<div>
+					<section id="foot-powered">
+					 <div class="row" >
+						<div class="large-6 columns">pass<span class="fa-plus-square-o"></span>mousso&copy;copyrigth 2016</div>
+						<div class="large-6 columns text-right">powered by <b><a href="http://www.ticleaders.com">TIC-Leaders</a></b></div>
+					</div>
+				   </section>
+			   </div>
+			</footer>
+		</body>
+</html>

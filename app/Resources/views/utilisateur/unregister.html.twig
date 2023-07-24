@@ -1,0 +1,81 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% if form is defined %}{% form_theme form 'bootstrap_3_layout.html.twig' %}{% endif %}
+{% block stylesheets %}
+    {{ parent() }}
+      <link rel="stylesheet" href="{{ asset('public/css/parsley.css') }}" />
+      <style>
+        .form-group {margin-bottom: 5px}
+        .validator-rules > li {display: inline;margin-right: 2px}
+        
+      </style>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <!-- /.col -->
+        <div class="col-md-12">
+
+            <div class="box box-danger">
+                <div class="box-body">
+                {{ form_start(form) }}
+                    <div class="text-muted" style="font-size: 18px">
+                        <strong>Vous perdrez toutes vos données sur sante mousso. Vous pouvez toujours utiliser votre couple ID/PIN pour vous enregistrer à nouveau</strong>
+                    </div>
+                    <p class="text-danger"><strong>Attention: Action irréversible</strong></p>
+                    <p>Souhaitez-vous supprimer définitivement votre compte?</p>
+                    <div class="form-group">
+                        <label for="{{ form.current_password.vars.id }}">Mot de passe</label>
+                        <div class="row">
+                        <div class="col-sm-4">
+                            {{ form_errors(form) }}
+                            {{ form_widget(form.current_password, {id: form.current_password.vars.id ~ '_' ~  utilisateur.id}) }}  
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox-inline">
+                            <label for="{{ form.validate.vars.id }}">
+                                <input type="checkbox" id="{{ form.validate.vars.id }}" name="{{ form.validate.vars.full_name }}" class=" checkbox" value="{{ form.validate.vars.value }}" required data-parsley-required-message="Veuillez accepter nos CGV" {% if form.validate.vars.data == 1 %}checked{% endif %} />
+                                Je comprends les risques de mon action
+                               
+                            </label>    
+                        </div>
+
+                    </div>
+                   
+                    <button class="btn btn-danger">Supprimer</button>
+                    <a href="{{ path('gestion_homepage') }}" class="btn btn-default">Annuler</a>
+                    
+                {{ form_widget(form._token, {id: form._token.vars.id ~ '_delete_' ~ utilisateur.id })}}
+                {{ form_end(form, {render_rest:false}) }}
+                </div>
+            </div>
+        
+        </div>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('dropzone/dist/min/bootstrap-filestyle.min.js') }}"></script>
+     <script src="{{ asset('bundles/gestion/js/fr.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/profil.js') }}"></script>
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+    <script>
+        
+    </script>
+
+{% endblock %}
+
+{% block page_title %}
+   Désactivation de compte
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

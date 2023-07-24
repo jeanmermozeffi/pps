@@ -1,0 +1,136 @@
+{% from 'macros/parametre.html.twig' import groupe_formulaire %}
+{% block page_content %}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+        
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+             <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Groupes </h4>
+    </div>
+    <div class="modal-body">
+        {{ form_start(form, {'attr': {'class':'', 'role':'form'}}) }}
+            <div id="list-niveau"  data-prototype="{{ groupe_formulaire(form.groupes.vars.prototype)|e }}"></div>
+            {% include 'ajax/response.html.twig' %}
+            <div class="form-body">
+                <button type="button" class="btn btn-default add_niveau btn-sm"
+                                        id="add_niveau">
+                                            <i class="fa fa-plus"></i>
+                                             Ajouter un groupe
+                </button>
+                <div class="row">
+                    <div class="col-md-2">
+                        Ordre
+                    </div>
+                    <div class="col-md-8">
+                        Libellé
+                    </div>
+                    
+                    <div class="col-md-2 del-col">
+                    </div>
+                </div>
+                <div id="list_files" class="collection list_groupes">
+                    {% for item in form.groupes %}
+                        {{ groupe_formulaire(item|e) }}
+                    {% endfor %}
+                </div>
+            </div>
+            {% include 'ajax/loader.html.twig' %}
+            <button type="submit" class="btn btn-primary  btn-ajax">Valider</button>
+            {{ form_row(form._token) }}
+        {{ form_end(form, {render_rest: false}) }}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Fermer</button>
+    </div>
+{% endblock %}
+{% block javascripts_inline %}
+    <script>
+
+    function init_color_picker() {
+        $('.sp-color-picker').spectrum({
+            preferredFormat: "hex",
+            showInitial: true,
+            chooseText: "Choisir",
+            cancelText: "Annuler"
+        });
+    }
+
+    var $container = $('.list_groupes');
+    const $addLink = $('#add_niveau');
+    $addLink.click(function(e) {
+        addLine($container);
+        $('.btn-ajax').prop('disabled', $('.prototype_groupe_formulaire').length == 0);
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+    });
+    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+    var index = $container.find('div.prototype_groupe_formulaire').length;
+    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+    /*if (index == 0) {
+     addimputation($container);
+     } else {*/
+    if (index > 0) {
+        // Pour chaque echantillon déjà existante, on ajoute un lien de suppression
+        $container.children('div.prototype_groupe_formulaire').each(function() {
+            $(this).find("select").each(function() {
+                const $this = $(this);
+                $this.select2(/*$this.hasClass('select2_ajax') ? selectedOptions : {}*/);
+            });
+
+
+
+            $('.btn-ajax').prop('disabled', $('.prototype_groupe_formulaire').length == 0);
+
+
+           
+           
+            addDeleteLink($(this));
+        });
+    }
+    // La fonction qui ajoute un formulaire Categorie
+    function addLine($container) {
+        // Dans le contenu de l'attribut « data-prototype », on remplace :
+        // - le texte "__name__label__" qu'il contient par le label du champ
+        // - le texte "__name__" qu'il contient par le numéro du champ
+        var $prototype = $($("div#list-niveau").attr('data-prototype').replace(/__name__label__/g, 'niveau ' + (index + 1)).replace(/__name__/g, index));
+        // On ajoute au prototype un lien pour pouvoir supprimer la prestation
+        addDeleteLink($prototype);
+        // On ajoute le prototype modifié à la fin de la balise <div>
+        $container.append($prototype);
+        $prototype.find("select").each(function() {
+            const $this = $(this);
+            $this.select2(/*$this.hasClass('select2_ajax') ? selectedOptions : {}*/);
+        });
+
+        $container.children('div.prototype_groupe_formulaire').each(function() {
+             const $this = $(this);
+            $this.find('input').eq(0).val($this.index()+1);
+           
+        });
+        index++;
+    }
+    // La fonction qui ajoute un lien de suppression d'une prestation
+    function addDeleteLink($prototype) {
+        // Création du lien
+        $deleteLink = $('<a href="#" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i></a>');
+        // Ajout du lien
+        $prototype.find(".del-col").append($deleteLink);
+        // Ajout du listener sur le clic du lien
+        $deleteLink.click(function(e) {
+            const $parent = $(this).closest('.prototype_groupe_formulaire');
+            $parent.remove();
+
+            $('div.prototype_groupe_formulaire').each(function() {
+                 const $this = $(this);
+                $this.find('input').eq(0).val($this.index()+1);
+            });
+            if (index > 0) {
+                index -= 1;
+            }
+
+            $('.btn-ajax').prop('disabled', $('.prototype_groupe_formulaire').length == 0);
+            e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        });
+    }
+    </script>
+{% endblock %}

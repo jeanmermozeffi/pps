@@ -1,0 +1,35 @@
+admin_gestion_abonnement_index:
+    path:     /
+    defaults: { _controller: "GestionBundle:Abonnement:index" }
+
+admin_gestion_abonnement_show:
+    path:     /{id}/show
+    defaults: { _controller: "GestionBundle:Abonnement:show" }
+    methods:  GET
+
+
+admin_gestion_abonnement_search:
+    path:     /search
+    defaults: { _controller: "GestionBundle:Abonnement:search" }
+
+
+
+admin_gestion_abonnement_commande:
+    path:     /commande/{pass}
+    defaults: { _controller: "GestionBundle:Abonnement:commande", pass: null }
+    
+
+admin_gestion_abonnement_new:
+    path:     /new
+    defaults: { _controller: "GestionBundle:Abonnement:new" }
+    methods:  [GET, POST]
+
+admin_gestion_abonnement_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "GestionBundle:Abonnement:edit" }
+    methods:  [GET, POST]
+
+admin_gestion_abonnement_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "GestionBundle:Abonnement:delete" }
+    methods:  [GET, DELETE]

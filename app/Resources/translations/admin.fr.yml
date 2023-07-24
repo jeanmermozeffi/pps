@@ -1,0 +1,145 @@
+rdv:
+  new: Nouveau RDV
+  search: Rechercher un RDV
+  details: Détails
+  cancelled: RDV annulé
+  patient: Présence effective du patient ou de la patiente
+  no_delete: Impossible de modifier ce RDV. Il a été soit annulé ou déjà été validé
+
+btn:
+  validate: Valider
+  back: Retour
+  new: Nouveau
+  new_label: Nouveau %label%
+  add_label: Ajouter %label%
+  edit: Modifier
+  cancel: Annuler
+  emergency: Signaler une urgence
+  suivi_constante: Suivi de constantes
+  user_account: Mon compte utilisateur
+  profile_medicale: Profil Médical
+  rappel_vaccin: Rappels de vaccins
+  add_linked_account: Nouveau compte lié
+  add_line: Ajouter une ligne
+  export_file: Exporter un fichier
+  import_file: Importer un fichier
+  generate_pass: Générer des PASS
+  patient_edit:  Modification des infos
+  patient_photo: Gestion des photos
+
+grid:
+  submit_action: Valider
+admin:
+  welcome: Bienvenue dans votre espace utilisateur
+  is_logged_in: Connecté
+  alert_medicament: Des médicaments de substitution ont été proposés sur %sub%
+  total_waiting_consultation: <a href="%link%">%total_sub% consultation(s)</a>
+  no_data: Aucune donnée
+  last_measures: Dernières constantes
+  required_fields: Tous les champs sont requis suivis de * sont requis
+  row_action: Actions
+  my_history: Mon historique
+  patient_charge: Liste des patients pris en charge
+  
+registration:
+  title: Création de compte
+  has_account: Je suis déjà membre
+  registration_text: Création de compte patient
+  terms: J'accepte les <a href="%link%">termes et conditions</a>
+  form:
+    placeholder: 
+      username: Pseudo
+      email: Adresse mail
+      contact: Numéro de téléphone
+      plainPassword:
+        first: Mot de passe
+        second: Retapez le mot de passe
+security:
+  password: Mot de passe oublié
+  login_text: Connectez-vous à votre espace
+  title: Connexion
+  form:
+    placeholder:
+      _username: Login
+      _password: Mot de passe
+
+consultation:
+  new: Nouvelle consultation
+  edit: Modifier Consultation
+  info:
+  historique:
+    infoPatient: Information Patient
+    tilte: Historique de consultations
+  patient_waiting: Patient(e)s en attente de consultation
+  no_patient_waiting: Aucun patient dans la file pour le 
+
+Légende: Légende
+Tableau de bord: Tableau de bord
+RDV et Rappels de vaccins: RDV et Rappels de vaccins
+
+
+# French Only
+profile:
+  details: Détails utilisateur
+  change_password: Modification du mot de passe
+  edit: Modifier
+  edit_title: Profil utilisateur
+  name: Nom
+  surname: Prénom(s)
+  contact: Numéro de téléphone
+  login_settings: Paramètres de connexion
+  user_id: Informations générales
+  age: Âge
+  years: "%age% ans"
+  user_info: Informations sur l'utilisateur
+
+patient:
+  info_title: Compte PSM
+  list_title: Liste des patients
+  vaccinations:
+    title: Vaccins
+    name: Vaccin
+    details: Détails
+    date: Date
+    rappel: Rappel
+  traitements:
+    title: Traitements suivis
+    libelle: Traitement
+    date: Debut
+    fin: Fin
+  affections:
+    title: Affections
+    affection: Affection
+    commentaire: Commentaire
+    date: Date
+  allergies:
+    title: Allergies
+    allergie: Allergie
+    commentaire: Commentaire
+  assurances:
+    title: Assurances
+    assurance: Assurance
+    numero: Numéro d'Assuré
+    taux: '% de couverture'
+  medecins:
+    title: Medecins Traitants
+    medecin: Medecin
+    specialite: Spécialité
+    contact: Contact
+    hopital: Hôpital
+    
+
+
+username: Pseudo
+email: Adresse e-mail
+password: Mot de passe
+role: Rôle(s)
+
+pass:
+  title: Liste des PASS
+  export: Exporter les données vers EXCEL
+  import: Importer un fichier
+
+constantes:
+  new: Nouveau
+  details: Détails

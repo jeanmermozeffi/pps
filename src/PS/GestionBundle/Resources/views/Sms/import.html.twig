@@ -1,0 +1,210 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('public/css/parsley.css') }}" />
+
+    
+
+{% endblock %}
+
+{% block page_content %}
+
+    <div class="row">
+
+    
+
+    <!-- /.col -->
+
+    <div class="col-md-12">
+
+      
+
+        {% if errors|length %}
+
+                <div class="alert alert-danger">
+
+                    {% for error in errors %}
+
+                        <p>{{ error }}</p>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {{ form_start(form, { 'attr': {'class': '', 'data-parsley-validate': true} }) }}
+
+        <div class="form-group">
+
+            {{ form_errors(form) }}
+
+            {#{{ form_row(form.identifiant) }}
+
+               {{ form_row(form.pin) }}#}
+
+            {% if form.contacts is defined and form.message is defined %}
+
+                {{ form_row(form.contacts, {attr: {rows: 6}}) }}
+
+                {{ form_row(form.message, {attr: {rows: 6}}) }}
+
+                {{ form_row(form.condition) }}
+                   
+
+                     <button class="btn btn-primary send-sms" type="submit">Valider</button>
+
+            {% else %}
+
+                {{ form_row(form.colonne) }}
+
+                {{ form_row(form.file) }}
+
+                <div class="form-group">
+
+
+
+                    <input type="submit" class="btn btn-success" value="Valider" />
+
+
+
+                </div>
+
+            {% endif %}
+
+
+
+
+
+        </div>
+
+        
+         {{ form_row(form._token) }}
+        {{ form_end(form, {render_rest: false}) }}
+
+        <!-- /.nav-tabs-custom -->
+
+    </div>
+
+   
+
+
+
+    {#{ form_start(form, {attr: {class: 'form_horizontal'}}) }}
+
+     <div class="row">
+
+        <section class="col-md-12">
+
+           <div class="box">
+
+                <div class="box-header with-border">
+
+                    <h3 class="box-title">Nouveau SMS</h3>
+
+                    <div class="box-tools pull-right">
+
+                      <!-- Buttons, labels, and many other things can be placed here! -->
+
+                      <!-- Here is a label for example -->
+
+                      
+
+                    </div>
+
+                    <!-- /.box-tools -->
+
+                </div>
+
+                  <!-- /.box-header -->
+
+                <div class="box-body">
+
+                    <p>{{ availableUnits }} SMS restants</p>
+
+                    {% for message in app.getSession().getFlashBag().get('message') %}
+
+                        <div class="alert alert-success">{{ message }}</div>
+
+                    {% endfor %}
+
+                    {% if errors %}
+
+                        <div class="alert alert-danger">
+
+                            {% for error in errors %}
+
+                                <p>{{ error }}</p>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+                    <p>{{ contacts | length }} contacts</p>
+
+                    {% if corporate and contacts|length %}
+
+                        <a href="{{ path('admin_gestion_sms_export', {corporate: corporate}) }}">Exporter</a>
+
+                    {% endif %}
+
+                    {{ form_errors(form) }}
+
+                    {{ form_row(form.contacts, {attr: {rows: 6}}) }}
+
+                    {{ form_row(form.message, {attr: {rows: 6}}) }}
+
+                    {{ form_row(form._token) }}
+
+                   
+
+                </div>
+
+                <div class="box-footer">
+
+                    <button class="btn btn-primary" type="submit">Valider</button>
+
+                </div>
+
+                  <!-- /.box-body -->
+
+                  
+
+                  <!-- box-footer -->
+
+            </div>
+
+                <!-- /.box -->
+
+        </section>
+
+    </div>
+
+     {{ form_end(form, {render_rest: false}) }#}
+
+{% endblock %}
+{% block javascripts_inline %}
+    <script>
+        {% if form.condition is defined %}
+        $('.send-sms').on('click', function (e) {
+            var $condition = $('#{{ form.condition.vars.id }}');
+            var $this = $(this);
+            if ($condition.is(':checked')) {
+                if (confirm('Voulez-vous vraiment envoyer ces SMS aux numéros sélectionnés ?')) {
+                    $this.closest('form').submit();
+                } else {
+                    e.preventDefault();
+                }
+            } else {
+                alert('Veuillez cocher la case de confirmation');
+                 e.preventDefault();
+            }
+        });
+        {% endif %}
+    </script>
+{% endblock %}

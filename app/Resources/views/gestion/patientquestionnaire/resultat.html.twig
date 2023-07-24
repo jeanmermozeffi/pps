@@ -1,0 +1,60 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block page_content %}
+
+        {% from 'GestionBundle:Macros:macro.html.twig' import  info_patient %}
+
+<div class="row" xmlns="http://www.w3.org/1999/html">
+
+        <section class="col-md-3 connectedSortable">
+
+           {{ info_patient(patient.patient, true) }}
+
+        </section>
+         <section class="col-md-9">
+            <div class="box box-solid">
+                <div class="box-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h4>Pourcentage de risque</h4>
+                    <input type="text" value="{{ patient.pourcentage }}" class="dial" data-min="0" data-max="100">
+                  </div>
+                  <div class="col-md-6">
+
+                     <h4>Diagnostic Probable</h4>
+                     <p>{{ diagnostic.libelle }}</p>
+                     <div class="alert alert-info">
+                      Votre question fera peut-être l'objet d'un autre diagnostic d'un médecin
+                    </div>
+                    <a class="btn btn-default"
+                            href="{{ path('gestion_patientquestionnaire_index') }}"
+                           ><i class="fa fa-edit"></i> Mes soumissions </a>
+                            <a href="{{ path('gestion_urgence_new') }}" class="btn btn-danger"><i class="fa fa-warning"></i> Signaler une urgence</a>
+
+                  </div>
+                </div>
+              
+       </div>
+     
+     
+     </div>
+        </section>
+</div>
+   
+   
+        
+            
+{% endblock %}
+{% block javascripts_inline %}
+  <script src="{{ asset('public/js/jquery.knob.min.js') }}"></script>
+    <script>
+        $(".dial").knob({
+          readOnly: true
+        });
+    </script>
+     
+{% endblock %}
+
+    {% block page_title %}
+        Pré-Diagnostic Probable
+    {% endblock %}

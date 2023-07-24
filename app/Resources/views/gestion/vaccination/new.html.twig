@@ -1,0 +1,69 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% from 'GestionBundle:Macros:macro.html.twig' import vaccinations %}
+{% import 'widget/macro.html.twig' as psm %}
+ {% form_theme form 'widget/fields_mousso_horizontal.html.twig' %}
+
+
+
+{% block page_content %}
+
+    <div class="row">
+        <section class="col-md-12">
+            <!-- general form elements -->
+            
+                        <div class="box-body">
+                            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate', 'data-parsley-validate': true} }) }}
+                                {% include 'ajax/response.html.twig' %}
+                               
+                                <div id="list-vaccination"
+                                     data-prototype="{{ vaccinations(form.vaccinations.vars.prototype)|e }}"></div>
+
+                                
+                                {{ form_errors(form )}}
+                               
+                                    
+                              
+                                        {{ psm.proto_add_button('ajouter une ligne', 'add_vaccin') }}
+                                        
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    {{ psm.row_headers(['vaccin', 'détails(Dose,Lot etc.)', 'date', 'rappel']) }}
+                                                    
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_vaccin" class="collection list_vaccin">
+                                                {% for item in form.vaccinations %}
+                                                    {{ vaccinations(item|e) }}
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                       <button class="btn btn-success">Valider</button>
+                                        <!-- /.box-body-->
+                                     {{ form_widget(form._token) }}
+                            {{ form_end(form, {render_rest: false}) }}
+                                    </div>
+                                    <!-- /.box -->
+
+
+                
+        </section>
+    </div>
+
+{% endblock %}
+
+{% block javascripts_inline %}
+
+    <script src="{{ asset('public/js/patient.js') }}"></script>
+
+  
+
+{% endblock %}
+
+{% block page_title %}
+   Nouveau(s) vaccin(s)
+{% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}

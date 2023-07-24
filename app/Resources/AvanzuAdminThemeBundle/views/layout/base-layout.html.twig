@@ -1,0 +1,1312 @@
+{% import "AvanzuAdminThemeBundle:layout:macros.html.twig" as macro %}
+{% import 'GestionBundle:Macros:html.html.twig' as _html %}
+{% set _locale = app.request.locale %}
+<!doctype html>
+
+<!--[if lt IE 7 ]><html lang="{{ _locale }}" class="no-js ie6"> <![endif]-->
+
+<!--[if IE 7 ]><html lang="{{ _locale }}" class="no-js ie7"> <![endif]-->
+
+<!--[if IE 8 ]><html lang="{{ _locale }}" class="no-js ie8"> <![endif]-->
+
+<!--[if IE 9 ]><html lang="{{ _locale }}" class="no-js ie9"> <![endif]-->
+
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="{{ _locale }}" class="no-js"> <!--<![endif]-->
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta name="author" content="">
+
+    <meta name="keywords" content="">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title>{% block title %}PASS SANTE{% endblock %}</title>
+
+   
+
+    <link rel="stylesheet" href="{{ asset('select2/dist/css/select2.min.css') }}" />
+
+
+
+    <link rel="stylesheet" href="{{ asset('/bundles/avanzuadmintheme/vendor/ionicons/css/ionicons.min.css') }}">
+
+
+
+     <link rel="stylesheet" href="{{ asset('/bundles/avanzuadmintheme/vendor/fontawesome/css/font-awesome.min.css') }}">
+
+
+
+    <link rel="stylesheet" href="{{ asset('/bundles/avanzuadmintheme/vendor/bootstrap/dist/css/bootstrap.min.css') }}" />
+
+     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.min.css' rel='stylesheet' />
+
+    <link rel="stylesheet" href="{{ asset('/bundles/avanzuadmintheme/vendor/adminlte/dist/css/AdminLTE.min.css') }}" />
+
+     <link rel="stylesheet" href="{{ asset('/bundles/avanzuadmintheme/vendor/adminlte/dist/css/skins/skin-red.min.css') }}" />
+
+     <link rel="stylesheet" href="{{ asset('/bundles/avanzuadmintheme/vendor/bootstrap-daterangepicker/daterangepicker.css') }}" />
+
+
+
+     
+
+
+
+     
+
+    <link rel="stylesheet" href="{{ asset('/bundles/avanzuadmintheme/vendor/adminlte/plugins/iCheck/square/blue.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('/bundles/avanzuadmintheme/vendor/adminlte/plugins/iCheck/square/red.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('/bundles/avanzuadmintheme/static/style.css') }}" />
+
+    {# -------------------------------------------------------------------------------------------------- STYLESHEETS #}
+
+    {% block stylesheets %}
+
+        
+
+       <link rel="stylesheet" href="{{ asset('dropzone/dist/min/dropzone.min.css') }}" />
+
+       <link rel="stylesheet" href="{{ asset('/bundles/parametre/css/print.css') }}" media="print">
+
+
+
+
+
+       
+
+    {% endblock %}
+
+
+
+    {% block c_stylesheets %}{% endblock %}
+
+
+
+    <link rel="stylesheet" href="{{ asset('public/css/parsley.css') }}" />
+
+    <style>
+
+        .form-group {margin-bottom: 5px}
+
+        .form-control[type="number"] {padding-right: 0};
+
+        .validator-rules > li {display: inline;margin-right: 2px}
+
+    </style>
+
+
+
+    <link rel="stylesheet" href="{{ asset('public/admin/css/admin.css') }}">
+
+
+
+    <link href="{{ asset('public/bootstrap-summernote/summernote.css') }}" rel="stylesheet" />
+
+
+
+    <script src="{{ asset('/bundles/avanzuadmintheme/vendor/jquery/dist/jquery.min.js') }}"></script>
+
+    <!--<script src="{{ asset('/bundles/avanzuadmintheme/vendor/adminlte/dist/js/adminlte.min.js') }}"></script>-->
+
+   
+
+    <script>
+
+    const loader_path = "{{ asset('public/img/loading-spinner-grey.gif') }}";
+
+     const locale = "{{ app.request.locale }}";
+
+
+
+    </script>
+
+    
+
+
+
+    <style>
+
+        .select2-container {width: 100% !important;}
+
+    </style>
+
+
+
+
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+
+
+     <script type="text/javascript" src="{{ asset('/bundles/avanzuadmintheme/static/'~app.environment~'/scripts/modernizr.js') }}"></script>
+
+
+
+    {# --------------------------------------------------------------------------------------------- JAVASCRIPTS_HEAD #}
+
+    {%  block javascripts_head %}
+
+       
+
+        <!--[if lt IE 9]>
+
+
+
+        <![endif]-->
+
+
+
+    {% endblock %}
+
+
+
+</head>
+
+<body class="hold-transition sidebar-mini {{ admin_skin|default('skin-blue')}}">
+
+    <div class="page-loading display-none" id="page-loader">{{ 'Chargement&#8230;' | trans({}, 'admin') }}</div>
+
+    <div class="wrapper">
+
+
+
+    {% block avanzu_admin_header %}
+
+        <header class="main-header">
+
+            {% block avanzu_logo %}
+
+                <a href="#" class="logo">
+
+                    <!-- Add the class icon to your logo image or logo icon to add the margining -->
+
+                    <span class="logo-lg">PASS POSTE <i class="fa fa-plus-square-o"></i> SANTE</span>
+
+                    <span class="logo-mini"><b><i class="fa fa-plus-square-o"></i></b></span>
+
+                </a>
+
+            {% endblock %}
+
+            <!-- Header Navbar: style can be found in header.less -->
+
+            <nav class="navbar navbar-static-top" role="navigation">
+
+                <!-- Sidebar toggle button-->
+
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+
+                    <span class="sr-only">Toggle navigation</span>
+
+                </a>
+
+               
+
+                {% if app.user is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                    <div class="navbar-custom-menu">
+
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown user user-menu">
+                                {% set langs = {"fr": "home.form.lang.fr", "en": "home.form.lang.en", "es": "home.form.lang.es"} %}
+                                
+                                <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">{{ langs[_locale|default('fr')] | trans }}</a>
+                                 <ul class="dropdown-menu dropdown-lang" aria-labelledby="btnLang">
+
+                                    {% for key, _lang in langs %}
+
+                                    <li><a href="{{ path('gestion_homepage', {_locale: key}) }}"
+
+                                            style="display:block;padding:5px 10px" {% if key == _locale %}class="active"
+
+                                            {% endif %}>{{ langs[key] | trans }}</a></li>
+
+                                    {% endfor %}
+
+                                </ul>
+
+                            </li>
+                            {% if app.user.hopital %}
+
+                            <li>
+
+                                <a href="#">{{ app.user.hopital.nom }}</a>
+
+                            </li>
+
+                            {% endif %}
+
+                            
+
+                            {% if app.user.pharmacie %}
+
+                                <li>
+
+                                    <a href="#">{{ app.user.pharmacie.libPharmacie }}</a>
+
+                                </li>
+
+                            {% endif %}
+
+                            {% if app.user.assurance %}
+
+                                <li>
+
+                                    <a href="#">{{ app.user.assurance.nom }}</a>
+
+                                </li>
+
+                            {% endif %}
+
+                           
+
+                            {% if app.user.personne.corporate %}
+
+                                <li>
+
+                                    <a href="#">{{ app.user.personne.corporate.raisonSociale }}</a>
+
+                                </li>
+
+                            {% endif %}
+
+                            
+
+                            
+
+                            {% block avanzu_navbar %}
+
+                                {#{{ render(controller('AvanzuAdminThemeBundle:Navbar:messages')) }}
+
+                                {{ render(controller('AvanzuAdminThemeBundle:Navbar:notifications')) }}
+
+                                {{ render(controller('AvanzuAdminThemeBundle:Navbar:tasks')) }}#}
+
+                                {{ render(controller('AvanzuAdminThemeBundle:Navbar:user')) }}
+
+                            {% endblock %}
+
+                        </ul>
+
+                    </div>
+
+                {% endif %}
+
+            </nav>
+
+        </header>
+
+    {% endblock %}
+
+
+
+        <!-- Left side column. contains the logo and sidebar -->
+
+        <aside class="main-sidebar">
+
+            <!-- sidebar: style can be found in sidebar.less -->
+
+            <section class="sidebar">
+
+
+
+                {% block avanzu_sidebar %}
+
+                    {% if app.user is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                        {{ render(controller('AvanzuAdminThemeBundle:Sidebar:userPanel')) }}
+
+                        {#{{ render(controller('AvanzuAdminThemeBundle:Sidebar:searchForm')) }}#}
+
+                    {% endif %}
+
+                    {{ render(controller('AvanzuAdminThemeBundle:Sidebar:menu', {'request':app.request})) }}
+
+                {% endblock %}
+
+
+
+            </section>
+
+            <!-- /.sidebar -->
+
+        </aside>
+
+
+
+        <!-- Right side column. Contains the navbar and content of the page -->
+
+        <div class="content-wrapper">
+
+            <!-- Content Header (Page header) -->
+
+            <section class="content-header">
+
+                <h1>
+
+                    {% block page_title %}{{ _html.text('Tableau de bord') }}{% endblock %}
+
+                    <small>{% block page_subtitle %}{% endblock %}</small>
+
+                </h1>
+
+                {% block avanzu_breadcrumb %}
+
+                    {{ render(controller('AvanzuAdminThemeBundle:Breadcrumb:breadcrumb', {'request':app.request, 'title' : block('page_title')})) }}
+
+                {% endblock %}
+
+            </section>
+
+
+
+            <!-- Main content -->
+
+            <section class="content page-content-inner" id="content-inner">
+
+                <div  id="page-content-wrapper">
+
+
+
+                    {% for key, messages in app.session.flashbag.all() %}
+
+                        <div class="alert alert-flash alert-{% if key in ['ppca_success', 'success', 'message'] %}success{% elseif key in ['ppca_danger', 'danger', 'error'] %}danger{% else %}warning{% endif %}">
+
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                            {% for message in messages %}
+
+                                {% if message is not iterable %}
+
+                                    <p class="small">{{ message }}</p>
+
+                                {% else %}
+
+                                    <p class="small">{{ message | last }}</p>
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endfor %}
+
+                    {% block page_content %}{% endblock %}
+
+                </div>
+
+            </section>
+
+            <!-- /.content -->
+
+        </div>
+
+        
+
+        <!-- /.content-wrapper -->
+
+
+
+    {% block avanzu_admin_footer %}
+
+        <footer class="main-footer">
+
+            <div class="pull-right hidden-xs">
+
+                <b>Version</b> 3.0
+
+            </div>
+
+            <strong>Copyright &copy; 2021-{{ "now" | date('Y') }} <a href="//santemousso.net">PASS POSTE <i class="fa fa-plus-square-o"></i> SANTE </a>.</strong>  Tous les droits réservés.  <a href="//mcm-ci.com"><abbr title="La Poste côte d'ivoire">PPS</abbr></a>
+
+        </footer>
+
+    {% endblock %}
+
+
+
+    </div>
+
+    <div class="modal fade" id="modal-table" role="basic" aria-hidden="true" data-backdrop="false" data-keyboard="false">
+
+        <div class="modal-dialog modal-lg">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+                    <span aria-hidden="true">&times;</span></button>
+
+                </div>
+
+                <div class="modal-body text-center">
+
+                    <img src="{{ asset('public/img/loading-spinner-grey.gif') }}" alt="" class="loading">
+
+                    <span> &nbsp;&nbsp;{{ 'Chargement des données...' | trans({}, 'admin') }} </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="stack2" role="basic" aria-hidden="true" data-backdrop="false" data-keyboard="false">
+
+        <div class="modal-dialog modal-sm">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+                    <span aria-hidden="true">&times;</span></button>
+
+                    <h4 class="modal-title">&nbsp;</h4>
+
+                </div>
+
+                <div class="modal-body text-center">
+
+                    <img src="{{ asset('public/img/loading-spinner-grey.gif') }}" alt="" class="loading">
+
+                    <span> &nbsp;&nbsp;{{ 'Chargement des données...' | trans({}, 'admin') }}</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>  
+
+    <script src="{{ asset('/bundles/avanzuadmintheme/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
+    <script src="{{ asset('/bundles/avanzuadmintheme/vendor/momentjs/min/moment-with-locales.min.js') }}"></script>
+
+    <script src="{{ asset('/bundles/avanzuadmintheme/vendor/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+
+    <script src="{{ asset('/bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+
+    <script src="{{ asset('public/bootstrap-filestyle/bootstrap-filestyle.js') }}"></script>
+
+    
+
+    
+
+      
+
+    <script src="{{ asset('public/js/jquery.form.js') }}"></script>
+
+    <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+
+        
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.min.js'></script>
+
+  
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/locales-all.js'></script>
+      
+
+    <script src="{{ asset('public/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+
+    <script src="{{ asset('/bundles/gestion/js/fr.js') }}"></script>
+
+
+
+    <script src="{{ asset('public/bootstrap-summernote/summernote.min.js') }}"></script>
+
+    <script src="{{ asset('public/bootstrap-summernote/lang/summernote-fr-FR.js') }}"></script>
+
+
+
+    <script src="{{ asset('/bundles/fosjsrouting/js/router.min.js') }}"></script>
+
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+        <!---->
+
+    
+
+        
+
+<!-- ./wrapper -->
+
+
+
+{# ------------------------------------------------------------------------------------------------------ JAVASCRIPTS #}
+
+
+
+{% block lang_js %}
+
+    <script>
+
+    moment().locale("{{ _locale }}");
+
+        $('#locale').on('change', function() {
+
+            var url = $('option:selected', $(this)).data('url');
+
+            document.location.href = Routing.generate('gestion_homepage', {_locale: $(this).val()});
+
+        });
+
+    </script>
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+
+{# ----------------------------------------------------------------------------------------------- JAVASCRIPTS_INLINE #}
+
+
+
+    <script>
+
+        
+
+
+
+function init_fstyle(selector = null, options = {}) {
+
+                    $(selector || '.filestyle').each(function() {
+
+
+
+                        var $this = $(this); 
+
+                        var $div = $this.closest('.filestyle-parent');
+
+                        var default_options = {
+
+
+
+                            'input' : $this.attr('data-input') !== 'false',
+
+                            'fileName': $this.attr('data-filename'),
+
+                            'fileUrl': $this.attr('data-fileurl') || $div.data('fileurl'),
+
+                            'icon' : $this.attr('data-icon') !== 'false',
+
+                            'buttonBefore' : $this.attr('data-buttonBefore') === 'true',
+
+                            'disabled' : $this.attr('data-disabled') === 'true',
+
+                            'size' : $this.attr('data-size'),
+
+                            'buttonText' : $this.attr('data-buttonText') || $div.data('buttonText'),
+
+                            'buttonName' : $this.attr('data-buttonName'),
+
+                            'iconName' : $this.attr('data-iconName'),
+
+                            'badge' : $this.attr('data-badge') !== 'false',
+
+                            'placeholder': $this.attr('data-placeholder') || $div.data('placeholder')
+
+                        };
+
+
+
+                        options = $.extend(default_options, options);
+
+
+
+                        //console.log(options);
+
+
+
+                        $this.filestyle(options);
+
+                    });
+
+                }
+
+        /*window.Parsley.on('form:validated', function(){
+
+            $('select').on('select2:select', function(evt) {
+
+                $("#select-id").parsley().validate();
+
+            });
+
+        });*/
+
+
+
+            function init_select2(
+                    /*property, */selector = null
+
+                    /*, dropDownParent = '#modal-table'
+                    , ajax= false
+                    , url = false*/
+                     , placeholder = null
+                    , dropDownParent = 'body'
+                    , initials = []
+                    , set = true
+                    , tags = false) 
+                {
+                    
+                    /*const format_data = (data) => {
+
+                        if (data.loading) {
+                            return data.text;
+                        }
+
+                        const markup = '<div class="select2-deal_container clearfix">' +
+                            '<div class="clearfix">' +
+                            '<div class="select2-details ">' +
+                            '<div class="select2-lib_tag"><strong>' + data[property] + '</strong></div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                        return markup;
+                    };
+
+
+
+                    const format_data_selection = (data) => {
+                        return data[property] || data.text;
+                    };*/
+
+                   if (selector) {
+                        if (selector == 'select') {
+                            $selector = $('select').filter(function () {
+                                return !this.closest('.grid-wrapper');
+                            });
+                        } else {
+                            $selector = $(selector);
+                        }
+                    } else {
+                        $selector = $('.select2_single, .select2_multiple, .select2-multiple, .select2-single, .select2');
+                    }
+
+                    $selector.each(function () {
+                        let $this = $(this);
+                        
+                        const placeholder = $this.attr('placeholder') || $this.data('select2-placeholder');
+                        const multiple = $this.prop('multiple');
+                        const default_placeholder = multiple ? 'Selectionner au moins un élément de la liste': 'Sélectionner un élément de la liste';
+                        let $item = $this.select2({
+                            placeholder: placeholder || $this.attr('placeholder'),
+                            tags: tags,
+                            language: 'fr',
+                            //multiple: multiple,
+                            tokenSeparators: [","],
+                            data: initials,
+                            dropdownParent: $(dropDownParent || 'body'),
+                            allowClear: !!(placeholder || $this.attr('placeholder')),
+                        
+                            //dropDownParent: dropDownParent,
+            
+                            escapeMarkup: function(markup) {
+                                return markup;
+                            }, // let our custom formatter work
+                            minimumInputLength: 0,
+                            /*templateResult: format_data, // omitted for brevity, see the source of this page
+                            templateSelection: format_data_selection, // omitted for brevity, see the source of this page*/
+                            noResults: function() {
+                                return 'Aucun résultat';
+                            },
+                            searching: function() {
+                                return 'Recherche…';
+                            }
+
+                    });
+
+                    if (Array.isArray(initials) && initials.length && set) {
+                        let ids = [];
+                        initials.forEach((initial) => {
+                            ids.push(initial.id);
+                        });
+
+                        $item.val(ids).trigger('change');
+                    }
+                    });
+
+                    
+                    
+
+                }
+
+
+
+
+                function setUserFields($modal) {
+
+                    $modal = typeof $modal == 'undefined' ? $('.modal.in') : $modal;
+
+                   
+
+                    const $pharmacie = $('.select2-pharmacie', $modal).closest('.form-group');
+
+                    const $hopital = $('.select2-hopital', $modal).closest('.form-group');
+
+                    const $specialites = $('.select2-specialite', $modal).closest('.form-group');
+
+                    const $assurance = $('.select2-assurance', $modal).closest('.form-group');
+
+                    const $banque = $('.select2-banque', $modal).closest('.form-group');
+
+                    const $site = $('.select2-site', $modal).closest('.form-group');
+
+                    const $corporate = $('.select2-corporate', $modal).closest('.form-group');
+
+                    const $type_admin = $('.type-admin', $modal).closest('.form-group');
+
+
+
+
+
+
+
+                    
+
+
+
+                    $('.list-roles', $modal).on('change', function () {
+
+                        
+
+                        const val = $(this).val();
+
+                        const hasHopital = (['ROLE_MEDECIN', 'ROLE_RECEPTION', 'ROLE_INFIRMIER', 'ROLE_ADMIN_LOCAL'].indexOf(val) != -1);
+
+                        const hasPharmacie = (val == 'ROLE_PHARMACIE');
+
+                        const hasSpecialite =(val == 'ROLE_MEDECIN');
+
+                        //const hasAssurance = (val == 'ROLE_ADMIN_LOCAL');
+
+
+
+
+
+                        //console.log(val);
+
+
+
+                        $assurance.addClass('hide');
+
+                        $hopital.addClass('hide');
+
+                        $type_admin.addClass('hide');
+
+                        $pharmacie.addClass('hide');
+
+                        $site.addClass('hide');
+
+                        $corporate.addClass('hide');
+
+                        $banque.addClass('hide');
+
+
+
+
+
+                        if (hasPharmacie) {
+
+                            $pharmacie.removeClass('hide');
+
+                            //$hopital.addClass('hide');
+
+                        } else {
+
+
+
+                        }
+
+
+
+                        if (val == 'ROLE_ADMIN') {
+
+                            $site.removeClass('hide');
+
+                        }
+
+
+
+                        if (val == 'ROLE_ADMIN_CORPORATE') {
+
+                            $corporate.removeClass('hide');
+
+                        }
+
+
+
+
+
+                        //$assurance.toggleClass('hide', hasAssurance);
+
+                        $type_admin.toggleClass('hide', val != 'ROLE_ADMIN_LOCAL');
+
+
+
+                        var set_select = function (_val) {
+
+                             if (_val == 'ROLE_ADMIN_ASSURANCE') {
+
+                                $assurance.removeClass('hide');
+
+                                $banque.addClass('hide');
+
+                                $hopital.addClass('hide');
+
+                            } else if (_val == 'ROLE_ADMIN_BANK') {
+
+                                $assurance.addClass('hide');
+
+                                $banque.removeClass('hide');
+
+                                $hopital.addClass('hide');
+
+                            } else if (_val == 'ROLE_ADMIN_HOPITAL') {
+
+                                $assurance.addClass('hide');
+
+                                $banque.addClass('hide');
+
+                                $hopital.removeClass('hide');
+
+                            }
+
+                        };
+
+
+
+                        var type_admin = $type_admin.find('.ck-type-admin:checked').val();
+
+                        set_select(type_admin);
+
+
+
+
+
+                        //$hopital.toggleClass('hide', hasAssurance);
+
+                    
+
+
+
+                        /*if (hasAssurance) {
+
+                           
+
+
+
+                            
+
+                        } else {
+
+                             $assurance.addClass('hide');
+
+                             $hopital.addClass('hide');
+
+                        }*/
+
+
+
+                        $type_admin.find('.ck-type-admin').on('change', function (e) {
+
+                            e.stopImmediatePropagation();
+
+                           
+
+                            let _val = $(this).val();
+
+
+
+                            set_select(_val);
+
+
+
+                           
+
+                            
+
+
+
+                           
+
+                               
+
+                        })/*.trigger('change')*/;
+
+
+
+
+
+
+
+
+
+                        if (!hasSpecialite) {
+
+                            $specialites.addClass('hide');
+
+                        } else {
+
+                            $specialites.removeClass('hide');
+
+                        }
+
+                    }).trigger('change');
+
+                }
+
+
+
+
+
+        /*$('.content').find('select').each(function () {
+
+            var $this = $(this);
+
+            if ((!$this.hasClass('select2-hidden-accessible') && !$this.closest('#grid_wrapper').length) || ($this.closest('.modal').length && !$this.hasClass('select2-hidden-accessible'))) {
+
+                $this.select2();
+
+            }
+
+        });*/
+
+
+
+
+
+        function init_date_rangepicker() {
+
+                     $('.daterangepicker').daterangepicker({
+
+                        
+
+                        showDropdowns: true,
+
+                        opens: 'left',
+
+                        start: moment(),
+
+                        locale: {
+
+                            format: 'DD/MM/YYYY',
+
+                            firstDay: 1,
+
+                            "daysOfWeek": [
+
+                                "Di",
+
+                                "Lu",
+
+                                "Ma",
+
+                                "Me",
+
+                                "Je",
+
+                                "Ve",
+
+                                "Sa"
+
+                            ],
+
+                            "monthNames": [
+
+                                "Janvier",
+
+                                "Fevrier",
+
+                                "Mars",
+
+                                "Avril",
+
+                                "Mai",
+
+                                "Juin",
+
+                                "Juillet",
+
+                                "Aôut",
+
+                                "Septembre",
+
+                                "Octobre",
+
+                                "Novembre",
+
+                                "Decembre"
+
+                            ],
+
+                        }
+
+                    });
+
+                } 
+
+
+
+                function init_date_picker(selector = null, drops = 'down', cb = null, minYear = null, maxYear = null, autoUpdateInput=true, minDate = null, maxDate = null) {
+
+                    let format = 'DD/MM/YYYY';
+
+                    let timepicker = false;
+
+                    
+
+
+
+                    if (selector == '.datetimepicker') {
+
+                        format += ' HH:mm';
+
+                        timepicker = true;
+
+                    }
+
+
+
+                    /*if (selector == 'daterangetimepicker') {
+
+                        format = 'HH:mm:mm';
+
+                        timepicker = true;
+
+                    }*/
+
+
+
+                    var minDate = null;
+
+                    var maxDate = null;
+
+                    var $selector = $(selector ? selector : '.datepicker');
+
+
+
+                    if (minYear && !minDate) {
+
+                        minDate = '01/01/'+minYear;
+
+                    }
+
+
+
+                    if (maxYear && !maxDate) {
+
+                        maxDate = '31/12/'+maxYear;
+
+                    }
+
+
+
+
+
+                   
+
+                    let cbs = [];
+
+                   
+
+                    $selector.each(function (index, current) {
+
+                        var $this = $(this);
+
+
+
+                        
+
+                        
+
+                        if (!autoUpdateInput && !cb) {
+
+                            cb = (start, e) => {
+
+
+
+                                //console.log(current);
+
+                                
+
+                                $this.val(start.format('DD/MM/YYYY'));
+
+                            };
+
+                        }
+
+
+
+                        
+
+
+
+                        //cb = cb || cbs[index];
+
+                        
+
+
+
+
+
+                        $this.daterangepicker({
+
+                            singleDatePicker: true,
+
+                            autoUpdateInput: autoUpdateInput,
+
+                            showDropdowns: true,
+
+                            timePicker24Hour: timepicker,
+
+                            timePicker: timepicker,
+
+                            maxYear: +maxYear,
+
+                            minYear: +minYear,
+
+                            minDate: minDate,
+
+                            maxDate: maxDate,
+
+
+
+                           
+
+                            drops: drops,
+
+                            locale: {
+
+                                format: format,
+
+                                firstDay: 1,
+
+                                "daysOfWeek": [
+
+                                    "Di",
+
+                                    "Lu",
+
+                                    "Ma",
+
+                                    "Me",
+
+                                    "Je",
+
+                                    "Ve",
+
+                                    "Sa"
+
+                                ],
+
+                                "monthNames": [
+
+                                    "Janvier",
+
+                                    "Fevrier",
+
+                                    "Mars",
+
+                                    "Avril",
+
+                                    "Mai",
+
+                                    "Juin",
+
+                                    "Juillet",
+
+                                    "Aôut",
+
+                                    "Septembre",
+
+                                    "Octobre",
+
+                                    "Novembre",
+
+                                    "Decembre"
+
+                                ],
+
+                            }
+
+                        }, cb);
+
+                    });
+
+                }
+
+
+
+
+
+
+
+ function init_text_editor(height, options = {}) {
+
+
+
+                   
+
+                   
+
+                    $('.has-editor').each(function() {
+
+                        var $this = $(this);
+
+                        console.log($this.data('height'));
+
+                        if ($this.data('height')) {
+
+                            height = +$this.data('height');
+
+                        }
+
+                        
+
+
+
+                        let defaults = {
+
+                            height: height ? +height: 100,
+
+                            lang: 'fr-FR'
+
+                        };
+
+                    
+
+                        options = $.extend(defaults, options);
+
+                        $this.summernote(options);
+
+                    });
+
+                }
+
+        
+
+     </script>
+
+{% block javascripts_inline %}
+
+{% endblock %}
+
+
+
+</body>
+
+</html>
+

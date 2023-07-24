@@ -1,0 +1,33 @@
+admin_gestion_corporate_index:
+    path:     /
+    defaults: { _controller: "GestionBundle:Corporate:index" }
+    methods:  [GET, POST]
+
+admin_gestion_corporate_show:
+    path:     /{id}/show
+    defaults: { _controller: "GestionBundle:Corporate:show" }
+    methods:  GET
+
+admin_gestion_corporate_pharmacie:
+    path:     /{id}/pharmacies
+    defaults: { _controller: "GestionBundle:Corporate:pharmacie" }
+
+
+admin_gestion_corporate_hopital:
+    path:     /{id}/hopitaux
+    defaults: { _controller: "GestionBundle:Corporate:hopital" }
+
+admin_gestion_corporate_new:
+    path:     /new
+    defaults: { _controller: "GestionBundle:Corporate:new" }
+    methods:  [GET, POST]
+
+admin_gestion_corporate_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "GestionBundle:Corporate:edit" }
+    methods:  [GET, POST]
+
+admin_gestion_corporate_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "GestionBundle:Corporate:delete" }
+    methods:  DELETE

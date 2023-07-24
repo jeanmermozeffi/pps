@@ -1,0 +1,191 @@
+{% extends 'SiteBundle:Default:base.html.twig' %}
+
+{% block css %}
+
+<style>
+    .dropdown-lang li:hover a {
+
+        background-color: #ff0000;
+
+        color: #fff;
+
+    }
+    @media (max-width: 767px) {
+
+        #mc_embed_signup input.btn-pass-id {
+
+            border-radius: 2em !important;
+
+            margin-top: -2px !important;
+
+        }
+
+    }
+
+
+
+    @media (max-width: 1024px) {
+
+        .top .nav-pills {
+
+            float: none !important;
+
+        }
+
+
+
+        #mc_embed_signup {
+
+            z-index: 999
+        }
+
+    }
+
+</style>
+
+{% endblock %}
+
+{% block banner_content %}
+
+{% include "SiteBundle:Default:slider.html.twig" %}
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+{% include "SiteBundle:Default:presentation.html.twig" %}
+
+
+
+{# <section id="img_view" class="img_view bg-image section-padding bg-no-position" style="background-image: url( '/bundles/site/v3/images/fonction_app.jpg') ">
+</section> #}
+
+
+
+{# {% include "SiteBundle:Default:video_popup.html.twig" %} #}
+
+
+
+{# <div class="row">
+    <div class="container">
+        <div class="section-title margin-b30">
+            <h2><span>{{ 'home.section.innovation.titl0' | trans }}</span>
+                {{ 'home.section.innovation.title' | trans }}
+            </h2>
+        </div>
+    </div>
+</div>
+
+<div class="plane">
+    <section class="plans-one">
+        {% include "SiteBundle:Default:innovation.html.twig" %}
+    </section>
+</div> #}
+
+
+{# 
+<div class="row">
+    <div class="container">
+        <div class="section-title margin-b30">
+            <h2><span>{{ 'home.section.parteners.titl0' | trans }}</span>
+                {{ 'home.section.parteners.title' | trans }}
+            </h2>
+        </div>
+    </div>
+</div>
+
+<div class="fist-tab-word-non">
+    <div class="container">
+        <h2 class="host-plans-title-non-index">
+            <div class="row justify-content-center">
+                <div class="col-3 col-align">
+                    <a class="domain-price-non-index" href="#">
+                        <small><img src="/uploads/logo_oif1.png" class="img-fluid" style="width: 100%;" /></small>
+                    </a>
+                </div>
+                <div class="col-3 col-align">
+                    <a class="domain-price-non-index" href="#">
+                        <small><img src="/uploads/PNUD_Logo-Bleu-Tagline_Noir.png" class="img-fluid" style="width: 20%;"></small>
+                    </a>
+                </div>
+                <div class="col-3 col-align">
+                    <a class="domain-price-non-index" href="#">
+                        <small><img src="/uploads/Logo AccLab.jpg" class="img-fluid" style="width: 100%;"></small>
+                    </a>
+                </div>
+            </div>
+    </div>
+</div>
+
+<section class="section_sapce section-partenaires section-padding" id="partenaires">
+    {% include "SiteBundle:Default:parteners.html.twig" %}
+</section>
+
+<section class=" section_sapce section_primary cover-image" id="contact-section" data-image-src="{{ asset('bundles/site/v3/images/subbanners/4.jpg') }}">
+    <div class="section-title ">
+        <h2>{{ 'home.section.contact.title' | trans | raw }}</h2>
+    </div>
+</section> #}
+
+<!-- Support -->
+
+<div class="needsupport section_sapce bg_gray" id="contact-info">
+    <div class="row">
+        <div class="container">
+            <div class="col-sm-12">
+                <div class="col-sm-4 margin-b30">
+                    <div class="text-center padding30  main-feature">
+                        <i class="fa fa-headphones fa-3x text_primary square-border-icon"></i>
+                        <h3>8H-18H</h3>
+                        <p> +225 25 2000 6844 </p>
+                    </div>
+                </div>
+                <div class="col-sm-4 margin-b30">
+                    <div class="text-center padding30  main-feature">
+                        <i class="fa fa-envelope-open fa-3x text_primary square-border-icon"></i>
+                        <h3>Email </h3>
+                        <p>info@passpostesante.ci</p>
+                    </div>
+                </div>
+                <div class="col-sm-4 margin-b30">
+                    <div class="text-center padding30  main-feature relative">
+                        <i class="fa fa-map-marker fa-3x text_primary square-border-icon"></i>
+                        <h3>Lieu</h3>
+                        <p>17 BP 105 ABIDJAN 17 - Abidjan Marcory, Siège KM4</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End of Support -->
+
+
+
+<section class="contact section_sapce2">
+    <div class="row">
+        <div class="container">
+            <div class="col-sm-6 col-md-8">
+                <div class="contactForm row m0">
+                    <div class="contactForm">
+                        <div class="row">
+                            <div class="successMessage alert alert-success alert-dismissible fade in margin-top-30" role="alert" style="display: none">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="fa fa-times"></i></button>
+                                <strong>Well done !</strong> Thank You! We will contact you shortly.
+                            </div>
+                        </div>
+                        <br>
+                        {{ render(controller('SiteBundle:Default:contact')) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

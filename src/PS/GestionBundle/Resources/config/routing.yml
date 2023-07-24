@@ -1,0 +1,85 @@
+gestion_admin_consultation:
+    resource: "@GestionBundle/Resources/config/routing/consultation.yml"
+    prefix:   /admin/consultation
+
+gestion_admin_pharmacie:
+    resource: "@GestionBundle/Resources/config/routing/pharmacie.yml"
+    prefix:   /admin/pharmacie
+
+gestion_admin_site:
+    resource: "@GestionBundle/Resources/config/routing/site.yml"
+    prefix:   /admin/gestion/site
+
+gestion_admin_faq:
+    resource: "@GestionBundle/Resources/config/routing/faq.yml"
+    prefix:   /admin/gestion/faq
+
+gestion_admin_patient:
+    resource: "@GestionBundle/Resources/config/routing/patient_access.yml"
+    prefix:   /admin/patient
+
+gestion_admin_gestion_patient:
+    resource: "@GestionBundle/Resources/config/routing/patient.yml"
+    prefix:   /admin/gestion/patient
+
+
+gestion_admin_patient_associe:
+    resource: "@GestionBundle/Resources/config/routing/associe.yml"
+    prefix:   /admin/patient/comptes
+
+gestion_admin_config_medecin:
+        resource: "@GestionBundle/Resources/config/routing/medecin.yml"
+        prefix:   /admin/config/medecin
+
+gestion_admin_gestion_traitement:
+    resource: "@GestionBundle/Resources/config/routing/traitement.yml"
+    prefix:   /admin/gestion/traitement
+
+gestion_admin_gestion_ligneanalyse:
+    resource: "@GestionBundle/Resources/config/routing/ligneanalyse.yml"
+    prefix:   /admin/gestion/ligneanalyse
+
+gestion_admin_gestion_hospitalisation:
+    resource: "@GestionBundle/Resources/config/routing/hospitalisation.yml"
+    prefix:   /admin/gestion/hospitalisation
+
+gestion_admin_gestion_statistique:
+    resource: "@GestionBundle/Resources/config/routing/statistique.yml"
+    prefix:   /admin/gestion/statistique
+
+gestion_homepage:
+    path:     admin/
+    defaults: { _controller: GestionBundle:Default:index }
+    options: 
+        expose: true
+
+gestion_rdv:
+    resource:  "@GestionBundle/Resources/config/routing/rendezvous.yml"
+    prefix: /admin/rendez-vous
+
+gestion_sms:
+    resource: "@GestionBundle/Resources/config/routing/sms.yml"
+    prefix: /admin/sms
+
+gestion_infirmier:
+    resource: "@GestionBundle/Resources/config/routing/infirmier.yml"
+    prefix: /admin/infirmier
+
+gestion_corporate:
+    resource: "@GestionBundle/Resources/config/routing/corporate.yml"
+    prefix: /admin/gestion/corporate
+
+
+gestion_abonnement:
+    resource: "@GestionBundle/Resources/config/routing/abonnement.yml"
+    prefix:   /admin/gestion/abonnement
+
+
+
+
+
+index:
+    path:     /index
+    defaults: { _controller: GestionBundle:Site:index }
+
+

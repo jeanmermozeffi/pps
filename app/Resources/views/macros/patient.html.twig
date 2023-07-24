@@ -1,0 +1,24 @@
+{% macro info_patient(patient) %}
+
+   {% if patient.personne.photo is not null %} 
+        <img class="profile-user-img img-responsive img-circle" src="{{ asset(patient.personne.photo.webPath) }}" alt="{{ patient.personne.photo.alt }}">
+    {% endif %}
+
+    <h3 class="profile-username text-center">{{ patient.personne.nom }} {{ patient.personne.prenom }}</h3>
+
+    <p class="text-muted text-center">{{ patient.profession }} / {{ patient.societe }}</p>
+    <p class="text-muted text-center"><b>{{ patient.personne.getAge }} ans / {{ patient.sexe }} / {{ patient.groupeSanguin.libelle }}</b></p>
+
+{% endmacro %}
+{% macro allergie_traitement(patient) %}
+<div class="row">
+    <div class="col-md-6">
+        <h5>Allergies du patient</h5>
+        <ul class="list-unstyled">
+            {% for allergie in patient.allergies %}
+                <li>-<strong>{{ allergie.allergie }}</strong></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endmacro %}

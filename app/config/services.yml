@@ -1,0 +1,326 @@
+# Learn more about services, parameters and containers at
+# https://symfony.com/doc/current/service_container.html
+parameters:
+    #parameter_name: value
+
+services:
+  app.form.registration:
+    class: PS\UtilisateurBundle\Form\RegistrationType
+    tags: 
+      - {name: form.type, alias: app_user_registration}
+
+  app.validator.unique_value_in_entity:
+    class: PS\MobileBundle\Validator\Constraints\UniqueValueEntityValidator
+    arguments: ['@doctrine.orm.entity_manager']
+    tags:
+      - { name: validator.constraint_validator }
+
+
+      
+  psm_profile_controller:
+    class: PS\UtilisateurBundle\Controller\ProfileController
+    arguments:
+      - '@event_dispatcher'
+      - '@fos_user.resetting.form.factory'
+      - '@fos_user.user_manager'
+    calls:
+      - method: setContainer
+        arguments:
+          - "@service_container"
+
+  app.commande_pack_type:
+    class: PS\GestionBundle\Form\CommandePackType
+    arguments: ["@session"]
+    tags: 
+      - {name: form.type}
+
+  app.textarea_type_extension:
+    class: PS\GestionBundle\Form\Type\TextAreaTypeEmptyDataExtension
+    tags:
+      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextareaType }
+
+  psm_logoutlistener:
+    class: PS\UtilisateurBundle\EventListener\LogoutListener
+    arguments: ["@fos_user.user_manager"]
+
+  jms_serializer.camel_case_naming_strategy:
+    class: JMS\Serializer\Naming\IdenticalPropertyNamingStrategy
+
+  app.form_builder:
+    class: PS\SpecialiteBundle\Service\FormBuilder
+    arguments: ['@form.factory']
+
+  redirect.after.login:
+    class: PS\UtilisateurBundle\EventListener\AfterLoginRedirect
+    arguments: ['@router', '@fos_user.user_manager', '@app.ps_sms', '@session', '@swiftmailer.mailer.default']
+
+  app.locale_listener:
+    class: PS\GestionBundle\EventListener\LocaleListener
+    arguments: ['%kernel.default_locale%', '@router']
+    tags:
+      - { name: kernel.event_subscriber }
+  app.patient_voter:
+    class:  PS\UtilisateurBundle\Security\PatientVoter
+    #arguments:  ['@security.authorization_checker']
+    tags:
+      - { name: security.voter }
+      # small performance boost
+    public: false
+
+  app.corporate_voter:
+    class:  PS\UtilisateurBundle\Security\CorporateVoter
+    #arguments:  ['@security.authorization_checker']
+    tags:
+      - { name: security.voter }
+      # small performance boost
+    public: false
+
+  app.hopital_voter:
+    class:  PS\UtilisateurBundle\Security\HopitalVoter
+    #arguments:  ['@security.authorization_checker']
+    tags:
+      - { name: security.voter }
+      # small performance boost
+    public: false
+
+  app.user_voter:
+    class:  PS\UtilisateurBundle\Security\UserVoter
+    #arguments:  ['@security.authorization_checker']
+    tags:
+      - { name: security.voter }
+      # small performance boost
+    public: false
+
+  app.form_error_serializer:
+    class: PS\GestionBundle\Service\FormErrorsSerializer
+
+  app.associe_voter:
+    class:  PS\UtilisateurBundle\Security\AssocieVoter
+    tags:
+      - { name: security.voter }
+      # small performance boost
+    public: false
+
+  
+
+  app.consultation_voter:
+    class:  PS\UtilisateurBundle\Security\ConsultationVoter
+    tags:
+      - { name: security.voter }
+      # small performance boost
+    public: false
+
+  app.psm_logo_uploader:
+    class: PS\GestionBundle\Service\FileUploader
+    arguments: ['%kernel.root_dir%']
+
+  app.doctrine_logolistener:
+    class: PS\GestionBundle\EventListener\LogoUploadListener
+    arguments: ['@app.psm_logo_uploader']
+    tags:
+      - { name: doctrine.event_listener, event: prePersist }
+      - { name: doctrine.event_listener, event: preUpdate }
+
+  
+
+
+  #app.doctrine_user_email_listener:
+    #class: PS\UtilisateurBundle\EventListener\UpdateUserListener
+    #arguments: ["@fos_user.user_manager"]
+    #tags:
+      #- { name: doctrine.event_listener, event: postUpdate }
+
+  #app.twig_extension:
+    #class: PS\GestionBundle\Twig\VisitorCounterExtension
+    #arguments: ["%kernel.root_dir%"]
+    #tags:
+      #- { name: twig.extension }
+
+  app.custom_twig_extension:
+    class: PS\GestionBundle\Twig\CustomExtension
+    arguments: ["@request_stack", "%bundle_dir%", "@twig.form.renderer"]
+    tags:
+      - { name: twig.extension }
+  
+  visitor_counters_twig_extension:
+    class: PS\GestionBundle\Twig\VisitorCounterExtension
+    arguments: ['%kernel.root_dir%']
+    tags:
+      - { name: twig.extension }
+
+  app.osms:
+    class: Osms\Osms
+
+  #app.form.type.task:
+    #class: PS\UtilisateurBundle\Form\UtilisateurType
+    #arguments: ['@doctrine.orm.entity_manager']
+    #tags:
+      #- { name: form.type }
+
+  app.form_error:
+    class: PS\GestionBundle\Service\FormErrors
+  app.reminder:
+    class: PS\GestionBundle\Service\Rappel
+    arguments: ["@doctrine.orm.entity_manager", "@app.ps_sms", "@swiftmailer.mailer.default"]
+
+  app.form.change_password:
+    class: PS\UtilisateurBundle\Form\ChangePasswordFormType
+    tags: 
+      - {name: form.type, alias: app_user_change_password}
+
+  app.form.profile_form:
+    class: PS\UtilisateurBundle\Form\ProfileType
+    tags: 
+      - {name: form.type, alias: app_user_profile}
+
+  app.form.reset_password:
+    class: PS\UtilisateurBundle\Form\ResettingFormType
+    tags: 
+      - {name: form.type, alias: app_user_reset_password}
+
+  app.contains_pass_validator:
+    class: PS\GestionBundle\Validator\Constraints\PassConstraintValidator
+    arguments: ["@doctrine.orm.entity_manager", "@security.token_storage"]
+    tags:
+      - { name: validator.constraint_validator }
+  
+  app.contains_pass_client:
+    class: PS\GestionBundle\Validator\Constraints\PassValidator
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: validator.constraint_validator }
+
+  app.rdv_date_constraint:
+    class: PS\GestionBundle\Validator\Constraints\DateTimeAvailabilityConstraintValidator
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: validator.constraint_validator, alias: date_constraint_validator }
+
+  app.assurance_constraint:
+    class: PS\GestionBundle\Validator\Constraints\AssuranceConstraintValidator
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: validator.constraint_validator, alias: assurance_constraint_validator }
+
+  #app.api_voter:
+   #     class:  PS\ApiBundle\Security\ApiVoter
+     #   tags:
+     #       - { name: security.voter }
+   #     # small performance boost
+    #    public: false
+
+  app.api_upload:
+    class: PS\ApiBundle\File\ApiUploadedFile
+
+  redirect.after.login:
+    class: App\Listener\AfterLoginRedirection
+    arguments: ['@router', "@security.authorization_checker", "@app.ps_sms", "@doctrine.orm.entity_manager"]
+
+  app.constance_type:
+    class: PS\GestionBundle\Form\ConstanteType
+    arguments: ["@security.token_storage", "@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type }
+
+  app.corporate_type:
+    class: PS\GestionBundle\Form\CorporateType
+    arguments: ["@security.token_storage"]
+    tags:
+      - { name: form.type }
+
+
+  app.fiche_type:
+    class: PS\SpecialiteBundle\Form\FicheType
+    arguments: ["@security.token_storage"]
+    tags:
+      - { name: form.type }
+
+  app.consultation_type:
+    class: PS\GestionBundle\Form\ConsultationType
+    arguments: ["@security.token_storage", "@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type }
+
+
+  app.action_logger:
+    class: PS\GestionBundle\Service\ActionLogger
+    arguments: ["@security.token_storage", "@doctrine.orm.entity_manager", "@session"]
+    public: true
+
+  app.file_exporter:
+    class: PS\GestionBundle\Service\FileExporter
+    arguments: ['@phpoffice.spreadsheet']
+
+  app.psm_util:
+    class: PS\GestionBundle\Service\Util
+    
+
+  app.rdv_type:
+    class: PS\GestionBundle\Form\RendezVousType
+    arguments: ["@security.token_storage", "@doctrine.orm.entity_manager", "@security.authorization_checker"]
+    tags:
+      - { name: form.type }
+
+  app.utilisateur_type:
+    class: PS\UtilisateurBundle\Form\UtilisateurType
+    arguments: ['@session', "@request_stack", '@doctrine.orm.entity_manager', '@security.token_storage']
+    tags:
+      - { name: form.type }
+
+  app.medecin_type:
+    class: PS\GestionBundle\Form\MedecinType
+    arguments: ['@security.token_storage']
+    tags:
+      - { name: form.type }
+
+
+  app.ps_sms:
+    class: PS\GestionBundle\Manager\SmsManager
+    arguments: ["@app.osms",  '@security.token_storage', "@doctrine.orm.entity_manager"]
+
+  app.mtarget_sms:
+    class: PS\GestionBundle\Service\MtargetApiService
+    autowire: true
+    arguments: ['@security.token_storage', "@doctrine.orm.entity_manager"]
+
+  acme_api.event.jwt_created_listener:
+    class: PS\MobileBundle\EventListener\JWTCreatedListener
+    arguments: ["@security.authorization_checker", "@doctrine.orm.entity_manager", "@fos_user.user_manager"]
+    tags:
+      - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
+
+  psm_d_post_connect:
+    class: PS\GestionBundle\EventListener\MyPdoInitializerListener
+    tags:
+      - { name: doctrine.event_listener, event: postConnect }
+
+  acme_api.event.jwt_decoded_listener:
+    class: PS\MobileBundle\EventListener\JWTDecodedListener
+    arguments: [ "@security.token_storage", "@security.authorization_checker"]
+    tags:
+      - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_decoded, method: onJWTDecoded }
+
+
+  acme_api.event.jwt_auth_listener:
+    class: PS\MobileBundle\EventListener\JWTAuthenticatedListener
+    arguments: [ "@security.token_storage", "@security.authorization_checker"]
+    tags:
+      - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_authenticated, method: onJWTAuthenticated }
+
+
+
+  app.form.handler.registration:
+    class: PS\ApiBundle\Form\Handler\RegistrationFormHandler
+    arguments: ["@fos_user.registration.form", "@request", "@fos_user.user_manager", "@fos_user.mailer", "@fos_user.util.token_generator"]
+    scope: request
+    public: false
+
+
+  psm.registration_event:
+    class: PS\UtilisateurBundle\EventListener\UserRegistrationListener
+    arguments: ['@router', '@fos_user.user_manager', "@doctrine.orm.entity_manager", "@app.ps_sms"]
+    tags:
+      - { name: kernel.event_subscriber }
+    #service_name:
+    #    class: AppBundle\Directory\ClassName
+    #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']

@@ -1,0 +1,26 @@
+{% block page_content %}
+    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-pharmacie-{{ corporate.id }}"><i class="fa fa-building"></i></button>
+    <div class="modal fade" id="modal-pharmacie-{{ corporate.id }}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Pharmacies</h4>
+                </div>
+                {{ form_start(form) }}
+                    <div class="modal-body">
+                        <div class="box-body">
+                            {{ form_widget(form.pharmacies, {id: form.pharmacies.vars.id ~ '_' ~ corporate.id }) }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+                        <input type="submit" class="btn btn-primary pull-right" value="Créer" />
+                    </div>
+                     {{ form_widget(form._token, {id: form._token.vars.id ~ '_pharmacie_' ~ corporate.id })}}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

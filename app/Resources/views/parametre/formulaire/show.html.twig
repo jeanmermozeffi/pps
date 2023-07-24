@@ -1,0 +1,172 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% import 'macros/parametre.html.twig' as _self %}
+ {% block stylesheets %}
+        
+    <link rel="stylesheet" href="{{ asset('public/css/jquery-ui.css') }}" />
+    <link rel="stylesheet" href="{{ asset('public/css/jquery-ui.structure.min.css') }}" />
+       
+
+
+       
+    {% endblock %}
+
+
+    {% block page_content %}
+     <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-danger">
+                <div class="box-header">
+                    <!-- Horizontal Form -->
+                    <div class="">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">{{ formulaire.libelle }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <a href="{{ path('parametre_ligneformulaire_new', {formulaire: formulaire.id, redirect: redirect}) }}" class="btn btn-default" data-target="#modal-table" data-toggle="modal">Nouvelle ligne</a>
+                    {% form_theme form 'widget/fields_custom_form.html.twig' %}
+   
+                    {{ form_start(form, {'attr': {'role':'form', 'class': 'sortable-form'}}) }}
+                        {% for groupe in groupes %}
+                            
+                            {% set current_lignes = _lignes[groupe.id] %}
+                            <fieldset class="" data-fieldset="{{ groupe.id }}" id="groupe_{{ groupe.id }}">
+                                <legend>{{ groupe.libelle }}</legend>
+                                <div class="groupe-{{ groupe.id }} sortable-group">
+                                    {% for ligne in current_lignes %}
+                                        {% if form['item_' ~ ligne.id] is defined %}
+                                            {{ form_row(form['item_' ~ ligne.id]) }}
+                                        {% elseif  form['collection_' ~ ligne.id] is defined %}
+                                            <div class="form-group sortable-row" data-group="{{ ligne.groupe.libelle }}" id="ordre_{{ ligne.id }}">
+                                            <div id="list-collection{{ ligne.id }}"
+                                     data-prototype="{{ _self.traitement(form['collection_' ~ ligne.id].vars.prototype)|e }}">&nbsp;</div>
+                                             <button type="button" class="btn btn-default add_collection_{{ ligne.id }} add_collection"
+                                                    id="add_collection_{{ ligne.id }}">
+                                                <i class="fa fa-plus"></i>
+                                                Nouveau
+                                            </button>
+                                            {{ _self.traitement_body() }}
+                                        </div>
+                                             {#{ form_row(form['collection_' ~ ligne.id]) }#}
+                                            
+                                        {% endif %}
+                                        
+                                    {% endfor %}
+                                </div>
+                            </fieldset>
+                        {% endfor %}
+
+                       
+                            {#% include 'ajax/response.html.twig' %}
+                          
+                                {{ form_widget(form) }}
+                          
+                            {% include 'ajax/loader.html.twig' %#}
+                           
+                            
+                        
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% endblock %}
+{% block javascripts_inline %}
+    <script src="{{ asset('public/js/jquery-ui.min.js') }}"></script>
+    <script>
+$( ".sortable-group" ).sortable({
+  axis: "y",
+  containment: "parent",
+  cursor: "move",
+   update : function (e, ui) { 
+        //var lignes = 
+        $.ajax({
+            data: $('.sortable-group').sortable('serialize'),
+            url: "{{ path('parametre_ligneformulaire_ordre') }}",
+            success: function (data) {
+                                if (data.statut) {
+                                    location.reload(true);
+                                }
+                            } 
+        });
+    } 
+   //handle: ".form-group"
+});
+
+$( ".sortable-form" ).sortable({
+  axis: "y",
+  containment: "parent",
+   //handle: "fieldset",
+   cursor: "move",
+   update : function () { 
+       $.ajax({
+            data: $('.sortable-form').sortable('serialize'),
+            url: "{{ path('parametre_formulaire_ordre') }}",
+            success: function (data) {
+                                if (data.statut) {
+                                    location.reload(true);
+                                }
+                            } 
+        });
+    } 
+});
+
+
+/*var $listSortable = $('.list-sortable');
+
+        $listSortable.each(function () {
+
+            var $this = $(this);
+            var pageOrders = {};
+            var $listLinks = $this.children().not(':first-child');
+
+            $listLinks.each(function (index) {
+                pageOrders[index] = $(this).data('pageOrder');
+            });
+
+    
+
+            if ($listLinks.length > 1) {
+
+                $this.sortable({
+                    cursor: 'move', 
+                    placeholder: 'highlight', 
+                    forcePlaceholderSize: true, 
+                    axis: 'y', 
+                    items : $listLinks,
+                    containment: $this,
+                    opacity: 0.6,
+                   
+                    update: function (e, ui) {
+
+                        var ajaxData = [];
+
+                        $('.ui-sortable-handle', $this).each(function (index) {
+                            var $this = $(this);
+                            var id = this.id.split('_')[2];
+                            ajaxData.push('page_id['+pageOrders[index]+']='+id);
+                        });
+
+                        ajaxData = ajaxData.join('&');
+
+                        $.ajax({
+                            url : "{admin_url('ajax/update_order",
+                            data: ajaxData,
+                           
+                            success: function (data) {
+                                if (data.valid) {
+                                    location.reload(true);
+                                }
+                            } 
+                        });
+                    }
+
+                }).disableSelection();
+            }
+
+        });*/
+    </script>
+{% endblock %}

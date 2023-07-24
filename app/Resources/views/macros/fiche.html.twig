@@ -1,0 +1,203 @@
+{% macro  fiche_constante(constante, key,  constantes, edit, delete) %}
+
+   {% set constantes = constantes|default([]) %}
+   {% set has_value =  constantes|length  %}
+    {% set edit = edit|default(false) %}
+    {% set delete = delete is same as(null) ? true : delete %}
+   <tr class="prototype_constante even pointer">
+        <td width="70%">
+            <div class="form-group">
+                <div class="col-md-12">
+                    {% if has_value %}{{ edit ? constantes[key].libelle : constantes[key] }}{% endif %}
+                    <div class="{% if has_value %}hide{% endif %}">
+                        {{ form_row(constante.libelle, {label: false}) }}
+                    </div>
+
+                    
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_row(constante.valeur) }}</div>
+            </div>
+        </td>
+         {% if delete %}
+        <td class="del-col" style="vertical-align:middle"></td>
+        {% endif %}
+    </tr>
+
+{% endmacro %}
+
+
+{% macro  fiche_analyse(analyse, key, analyses, edit, delete) %}
+   {% set analyses = analyses|default([]) %}
+   {% set has_value =  analyses|length %}
+     {% set edit = edit|default(false) %}
+         {% set delete = delete is same as(null) ? true : delete %}
+   <tr class="prototype_analyse even pointer">
+        <td width="40%">
+            <div class="form-group">
+                <div class="col-md-12">
+                    
+                     {% if has_value %}{{ edit ? analyses[key].libelle : analyses[key] }}{% endif %}
+                    <div class="{% if has_value %}hide{% endif %}">
+                        {{ form_row(analyse.libelle, {label: false}) }}
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_row(analyse.valeur) }}</div>
+            </div>
+        </td>
+         {% if delete %}
+        <td class="del-col" style="vertical-align:middle"></td>
+        {% endif %}
+    </tr>
+
+{% endmacro %}
+
+
+
+{% macro  fiche_antedecedent(antecedent, key, antecedents, edit, delete) %}
+    
+     {% set antecedents = antecedents|default([]) %}
+         {% set edit = edit|default(false) %}
+     {% set delete = delete is same as(null) ? true : delete %}
+   {% set has_value =  antecedents|length  %}
+   <tr class="prototype_antecedent even pointer">
+        <td width="60%">
+            <div class="form-group">
+                <div class="col-md-12">
+                    
+                     {% if has_value %}{{ edit ? antecedents[key].libelle:antecedents[key] }}{% endif %}
+                    <div class="{% if has_value %}hide{% endif %}">
+                        {{ form_row(antecedent.libelle, {label: false}) }}
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_row(antecedent.valeur) }}</div>
+            </div>
+        </td>
+         {% if delete %}
+        <td class="del-col" style="vertical-align:middle"></td>
+        {% endif %}
+    </tr>
+
+{% endmacro %}
+
+
+{% macro  fiche_gc(gc, key, gcs, edit, delete) %}
+
+    {% set gcs = gcs|default([]) %}
+   {% set has_value =  gcs|length  %}
+     {% set edit = edit|default(false) %}
+    {% set delete = delete is same as(null) ? true : delete %}
+   <tr class="prototype_gc even pointer">
+        <td width="40%">
+            <div class="form-group">
+                <div class="col-md-12">
+                    
+                    {% if has_value %}{{ edit ? gcs[key].libelle :gcs[key]  }}{% endif %}
+                    <div class="{% if has_value %}hide{% endif %}">
+                        {{ form_row(gc.libelle, {label: false}) }}
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_row(gc.valeur) }}</div>
+            </div>
+        </td>
+         {% if delete %}
+        <td class="del-col" style="vertical-align:middle"></td>
+        {% endif %}
+    </tr>
+
+{% endmacro %}
+
+
+{% macro  fiche_traitement(traitement, delete) %}
+   
+   <tr class="prototype_traitement even pointer">
+        <td width="80%">
+            
+                
+            {{ form_row(traitement.libelle, {label: false}) }}
+                
+           
+        </td>
+         {% if delete %}
+        <td class="del-col" style="vertical-align:middle"></td>
+        {% endif %}
+    </tr>
+
+{% endmacro %}
+
+
+
+{% macro  fiche_complication(complication, key, complications, edit, delete) %}
+   {% set gcs = complications|default([]) %}
+   {% set has_value =  complications|length  %}
+     {% set edit = edit|default(false) %}
+         {% set delete = delete is same as(null) ? true : delete %}
+   <tr class="prototype_complication even pointer">
+        <td width="90%">
+          
+            {% if has_value %}{{ edit ? complications[key].libelle : complications[key] }}{% endif %}
+            <div class="{% if has_value %}hide{% endif %}">
+                {{ form_row(complication.libelle, {label: false}) }}
+            </div>
+            {{ form_row(complication.details) }}
+        </td>
+        {% if delete %}
+        <td class="del-col" style="vertical-align:middle"></td>
+        {% endif %}
+    </tr>
+
+{% endmacro %}
+
+
+{% macro  fiche_glycemie(glycemie, key, glycemies, edit, delete) %}
+    {% set glycemies = glycemies|default([]) %}
+   {% set has_value =  glycemies|length  %}
+     {% set edit = edit|default(false) %}
+ {% set delete = delete is same as(null) ? true : delete %}
+   <tr class="prototype_glycemie even pointer">
+        <td width="70%">
+            <div class="form-group">
+                <div class="col-md-12">
+                    
+                    {% if has_value %}{{ edit ? glycemies[key].libelle : glycemies[key] }}{% endif %}
+                    <div class="{% if has_value %}hide{% endif %}">
+                        {{ form_row(glycemie.libelle, {label: false}) }}
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+        {#<td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_row(glycemie.etat) }}</div>
+            </div>
+        </td>#}
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_row(glycemie.valeur) }}</div>
+            </div>
+        </td>
+        {% if delete %}
+        <td class="del-col"></td>
+        {% endif %}
+    </tr>
+
+{% endmacro %}

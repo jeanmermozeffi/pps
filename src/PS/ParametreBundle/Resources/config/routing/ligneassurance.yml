@@ -1,0 +1,24 @@
+admin_parametre_ligneassurance_index:
+    path:     /
+    defaults: { _controller: "ParametreBundle:LigneAssurance:index" }
+    methods:  GET
+
+admin_parametre_ligneassurance_show:
+    path:     /{id}/show
+    defaults: { _controller: "ParametreBundle:LigneAssurance:show" }
+    methods:  GET
+
+admin_parametre_ligneassurance_new:
+    path:     /new
+    defaults: { _controller: "ParametreBundle:LigneAssurance:new" }
+    methods:  [GET, POST]
+
+admin_parametre_ligneassurance_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ParametreBundle:LigneAssurance:edit" }
+    methods:  [GET, POST]
+
+admin_parametre_ligneassurance_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ParametreBundle:LigneAssurance:delete" }
+    methods:  DELETE

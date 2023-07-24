@@ -1,0 +1,125 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+    {% block page_content %}
+     <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-danger">
+                <div class="box-header">
+                    <!-- Horizontal Form -->
+                    <div class="">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Stats - {{ questionnaire.libelle }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <form class="form-horizontal">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                    
+                                <label for="annee" class="control-label col-md-2">Mois</label>
+                                <div class="col-md-8">
+                                <select id="annee" name="annee" class="form-control input-sm" data-placeholder="false">
+                                    {% for key, __mois in mois %}
+                                        <option value="{{ key }}" {% if key == _mois %}selected{% endif %}>{{ __mois }}</option>
+                                    {% endfor %}
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                    
+                                <label for="annee" class="control-label col-md-2">Année</label>
+                                <div class="col-md-8">
+                                <select id="annee" name="annee" class="form-control input-sm" data-placeholder="false">
+                                    {% for _annee in annees %}
+                                        <option value="{{ _annee }}" {% if _annee == annee %}selected{% endif %}>{{ _annee }}</option>
+                                    {% endfor %}
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary">Valider</button>
+                    </form>
+                     <div id="container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% endblock %}
+{% block javascripts_inline %}
+       
+        <script type="text/javascript" src="{{ asset('public/js/highchart/highcharts.js') }}"></script>
+        
+        <script>
+            Highcharts.chart('container', {
+    chart: {
+        type: 'bar'
+    },
+    title: {
+        text: null/*'Historic World Population by Region'*/
+    },
+    subtitle: {
+        text: null/*'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>'*/
+    },
+    xAxis: {
+        categories: ['Semaine N', 'Semaine N + 1', 'Semaine N + 2', 'Semaine N + 3'],
+        title: {
+            text: null
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Total',
+            align: 'high'
+        },
+        labels: {
+            overflow: 'justify'
+        }
+    },
+    tooltip: {
+        //valueSuffix: ' millions'
+    },
+    plotOptions: {
+        bar: {
+            dataLabels: {
+                enabled: true
+            }
+        }
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'top',
+        x: -40,
+        y: 80,
+        floating: true,
+        borderWidth: 1,
+        backgroundColor:
+            Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+        shadow: true
+    },
+    credits: {
+        enabled: false
+    },
+    series: [{
+        name: 'Demande de dépistage',
+        data: [107, 31, 635, 0]
+    }, {
+        name: 'Dépistage positif',
+        data: [133, 156, 947, 408]
+    }, {
+        name: 'Dépistage négatif avec suivi',
+        data: [814, 841, 3714, 727]
+    }, {
+        name: 'Dépistage négatif',
+        data: [1216, 1001, 4436, 738]
+    }]
+});
+
+        </script>
+    {% endblock %}

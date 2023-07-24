@@ -1,0 +1,80 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+
+{% block page_content %}
+    {{ form_start(form) }}
+    <div class="box">
+        <div class="box-body">
+                      <div class="row">
+             <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ form.libPharmacie.vars.id }}"> Officine</label>
+                     {{ form_widget(form.libPharmacie) }}
+                </div>
+            </div>
+            <div class="col-md-3">
+                 <div class="form-group">
+                    <label for="{{ form.info.nomResponsable.vars.id }}"> Responsable</label>
+                     {{ form_widget(form.info.nomResponsable) }}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="{{ form.info.contacts.vars.id }}"> Contacts</label>
+                     {{ form_widget(form.info.contacts) }}
+                </div>
+            </div>
+            <div class="col-md-12">
+                 <div class="form-group">
+                    <label for="{{ form.info.localisationPharmacie.vars.id }}"> Localisation</label>
+                     {{ form_widget(form.info.localisationPharmacie) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ form.info.ville.vars.id }}"> Ville</label>
+                     {{ form_widget(form.info.ville) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                 <div class="form-group">
+                    <label for="{{ form.info.commune.vars.id }}"> Commune</label>
+                     {{ form_widget(form.info.commune) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                 <div class="form-group">
+                    
+                     {{ form_widget(form.info.pointVente) }}
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-success">Valider</button>
+        </div>
+    </div>
+    {{ form_widget(form._token)}}
+    {{ form_end(form, {render_rest: false}) }}
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('dropzone/dist/min/bootstrap-filestyle.min.js') }}"></script>
+     <script src="{{ asset('bundles/gestion/js/fr.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/profil.js') }}"></script>
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+    <script>
+        
+    </script>
+
+{% endblock %}
+
+{% block page_title %}
+  Modification
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

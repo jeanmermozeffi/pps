@@ -1,0 +1,247 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block javascripts_head %}
+
+        <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+
+        <script type="text/javascript" src="{{ asset('bundles/obhighcharts/js/highcharts/highcharts.js') }}"></script>
+
+        <script type="text/javascript" src="{{ asset('bundles/obhighcharts/js/highcharts/modules/exporting.js') }}"></script>
+
+    {% endblock %}
+
+
+
+{% block page_content %}
+
+
+
+    {% set searchFilter = {hopital: hopital, corporate: corporate, pays: paysId, annee: annee} %}
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+             <form method="get" class="form-horizontal">
+
+                <input type="hidden" name="annee" value="{{ annee }}" />
+
+                
+
+                <div class="form-group">
+
+                    <label for="corporate" class="control-label col-md-2">Corporate</label>
+
+                    <div class="col-md-5">
+
+                        <select id="corporate" name="corporate" class="form-control input-sm">
+
+                             <option value="">--------</option>
+
+                        {% for _corporate in corporates if ( not app.user.personne.corporate or _corporate.id == corporate ) %}
+
+                            <option value="{{ _corporate.id }}" {% if _corporate.id == corporate %}selected{% endif %}>{{ _corporate.raisonSociale }}</option>
+
+                        {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                {% if is_granted('ROLE_ADMIN_CORPORATE') or is_granted('ROLE_ADMIN') %}
+
+                <div class="form-group">
+
+                    <label for="pays" class="control-label col-md-2">Pays</label>
+
+                    <div class="col-md-5">
+
+                        <select id="pays" name="pays" class="form-control input-sm">
+
+                            <option value="">--------</option>
+
+                        {% for _pays in pays %}
+
+                            <option value="{{ _pays.id }}" {% if _pays.id == paysId %}selected{% endif %}>{{ _pays.nom }}</option>
+
+                        {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+               
+
+                <div class="form-group">
+
+                    <label for="hopital" class="control-label col-md-2">Centre de Santé</label>
+
+                    <div class="col-md-5">
+
+                        <select id="hopital" name="hopital" class="form-control input-sm">
+
+                             <option value="">--------</option>
+
+                            {% for _hopital in hopitaux if ( is_granted('ROLE_ADMIN') or not app.user.hopital or app.user.hopital.id == _hopital.id) %}
+
+                                <option value="{{ _hopital.id }}" {% if _hopital.id == hopital %}selected{% endif %}>{{ _hopital.nom }}</option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    
+
+                    <label for="annee" class="control-label col-md-2">Année</label>
+
+                    <div class="col-md-5">
+
+                    <select id="annee" name="annee" class="form-control input-sm" data-placeholder="false">
+
+                        {% for _annee in annees %}
+
+                            <option value="{{ _annee }}" {% if _annee == annee %}selected{% endif %}>{% if _annee %}{{ _annee }}{% else %}Toutes les années{% endif %}</option>
+
+                        {% endfor %}
+
+                    </select>
+
+                    </div>
+
+                </div>
+
+               
+
+                <div class="form-group">
+
+                    <div class="col-md-offset-2 col-md-5">
+
+                        <button>Valider</button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <!-- AREA CHART -->
+
+            {{ render(controller("GestionBundle:Statistique:genre", searchFilter)) }}
+
+            {{ render(controller("GestionBundle:Statistique:age", searchFilter)) }}
+
+            {{ render(controller("GestionBundle:Statistique:assurance", searchFilter)) }}
+
+            {{ render(controller("GestionBundle:Statistique:affection", searchFilter)) }}
+
+            {{ render(controller("GestionBundle:Statistique:consultation", searchFilter)) }}
+
+            <!-- /.box -->
+
+
+
+        </div>
+
+        <!-- /.col (LEFT) -->
+
+        <div class="col-md-6">
+
+            <!-- LINE CHART -->
+
+            
+
+            {{ render(controller("GestionBundle:Statistique:allergie", searchFilter)) }}
+
+            {{ render(controller("GestionBundle:Statistique:groupeSanguin", searchFilter)) }}
+
+           
+
+
+
+{#
+
+            {{ render(controller("GestionBundle:Statistique:medicament")) }}
+
+#}
+
+            {{ render(controller("GestionBundle:Statistique:vaccin", searchFilter)) }}
+
+            {{ render(controller("GestionBundle:Statistique:inscription", searchFilter)) }}
+
+            
+            {% if not hopital %}
+             {{ render(controller("GestionBundle:Statistique:pharmacie", searchFilter)) }}
+
+            {% endif %}
+
+            
+
+            <!-- /.box -->
+
+
+
+        </div>
+
+
+
+    </div>
+
+    <div class="row">
+
+        
+
+        <div class="col-md-6">
+
+            {{ render(controller("GestionBundle:Statistique:region", searchFilter)) }}
+
+        </div>
+
+        
+
+        <div class="col-md-6">
+
+            {{ render(controller("GestionBundle:Statistique:hopitaux", searchFilter)) }}
+
+        </div>
+
+        
+
+    </div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+{% block page_title %}
+
+    Tableau de Statistiques
+
+{% endblock %}
+
+
+
+{% block page_subtitle %}
+
+{% endblock %}

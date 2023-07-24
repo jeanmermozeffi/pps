@@ -1,0 +1,243 @@
+{% block page_content %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Ajouter utilisateur</h4>
+</div>
+{{ form_start(form, { 'attr': {'class': 'form-utilisateur form-horizontal', 'id': 'form_new_user', "data-parsley-validate": true} }) }}
+<div class="modal-body">
+    <div class="">
+        {% include 'ajax/response.html.twig' %}
+
+        <div class="form-group">
+            <label for="nom" class="col-sm-4">Pseudo</label>
+
+            <div class="col-sm-8">
+                {{ form_widget(form.username) }}
+                {% include 'UtilisateurBundle:Rules:username.html.twig' %}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="nom" class="col-sm-4">Email</label>
+
+            <div class="col-sm-8">
+                {{ form_widget(form.email) }}
+            </div>
+        </div>
+        {% if form.roles is defined %}
+        <div class="form-group">
+            <label class="col-sm-4">Rôle</label>
+            <div class="col-sm-8">
+                {{ form_widget(form.roles) }}
+            </div>
+        </div>
+        {% endif %}
+        {% if form.hopital is defined %}
+        <div class="form-group hide">
+            <label for="{{ form.hopital.vars.id }}" class="col-sm-4">Hôpital</label>
+            <div class="col-sm-8">
+                {{ form_widget(form.hopital) }}
+                <p class="help-block small"><span class="fa fa-info-circle"></span> Seulement pour les medecins et infirmiers</p>
+            </div>
+        </div>
+        {% endif %}
+        {% if form.assurance is defined %}
+        <div class="form-group hide">
+            <label for="{{ form.assurance.vars.id }}" class="col-sm-4">Assurance</label>
+            <div class="col-sm-8">
+                {{ form_widget(form.assurance) }}
+            </div>
+        </div>
+        {% endif %}
+        {% if form.specialites is defined %}
+        <div class="form-group hide">
+            <label for="{{ form.specialites.vars.id }}" class="col-sm-4">Spécialtés</label>
+            <div class="col-sm-8">
+                {{ form_widget(form.specialites) }}
+                <p class="help-block small"><span class="fa fa-info-circle"></span> Seulement pour les medecins</p>
+            </div>
+        </div>
+        {% endif %}
+        {% if form.pharmacie is defined %}
+        <div class="form-group hide">
+            <label for="{{ form.pharmacie.vars.id }}" class="col-sm-4">Pharmacie</label>
+            <div class="col-sm-8">
+                {{ form_widget(form.pharmacie) }}
+                <p class="help-block small"><span class="fa fa-info-circle"></span> Seulement pour les pharmaciens</p>
+            </div>
+        </div>
+        {% endif %}
+        {% if form.personne.corporate is defined %}
+        <div class="form-group">
+            <label for="{{ form.personne.corporate.vars.id }}" class="col-sm-4">Corporate</label>
+            <div class="col-sm-8">
+                {{ form_widget(form.personne.corporate) }}
+            </div>
+        </div>
+        {% endif %}
+        <div class="form-group">
+            <label for="nom" class="col-sm-4">Nom</label>
+            <div class="col-sm-8">
+                {{ form_widget(form.personne.nom) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="nom" class="col-sm-4">Prénom</label>
+            <div class="col-sm-8">
+                {{ form_widget(form.personne.prenom) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="nom" class="col-sm-4">Contact</label>
+            <div class="col-sm-8">
+                {{ form_widget(form.personne.contact) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="nom" class="col-sm-4">Mot de passe</label>
+
+            <div class="col-sm-8">
+                {{ form_widget(form.plainPassword.first) }}
+                {% include 'UtilisateurBundle:Rules:password.html.twig' %}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="nom" class="col-sm-4">Répétez mot de passe</label>
+
+            <div class="col-sm-8">
+                {{ form_widget(form.plainPassword.second) }}
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal-footer">
+    {% include 'ajax/loader.html.twig' %}
+    <button type="button" class="btn btn-default " data-dismiss="modal">Annuler</button>
+    <input type="submit" class="btn btn-primary  btn-ajax" value="Enregistrer" />
+</div>
+{{ form_widget(form._token, {id: form._token.vars.id ~ '_new' })}}
+{{ form_end(form, {render_rest: false}) }}
+
+{% endblock %}
+
+{% block javascripts_inline %}
+<script src="{{ asset('public/js/admin.js') }}"></script>
+<script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+
+<script>
+    init_select2('select');
+    // setUserFields('#modal-table');
+    {% if form.roles is defined %}
+    $('#{{ form.roles.vars.id }}').on('change', function () {
+        const $pharmacie = $('.select2-pharmacie').closest('.form-group');
+        const $hopital = $('.select2-hopital').closest('.form-group');
+        const $specialites = $('.select2-specialite').closest('.form-group');
+        const $assurance = $('.select2-assurance').closest('.form-group');
+        const $banque = $('.select2-banque').closest('.form-group');
+        const $site = $('.select2-site').closest('.form-group');
+        const $corporate = $('.select2-corporate').closest('.form-group');
+        const $type_admin = $('.type-admin').closest('.form-group');
+        const val = $(this).val();
+        const hasHopital = (['ROLE_MEDECIN', 'ROLE_RECEPTION', 'ROLE_INFIRMIER', 'ROLE_ADMIN_LOCAL'].indexOf(val) != -1);
+        const hasPharmacie = (val == 'ROLE_PHARMACIE');
+        const hasSpecialite = (val == 'ROLE_MEDECIN');
+        //const hasAssurance = (val == 'ROLE_ADMIN_LOCAL');
+
+
+        //console.log(val);
+
+        $assurance.addClass('hide');
+        $hopital.addClass('hide');
+        $type_admin.addClass('hide');
+        $pharmacie.addClass('hide');
+        $site.addClass('hide');
+        $corporate.addClass('hide');
+        $banque.addClass('hide');
+
+
+        if (hasPharmacie) {
+            $pharmacie.removeClass('hide');
+            //$hopital.addClass('hide');
+        } else {
+
+        }
+
+        if (hasHopital) {
+            $hopital.removeClass('hide');
+        }
+
+        if (val == 'ROLE_ADMIN') {
+            $site.removeClass('hide');
+        }
+
+        if (val == 'ROLE_ADMIN_CORPORATE') {
+            $corporate.removeClass('hide');
+        }
+
+
+        //$assurance.toggleClass('hide', hasAssurance);
+        $type_admin.toggleClass('hide', val != 'ROLE_ADMIN_LOCAL');
+
+        var set_select = function (_val) {
+            if (_val == 'ROLE_ADMIN_ASSURANCE') {
+                $assurance.removeClass('hide');
+                $banque.addClass('hide');
+                $hopital.addClass('hide');
+            } else if (_val == 'ROLE_ADMIN_BANK') {
+                $assurance.addClass('hide');
+                $banque.removeClass('hide');
+                $hopital.addClass('hide');
+            } else if (_val == 'ROLE_ADMIN_HOPITAL') {
+                $assurance.addClass('hide');
+                $banque.addClass('hide');
+                $hopital.removeClass('hide');
+            }
+        };
+
+        var type_admin = $type_admin.find('.ck-type-admin:checked').val();
+        set_select(type_admin);
+
+
+        //$hopital.toggleClass('hide', hasAssurance);
+
+
+        /*if (hasAssurance) {
+           
+
+            
+        } else {
+             $assurance.addClass('hide');
+             $hopital.addClass('hide');
+        }*/
+
+        $type_admin.find('.ck-type-admin').on('change', function (e) {
+            e.stopImmediatePropagation();
+
+            let _val = $(this).val();
+
+            set_select(_val);
+
+
+
+
+
+
+        })/*.trigger('change')*/;
+
+
+
+
+        if (!hasSpecialite) {
+            $specialites.addClass('hide');
+        } else {
+            $specialites.removeClass('hide');
+        }
+    }).trigger('change');
+    {% endif %}
+</script>
+
+{% endblock %}

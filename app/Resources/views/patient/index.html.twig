@@ -1,0 +1,168 @@
+{0% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block page_content %}
+    <div class="row">
+        <section class="col-md-12">
+            <!-- general form elements -->
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="{{ path ('admin_gestion_patient_index') }}">Liste patients</a></li>
+                    </ul>
+                    <div class="tab-content">
+
+                        <div class="active tab-pane" id="liste">
+                            <div class="box-header">
+                                <div class="col-md-12">
+                                    <!-- Horizontal Form -->
+                                    <div class="">
+                                        <div class="box-header with-border">
+                                            <h3 class="box-title">Liste des patients</h3>
+                                        </div>
+                                        <!-- box-header -->
+                                        <!-- form start -->
+                                        {#<form class="form-horizontal ng-pristine ng-valid">
+                                            <div class="box-body">
+                                                <div class="form-group">
+                                                    <div class="col-sm-8 col-sm-offset-2">
+                                                        <label for="nom" class="col-sm-2 control-label">Nom</label>
+
+                                                        <div class="col-sm-8">
+                                                            <input type="text"
+                                                                   class="form-control ng-pristine ng-untouched ng-valid" id="nom"
+                                                                   placeholder="Nom">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <!-- box-body -->
+
+                                            <!-- box-footer -->
+                                        </form>#}
+                                        {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <div class="col-sm-8 col-sm-offset-2">
+                                                    <label for="code" class="col-sm-2 control-label">Nom</label>
+
+                                                    <div class="col-sm-6">
+                                                        {{ form_widget(form.nom) }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-2">
+                                                    {{ form_row(form.submit,{'attr':{'class':'btn btn-success pull-right glyphicon glyphicon-search'}}) }}
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- /.box-body -->
+
+                                        <!-- /.box-footer -->
+                                        {{ form_end(form) }}
+                                    </div>
+                                    <!-- box -->
+                                </div>
+
+                            </div>
+                            <div class="box-body">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Identifiant</th>
+                                            <th>Nom & Prenom</th>
+                                            <th>Date naissance</th>
+                                            <th>Profession</th>
+                                            <th>Société</th>
+                                            <th>Sexe</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for patient in patients %}
+                                        <tr>
+                                            <td>{{ patient.identifiant }}</td>
+                                            <td>{{ patient.personne.getNomComplet }}</td>
+                                            <td>{% if patient.personne.datenaissance %}{{ patient.personne.datenaissance|date('d/m/Y') }}{% endif %}</td>
+                                            <td>{{ patient.profession }}</td>
+                                            <td>{{ patient.societe }}</td>
+                                            <td>
+                                                {% if patient.sexe == 'M' %}
+                                                    Masculin
+                                                {% endif %}
+                                                {% if patient.sexe == 'F' %}
+                                                    Féminin
+                                                {% endif %}
+                                            </td>
+                                            <td>
+
+                                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                        data-target="#modal-delete{{ patient.id }}"><i class="fa fa-remove"></i>
+                                                </button>
+                                                <div class="modal " id="modal-delete{{ patient.id }}">
+
+                                                    <div class="modal-dialog modal-sm">
+                                                        <div class="modal-content">
+                                                            <style>
+                                                                #modal-delete{{patient.id}} {
+                                                                    text-align: center;
+                                                                    padding: 0 !important;
+                                                                }
+
+                                                                #modal-delete{{patient.id}}:before {
+                                                                    content: '';
+                                                                    display: inline-block;
+                                                                    height: 100%;
+                                                                    vertical-align: middle;
+                                                                    margin-right: -4px;
+                                                                }
+
+                                                                #modal-delete{{patient.id}} .modal-dialog {
+                                                                    display: inline-block;
+                                                                    text-align: left;
+                                                                    vertical-align: middle;
+                                                                }
+                                                            </style>
+                                                            <div class="modal-body">
+                                                                Souhaitez-vous supprimer définitivement <span
+                                                                        style="color: red">{{ patient.personne.getNomComplet }}</span>?
+                                                            </div>
+
+                                                            <div class="modal-footer">
+                                                                <a href="{{ path ('admin_gestion_patient_delete',{'id':patient.id}) }}"
+                                                                   data-toggle="modal" type="button" class="bouton btn btn-danger">Supprimer</a>
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                                    Annuler
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <!-- modal-content -->
+                                                    </div>
+                                                    <!-- modal-dialog -->
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                <div class="navigation">
+                                    {{ knp_pagination_render(patients) }}
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.tab-pane -->
+
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+        </section>
+    </div>
+{% endblock %}
+
+    {% block page_title %}
+        Patient
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}

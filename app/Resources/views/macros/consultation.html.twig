@@ -1,0 +1,79 @@
+{% macro affection(affection) %}
+    <tr class="prototype_affection even pointer">
+        <td width="40%">
+            <div class="form-group">
+                <div class="col-md-12">{{ form_row(affection.affection, {label: false}) }}</div>
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_row(affection.commentaire, {label: false}) }}</div>
+            </div>
+        </td>
+        <td></td>
+    </tr>
+{% endmacro %}
+
+
+{% macro examen(examen) %}
+    <tr class="prototype_examen even pointer">
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_row(examen.examen, {label: false})}}</div>
+                
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_row(examen.commentaire, {label: false}) }}</div>
+            </div>
+        </td>
+        
+        <td></td>
+    </tr>
+{% endmacro %}
+
+
+{% macro hospitalisation(hospitalisation) %}
+    <tr class="prototype_hospitalisation even pointer">
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_row(hospitalisation.hospitalisation, {label: false})}}</div>
+                
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-md-12">{{ form_row(hospitalisation.commentaire, {label: false}) }}</div>
+            </div>
+        </td>
+        
+        <td>
+
+        </td>
+    </tr>
+{% endmacro %}
+
+
+{% macro medicament(medicament) %}
+        <tr class="prototype_medicament even pointer">
+            <td>
+                <div class="form-group">
+                    <div class="col-md-12">{{ form_row(medicament.medicament, {label: false}) }}</div>
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <div class="col-md-12">{{ form_row(medicament.posologie, {label: false}) }}</div>
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <div class="col-md-12">{{ form_row(medicament.commentaire, {label: false}) }}</div>
+                </div>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+    {% endmacro %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Accès non autorisé</title>
+    <meta name="description" content="Site officiel du Pass Santé">
+    
+    <link rel="shortcut Icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
+    <link href='https://fonts.googleapis.com/css?family=Anton|Passion+One|PT+Sans+Caption' rel='stylesheet' type='text/css'>
+    <meta name="author" content="MCM">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ asset('bundles/site/v2/css/bootstrap.min.css') }} " />
+    <link rel="stylesheet" href="{{ asset('bundles/site/v2/css/error.css') }} " />
+    <script src="{{ asset('bundles/site/v2/js/modernizr.js') }}"></script>
+</head>
+<body>
+   <div class="error error-403">
+        <div class="container-fluid">
+            <div class="col-xs-12 ground-color text-center">
+                <div class="container-error">
+                    <div class="clip"><div class="shadow"><span class="digit thirdDigit">4</span></div></div>
+                    <div class="clip"><div class="shadow"><span class="digit secondDigit">0</span></div></div>
+                    <div class="clip"><div class="shadow"><span class="digit firstDigit">3</span></div></div>
+                    <div class="msg">OH!<span class="triangle"></span></div>
+                </div>
+                <h2 class="h1">Vous n'avez pas le droit d'accéder à cette page</h2>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

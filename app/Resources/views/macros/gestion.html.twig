@@ -1,0 +1,50 @@
+{% macro gestionnaire_hopital(hopital) %}
+    <div class="prototype_hopital even pointer row" style="margin-bottom: 5px">
+        <div class="col-md-10">
+            {{ form_widget(hopital.hopital) }}
+        </div>
+      
+        
+        <div class="col-md-2 del-col">
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro gestionnaire_assurance(assurance) %}
+    <div class="prototype_assurance even pointer row" style="margin-bottom: 5px">
+        <div class="col-md-10">
+            {{ form_widget(assurance.assurance) }}
+        </div>
+      
+        
+        <div class="col-md-2 del-col">
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro medicament_pharmacie(medicament, key, medicaments) %}
+    
+    <tr class="prototype_medicament even pointer">
+        <td>
+            {{ medicaments[key].medicament.nom }}
+            <div class="hide">{#{ form_widget(medicament.medicament) }}</div>
+            
+             {{ form_row(medicament.substitution) }#}</div>
+            
+        </td>
+        <td width="5%">
+            {{ form_widget(medicament.statut, {label: false}) }}
+             
+        </td>
+        <td  width="10%">
+            {{ form_widget(medicament.prix) }}
+             
+        </td>
+        <td width="30%">
+            {{ form_widget(medicament.commentaire) }}
+        </td>
+
+    </tr>
+{% endmacro %}

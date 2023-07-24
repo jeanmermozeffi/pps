@@ -1,0 +1,8 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+<p>
+{{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}
+</p><p></p>
+    <a href="{{ path("fos_user_security_login") }}">Page de connexion</a><br>
+{% endblock %}

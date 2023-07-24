@@ -1,0 +1,73 @@
+{%- block form_label -%}
+{% if label is not same as(false) %}
+{%- if not compound -%}
+{% set label_attr = label_attr|merge({'for': id}) %}
+
+{%- endif -%}
+
+{%- if label is empty -%}
+{% set label = name|humanize %}
+{%- endif -%}
+<label {% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}" {% endfor %}>
+    {{ label|trans({}, translation_domain) }}
+    {% if required %}
+    <span class="required">
+        *
+    </span>
+    {% endif %}
+</label>
+{%- endif -%}
+{%- endblock form_label -%}
+
+{% block form_widget_simple %}
+{% spaceless %}
+{% set type = type|default('text') %}
+<input
+    class="form-control name {% if attr %}{% for attrname, attrvalue in attr %}{% if attrname == 'class' %}{{attrvalue}}{% endif %}{% endfor %}{% endif %}"
+    type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %} value="{{ value }}" {% endif %} />
+{% endspaceless %}
+{% endblock form_widget_simple %}
+
+{% block textarea_widget %}
+{% spaceless %}
+<textarea class="form-control " rows="4" {{ block('widget_attributes') }}>
+		{{ value }}
+	</textarea>
+{% endspaceless %}
+{% endblock textarea_widget %}
+
+{%- block choice_widget_collapsed -%}
+{%- if required and empty_value is none and not empty_value_in_choices and not multiple -%}
+{% set required = false %}{%- endif -%}<div class="mb-3">
+    <select
+        class="form-control name {% for attrname, attrvalue in attr %}{% if attrname == 'class' %}{{attrvalue}}{% endif %}{% endfor %}"
+        {{ block('widget_attributes') }} {% if multiple %} multiple="multiple" {% endif %}>
+        {%- if empty_value is not none -%}
+        <option value="" {% if required and value is empty %} selected="selected" {% endif %}>
+            {{ empty_value != '' ? empty_value|trans({}, translation_domain) }}
+        </option>
+        {%- endif -%}
+        {%- if preferred_choices|length > 0 -%}
+        {% set options = preferred_choices %}
+        {{- block('choice_widget_options') -}}
+        {%- if choices|length > 0 and separator is not none -%}
+        <option disabled="disabled">
+            {{ separator }}
+        </option>
+        {%- endif -%}
+        {%- endif -%}
+        {%- set options = choices -%}
+        {{- block('choice_widget_options') -}}
+    </select>
+</div>
+{%- endblock choice_widget_collapsed -%}
+
+{%- block form_row -%}
+
+<!--<div class="col-md-6">-->
+{{- form_label(form) -}}
+{{- form_widget(form) -}}
+{{- form_errors(form) -}}
+<!--</div>-->
+
+{%- endblock form_row -%}

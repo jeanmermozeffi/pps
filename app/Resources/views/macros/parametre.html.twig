@@ -1,0 +1,44 @@
+{% macro groupe_formulaire(groupe) %}
+    <div class="prototype_groupe_formulaire even pointer row" style="margin-bottom: 5px">
+        <div class="col-md-2">
+            {{ form_widget(groupe.ordre) }}
+        </div>
+        <div class="col-md-8">
+            {{ form_widget(groupe.libelle) }}
+        </div>
+        
+        <div class="col-md-2 del-col">
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro hopital_banque(hopital_banque) %}
+    <div class="prototype_hopital_banque even pointer row" style="margin-bottom: 5px">
+        <div class="col-md-10">
+            {{ form_widget(hopital_banque.hopital) }}
+        </div>
+      
+        
+        <div class="col-md-2 del-col">
+        </div>
+    </div>
+{% endmacro %}
+
+
+
+{% macro image_banniere(image) %}
+    {% set file_value = image.vars.value %}
+    {% set file_url = file_value ? path('admin_parametre_fichier_show', {fichier: file_value.id}): null %}
+    {% set file_attr = file_value ? {data: file_value, attr: {class: 'filestyle', 'data-placeholder': file_value.alt, 'data-fileUrl': file_url  }}:  {attr: {class: 'filestyle', 'data-placeholder': 'No file', 'data-buttonText': 'Choisir'}} %}
+    {% set file_attr = file_attr|merge({type:'file'}) %}
+    <div class="prototype_image_banniere even pointer row" style="margin-top: 10px;">
+        <div class="col-md-10">
+            {{ form_widget(image.file, file_attr) }}
+        </div>
+        <div class="col-md-2 del-col"></div>
+    </div>
+{% endmacro %}
+
+
+

@@ -1,0 +1,31 @@
+<nav class="main-nav navbar navbar-expand-md main-nav">
+    <a class="navbar-brand" href="{{ path('homepage') }}">
+        <img src="{{ asset('bundles/site/v2/images/_psm_w.png') }}">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon">
+            <span class="fa fa-bars"></span>
+        </span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-uppercase" id="main-menu">
+            <li class="nav-item active">
+                <a class="nav-link scroll-link" href="#home">{{ 'home.menu.home' | trans }} <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link scroll-link" href="#presentation">{{ 'home.menu.pass' | trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link scroll-link" href="#partenaires">{{ 'home.menu.partners' | trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link scroll-link" href="#contact-info">{{ 'home.menu.contact' | trans }}</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0 profil-form" method="POST" action="{{ path('patient_profil', {_locale: lang}) }}">
+            {{ form_widget(form.identifiant, {attr: {class: 'form-control mr-sm-2 form-control-sm'}}) }}
+            {{ form_rest(form) }}
+            <button class="btn my-2 my-sm-0 btn-sm" type="submit"><span class="fa fa-spinner d-none fa-spin"></span> <span class="fa fa-search" aria-label="Rechercher"></span></button>
+        </form>
+    </div>
+</nav>

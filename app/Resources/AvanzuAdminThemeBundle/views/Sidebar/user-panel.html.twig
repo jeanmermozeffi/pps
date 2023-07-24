@@ -1,0 +1,34 @@
+{% import "AvanzuAdminThemeBundle:layout:macros.html.twig" as macro %}
+
+<!-- Sidebar user panel -->
+
+<div class="user-panel">
+
+    <div class="pull-left image">
+
+    {% set photo = '' %}
+
+    {% if app.user.personne.photo %}
+
+        {% set photo = asset(app.user.personne.photo.webPath) %}
+
+    {% endif %}
+
+    {{ macro.avatar(photo) }}
+
+        
+
+    </div>
+
+    <div class="pull-left info">
+
+        <p>{{ app.user.username }}</p>
+
+
+
+        <a href="#"><i class="fa fa-circle text-success"></i> {{ 'admin.is_logged_in' | trans({}, 'admin') }}</a>
+
+    </div>
+
+</div>
+

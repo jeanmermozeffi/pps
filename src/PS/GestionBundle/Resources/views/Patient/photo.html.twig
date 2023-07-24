@@ -1,0 +1,128 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+
+{% block page_content %}
+<div class="row">
+    {% if not _form %}
+    <!-- /.col -->
+    <div class="col-md-12">
+        <a href="{{ path('admin_gestion_patient_photo', {mode: 'list'}) }}" class="btn btn-success">Voir la liste des patients avec Photo</a>
+        <a href="{{ path('admin_gestion_patient_photo', {filter: view == 'nom' ? '': 'nom'}) }}" class="btn btn-success">{{ view == 'nom' ? 'Ajouter par Matricule': 'Ajouter par nom &amp; Prénoms' }}</a>
+        
+        {#% if errors|length %}
+                <div class="alert alert-danger">
+                    {% for error in errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %#}
+        {{ form_start(form, { 'attr': {'class': '', 'data-parsley-validate': true} }) }}
+        {% if view == 'nom' %}
+        <div class="alert alert-warning">
+            L'ajout par nom peut vous créer quelque soucis dans le cas où il n y a pas de garantie d'unicité
+        </div>
+        {% endif %}
+        
+        {{ form_errors(form) }}
+          {% if errors|length %}
+                <div class="alert alert-danger">
+                    {% for error in errors %}
+                        <p>{{ error | raw }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        <div class="form-group">
+            {#{{ form_row(form.identifiant) }}
+               {{ form_row(form.pin) }}#}
+            {% if view == 'nom' %}
+                {% if form.corporate is defined %}
+                {{ form_row(form.corporate) }}
+                {% endif %}
+                {{ form_row(form.nom) }}
+            {% else %}
+                {{ form_row(form.matricule) }}
+            {% endif %}
+            {{ form_row(form.file) }}
+             {{ form_row(form.filter) }}
+
+        </div>
+        <div class="form-group">
+
+            <input type="submit" class="btn btn-success" value="Valider" />
+
+        </div>
+        {{ form_widget(form._token) }}
+        {{ form_end(form, {render_rest: false}) }}
+        <!-- /.nav-tabs-custom -->
+    </div>
+   
+    {% else %}
+    <div class="col-md-12">
+
+        <a href="{{ path('admin_gestion_patient_photo') }}" class="btn btn-success">Ajouter une photo</a>
+        {#% if errors|length %}
+                <div class="alert alert-danger">
+                    {% for error in errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %#}
+        {{ form_start(_form, { 'attr': {'class': '', 'data-parsley-validate': true} }) }}
+        <div class="form-group">
+            {#{{ form_row(form.identifiant) }}
+               {{ form_row(form.pin) }}#}
+            {% if _form.corporate is defined %}
+            {{ form_row(_form.corporate) }}
+            {% endif %}
+            {{ form_row(_form.matricule) }}
+            {{ form_row(_form.nom) }}
+           
+
+
+        </div>
+        <div class="form-group">
+
+            <input type="submit" class="btn btn-success" value="Valider" />
+
+        </div>
+        {{ form_end(_form) }}
+      
+        <ul class="media-list">
+            {% for patient in patients %}
+            <li class="media" style="padding:5px;background-color:#fff">
+                <div class="media-left">
+                   
+                    <img class="media-object"  width="100"  {% if patient.personne.photo %}src="{{ asset(patient.personne.photo.webPath) }}"{% else %}src="{{ asset('bundles/avanzuadmintheme/img/avatar.png') }}"{% endif %} alt="{{ patient.personne.nomComplet }}">
+                    
+                </div>
+                <div class="media-body">
+                <h4 class="media-heading">{{ patient.personne.nomComplet }}</h4>
+                <p>Matricule: {{ patient.matricule}}</p>
+                <p>PASS: {{ patient.identifiant}} / {{ patient.pin }}</p>
+                <a href="{{ path('admin_gestion_patient_modifier', {'id': patient.id}) }}" class="btn btn-success" target="_blank">Modifier</a>
+                </div>
+            </li>
+            {% else %}
+                {% if has_filter %}
+                <li class="text-center text-danger"><div class="alert alert-danger">Aucun enregistrement trouvé</div></li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        {% if patients %}
+        {{ knp_pagination_render(patients) }} 
+        {% endif %}
+        <!-- /.nav-tabs-custom -->
+    </div>
+    {% endif %}
+    <!-- /.col -->
+</div>
+
+{% endblock %}
+
+
+{% block page_title %}
+{% if mode %}Liste des patients{% else %}Ajouter une Photo{% endif %}
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

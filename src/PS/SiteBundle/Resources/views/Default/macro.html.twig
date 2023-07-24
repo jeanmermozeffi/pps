@@ -1,0 +1,24 @@
+{% macro form_id_pin(form, lang, mobile=false) %}
+    <div class="mc_embed_signup {%if mobile %}mc_embed_signup_mobile{% endif %}">
+        <form class="form-inline validate" action="{{ path('patient_profil', {_locale: lang, pin: -1}) }}"
+                            method="POST" class="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank"
+                            novalidate>
+                            <div class="row no-gutter">
+                                <div class="col-sm-8 col-xs-9">
+                                {% set id = form.identifiant.vars.id %}
+                                <input type="text" id="{{ mobile ? id ~ '_mobile': id }}"
+                                 name="{{ form.identifiant.vars.full_name }}" 
+                                 required="{{ form.identifiant.vars.required ? 'required': '' }}" 
+                                 placeholder="{{ form.identifiant.vars.attr.placeholder | trans }}" tabindex="-1" class=" form-control" 
+                                 />
+                                
+                                    
+                                </div>
+                                <div class="col-sm-4 col-xs-3 id_validation">
+                                    <input type="submit" value="Valider" name="subscribe" 
+                                        class="btn-pass-id mc-embedded-subscribe">
+                                </div>
+                            </div>
+        </form>
+    </div>
+{% endmacro %}

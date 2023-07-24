@@ -1,0 +1,35 @@
+{% block page_content %}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Demande de crédit</h4>
+    </div>
+    {{ form_start(form, {'attr': {'role':'form', 'class': ''}}) }}
+        <div class="modal-body">
+            {% include 'ajax/response.html.twig' %}
+            <div class="form-body">
+                <p>Pack: <strong>{{ packCredit.libelle}}</strong></p>
+                <p>Banque: <strong>{{ packCredit.banque.sigle }}</strong></p>
+                <div class="alert alert-warning">
+                    <span class="fa fa-warning"></span> Veuillez lire les conditions avant de valider votre demande
+                </div>
+                {{ form_widget(form) }}
+            </div>
+        </div>
+        <div class="modal-footer">
+            {% include 'ajax/loader.html.twig' %}
+           
+            <button type="submit" class="btn btn-primary  btn-ajax pull-left">Valider la demande</button>
+             <button type="button" class="btn btn-default  pull-left" data-dismiss="modal">Fermer</button>
+        </div>
+    {{ form_end(form) }}
+            
+{% endblock %}
+{% block javascripts_inline %}
+    <script>
+        
+    </script>
+     
+{% endblock %}

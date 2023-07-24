@@ -1,0 +1,33 @@
+
+<form method="POST" id="contact-form" action="{{ path('site_contact') }}">
+    {{ form_row(form._token) }}
+    {% for type, flash_messages in app.session.flashBag.all %}
+        {% for flash_message in flash_messages %}
+            {% if type in ['contact.warning', 'contact.success'] %}
+                <div class="alert alert-{{ type|split('.')|last }}">
+                    {{ flash_message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    <div class="row">
+        <div class="col-12 col-md-6">
+            {{ form_row(form.nom) }}
+        </div>
+        <div class="col-12 col-md-6">
+            {{ form_row(form.email) }}
+        </div>
+        <div class="col-12 col-md-12">
+            {{ form_row(form.categorie) }}
+        </div>
+        <div class="col-12 col-md-12">
+            {{ form_row(form.sujet) }}
+        </div>
+        <div class="col-12 col-md-12">
+            {{ form_row(form.message) }}
+        </div>
+    </div>
+    <div class="float-right font-alt-1">
+        <button class="text-white">{{ 'home.btn.send' | trans }}</button>
+    </div>
+</form>

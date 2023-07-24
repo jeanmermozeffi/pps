@@ -1,0 +1,24 @@
+admin_config_groupe_index:
+    path:     /
+    defaults: { _controller: "UtilisateurBundle:Groupe:index" }
+    methods:  GET
+
+admin_config_groupe_show:
+    path:     /{id}/show
+    defaults: { _controller: "UtilisateurBundle:Groupe:show" }
+    methods:  GET
+
+admin_config_groupe_new:
+    path:     /new
+    defaults: { _controller: "UtilisateurBundle:Groupe:new" }
+    methods:  [GET, POST]
+
+admin_config_groupe_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "UtilisateurBundle:Groupe:edit" }
+    methods:  [GET, POST]
+
+admin_config_groupe_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "UtilisateurBundle:Groupe:delete" }
+    methods:  DELETE

@@ -1,0 +1,118 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% import 'GestionBundle:Macros:html.html.twig' as _html %}
+{% block stylesheets %}
+    {{ parent() }}
+     {{ form_stylesheet(form) }}
+{% endblock %}
+{% block page_content %}
+    {{ form_start(form, {attr: {class: 'form_horizontal'}}) }}
+     <div class="row">
+        <section class="col-md-12">
+           <div class="box">
+              {% if isEditable %}
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ _html.text('rdv.details') }}</h3>
+                    <div class="box-tools pull-right">
+                      <!-- Buttons, labels, and many other things can be placed here! -->
+                      <!-- Here is a label for example -->
+                      
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                  <!-- /.box-header -->
+                <div class="box-body">
+                    
+                    <p><strong>Patient(e)</strong> {{ rendezVous.patient.personne.nom }} {{ rendezVous.patient.personne.prenom }} <a href="{{ path('admin_consultation_liste', {id: rendezVous.patient.id}) }}" class="btn btn-xs btn-default">Historique médical du patient</a></p>
+
+                    {{ form_errors(form) }}
+                    {#% if form.specialite is defined %}
+                      {{ form_row(form.specialite) }}
+                    {% endif %}
+                    {% if form.medecin is defined %}
+                      {{ form_row(form.medecin) }}
+                    {% endif %#}
+                    <div class="form-group">
+                        <label for="date">{{ _html.text('rdv.form.dateRendezVous', 'messages') }}</label>
+                        <p>{{ rendezVous.dateRendezVous | date('d/m/Y H:i')}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ _html.text('rdv.form.libRendezVous', 'messages') }}</label>
+                        <p>{{ rendezVous.libRendezVous }}</p>
+                    </div>
+                    
+                   
+                    {% if not rendezVous.statutRendezVous and is_granted('ROLE_MEDECIN') %}
+                      {{ form_row(form.statutRendezVous) }}
+                    {% endif %}
+                    {{ form_row(form._token)}}
+                   
+                </div>
+                <div class="box-footer">
+                    {% if is_granted('ROLE_MEDECIN') %}
+                     <button class="btn btn-primary" type="submit">{{ _html.text('btn.validate') }}</button>
+                    {% else %}
+                    <a class="btn btn-default" href="{{ path('admin_gestion_rdv_index') }}">{{ _html.text('btn.back') }}</a>
+                    {% endif %}
+                     <a class="btn btn-danger" href="{{ path('admin_gestion_rdv_annuler', {id: rendezVous.id}) }}">{{ _html.text('btn.cancel') }}</a>
+                  
+
+                </div>
+                  <!-- /.box-body -->
+                  
+                  <!-- box-footer -->
+            </div>
+                <!-- /.box -->
+        </section>
+    </div>
+     {{ form_end(form, {render_rest: false}) }}
+   {% else %}
+    <div class="alert alert-warning">
+      <span class="fa fa-warning"></span> {{ _html.text('rdv.no_delete')}}
+    </div>
+  {% endif %}
+
+     
+{% endblock %}
+{% block javascripts_inline %}
+    {{ parent() }}
+     {{ form_javascript(form) }}
+
+     <script>
+
+     $('#ps_gestionbundle_rdv_specialite').change(function () {
+            var specialiteSelector = $(this);
+
+            if (specialiteSelector.val()) {
+                $.ajax({
+                url: "{{ path('admin_parametre_specialite_medecin') }}",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    specialite: specialiteSelector.val()
+                },
+                success: function (medecins) {
+                    var medecinSelect = $("#ps_gestionbundle_rdv_medecin");
+
+                    // Remove current options
+                    medecinSelect.html('');
+                    
+                    // Empty value ...
+                    medecinSelect.append('<option value> Selection un medecin  ' + specialiteSelector.find("option:selected").text() + ' ...</option>');
+                    
+                    
+                    $.each(medecins, function (key, medecin) {
+                        medecinSelect.append('<option value="' + medecin.id + '">' + medecin.name + '</option>');
+                    });
+                },
+                error: function (err) {
+                    alert("An error ocurred while loading data ...");
+                }
+            });
+            }
+            
+            // Request the medecins of the selected specialite.
+            
+        }).trigger('change');
+      
+     </script>
+{% endblock %}

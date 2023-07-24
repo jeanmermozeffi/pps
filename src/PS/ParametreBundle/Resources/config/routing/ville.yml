@@ -1,0 +1,24 @@
+admin_parametre_ville_index:
+    path:     /
+    defaults: { _controller: "ParametreBundle:Ville:index" }
+
+
+admin_parametre_ville_show:
+    path:     /{id}/show
+    defaults: { _controller: "ParametreBundle:Ville:show" }
+    methods:  GET
+
+admin_parametre_ville_new:
+    path:     /new
+    defaults: { _controller: "ParametreBundle:Ville:new" }
+    methods:  [GET, POST]
+
+admin_parametre_ville_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ParametreBundle:Ville:edit" }
+    methods:  [GET, POST]
+
+admin_parametre_ville_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ParametreBundle:Ville:delete" }
+    methods:  DELETE

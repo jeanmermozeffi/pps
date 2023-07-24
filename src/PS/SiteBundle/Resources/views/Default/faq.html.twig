@@ -1,0 +1,95 @@
+{% extends 'SiteBundle:Default:base.html.twig' %}
+{% block site_header_class %}no-banner{% endblock %}
+{% block content %}
+        <div id="container" class="boxed">
+            <div id="content">
+                <div class="page-banner">
+                    <div class="container">
+                        <h2>Foire aux questions (FAQ)</h2>
+                        <ul class="page-tree">
+                            <li><a href="https://scolarite.uvci.edu.ci/Main">Accueil</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+        
+                <div class="blog-box with-sidebar">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-9 single-post">
+                                <div class="single-post-content">
+        
+                                    <div class="sidebar-widgets">
+                                        <div class="shop-widget">
+                                            <h4>FOIRE AUX QUESTIONS</h4>
+                                            <ul class="category-shop-list">
+                                                {% for faq in faqs %}
+                                                <li>
+                                                    <a class="accordion-link" href="#">
+                                                        <strong>
+                                                            1- {{ faq.question }}
+                                                        </Strong>
+                                                    </a>
+                                                    <ul class="accordion-list-content">
+                                                        <li> 
+                                                            {{ faq.reponse}}
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+        
+                                    <br><br><br><br>
+                                </div>
+                            </div>
+                            {{ knp_pagination_render(faqs) }}
+                            <div class="col-md-3 sidebar">
+                                <div class="sidebar-widgets">
+        
+                                    <div class="shop-widget">
+                                        <h4>Témoignage Utilisateur</h4>
+                                        <div class="price-range">
+                                            <iframe width="100%" height="auto" src="https://www.youtube.com" frameborder="0"
+                                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen></iframe>
+                                        </div>
+                                    </div>
+        
+                                    <div class="sidebar-widgets">
+                                        <div class="shop-widget">
+                                            <h4>PLATEFORMES</h4>
+                                            <ul class="category-shop-list">
+                                                <li>
+                                                    <a class="accordion-link" href="#">Nos plateformes</a>
+                                                    <ul class="accordion-list-content">
+                                                        <li><a href="http://santemousso.net" target="_blank">Pass Sante Mousso
+                                                            </a>
+                                                        </li>
+                                                        <li><a href="https://vbg.pass-sante.net" target="_blank">VBG ALERTE </a>
+                                                        </li>
+                                                        <li><a href="http://mcm.ci" target="_blank">MCM
+                                                            </a></li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <a class="accordion-link" href="#">Espace média</a>
+                                                    <ul class="accordion-list-content">
+                                                        <li><a href="http://">Facebook</a></li>
+                                                        <li><a href="#">Twitter</a></li>
+                                                    </ul>
+                                                </li>
+        
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

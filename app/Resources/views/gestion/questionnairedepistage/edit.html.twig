@@ -1,0 +1,145 @@
+    {% block page_content %}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+           {% from 'macros/questionnaire.html.twig' import diagnostic_questionnaire %}
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">Modification </h4>
+        </div>
+        {{ form_start(form, {'attr': {'role':'form', 'class': ''}}) }}
+        <div class="modal-body">
+             <div id="list-diagnostic" data-prototype="{{ diagnostic_questionnaire(form.diagnostics.vars.prototype)|e }}"></div>
+            {{ form_errors(form) }}
+            {% include 'ajax/response.html.twig' %}
+            
+            {{ form_row(form.libelle) }}
+            {{ form_row(form.introduction) }}
+            {{ form_row(form.conclusion) }}
+            {{ form_row(form.affection) }}
+            {{ form_row(form.roles) }}
+            {{ form_row(form.specialites) }}
+            <div class="box-footer hide">
+                                    <!-- Affections box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right"
+                                                        data-widget="collapse"
+                                                        data-toggle="tooltip" style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-flash"></i>
+
+                                            <h3 class="box-title">
+                                                Diagnostics probables
+                                            </h3>
+                                        </div>
+                                        <div class="box-footer no-border">
+                                            <button type="button" class="btn btn-default add_diagnostic"
+                                                    id="add_diagnostic">
+                                                <i class="fa fa-plus"></i>
+                                                Nouveau
+                                            </button>
+                                        </div>
+                                        <div class="box-body">
+                                            <table class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Diagnostic</th>
+                                                    <th>Min</th>
+                                                    <th>Max</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_diagnostic" class="collection list_diagnostic">
+                                                {% for item in form.diagnostics %}
+                                                    {{ diagnostic_questionnaire(item|e) }}
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+            
+        </div>
+        <div class="modal-footer">
+            {% include 'ajax/loader.html.twig' %}
+           
+            <button type="submit" class="btn blue btn-ajax pull-left">Modifier</button>
+             <button type="button" class="btn dark btn-default pull-left" data-dismiss="modal">Annuler</button>
+        </div>
+        {{ form_end(form) }}
+            
+    {% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('public/js/admin.js') }}"></script>
+ {% endblock %}   
+{% block javascripts_inline %}
+    <script>
+         init_text_editor();
+         init_select2();
+         function addDeleteLink($prototype) {
+        // Création du lien
+   $deleteLink = $('<a href="#" class="btn btn-danger"><i class="fa fa-remove"></i></a>');
+        // Ajout du lien
+   $prototype.find(".del-col").append($deleteLink);
+        // Ajout du listener sur le clic du lien
+   $deleteLink.click(function(e) {
+       $(this).parent("td:eq(0)").parent("tr:eq(0)").remove()
+            //$prototype.remove();
+       e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        return false;
+   });
+}
+
+
+$(document).ready(function() {
+    var $container = $('.list_diagnostic');
+    var $addLink = $('.add_diagnostic');
+    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+    $addLink.click(function(e) {
+        addRow($container);
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        return false;
+    });
+    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+    var index = $container.find('.prototype_diagnostic').length;
+    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+    /*if (index == 0) {
+     addAffection($container);
+     } else {*/
+    if (index > 0) {
+        // Pour chaque echantillon déjà existante, on ajoute un lien de suppression
+        $container.children('.prototype_diagnostic').each(function() {
+           
+            addDeleteLink($(this));
+        });
+    }
+    // La fonction qui ajoute un formulaire Categorie
+    function addRow($container) {
+        // Dans le contenu de l'attribut « data-prototype », on remplace :
+        // - le texte "__name__label__" qu'il contient par le label du champ
+        // - le texte "__name__" qu'il contient par le numéro du champ
+        var $prototype = $($("#list-diagnostic").attr('data-prototype').replace(/__name__label__/g, 'Associé ' + (index + 1)).replace(/__name__/g, index));
+        // On ajoute au prototype un lien pour pouvoir supprimer la prestation
+        addDeleteLink($prototype);
+        // On ajoute le prototype modifié à la fin de la balise <div>
+        $container.append($prototype);
+       
+        // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+        index++;
+    }
+    // La fonction qui
+});
+    </script>
+     
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% from 'macros/examen.html.twig' import ligne_examen %}
+{% import 'widget/macro.html.twig' as psm %}
+{% block stylesheets %}
+    {{ parent() }}
+     {{ form_stylesheet(form) }}
+{% endblock %}
+{% block page_content %}
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box-body">
+                <div class="box-footer">
+                    <div class="box box-solid ">
+                        {{ psm.box_header('Liste des examens') }}
+                        <div class="box-body table-responsive">
+                            {% for item in form.lignes %}
+                                {{ ligne_examen(item|e) }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+{% block javascripts_inline %}
+    <script>
+        
+    </script>
+     
+{% endblock %}

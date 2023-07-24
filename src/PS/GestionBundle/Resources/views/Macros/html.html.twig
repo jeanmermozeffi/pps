@@ -1,0 +1,195 @@
+{% macro button(label, attributes={}) %}
+
+    {% apply spaceless %}
+
+        <button 
+
+            {% for attr, val in attributes %}
+
+                {% if val is iterable %}
+
+                {% set val = val|join(' ') %}
+
+                {% endif %}
+
+                {{ attr }}="{{ val }}"
+
+            {% endfor %}>
+
+            {{ _self.text(label) }}
+
+        </button>
+
+    {% endapply %}
+
+{% endmacro %}
+
+
+
+{% macro table_row(label,options={}, translate_domain = 'admin', params = {}, _raw = false) %}
+    {% set tag = options.tag|default('th') %}
+    {% set action = options.action|default(false) %}
+    {% set translate_domain = translate_domain|default('admin') %}
+   
+    {% if label is iterable %}
+        {% set labels = label %}
+    {% else %}
+         {% set labels = label|split(' ', 1) %}
+    {% endif %}
+    {% set params = params|default({}) %}
+    {% for _label in labels %}
+    
+
+     <{{ tag }}>
+    {% if _raw %}
+
+       {{ _label | trans(params, translate_domain) | raw }}
+
+    {% else %}
+
+        {{ _label | trans(params, translate_domain)  }}
+
+    {% endif %}
+     </{{ tag }}>
+     {% endfor %}
+     {% if action %}
+     <th>{{ _self.text('admin.row_action') }}</th>
+     {% endif %}
+{% endmacro %}
+
+{% macro text(label, translate_domain = 'admin', params = {}, _raw = false) %}
+
+    {% set translate_domain = translate_domain|default('admin') %}
+
+    {% set params = params|default({}) %}
+
+    
+
+    {% if _raw %}
+
+        {{ label | trans(params, translate_domain) | raw }}
+
+    {% else %}
+
+        {{ label | trans(params, translate_domain)  }}
+
+    {% endif %}
+
+{% endmacro %}
+
+
+
+{% macro button_link(label, route, route_params = {}, attributes={}) %}
+
+    {% apply spaceless %}
+
+        {% set _url = '#' %}
+
+        {% if route %}
+
+            {% set _url = path(route, route_params) %}
+
+        {% endif %}
+
+        <a href="{{ _url }}"
+
+            {% for attr, val in attributes %}
+
+                {% if val is iterable %}
+
+                {% set val = val|join(' ') %}
+
+                {% endif %}
+
+                {{ attr }}="{{ val }}"
+
+            {% endfor %}>
+
+            {{ _self.text(label) }}
+
+        </a>
+
+    {% endapply %}
+
+{% endmacro %}
+
+
+
+{% macro button_links(labels) %}
+    
+    {% for label in labels %}
+        {{ _self.button_link(label.label, label.route, label.route_params, label.attributes) }}
+    {% endfor %}
+{% endmacro %}
+
+
+
+
+{% macro fichier(fichier,  with_link) %}
+
+    
+
+    {% set value = (fichier.vars is defined ? fichier.vars.value : null) %}
+
+    {% set with_link = with_link is defined ? with_link : false %}
+
+    {% set is_link = value and value.path == '__external__' %}
+
+    {% set alt_input_attr = is_link is same as(false) ? {attr: {class: 'hide input-alt'}}: {attr: {class: 'input-alt'}} %}
+
+
+
+    {% if is_link %}
+
+        {% set file_url = value.alt %}
+
+    {% else %}
+
+        {% set file_url = value and value.id ? path('admin_parametre_fichier_show', {fichier: value.id}): null %}
+
+    {% endif %}
+
+   
+
+    {% set file_attr = (value and value.path != '__external__')  ? {data: value, attr: {class: 'filestyle', 'data-placeholder': value.alt, 'data-fileUrl': file_url, 'data-buttonText': 'Modifier'}}:  {attr: {class: 'filestyle', 'data-placeholder': 'Aucun fichier', 'data-buttonText': 'Choisir'}} %}
+
+ 
+
+    
+
+    <div class="prototype_file even pointer row" style="margin-bottom: 5px">
+
+         <div class="col-md-6"> 
+
+            {{ form_widget(fichier.title) }}
+
+        </div>
+
+        <div class="col-md-4"> 
+
+            {{ form_widget(fichier.file, file_attr) }}
+
+        </div>
+
+        <div class="col-md-2 del-col {% if value and value.id %}has-file{% endif %}">
+
+            {% if value and value.id %}
+
+                 <a href="#" data-href="{{ path('admin_parametre_fichier_delete', {id: value.id}) }}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i>
+
+                    <span class="hide">Supprimer</span>
+
+                 </a>
+
+            {% endif %}
+
+
+
+        </div>
+
+    </div>
+
+
+
+{% endmacro %}
+

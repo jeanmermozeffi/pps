@@ -1,0 +1,49 @@
+utilisateur_admin_config_utilisateur:
+    resource: "@UtilisateurBundle/Resources/config/routing/utilisateur.yml"
+    prefix:   /admin/config/utilisateur
+
+utilisateur_admin_config_personne:
+    resource: "@UtilisateurBundle/Resources/config/routing/personne.yml"
+    prefix:   /admin/config/personne
+
+utilisateur_admin_config_groupe:
+    resource: "@UtilisateurBundle/Resources/config/routing/groupe.yml"
+    prefix:   /admin/config/groupe
+
+utilisateur_admin_config_role:
+    resource: "@UtilisateurBundle/Resources/config/routing/role.yml"
+    prefix:   /admin/config/role
+
+utilisateur_admin_profile_utilisateur:
+    resource: "@UtilisateurBundle/Resources/config/routing/profile.yml"
+    prefix:   /admin/utilisateur/profile
+
+
+
+
+#utilisateur_homepage:
+#    path:     /
+#    defaults: { _controller: UtilisateurBundle:Default:index }
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /admin/profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /admin/change-password
+
+fos_user_group:
+    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
+    prefix: /admin/config/group

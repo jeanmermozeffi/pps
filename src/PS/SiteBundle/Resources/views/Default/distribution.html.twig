@@ -1,0 +1,116 @@
+{% extends 'SiteBundle:Default:base.html.twig' %}
+{% block site_header_class %}no-banner{% endblock %}
+{% block content %}
+<section class="non-index-section">
+    <div class="fist-tab-word-non">
+        <div class="container">
+            <h2 class="host-plans-title-non-index">
+                <form action="https://www.expertfoxportal.com/cart.php?a=add&domain=register" id="domain-search"
+                    class="wow fadeIn" method="post" data-wow-delay="0.5s">
+                    <input id="domain-text" type="text" name="query"
+                        placeholder="Saisissez votre lieu d'habitation  ici..." />
+                    <span class="inline-button">
+                        <button id="search-btn" type="submit" name="submit" value="Search">
+                            <img src="/bundles/site/v3/images/search.svg" alt="search icon" />
+                        </button>
+                    </span>
+                </form>
+                <div class="row">
+                    <div class="container">
+                        <div class="section-title margin-b30">
+                            <h2><span>PASS SANTE MOUSSO</span> Il nous font confiance. </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-3 col-align">
+                        <a class="domain-price-non-index" href="#">
+                            <small><img src="/uploads/mshp.jpg" /></small>
+                            <!-- <span>9.900F/AN</span> -->
+                        </a>
+                    </div>
+                    <div class="col-3 col-align">
+                        <a class="domain-price-non-index" href="#">
+                            <small><img src="/uploads/logo_synamepci.png"></small>
+                            <!-- <span>9.900F/AN</span> -->
+                        </a>
+                    </div>
+                    <div class="col-3 col-align">
+                        <a class="domain-price-non-index" href="#">
+                            <small><img src="/uploads/logo-sgci.png"></small>
+                            <!-- <span>9.900F/AN</span> -->
+                        </a>
+                    </div>
+                    <div class="col-3 col-align">
+                        <a class="domain-price-non-index" href="#">
+                            <small><img src="/uploads/logo_pass_mu.png"></small>
+                            <!-- <span>49.900F/AN</span> -->
+                        </a>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <div class="section-title margin-b30">
+                <h2><span>Nos</span>{{ 'home.section.distrib.title' | trans | raw }} </h2>
+            </div>
+        </div>
+    </div>
+    <div class="container tablepricdomain">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-content">
+                    <p>
+                        {{ 'home.section.distrib.content1' | trans }}
+                    </p>
+                    <p>
+                        {{ 'home.section.distrib.content2' | trans }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table pricing_table_domain">
+                        <thead>
+                            <tr>
+                                <th>Centre Médical</th>
+
+                                <th>Docteur Urgentiste</th>
+
+                                <th>Zone de localisation</th>
+
+                                <th>Contacts</th>
+
+
+                            </tr>
+
+                        </thead>
+
+                        {% for hopital in hopitaux %}
+                        <tbody>
+
+                            <tr>
+
+                                <th>{{ hopital.nom }}</th>
+
+                                <td>{{ hopital.nomResponsable }}</td>
+
+                                <td>{{ hopital.localisationHopital }}</td>
+
+                                <td>{{ hopital.contacts }}</td>
+
+                            </tr>
+
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

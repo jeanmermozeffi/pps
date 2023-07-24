@@ -1,0 +1,133 @@
+ps_api_homepage:
+    type: rest
+    resource: PS\ApiBundle\Controller\DefaultController
+
+ps_api_v1_rdv_patient:
+    resource: PS\ApiBundle\Controller\V1\Patient\RendezVousController
+    
+
+ps_api_v1_consultation_patient:
+    resource: PS\ApiBundle\Controller\V1\Patient\ConsultationController
+
+ps_api_rdv_medecin:
+    resource: PS\ApiBundle\Controller\V1\Medecin\RendezVousController
+    
+
+ps_api_v1_consultation_medecin:
+    resource: PS\ApiBundle\Controller\V1\Medecin\ConsultationController
+    
+ps_api_pays:
+    resource: PS\ApiBundle\Controller\PaysController
+
+
+ps_api_contact:
+    type: rest
+    resource: PS\ApiBundle\Controller\Patient\ContactController
+
+ps_api_auth:
+    type: rest
+    resource: PS\ApiBundle\Controller\UserController
+
+ps_api_medecin:
+    type: rest
+    resource: PS\ApiBundle\Controller\MedecinController
+
+ps_api_affection:
+    type: rest
+    resource: PS\ApiBundle\Controller\AffectionController
+
+ps_api_assurance:
+    type: rest
+    resource: PS\ApiBundle\Controller\AssuranceController
+
+ps_api_analyse:
+    type: rest
+    resource: PS\ApiBundle\Controller\AnalyseController
+
+ps_api_gs:
+    type: rest
+    resource: PS\ApiBundle\Controller\GroupeSanguinController
+
+ps_api_specialite:
+    type: rest
+    resource: PS\ApiBundle\Controller\SpecialiteController
+
+ps_api_hopital:
+    type: rest
+    resource: PS\ApiBundle\Controller\HopitalController
+
+ps_api_ville:
+    type: rest
+    resource: PS\ApiBundle\Controller\VilleController
+
+ps_api_medicament:
+    type: rest
+    resource: PS\ApiBundle\Controller\MedicamentController
+
+ps_api_cs_patient:
+    type: rest
+    resource: PS\ApiBundle\Controller\Patient\ConsultationController
+
+ps_api_aff_patient:
+    type: rest
+    resource: PS\ApiBundle\Controller\Patient\AffectionController
+
+ps_api_al_patient:
+    type: rest
+    resource: PS\ApiBundle\Controller\Patient\AllergieController
+
+ps_api_or_patient:
+    type: rest
+    resource: PS\ApiBundle\Controller\Patient\OrdonnanceController
+
+ps_api_ct_patient:
+    type: rest
+    resource: PS\ApiBundle\Controller\Patient\ContactController
+
+ps_api_rdv_patient:
+    type: rest
+    resource: PS\ApiBundle\Controller\Patient\RendezVousController
+
+ps_api_rdv_medecin:
+    type: rest
+    resource: PS\ApiBundle\Controller\Medecin\RendezVousController
+
+ps_api_in_patient:
+    type: rest
+    resource: PS\ApiBundle\Controller\PatientController
+
+ps_api_ord_med_patient:
+    type: rest
+    resource: PS\ApiBundle\Controller\Patient\Consultation\MedicamentController
+
+ps_api_ord_anal_patient:
+    type: rest
+    resource: PS\ApiBundle\Controller\Patient\Consultation\AnalyseController
+
+ps_api_ord_aff_dpatient:
+    type: rest
+    resource: PS\ApiBundle\Controller\Patient\Consultation\AffectionController
+
+ps_api_assur_patient:
+    type: rest
+    resource: PS\ApiBundle\Controller\Patient\AssuranceController
+
+ps_api_vaccin_patient:
+    type: rest
+    resource: PS\ApiBundle\Controller\Patient\VaccinationController
+
+ps_api_medecin_patient:
+    type: rest
+    resource: PS\ApiBundle\Controller\Patient\MedecinController
+
+ps_api_associe_patient:
+    resource: PS\ApiBundle\Controller\Patient\AssocieController
+
+ps_api_attribut_patient:
+    resource: PS\ApiBundle\Controller\Patient\AttributController
+
+ps_api_attribut:
+     resource: PS\ApiBundle\Controller\AttributController
+
+
+  #prefix: /{_locale}/

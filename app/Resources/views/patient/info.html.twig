@@ -1,0 +1,753 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% import 'GestionBundle:Macros:html.html.twig' as _html %}
+{% import 'widget/macro.html.twig' as psm %}
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="nav-tabs-custom">
+
+                {% if is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <!-- <ul class="nav nav-tabs">
+                    
+                    {% if is_granted('ROLE_EDIT_PATIENT', patient) %}
+                   
+                    <li class="active">
+                        <a href="{{ path ('admin_gestion_patient_modifier', {'id': patient.id}) }}">
+                            {{ _html.text('btn.patient_edit') }}
+                        </a>
+                    </li>
+                        {% if true %}
+                        <li class="active">
+                            <a href="{{ path ('admin_gestion_patient_new', {'id': patient.id}) }}">
+                                {{ _html.text('btn.add_linked_account') }}
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+                </ul> -->
+                {% endif %}
+                <div class="tab-content">
+
+                    <div class="active tab-pane" id="ajouter">
+
+                        <div class="box-body">
+                            <form class="form-horizontal">
+                                <div class="box-footer">
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre">
+                                            {{ _html.text('patient.info_title') }}
+                                        </div>
+                                        {% if is_granted('ROLE_ADMIN_SUP') %}
+                                            {#}{% if is_granted('ROLE_EDIT_PATIENT', patient) %}
+                                            <a href="{{ path ('admin_gestion_patient_modifier', {'id': patient.id}) }}"
+                                               class="btn btn-warning pull-right">
+                                                <i class="fa fa-edit"></i> {{ _html.text('btn.edit') }}
+                                            </a>
+                                            {% endif %}#}
+                                            {% if 'ROLE_CUSTOMER' not in app.user.roles %}
+                                                <a href="{{ path('admin_gestion_patient_new') }}"
+                                               class="btn btn-info pull-right">
+                                                <i class="fa fa-plus"></i> {{ _html.text('Nouveau') }}
+                                            </a>
+                                           {% endif %}
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <div class="box-body patient_img col-sm-offset-3">
+                                            <div class="form-group">
+                                                <img id="blah" class="profile-user-img img-responsive  dropzone" height=180 width=180
+                                                     {% if patient.personne.photo is not null %}
+                                                    src="{{ asset(patient.personne.photo.webPath) }}" alt="{{ patient.personne.photo.alt }}"
+                                                {% else %}src="{{ asset('bundles/avanzuadmintheme/img/avatar.png') }}" alt="User profile picture"
+                                                        {% endif %}
+                                                />
+                                            </div>
+
+                                        </div>
+                                        <!-- /.box-body -->
+
+
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label for="identifiant"
+                                                           class="col-sm-4 control-label">{{ _html.text('Identifiant') }}</label>
+
+                                                    <div class="col-sm-8">
+                                                        <p class="help-block"><strong>{{ patient.identifiant }}</strong></p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label for="nom" class="col-sm-4 control-label">{{ _html.text('Nom') }}</label>
+
+                                                    <div class="col-sm-8">
+
+                                                        <p class="help-block">{{ patient.personne.nom }}</p>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label for="prenom"
+                                                           class="col-sm-4 control-label">{{ _html.text('Prénom(s)') }}</label>
+
+                                                    <div class="col-sm-8">
+
+                                                        <p class="help-block">{{ patient.personne.prenom }}</p>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label for="age" class="col-sm-4 control-label">{{ _html.text('Âge') }}</label>
+
+                                                    <div class="col-sm-8">
+                                                        {% if patient.personne.getAge is defined and patient.personne.getAge is not null %}
+                                                        <p class="help-block">{{ patient.personne.getAge }} ans</p>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                          
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label for="sexe"
+                                                           class="col-sm-4 control-label">{{ _html.text('Sexe') }}</label>
+
+                                                    <div class="col-sm-8">
+                                                        <p class="help-block">
+                                                            {% if patient.sexe == 'M' %}
+                                                                {{ _html.text('Masculin') }}
+                                                            {% elseif patient.sexe == 'F' %}
+                                                                {{ _html.text('Féminin') }}
+                                                            {% else %}
+                                                                {{ _html.text('N/A') }}
+                                                            {% endif %}
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label class="col-sm-4 control-label">{{ _html.text('Taille') }}</label>
+
+                                                    <div class="col-sm-8">
+                                                        <p class="help-block">{% if patient.taille %}{{ patient.taille }} cm{% else %}{{ _html.text('N/A') }}</p>{% endif %}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label  class="col-sm-4 control-label">{{ _html.text('Poids') }}</label>
+
+                                                    <div class="col-sm-8">
+                                                        <p class="help-block">{% if patient.poids %}{{ patient.poids }} Kg{% else %}{{ _html.text('N/A') }}</p>{% endif %}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                                <div class="box-footer">
+                                    <div class="col-md-6 barre-right">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="gs" class="col-sm-4 control-label">
+                                                    {{ _html.text('Groupe Sanguin') }}</label>
+
+                                                <div class="col-sm-8">
+
+                                                    <p class="help-block"> 
+                                                           {% if patient.groupeSanguin.libelle is defined %}{{ patient.groupeSanguin.libelle }}{% endif %}
+                                                    </p>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="gs" class="col-sm-4 control-label">{{ _html.text('Statut') }}</label>
+
+                                                <div class="col-sm-8">
+
+                                                    <p class="help-block"> 
+                                                           {% if patient.statut.libelle is defined %}{{ patient.statut.libelle }}{% endif %}
+                                                    </p>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        {% if is_granted('ROLE_EDIT_PATIENT', patient) or is_granted('ROLE_IS_MEDICAL') %}
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="enfant"
+                                                       class="col-sm-4 control-label">{{ _html.text('Nombre d\'Enfant') }}</label>
+
+                                                <div class="col-sm-8">
+                                                    <p class="help-block">{{ patient.nombreEnfant }}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="contact"
+                                                       class="col-sm-4 control-label">{{ _html.text('Contact') }}</label>
+
+                                                <div class="col-sm-8">
+
+                                                    <p class="help-block">{{ patient.personne.contact }}</p>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        {% endif %}
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="profession"
+                                                       class="col-sm-4 control-label">{{ _html.text('Profession') }}</label>
+
+                                                <div class="col-sm-8">
+                                                    <p class="help-block">{{ patient.profession }}</p>
+                                                    
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="societe"
+                                                       class="col-sm-4 control-label">{{ _html.text('Entreprise/Ecole') }}</label>
+
+                                                <div class="col-sm-8">
+                                                    <p class="help-block">{{ patient.societe }}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="ville"
+                                                       class="col-sm-4 control-label">{{ _html.text('Pays') }}</label>
+
+                                                <div class="col-sm-8">
+
+                                                    <p class="help-block">{% if patient.pays %}{{ patient.pays.nom }}{% endif %}</p>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="ville"
+                                                       class="col-sm-4 control-label">{{ _html.text('Ville') }}</label>
+
+                                                <div class="col-sm-8">
+                                                     <p class="help-block">{% if patient.ville %}{{ patient.ville.nom }}{% endif %}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="adresse"
+                                                       class="col-sm-4 control-label">{{ _html.text('Adresse') }}</label>
+
+                                                <div class="col-sm-8">
+                                                    <p class="help-block">{{ patient.adresse }}</p>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="lieu" class="col-sm-4 control-label">
+                                                    {{ _html.text('Lieu d\'habitation') }}
+                                                </label>
+
+                                                <div class="col-sm-8">
+                                                     <p class="help-block">{{ patient.lieuhabitation }}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="lieu" class="col-sm-4 control-label">{{ _html.text('Réligion') }}</label>
+
+                                                <div class="col-sm-8">
+                                                     <p class="help-block">{{ patient.religion.nom|default('N/A') }}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                         <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="lieu" class="col-sm-4 control-label">{{ _html.text('Nationalité') }}</label>
+
+                                                <div class="col-sm-8">
+                                                     <p class="help-block">{{ patient.nationalite.libNationalite|default('N/A') }}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        {% if patient.personne.corporate %}
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="corporate" class="col-sm-4 control-label">{{ _html.text('Affiliation') }}</label>
+
+                                                <div class="col-sm-8">
+                                                     <p class="help-block">{{ patient.personne.corporate.raisonSociale }}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        {% endif %}
+                                        {% if patient.matricule %}
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="corporate" class="col-sm-4 control-label">Matricule</label>
+
+                                                <div class="col-sm-8">
+                                                     <p class="help-block">{{ patient.matricule }}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+                                {% if is_granted('ROLE_EDIT_PATIENT', patient) or is_granted('ROLE_IS_MEDICAL') %}
+                                    {% if patient.ligneAttributs is not empty %}
+                                        <div class="box-footer">
+                                            <!-- Medicaments box -->
+                                            <div class="box box-solid ">
+                                                <div class="box-header bg-default">
+                                                    <!-- tools box -->
+                                                    <div class=" box-tools">
+                                                        <button type="button" class="btn btn-default btn-sm pull-right"
+                                                                data-widget="collapse"
+                                                                data-toggle="tooltip" style="margin-right: 5px;">
+                                                            <i class="fa fa-minus"></i></button>
+                                                    </div>
+                                                    <!-- /. tools -->
+
+                                                    <i class="fa fa-medkit"></i>
+
+                                                    <h3 class="box-title">
+                                                        {{ _html.text('Autres informations') }}
+                                                    </h3>
+                                                </div>
+                                                <div class="box-body">
+                                                    <ul>
+                                                        {% for attribut in patient.ligneAttributs %}
+                                                            <li>{{ attribut.attribut.libAttribut }}</li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                <!-- /.box-body-->
+
+                                            </div>
+                                            <!-- /.box -->
+
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                                {% if patient.telephones is not empty %}
+                                    <div class="box-footer">
+                                        <!-- Medicaments box -->
+                                        <div class="box box-solid ">
+                                            <div class="box-header bg-default">
+                                                <!-- tools box -->
+                                                <div class=" box-tools">
+                                                    <button type="button" class="btn btn-default btn-sm pull-right"
+                                                            data-widget="collapse"
+                                                            data-toggle="tooltip" style="margin-right: 5px;">
+                                                        <i class="fa fa-minus"></i></button>
+                                                </div>
+                                                <!-- /. tools -->
+
+                                                <i class="fa fa-medkit"></i>
+
+                                                <h3 class="box-title">
+                                                    {{ _html.text('Personnes à contacter') }}
+                                                </h3>
+                                            </div>
+                                            <div class="box-body">
+                                                <table id="example1" class="table table-bordered table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>{{ _html.text('Nom') }}</th>
+                                                        <th>{{ _html.text('Numero') }}</th>
+                                                        <th>{{ _html.text('Lien') }}</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="list_medicament" class="collection list_medicament">
+                                                    {% for item in patient.telephones %}
+                                                        <tr>
+                                                            <td>{{ item.nom }}</td>
+                                                            <td>{{ item.numero }}</td>
+                                                            <td>{{ item.lien }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                            <!-- /.box-body-->
+
+                                        </div>
+                                        <!-- /.box -->
+
+                                    </div>
+                                {% endif %}
+                                {% if patient.medecins is not empty %}
+                                    <div class="box-footer">
+                                        <!-- Medicaments box -->
+                                        <div class="box box-solid ">
+                                            <div class="box-header bg-default">
+                                                <!-- tools box -->
+                                                <div class=" box-tools">
+                                                    <button type="button" class="btn btn-default btn-sm pull-right"
+                                                            data-widget="collapse"
+                                                            data-toggle="tooltip" style="margin-right: 5px;">
+                                                        <i class="fa fa-minus"></i></button>
+                                                </div>
+                                                <!-- /. tools -->
+
+                                                <i class="fa fa-medkit"></i>
+
+                                                <h3 class="box-title">
+                                                    {{ _html.text('Medecins Traitants') }}
+                                                </h3>
+                                            </div>
+                                            <div class="box-body">
+                                                <table id="example1" class="table table-bordered table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>{{ _html.text('Medecin') }}</th>
+                                                        <th>{{ _html.text('Spécialité') }}</th>
+                                                        <th>{{ _html.text('Contacts') }}</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="list_medicament" class="collection list_medecin">
+                                                    {% for item in patient.medecins %}
+                                                        <tr>
+                                                            <td>{{ item.medecin }}</td>
+                                                            <td>{{ item.specialite.nom }}</td>
+                                                            <td>{{ item.contact }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                            <!-- /.box-body-->
+
+                                        </div>
+                                        <!-- /.box -->
+
+                                    </div>
+                                {% endif %}
+                                {% if is_granted('ROLE_EDIT_PATIENT', patient) or is_granted('ROLE_IS_MEDICAL') %}
+                                    {% if patient.ligneAssurances is not empty %}
+                                        <div class="box-footer">
+                                            <!-- Medicaments box -->
+                                            <div class="box box-solid ">
+                                                <div class="box-header bg-default">
+                                                    <!-- tools box -->
+                                                    <div class=" box-tools">
+                                                        <button type="button" class="btn btn-default btn-sm pull-right"
+                                                                data-widget="collapse"
+                                                                data-toggle="tooltip" style="margin-right: 5px;">
+                                                            <i class="fa fa-minus"></i></button>
+                                                    </div>
+                                                    <!-- /. tools -->
+
+                                                    <i class="fa fa-medkit"></i>
+
+                                                    <h3 class="box-title">
+                                                        {{ _html.text('Assurances') }}
+                                                    </h3>
+                                                </div>
+                                                <div class="box-body">
+                                                    <table id="example1" class="table table-bordered table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>{{ _html.text('Assurances') }}</th>
+                                                            <th>{{ _html.text('Numero') }}</th>
+                                                            <th>{{ _html.text('Taux') }}</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="list_assurances" class="collection list_assurance">
+                                                        {% for item in patient.ligneAssurances %}
+                                                            <tr>
+                                                                <td>{{ item.assurance.nom }}</td>
+                                                                <td>{{ item.numero }}</td>
+                                                                <td>{{ item.taux }}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                                <!-- /.box-body-->
+
+                                            </div>
+                                            <!-- /.box -->
+
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                                {% if patient.allergies is not empty %}
+                                    <div class="box-footer">
+                                        <!-- Medicaments box -->
+                                        <div class="box box-solid ">
+                                            <div class="box-header bg-default">
+                                                <!-- tools box -->
+                                                <div class=" box-tools">
+                                                    <button type="button" class="btn btn-default btn-sm pull-right"
+                                                            data-widget="collapse"
+                                                            data-toggle="tooltip" style="margin-right: 5px;">
+                                                        <i class="fa fa-minus"></i></button>
+                                                </div>
+                                                <!-- /. tools -->
+
+                                                <i class="fa fa-medkit"></i>
+
+                                                <h3 class="box-title">
+                                                    {{ _html.text('Allergies') }}
+                                                </h3>
+                                            </div>
+                                            <div class="box-body">
+                                                <table id="example1" class="table table-bordered table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>{{ _html.text('Allergie') }}</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="list_medicament" class="collection list_medicament">
+                                                    {% for item in patient.allergies %}
+                                                        <tr>
+                                                            <td>{{ item.allergie }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                            <!-- /.box-body-->
+
+                                        </div>
+                                        <!-- /.box -->
+
+                                    </div>
+                                {% endif %}
+                    
+                                {% if patient.affections is not empty  %}
+                                    <div class="box-footer">
+                                        <!-- Medicaments box -->
+                                        <div class="box box-solid ">
+                                            <div class="box-header bg-default">
+                                                <!-- tools box -->
+                                                <div class=" box-tools">
+                                                    <button type="button" class="btn btn-default btn-sm pull-right"
+                                                            data-widget="collapse"
+                                                            data-toggle="tooltip" style="margin-right: 5px;">
+                                                        <i class="fa fa-minus"></i></button>
+                                                </div>
+                                                <!-- /. tools -->
+
+                                                <i class="fa fa-medkit"></i>
+
+                                                <h3 class="box-title">
+                                                    {{ _html.text('Affections') }}
+                                                </h3>
+                                            </div>
+                                            <div class="box-body">
+                                                <table id="example1" class="table table-bordered table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>{{ _html.text('Affection') }}</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="list_medicament" class="collection list_medicament">
+                                                    {% for item in patient.affections %}
+                                                        <tr>
+                                                            <td>{{ item.affection }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                            <!-- /.box-body-->
+
+                                        </div>
+                                        <!-- /.box -->
+
+                                    </div>
+                                {% endif %}
+                                {% if is_granted('ROLE_EDIT_PATIENT', patient) or is_granted('ROLE_IS_MEDICAL') %}
+                                    {% if patient.vaccinations is not empty %}
+                                        <div class="box-footer">
+                                            <!-- Medicaments box -->
+                                            <div class="box box-solid ">
+                                                <div class="box-header bg-default">
+                                                    <!-- tools box -->
+                                                    <div class=" box-tools">
+                                                        <button type="button" class="btn btn-default btn-sm pull-right"
+                                                                data-widget="collapse"
+                                                                data-toggle="tooltip" style="margin-right: 5px;">
+                                                            <i class="fa fa-minus"></i></button>
+                                                    </div>
+                                                    <!-- /. tools -->
+
+                                                    <i class="fa fa-medkit"></i>
+
+                                                    <h3 class="box-title">
+                                                        {{ _html.text('Vaccinations') }}
+                                                    </h3>
+                                                </div>
+                                                <div class="box-body">
+                                                    <table id="example1" class="table table-bordered table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>{{ _html.text('Vaccin') }}</th>
+                                                            <th>{{ _html.text('Détails') }}</th>
+                                                            <th>{{ _html.text('Date') }}</th>
+                                                            <th>{{ _html.text('Rappel') }}</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="list_medicament" class="collection list_medicament">
+                                                        {% for item in patient.vaccinations %}
+                                                            <tr>
+                                                                <td>{{ item.vaccin }}</td>
+                                                                <td>{{ item.details }}</td>
+                                                                <td>{% if item.date %}{{ item.date|date('d/m/Y') }}{% endif %}</td>
+                                                                 <td>{% if item.rappel %}{{ item.rappel|date('d/m/Y') }}{% endif %}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                                <!-- /.box-body-->
+
+                                            </div>
+                                            <!-- /.box -->
+
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                                
+                                {% if patient.traitements is not empty %}
+                                    <div class="box-footer">
+                                        <!-- Medicaments box -->
+                                        <div class="box box-solid ">
+                                            <div class="box-header bg-default">
+                                                <!-- tools box -->
+                                                <div class=" box-tools">
+                                                    <button type="button" class="btn btn-default btn-sm pull-right"
+                                                            data-widget="collapse"
+                                                            data-toggle="tooltip" style="margin-right: 5px;">
+                                                        <i class="fa fa-minus"></i></button>
+                                                </div>
+                                                <!-- /. tools -->
+
+                                                <i class="fa fa-medkit"></i>
+
+                                                <h3 class="box-title">
+                                                   {{ _html.text('Traitements suivis') }}
+                                                </h3>
+                                            </div>
+                                            <div class="box-body">
+                                                <table id="example1" class="table table-bordered table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>{{ _html.text('Traitement') }}</th>
+                                                        
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="list_medicament" class="collection list_medecin">
+                                                    {% for item in patient.traitements %}
+                                                        <tr>
+                                                            <td>{{ item.libelle }}</td>
+                                                            
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                            <!-- /.box-body-->
+
+                                        </div>
+                                        <!-- /.box -->
+
+                                    </div>
+                                {% endif %}
+
+
+                            </form>
+                        </div>
+
+                    </div>
+                    <!-- /.tab-pane -->
+
+                </div>
+                <!-- /.tab-content -->
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('dropzone/dist/min/bootstrap-filestyle.min.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/patient.js') }}"></script>
+
+{% endblock %}
+
+{% block page_title %}
+    {{ _html.text('patient.info_title') }}
+{% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}

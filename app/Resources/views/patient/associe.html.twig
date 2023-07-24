@@ -1,0 +1,33 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% block page_content %}
+
+   
+       
+       <div class="col-md-12">
+
+            <div class="box-body">
+                 {% if patient %}
+               <div class="list-group">
+                 {% for associe in associes %}
+                    <a href="{{ path('admin_gestion_patient_associe', {associe: associe.id, id: patient.id}) }}" class="list-group-item">{{ associe.personne.nomComplet }}</a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-warning">Vous ne pouvez pas accéder à cette ressource</div>
+                {% endif %}
+            </div>
+        
+    </div>
+
+{% endblock %}
+
+
+
+    {% block page_title %}
+        Comptes associés au Bracelet
+    {% endblock %}
+
+    {% block title %}
+        Comptes associés au Bracelet
+    {% endblock %}
+

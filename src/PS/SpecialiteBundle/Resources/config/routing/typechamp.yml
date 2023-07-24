@@ -1,0 +1,11 @@
+admin_specialite_typechamp_index:
+    path:     /
+    defaults: { _controller: "PSSpecialiteBundle:TypeChamp:index" }
+
+admin_specialite_typechamp_new:
+    path:     /new
+    defaults: { _controller: "PSSpecialiteBundle:TypeChamp:new" }
+
+admin_specialite_typechamp_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PSSpecialiteBundle:TypeChamp:edit" }

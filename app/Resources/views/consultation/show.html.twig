@@ -1,0 +1,616 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% form_theme form 'widget/fields_mousso_horizontal.html.twig' %}
+{% from 'GestionBundle:Macros:macro.html.twig' import analyses, consultation_affections, medicaments, allergie_traitement, info_patient, vaccin, constante, fonctionnels, physiques, signes, antecedent_personnel, antecedent_familial, antecedent %}
+{% block stylesheets %}
+    {{ parent() }}
+     {{ form_stylesheet(form) }}
+     <style>
+        .box-footer {border: 1px solid #fff !important;}
+        .box-footer .box {box-shadow: none;}
+
+     </style>
+{% endblock %}
+{% block page_content %}
+
+<div class="row" xmlns="http://www.w3.org/1999/html">
+
+        <section class="col-md-3 connectedSortable">
+
+           {{ info_patient(patient, true) }}
+
+        </section>
+
+        <!-- /.col -->
+        <section class="col-md-9">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li><a href="{{ path ('admin_consultation_liste',{'id': patient.id}) }}">Liste consultation</a></li>
+                   
+                </ul>
+                <div class="tab-content">
+
+                    <div class="active tab-pane" id="nouvelle">
+                        
+                        <!-- general form elements -->
+                        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+                        
+                        <div class="">
+                            <div class="btn-group">
+                                <a href="{{ path('admin_consultation_preview_print', {id: patient.id, id1: consultation.id}) }}" class="btn btn-primary"><span class="fa fa-print"></span> Imprimer</a>
+                            </div>
+                            {#<div class="right col-md-3">
+                                {{ form_widget(form.dateConsultation) }}
+                            </div>#}
+                            <!-- /.box-header -->
+                            <div class="box-footer">
+                                <div class="col-md-12 ">
+                                    {{ form_errors(form) }}
+                                    
+
+                                    <div class="box-body">
+                                        <p>Medecin: <strong>{{ consultation.medecin.personne.nomComplet }}</strong></p>
+                                         <p>Spécialité: <strong>{{ consultation.specialite.nom }}</strong></p>
+                                         <p>Hôpital: <strong>{{ consultation.hopital.nom }}</strong></p>
+                                         <p>Date: <strong>{{ consultation.dateConsultation|date('d/m/Y') }}</strong></p>
+                                         {% if consultation.assurance %}
+                                         <p>Assurance:  <strong>{{ consultation.assurance.nom }}</strong></p>
+                                     {% endif %}
+                                        <div class="row">
+                                           
+                                                
+                                            
+                                            
+                                           
+                                            <div class="col-md-12">
+                                                <div class="box-header with-border">
+                                                    <div type="button" class="pull-left titre">Constantes</div>
+                                                </div>
+
+                                                <div class="box-body">
+                                                    <div class="row">
+                                                        {% for key, item in form.constantes %}
+                                                            
+                                                            {{ constante(item|e, key, constantes, true) }}
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {#<div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="col-sm-4 control-label">Tension <span class="red">*</span></label>
+
+                                                        <div class="col-sm-8">
+                                                            {{ form_widget(form.tension) }}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="col-sm-4 control-label">Poids(kg) <span
+                                                                    class="red">*</span></label>
+
+                                                        <div class="col-sm-8">
+                                                            {{ form_widget(form.poids) }}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="col-sm-4 control-label">T(°C) <span
+                                                                    class="red">*</span></label>
+
+                                                        <div class="col-sm-8">
+                                                            {{ form_widget(form.temperature) }}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>#}
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+
+
+                                </div>
+
+                                <div class="col-md-12">
+
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre success">Autres Informations</div>
+                                    </div>
+
+                                    <div class="box-body">
+                                        
+                                            
+                                            {% if form.medecin is defined %}
+                                                 {{ form_row_inline(form.medecin) }}
+                                            {% endif %}
+                                       
+                                         {{ form_row_inline(form.motif) }}
+                                        
+                                        
+
+                                    </div>
+                                    <!-- /.box-body -->
+
+
+                                </div>
+
+                            </div>
+
+                           <div class="box-footer">
+                                <!-- Affections box -->
+                                <div class="box box-solid">
+                                    <div class="box-header bg-light-blue-gradient">
+                                         <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+                                        <h3 class="box-title">Fichiers de consultations</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <ul class="list-group">
+                                            {% for fichier in consultation.fichiers %}
+                                            <li class="list-group-item">
+                                                <a href="{{ path('admin_parametre_fichier_show', {id: fichier.id, download: true}) }}">
+                                                    {{ fichier.title }}
+                                                </a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-footer">
+                                <!-- Affections box -->
+                                <div class="box box-solid ">
+                                    <div class="box-header bg-light-blue-gradient">
+                                        <!-- tools box -->
+                                        <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+
+                                        <i class="fa fa-flash"></i>
+
+                                        <h3 class="box-title">
+                                            Signes fonctionnels
+                                        </h3>
+                                    </div>
+                                    <div class="box-footer no-border">
+                                       
+                                    </div>
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Signe</th>
+                                                
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_signe_fonctionnel" class="collection list_signe_fonctionnel">
+                                            {% for item in form.fonctionnels %}
+                                                
+                                                {{ fonctionnels(item|e, false) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body-->
+
+                                </div>
+                                <!-- /.box -->
+
+                            </div>
+                            <div class="box-footer">
+                                <!-- Medicaments box -->
+                                <div class="box" style="border-top: none;">
+                                     <div class="box-body">
+                                        {{ form_row_inline(form.histoire) }}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="box-footer">
+                                <!-- Affections box -->
+                                <div class="box box-solid ">
+                                    <div class="box-header bg-light-blue-gradient">
+                                        <!-- tools box -->
+                                        <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+
+                                        <i class="fa fa-flash"></i>
+
+                                        <h3 class="box-title">
+                                            Antécédents Personnels
+                                        </h3>
+                                    </div>
+                                    <div class="box-footer no-border">
+                                       
+                                    </div>
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Antécédent</th>
+                                                <th>Groupe</th>
+                                                
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_antecedent_personnel" class="collection list_antecedent_personnel">
+                                            {% for item in form.personnels %}
+                                                
+                                                {{ antecedent_personnel(item|e, false) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body-->
+
+                                </div>
+                                <!-- /.box -->
+
+                            </div>
+                            <div class="box-footer">
+                                <!-- Affections box -->
+                                <div class="box box-solid ">
+                                    <div class="box-header bg-light-blue-gradient">
+                                        <!-- tools box -->
+                                        <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+
+                                        <i class="fa fa-flash"></i>
+
+                                        <h3 class="box-title">
+                                            Antécédents Familiaux
+                                        </h3>
+                                    </div>
+                                    <div class="box-footer no-border">
+                                       
+                                    </div>
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Antécédent</th>
+                                                <th>Groupe</th>
+                                                
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_antecedent_familial" class="collection list_antecedent_familial">
+                                            {% for item in form.familiaux %}
+                                                
+                                                {{ antecedent_familial(item|e, false) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body-->
+
+                                </div>
+                                <!-- /.box -->
+
+                            </div>
+                            <div class="box-footer">
+                                <!-- Affections box -->
+                                <div class="box box-solid ">
+                                    <div class="box-header bg-light-blue-gradient">
+                                        <!-- tools box -->
+                                        <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+
+                                        <i class="fa fa-flash"></i>
+
+                                        <h3 class="box-title">
+                                            Signes Physiques
+                                        </h3>
+                                    </div>
+                                    <div class="box-footer no-border">
+                                       
+                                    </div>
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Signe</th>
+                                                
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_signe_physique" class="collection list_signe_physique">
+                                            {% for item in form.physiques %}
+                                                
+                                                {{ physiques(item|e, false) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body-->
+
+                                </div>
+                                <!-- /.box -->
+
+                            </div>
+
+    
+                            
+                            {#<div class="box-footer hide">
+                                <!-- Medicaments box -->
+                                <div class="box box-solid ">
+                                    <div class="box-header bg-light-blue-gradient">
+                                        <!-- tools box -->
+                                        <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+
+                                        <i class="fa fa-medkit"></i>
+
+                                        <h3 class="box-title">
+                                            Vaccins
+                                        </h3>
+                                    </div>
+                                    <div class="box-footer no-border">
+                                       
+                                    </div>
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Vaccin</th>
+                                                <th>Commentaire</th>
+                                                
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_vaccin" class="collection list_vaccin">
+                                            {% for item in form.vaccins %}
+                                                {{ vaccin(item|e, false) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body-->
+
+                                </div>
+                                <!-- /.box -->
+
+                            </div>#}
+                             <div class="box-footer">
+                                <!-- Medicaments box -->
+                                <div class="box box-solid ">
+                                     <div class="box-body">
+                                        {{ form_row_inline(form.diagnostique) }}
+                                    </div>
+                                </div>
+                            </div>
+                                        
+                               <div class="box-footer">
+
+                                <!-- Analyses box -->
+                                <div class="box box-solid ">
+                                    <div class="box-header bg-light-blue-gradient">
+                                        <!-- tools box -->
+                                        <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+
+                                        <i class="fa fa-search-plus"></i>
+
+                                        <h3 class="box-title">
+                                            Examens/Explorations
+                                        </h3>
+                                    </div>
+                                    <div class="box-footer no-border">
+                                       
+                                    </div>
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Examen</th>
+                                                <th>Description</th>
+                                                
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_analyse" class="collection list_analyse">
+                                            {% for item in form.analyses %}
+                                                {{ analyses(item|e, false, false) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body-->
+
+                                </div>
+                                <!-- /.box -->
+
+                            </div>
+                            <div class="box-footer">
+                                <!-- Medicaments box -->
+                                <div class="box box-solid ">
+                                     <div class="box-body">
+                                        {{ form_row_inline(form.diagnostiqueFinal) }}
+                                         {{ form_row_inline(form.hospitalisation) }}
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="box-footer">
+                                <!-- Affections box -->
+                                <div class="box box-solid ">
+                                    <div class="box-header bg-light-blue-gradient">
+                                        <!-- tools box -->
+                                        <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+
+                                        <i class="fa fa-flash"></i>
+
+                                        <h3 class="box-title">
+                                            Affections chroniques
+                                        </h3>
+                                    </div>
+                                    <div class="box-footer no-border">
+                                        
+                                        <h4>Affections connues du patient</h4>
+                                        {% for affection in patient.affections %}
+                                            {% if loop.index == 1 %}
+                                                <ul>
+                                            {% endif %}
+                                            <li>{{ affection.affection }}</li>
+                                            {% if loop.last %}
+                                                </ul>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Affection</th>
+                                                 <th>Détails</th>
+                                                
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_affection" class="collection list_affection">
+                                            {% for item in form.affections %}
+                                                
+                                                {{ consultation_affections(item|e, false) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body-->
+
+                                </div>
+                                <!-- /.box -->
+
+                            </div>
+                            <div class="box-footer">
+                                <!-- Medicaments box -->
+                                <div class="box box-solid ">
+                                    <div class="box-header bg-light-blue-gradient">
+                                        <!-- tools box -->
+                                        <div class=" box-tools">
+                                            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                    data-toggle="tooltip"  style="margin-right: 5px;">
+                                                <i class="fa fa-minus"></i></button>
+                                        </div>
+                                        <!-- /. tools -->
+
+                                        <i class="fa fa-medkit"></i>
+
+                                        <h3 class="box-title">
+                                            Ordonnance
+                                        </h3>
+                                    </div>
+                                    <div class="box-footer no-border">
+                                        
+                                        {{ allergie_traitement(patient) }}
+                                    </div>
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Médicament</th>
+                                               
+                                                <th>Posologie</th>
+                                                <th>Détail</th>
+                                                
+                                            </tr>
+                                            </thead>
+                                            <tbody id="list_medicament" class="collection list_medicament">
+                                            {% for item in form.medicaments %}
+                                                {{ medicaments(item|e, false) }}
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body-->
+
+                                </div>
+                                <!-- /.box -->
+
+                            </div>
+
+
+                         
+                            <div class="box-footer">
+                                <div class="box-body">
+                                    {{ form_row_inline(form.observation, {attr: {'rows': 8}}) }}
+                                </div>
+                            </div>
+                            
+                            
+                            {{ form_widget(form._token) }}
+                            {{ form_end(form, {render_rest: false}) }}
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+        </section>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+     <script src="{{ asset('bundles/gestion/js/consultation.min.js') }}"></script>
+
+{% endblock %}
+{% block javascripts_inline %}
+    {{ parent() }}
+     {{ form_javascript(form) }}
+{% endblock %}
+
+    {% block page_title %}
+        Consultation :: Détails
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}
+

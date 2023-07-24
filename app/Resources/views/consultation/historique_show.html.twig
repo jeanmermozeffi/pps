@@ -1,0 +1,393 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block page_content %}
+
+    <div class="row">
+        <section class="col-md-3 connectedSortable">
+
+            <!-- Profile Image -->
+            <div class="box box-solid">
+                <div class="box-header bg-light-blue-gradient">
+                    <!-- tools box -->
+                    <div class=" box-tools">
+                        <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                data-toggle="tooltip"  style="margin-right: 5px;">
+                            <i class="fa fa-minus"></i></button>
+                    </div>
+                    <!-- /. tools -->
+
+                    <i class="fa fa-user"></i>
+
+                    <h3 class="box-title">
+                        {{'consultation.historique.infoPatient' | trans}}
+                    </h3>
+                </div>
+                <div class="box-body box-profile">
+                    <img class="profile-user-img img-responsive img-circle"
+                         src="{{ asset('bundles/avanzuadmintheme/img/avatar.png') }}" alt="User profile picture">
+
+                    <h3 class="profile-username text-center">{{ patient.personne.nom }} {{ patient.personne.prenom }}</h3>
+
+                    <p class="text-muted text-center">{{ patient.profession }} / {{ patient.societe }}</p>
+
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Groupe Sanguin</b> <a class="pull-right">{{ patient.groupeSanguin.libelle }}</a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <b>Âge</b> <a class="pull-right">{{ patient.personne.getAge }} ans</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Sexe</b>
+                            <a class="pull-right">
+                                {% if patient.sexe == 'F' %}
+                                    Femme
+                                {% elseif patient.sexe == 'M' %}
+                                    Homme
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Enfant(s)</b> <a class="pull-right">{{ patient.nombreEnfant }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Contact</b> <a class="pull-right">{{ patient.personne.contact }}</a>
+                        </li>
+                    </ul>
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+        </section>
+        <!-- /.col -->
+        <section class="col-md-9 connectedSortable">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li><a href="{{ path ('admin_consultation_historique') }}">{{ 'consultation.historique.tilte' | trans}}</a></li>
+                    <li><a href="{{ path ('admin_consultation_actions',{'id': consultation.id}) }}">Actions</a></li>
+                </ul>
+                <div class="tab-content">
+
+                    <div class="active tab-pane" id="nouvelle">
+                        <!-- general form elements -->
+
+                            <div class="box-footer">
+                                <a href="{{ path('admin_consultation_preview_print', {'id': patient.id, 'id1': consultation.id}) }}" type="button" class="btn btn-danger pull-right" title="Imprimer fiche consultation">
+                                    <i class="fa fa-print"></i>
+                                </a>
+                               {% if is_granted('ROLE_MEDECIN') and not is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path ('admin_consultation_new',{'id': patient.id}) }}" type="button" class="btn btn-primary" title="Nouvelle consultation">
+                                        <i class="fa fa-plus"></i> {{ 'consultation.new'}}
+                                    </a>
+                                    {#<a href="{{ path ('admin_consultation_new',{'id': patient.id}) }}" type="button" class="btn btn-primary" title="Nouvelle consultation">
+                                        <i class="fa fa-plus"></i> Nouvelle Consultation
+                                    </a>#}
+                                    {% if consultation.medecin.personne.utilisateur.id == app.user.id %}
+                                        <a href="{{ path ('admin_consultation_edit',{'id': patient.id, 'id1': consultation.id}) }}" type="button" class="btn btn-warning" title="Modifier consultation">
+                                            <i class="fa fa-edit"></i> {{ 'consultation.edit' | trans}}
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+
+                            <!-- /.box-header -->
+                        <form class="form-horizontal">
+                            <div class="box-footer">
+                                <div class="col-md-6 ">
+
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre">{{'consultation.infoPatient' | trans}}</div>
+                                    </div>
+
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="dateConsultation" class="col-sm-4 control-label">{{'consultation.form.dateConsultation' | trans}}</label>
+
+                                                <div class="col-sm-8">
+
+                                                    <input id="dateConsultation" type="text" value="{{ consultation.dateConsultation|date("d/m/Y") }}" class="form-control" disabled="disabled"/>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="tension" class="col-sm-4 control-label">{{'consultation.form.tension' | trans}} </label>
+
+                                                <div class="col-sm-8">
+
+                                                    <input id="tension" type="text" value="{{ consultation.tension }}" class="form-control" disabled="disabled"/>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="poids" class="col-sm-4 control-label">{{'consultation.form.poids' | trans}}</label>
+
+                                                <div class="col-sm-8">
+                                                    <input id="poids" type="text" value="{{ consultation.poids }}" class="form-control" disabled="disabled"/>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="temperature" class="col-sm-4 control-label">
+                                                    {{'consultation.form.temperature' | trans}}</label>
+
+                                                <div class="col-sm-8">
+
+                                                    <input id="temperature" type="text" value="{{ consultation.temperature }}" class="form-control" disabled="disabled"/>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+
+
+                                </div>
+
+                                <div class="col-md-6 barre">
+
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre success">
+                                            {{'consultation.form.autrinfo' | trans}}</div>
+                                    </div>
+
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="specialite" class="col-sm-4 control-label">{{'consultation.form.specialite.label' | trans}}</label>
+
+                                                <div class="col-sm-8">
+
+                                                    <input id="specialite" type="text" value="{{ consultation.specialite.nom }}" class="form-control" disabled="disabled"/>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="diagnostique" class="col-sm-4 control-label">*
+                                                    {{'consultation.form.diagnostique' | trans}}</label>
+
+                                                <div class="col-sm-8">
+
+                                                <textarea id="diagnostique" class="form-control form-control" disabled="disabled">{{ consultation.diagnostique }}</textarea>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="motif" class="col-sm-4 control-label">
+                                                    {{'consultation.form.motif' | trans}}</label>
+                                                <div class="col-sm-8">
+                                                <textarea id="motif" class="form-control" disabled="disabled">{{ consultation.motif }}</textarea>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="hospitalisation" class="col-sm-4 control-label">{{'consultation.form.hospitalisation'  | trans}}</label>
+
+                                                <div class="col-sm-8">
+                                                <textarea id="hospitalisation" class="form-control" disabled="disabled">{{ consultation.hospitalisation }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- /.box-body -->
+
+
+                                </div>
+
+                            </div>
+
+                            {% if consultation.affections is not empty %}
+                                <div class="box-footer">
+                                    <!-- Affections box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                        data-toggle="tooltip"  style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-flash"></i>
+
+                                            <h3 class="box-title">
+                                                {{'consultation.form.listeDianostic' | trans}}
+                                            </h3>
+                                        </div>
+                                        <div class="box-body">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{'consultation.form.affection' | trans}}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_affection" class="collection list_affection">
+                                                {% for item in consultation.affections %}
+                                                    <tr>
+                                                        <td>{{ item.affection }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+                            {% endif %}
+
+                            {% if consultation.medicaments is not empty %}
+                                <div class="box-footer">
+                                    <!-- Medicaments box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                        data-toggle="tooltip"  style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-medkit"></i>
+
+                                            <h3 class="box-title">
+                                                {{'consultation.form.listeMedicament' | trans}}
+                                            </h3>
+                                        </div>
+                                        <div class="box-footer no-border">
+
+                                            <a href="{{ path('admin_consultation_ordonnance_preview_print', {'id': patient.id, 'id1': consultation.id}) }}" type="button" class="btn btn-danger pull-right" title="Imprimer ordonnance">
+                                                <i class="fa fa-print"></i>
+                                            </a>
+                                        </div>
+                                        <div class="box-body">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{'consultation.form.nom' | trans}}</th>
+                                                    <th>{{'consultation.form.posologie' | trans}}</th>
+                                                    <th>{{'consultation.form.detail' | trans}}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_medicament" class="collection list_medicament">
+                                                {% for item in consultation.medicaments %}
+                                                    <tr>
+                                                        <td>{{ item.medicament }}</td>
+                                                        <td>{{ item.posologie }}</td>
+                                                        <td>{{ item.details }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+                            {% endif %}
+
+                            {% if consultation.analyses is not empty %}
+                                <div class="box-footer">
+
+                                    <!-- Analyses box -->
+                                    <div class="box box-solid ">
+                                        <div class="box-header bg-light-blue-gradient">
+                                            <!-- tools box -->
+                                            <div class=" box-tools">
+                                                <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                                        data-toggle="tooltip"  style="margin-right: 5px;">
+                                                    <i class="fa fa-minus"></i></button>
+                                            </div>
+                                            <!-- /. tools -->
+
+                                            <i class="fa fa-search-plus"></i>
+
+                                            <h3 class="box-title">
+                                                {{'consultation.form.analyse.label' | trans}}
+                                            </h3>
+                                        </div>
+                                        <div class="box-footer no-border">
+
+                                            <a href="" type="button" class="btn btn-danger pull-right" title="Imprimer fiche analyse">
+                                                <i class="fa fa-print"></i>
+                                            </a>
+                                        </div>
+                                        <div class="box-body">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{'consultation.form.analyse.nom' | trans}}</th>
+                                                    <th>{{'consultation.form.analyse.description' | trans}}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="list_analyse" class="collection list_analyse">
+                                                {% for item in consultation.analyses %}
+                                                    <tr>
+                                                        <td>{{ item.analyse }}</td>
+                                                        <td>{{ item.libelle }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body-->
+
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+                            {% endif %}
+
+                        </form>
+
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+
+                </div>
+            <!-- /.nav-tabs-custom -->
+        </section>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+    {% block page_title %}
+        Consultation :: Détails
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}
+

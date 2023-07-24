@@ -1,0 +1,35 @@
+admin_specialite_fiche_search:
+    path:     /search
+    defaults: { _controller: PSSpecialiteBundle:Fiche:search }
+
+
+admin_specialite_fiche_index:
+    path:     /liste/{patient}
+    defaults: { _controller: PSSpecialiteBundle:Fiche:index }
+   
+
+admin_specialite_fiche_new:
+    path:     /new/{patient}
+    defaults: { _controller: PSSpecialiteBundle:Fiche:new }
+
+admin_specialite_fiche_edit:
+    path:     /edit/{fiche}
+    defaults: { _controller: PSSpecialiteBundle:Fiche:edit }
+
+
+admin_specialite_fiche_details:
+    path:     /details/{fiche}/{etape}
+    defaults: { _controller: PSSpecialiteBundle:Fiche:details, etape: null }
+
+admin_specialite_fiche_donnee:
+    path:     /{fiche}/donnees/{etape}
+    defaults: { _controller: PSSpecialiteBundle:Fiche:donnee, etape: null }
+
+
+admin_specialite_fiche_etape:
+    path:     /{fiche}/etapes/{specialite}
+    defaults: { _controller: PSSpecialiteBundle:Fiche:etape }
+
+admin_specialite_fiche_historique:
+    path:     /historique/{patient}/{fiche}
+    defaults: { _controller: PSSpecialiteBundle:Fiche:historique }

@@ -1,0 +1,24 @@
+admin_config_role_index:
+    path:     /
+    defaults: { _controller: "UtilisateurBundle:Role:index" }
+    methods:  GET
+
+admin_config_role_show:
+    path:     /{id}/show
+    defaults: { _controller: "UtilisateurBundle:Role:show" }
+    methods:  GET
+
+admin_config_role_new:
+    path:     /new
+    defaults: { _controller: "UtilisateurBundle:Role:new" }
+    methods:  [GET, POST]
+
+admin_config_role_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "UtilisateurBundle:Role:edit" }
+    methods:  [GET, POST]
+
+admin_config_role_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "UtilisateurBundle:Role:delete" }
+    methods:  DELETE

@@ -1,0 +1,30 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+ {% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block page_content %}
+     <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-danger">
+                
+                <div class="box-body">
+                   {{ form_start(form, {attr: {id: 'form_new_pass'}}) }}
+                    
+                        {{ form_widget(form) }}
+                       
+                        <input type="submit" class="btn btn-primary" value="Valider" />
+                    
+                    {{ form_end(form) }}
+            
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
+ {% block page_title %}
+        Choix du PACK
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}
+

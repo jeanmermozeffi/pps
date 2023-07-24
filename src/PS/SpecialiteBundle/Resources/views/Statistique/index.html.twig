@@ -1,0 +1,54 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <!-- Horizontal Form -->
+                    <div class="">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Veuillez choisir une spécialité pour continuer</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="list-group">
+                        {% for specialite in specialites %}
+                            <a href="{{ path('admin_specialite_stats_list', {id: specialite.id}) }}" class="list-group-item">
+                                {{ specialite.nom }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                    {{ knp_pagination_render(specialites) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts_inline %}
+    <script>
+        /*$('#form_new_affection').on('submit', function (e) {
+            e.preventDefault();
+            const $this = $(this);
+            const $ajax_feedback = $('.ajax-feedback', $this);
+            $.post($this.attr('action'), $this.serialize(), function (data) {
+
+                if (!data.success) {
+                   
+                    const errors = data.message;
+                    let error_str = '';
+                    for (error of errors) {
+                        error_str += `<p>${error}</p>`;
+                    }
+                    
+                    $ajax_feedback.removeClass('hide').html(error_str);
+                }
+            }, 'json');
+        }); */
+    </script>
+{% endblock %}
+{% block page_title %}
+  Stats par spécialité
+{% endblock %}

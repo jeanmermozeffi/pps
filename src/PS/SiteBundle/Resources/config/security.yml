@@ -1,0 +1,48 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    providers:
+       fos_userbundle:
+           id: fos_user.user_manager
+
+    firewalls:
+        main:
+            pattern: .*
+
+            form_login:
+                provider: fos_userbundle
+                login_path: /login
+                use_forward: false
+                check_path: /login_check
+                failure_path: null
+                default_target_path: /
+
+            logout:
+                path: /logout
+                target: /
+            
+            anonymous: true
+        
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER, ROLE_CONSULTATION]
+        ROLE_SUPERADMIN: ROLE_ADMIN
+
+    access_control:
+        # Liste des pages accessibles à tous les utilisateurs (ne pas toucher)
+        - { path: ^/_wdt/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/_profiler/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/js/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/css/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resseting$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        # PAGES ACCESSIBLES AUX ADMINISTRATEURS
+        - { path: ^/admin/, role: ROLE_ADMIN }
+        # PAGES ACCESSIBLES AUX CONSULTANTS
+        - { path: ^/consult/, role: ROLE_CONSULTATION }
+        # PAGES ACCESSIBLES AUX UTILISATEURS CONNECTES
+        - { path: ^/change-password, role: ROLE_USER }
+        # PAGES ACCESSIBLES À TOUS
+        - { path: ^.*, role: IS_AUTHENTICATED_ANONYMOUSLY }

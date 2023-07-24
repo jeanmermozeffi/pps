@@ -1,0 +1,111 @@
+parametre_admin_parametre_allergie:
+    resource: "@ParametreBundle/Resources/config/routing/allergie.yml"
+    prefix:   /admin/parametre/allergie
+
+parametre_admin_parametre_affection:
+    resource: "@ParametreBundle/Resources/config/routing/affection.yml"
+    prefix:   /admin/parametre/affection
+
+parametre_admin_parametre_etat:
+    resource: "@ParametreBundle/Resources/config/routing/etat.yml"
+    prefix:   /admin/parametre/etat
+
+
+parametre_admin_parametre_fichier:
+    resource: "@ParametreBundle/Resources/config/routing/fichier.yml"
+    prefix:   /admin/parametre/fichier
+
+
+parametre_admin_parametre_type_etat:
+    resource: "@ParametreBundle/Resources/config/routing/type_etat.yml"
+    prefix:   /admin/parametre/type-etat
+
+
+parametre_admin_parametre_vaccin:
+    resource: "@ParametreBundle/Resources/config/routing/vaccin.yml"
+    prefix:   /admin/parametre/vaccin
+
+parametre_admin_parametre_assurance:
+    resource: "@ParametreBundle/Resources/config/routing/assurance.yml"
+    prefix:   /admin/parametre/assurance
+
+parametre_admin_parametre_specialite:
+    resource: "@ParametreBundle/Resources/config/routing/specialite.yml"
+    prefix:   /admin/parametre/specialite
+
+parametre_admin_parametre_religion:
+    resource: "@ParametreBundle/Resources/config/routing/religion.yml"
+    prefix:   /admin/parametre/religion
+
+parametre_admin_parametre_pays:
+    resource: "@ParametreBundle/Resources/config/routing/pays.yml"
+    prefix:   /admin/parametre/pays
+
+parametre_admin_parametre_hopital:
+    resource: "@ParametreBundle/Resources/config/routing/hopital.yml"
+    prefix:   /admin/parametre/hopital
+
+
+parametre_admin_parametre_nationalite:
+    resource: "@ParametreBundle/Resources/config/routing/nationalite.yml"
+    prefix:   /admin/parametre/nationalite
+
+parametre_admin_parametre_telephone:
+    resource: "@ParametreBundle/Resources/config/routing/telephone.yml"
+    prefix:   /admin/parametre/telephone
+
+parametre_admin_parametre_region:
+    resource: "@ParametreBundle/Resources/config/routing/region.yml"
+    prefix:   /admin/parametre/region
+
+parametre_admin_parametre_attribut:
+    resource: "@ParametreBundle/Resources/config/routing/attribut.yml"
+    prefix:   /admin/parametre/attribut
+
+parametre_admin_parametre_ville:
+    resource: "@ParametreBundle/Resources/config/routing/ville.yml"
+    prefix:   /admin/parametre/ville
+
+parametre_admin_parametre_groupesanguin:
+    resource: "@ParametreBundle/Resources/config/routing/groupesanguin.yml"
+    prefix:   /admin/parametre/groupesanguin
+
+parametre_admin_parametre_medicament:
+    resource: "@ParametreBundle/Resources/config/routing/medicament.yml"
+    prefix:   /admin/parametre/medicament
+
+parametre_admin_parametre_image:
+    resource: "@ParametreBundle/Resources/config/routing/image.yml"
+    prefix:   /admin/parametre/image
+
+parametre_admin_parametre_ligneassurance:
+    resource: "@ParametreBundle/Resources/config/routing/ligneassurance.yml"
+    prefix:   /admin/parametre/ligneassurance
+
+parametre_admin_parametre_lignevaccin:
+    resource: "@ParametreBundle/Resources/config/routing/lignevaccin.yml"
+    prefix:   /admin/parametre/lignevaccin
+
+parametre_admin_config_pass:
+    resource: "@ParametreBundle/Resources/config/routing/pass.yml"
+    prefix:   /admin/config/pass
+
+parametre_admin_parametre_analyse:
+    resource: "@ParametreBundle/Resources/config/routing/analyse.yml"
+    prefix:   /admin/parametre/analyse
+
+parametre_admin_parametre_module:
+    resource: "@ParametreBundle/Resources/config/routing/module.yml"
+    prefix:   /admin/parametre/module
+
+parametre_admin_parametre_permission:
+    resource: "@ParametreBundle/Resources/config/routing/permission.yml"
+    prefix:   /admin/parametre/permission
+
+#parametre_homepage:
+#    path:     /
+#    defaults: { _controller: ParametreBundle:Default:index }
+
+
+
+

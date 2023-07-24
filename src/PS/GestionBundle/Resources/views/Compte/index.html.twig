@@ -1,0 +1,39 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+      <link rel="stylesheet" href="{{ asset('public/css/parsley.css') }}" />
+{% endblock %}
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <!-- Horizontal Form -->
+                    <div class="">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Comptes Associés</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    {% if patient.id is defined %}
+                    <a href="{{ path('admin_gestion_patient_new', {id: patient.id}) }}" class="btn btn-success">Nouveau</a>
+                   {% else %}
+                    <div class="alert alert-warning">Veuillez créer votre profil médical</div>
+                {% endif %}
+                    
+                    
+                    {{ grid(grid, 'grid/blocks.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+
+{% endblock %}

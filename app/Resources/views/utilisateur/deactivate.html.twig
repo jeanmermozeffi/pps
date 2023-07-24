@@ -1,0 +1,43 @@
+
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Désactivation/Activation Utilisateur</h4>
+                </div>
+
+            {{ form_start(form) }}
+
+            <div class="modal-body">
+                {% include 'ajax/response.html.twig' %}
+                {% if utilisateur.enabled %}
+
+                    Souhaitez-vous désactiver  <span style="color: red">{{utilisateur.username }}</span>?
+
+                {% else %}
+
+                    Souhaitez-vous activer  <span style="color: red">{{utilisateur.username }}</span>?
+
+                {% endif %}
+
+            </div>
+
+            <div class="modal-footer">
+                {% include 'ajax/loader.html.twig' %}
+                <button class="btn btn-warning btn-ajax">{% if utilisateur.enabled %}Désactiver{% else %}Activer{% endif %}</button>
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+
+            </div>
+
+            {{ form_widget(form._token, {id: form._token.vars.id ~ '_deactivate_' ~ utilisateur.id })}}
+
+            {{ form_end(form, {render_rest:false}) }}
+
+{% block javascripts_inline %}
+    <script src="{{ asset('public/js/admin.js') }}"></script>
+    <script>
+ 
+    </script>
+     
+{% endblock %}

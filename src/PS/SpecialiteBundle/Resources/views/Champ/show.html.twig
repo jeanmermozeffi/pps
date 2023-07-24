@@ -1,0 +1,60 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+ {% form_theme form 'PSSpecialiteBundle:Macros:fields_bs3_horizontal.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+     {{ form_stylesheet(form) }}
+     <style>
+     .radio-inline label {font-weight: normal;}
+     .form-group {margin-bottom: 5px;}
+     </style>
+{% endblock %}
+{% block page_content %}
+    <ul class="list-group">
+        {% for etape in etapes %}
+            <li class="list-group-item">
+
+                <a href="{% if not etape.etapeEnfants|length %}{{ path('admin_specialite_champ_show', {id: specialite.id, etape: etape.id}) }}{% else %}#{% endif %}">
+                {% if not etape.etapeParente %}<strong>{{ etape.libEtape }}</strong>{% else %}{{ etape.libEtape }}{% endif %}</a>
+                {% if etape.etapeEnfants|length %}
+                <ul class="list-group">
+                    {% for _etape in etape.etapeEnfants %}
+                        <li class="list-group-item"><a href="{{ path('admin_specialite_champ_show', {id: specialite.id, etape: _etape.id}) }}">{{ _etape.libEtape}}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+            </li>
+        {% endfor %}
+    </ul>
+    {% if etape %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    {% endif %}
+
+{% endblock %}
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('dropzone/dist/min/bootstrap-filestyle.min.js') }}"></script>
+     <script src="{{ asset('bundles/gestion/js/fr.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/profil.js') }}"></script>
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+     <script src="{{ asset('bundles/specialite/js/fields.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+    <script>
+        
+    </script>
+
+{% endblock %}
+{% block javascripts_inline %}
+     {{ form_javascript(form) }}
+{% endblock %}
+
+{% block page_title %}
+  Nouvelle fiche
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

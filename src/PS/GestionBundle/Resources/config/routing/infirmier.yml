@@ -1,0 +1,43 @@
+admin_gestion_infirmier_index:
+    path:     /
+    defaults: { _controller: GestionBundle:Infirmier:index }
+    options:
+        expose: true
+
+admin_gestion_infirmier_new:
+    path:     /{id}/new
+    defaults: { _controller: GestionBundle:Infirmier:new }
+
+admin_gestion_infirmier_info:
+    path:     /{id}/info
+    defaults: { _controller: GestionBundle:Infirmier:info }
+
+admin_gestion_infirmier_show:
+    path:     /{id}/show
+    defaults: { _controller: GestionBundle:Infirmier:show }
+
+admin_gestion_infirmier_edit:
+    path:     /{id}/edit
+    defaults: { _controller: GestionBundle:Infirmier:edit }
+
+admin_gestion_infirmier_delete:
+    path:     /{id}/delete
+    defaults: { _controller: GestionBundle:Infirmier:delete }
+
+admin_gestion_infirmier_consultation:
+    path:     /{id}/consultation/{consultation}
+    defaults: { _controller: GestionBundle:Infirmier:consultation, consultation: null }
+
+admin_gestion_infirmier_compte:
+    path:     /{id}/compte
+    defaults: { _controller: GestionBundle:Infirmier:compte }
+
+admin_gestion_infirmier_patient:
+    path:     /patient
+    defaults: { _controller: GestionBundle:Infirmier:patient }
+
+admin_gestion_infirmier_historique:
+    path:     /historique
+    defaults: { _controller: GestionBundle:Infirmier:historique }
+
+

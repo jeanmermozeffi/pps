@@ -1,0 +1,50 @@
+menu:
+  title: MENU PRINCIPAL
+  logout: Déconnexion
+  dashboard: Tableau de bord
+  site_distrib: Réseaux de soins
+  site_home: Retour au site
+  user_account: Accès PPS
+  admission:
+    title: Admission
+  rdv:
+    title: Rendez-vous
+  gestion:
+    title: Gestion
+    faq: FAQ
+    sms: Campagnes SMS
+    pharmacies: Pharmacies
+    corporate: Corporate
+  parametre:
+    title: Paramètres
+    affections: Affections
+    hopitaux: Hôpitaux
+    specialites: Spécialités
+    assurances: Assurances
+    villes: Villes
+    religions: Religions
+    pays: Pays
+    nationalites: Nationalités
+    groupesanguin: Groupes Sanguins
+    regions: Régions
+  configuration:
+    title: Configuration
+    utilisateurs: Comptes Utilisateurs
+    patients: Comptes Patients
+    pass: Gestion des PASS
+    photo: Gestion des Photos
+  stats:
+    title: Statistiques
+    global: Stats globales
+  patient:
+    title: Compte PPS
+    list: Patients
+    new: Nouveau
+    associe: Mes comptes associés
+   
+    constantes: Suivi constantes
+    evolution: Suivi/Evolutios
+    info: Compte PPS
+    historique_medical: Historique Médical
+    rdv: Mes Rendez-vous
+    ordonnances: Ordonnances

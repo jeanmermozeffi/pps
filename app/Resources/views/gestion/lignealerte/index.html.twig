@@ -1,0 +1,131 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+    {% block page_content %}
+     <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-danger">
+                <div class="box-header">
+                    <!-- Horizontal Form -->
+                    <div class="">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Suivi - {{ alerte.libelle }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                     
+                    <a class="btn btn-default"
+                            href="{{ path('gestion_suivialerte_new', {id: alerte.id}) }}"
+                           ><i class="fa fa-plus"></i> Nouveau </a>
+                    <div id="calendar-events"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% endblock %}
+{% block javascripts_inline %}
+    
+    <script src="{{ asset('public/js/moment.min.js') }}"></script>
+   
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script>
+  
+    
+       $(document).ready(function () {
+            moment().locale("{{ app.request.locale }}");
+           
+
+            var calendar = new FullCalendar.Calendar(document.getElementById('calendar-events'), {
+                locale: '{{ _locale }}',
+                //events: "{{ path('admin_gestion_rdv_list') }}",
+                //initialView: 'dayGridWeek',
+                eventSources: [
+                    {
+                        url: "{{ path('gestion_suivialerte_data', {id: alerte.id}) }}",
+                        /*data: {
+                            id: "{{ idUser | default() }}",
+                            idMedecin: "{{ idMedecin | default() }}"
+                        }*/
+                    }
+                ], 
+           
+
+                eventClick: function (info) {
+                    /*if (info.event.extendedProps.statut_rendez_vous == 0) {
+                        document.location.href = Routing.generate('admin_gestion_rdv_edit', {id: info.event.id})
+                    }*/
+                },
+                
+                eventDidMount: function(eventObj) {
+
+                    const event = eventObj.event;
+                    const $el = $(eventObj.el);
+
+                   
+                    const props = event.extendedProps;
+
+                    
+                    moment.defineLocale('fr', null);
+                    const start = moment(event.start).format('LLLL');
+                    let content = '';
+                    let title = event.lib;
+                   
+                    content = `<p>Date: ${start}</p>
+                    <p>Note: ${props.commentaire}</p>
+                    `;
+                    
+
+                    const colors = {'-1': '#ff0000', '0': '#016daf', '1': '#50af01', '2': '#f1c232'};
+
+
+                    
+                    $el.popover({
+                        title: title,
+                        content: content,
+                        trigger: 'hover',
+                        placement: 'top',
+                        html: true,
+                        container: 'body'
+                    });
+
+                    return eventObj;
+                },
+                
+                themeSystem: 'bootstrap3',
+                editable: true,
+                //draggable: true,
+                dateClick: function (calEvent) {
+                    console.log(calEvent);
+                    
+                },
+                
+                headerToolbar: {
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'dayGridMonth,dayGridWeek,listWeek'
+                },
+                /*buttonText: {
+                    today: 'todya',
+                    month: 'month',
+                    week: 'week',
+                    day: 'day',
+                    list: 'list'
+                }*/
+               
+                
+            });
+
+             calendar.render();
+        });
+   
+   
+
+
+    
+   
+
+    </script>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <!-- Horizontal Form -->
+                    <div class="">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">{% if not is_granted('ROLE_CUSTOMER') and not patient %}Historique de Vaccinations{% else %}Carnet de vaccination [{{ patient.identifiant }} , {{ patient.pin }}]{% endif %}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                     <a href="#" onclick="return {{ grid.hash }}_reset();" class="btn btn-success"><i class="fa fa-repeat"></i></a>
+                    {% if not is_granted('ROLE_CUSTOMER') %}
+                      {% if not patient %}
+                     <a class="btn btn-default" 
+                            href="{{ path('gestion_vaccination_search', {isAjax: true}) }}"
+                           ><i class="fa fa-plus"></i> Nouveau </a>
+                        {% else %}
+                            <a class="btn btn-default" 
+                            href="{{ path('gestion_vaccination_new_patient', {id: patient.id}) }}"
+                           ><i class="fa fa-plus"></i> Nouveau </a>
+                        {% endif %}
+
+                    {% else %}
+                        <a class="btn btn-default" 
+                                href="{{ path('gestion_vaccination_index', {isAjax: true}) }}"
+                               ><i class="fa fa-file-o"></i> Carnet de vaccination </a>
+                         <a class="btn btn-default" 
+                                href="{{ path('gestion_vaccination_ls', {isAjax: true}) }}"
+                               ><i class="fa fa-file-o"></i> Vaccins prévus </a>
+                    {% endif %}
+                    
+                    {{ grid(grid) }}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts_inline %}
+    <script>
+       
+    </script>
+{% endblock %}

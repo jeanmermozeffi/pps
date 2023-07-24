@@ -1,0 +1,11 @@
+admin_specialite_etape_index:
+    path:     /
+    defaults: { _controller: "PSSpecialiteBundle:Etape:index" }
+
+admin_specialite_etape_new:
+    path:     /new
+    defaults: { _controller: "PSSpecialiteBundle:Etape:new" }
+
+admin_specialite_etape_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PSSpecialiteBundle:Etape:edit" }

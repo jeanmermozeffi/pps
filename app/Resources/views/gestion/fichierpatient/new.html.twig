@@ -1,0 +1,39 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block page_content %}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+        {% from 'GestionBundle:Macros:macro.html.twig' import  info_patient %}
+
+<div class="row" xmlns="http://www.w3.org/1999/html">
+
+        <section class="col-md-3 connectedSortable">
+
+        {{ info_patient(fichierPatient.patient, true) }}
+
+        </section>
+         <section class="col-md-9">
+            <div class="box box-solid">
+                <div class="box-body">
+             {{ form_start(form, {'attr': {'role':'form', 'class': ''}}) }}
+             {{ form_widget(form) }}
+              <button type="submit" class="btn btn-primary pull-left">Enregistrer</button>
+               {{ form_end(form) }}
+           </div>
+       </div>
+        </section>
+</div>
+   
+   
+        
+            
+{% endblock %}
+{% block javascripts_inline %}
+    <script>
+         
+    </script>
+     
+{% endblock %}
+
+    {% block page_title %}
+        Fichier :: Nouveau
+    {% endblock %}

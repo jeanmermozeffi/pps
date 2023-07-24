@@ -1,0 +1,50 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+
+{% block page_content %}
+    <a href="{{ path('admin_consultation_info', {patient: patient.id, consultation: consultation.id})}}">Retour</a>
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Actions- Ref: {{ consultation.refConsultation }}</h3>
+        </div>
+        <div class="box-body">
+            <div class="list-group">
+               
+                {% for info in infos %}
+                    <div class="list-group-item">
+                        <h4><span class="fa fa-user"></span> {{ info.medecin.personne.nomComplet }}</h4>
+                        <div class="text-muted"> {{ info.detailsInfo }}</div>
+                        <p class="text-muted"><span class="fa fa-time"></span> {{ info.dateInfo|date('d/m/Y h:i')}}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if infos|length %}
+            {{ knp_pagination_render(infos) }} 
+            {% endif %}
+        </div>
+    </div>
+   
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('dropzone/dist/min/bootstrap-filestyle.min.js') }}"></script>
+     <script src="{{ asset('bundles/gestion/js/fr.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/profil.js') }}"></script>
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+    <script>
+        
+    </script>
+
+{% endblock %}
+
+{% block page_title %}
+  Actions Médecin Conseil - Consultation {{ consultation.refConsultation }}
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

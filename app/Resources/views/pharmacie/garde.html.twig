@@ -1,0 +1,88 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% if form is defined %}{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}{% endif %}
+{% block stylesheets %}
+    {{ parent() }}
+      <link rel="stylesheet" href="{{ asset('public/css/parsley.css') }}" />
+      <style>
+        .form-group {margin-bottom: 5px}
+        .validator-rules > li {display: inline;margin-right: 2px}
+        
+      </style>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <!-- /.col -->
+        <div class="col-md-12">
+            {% if mode == 'new' and canAdd %}
+                <a href="{{ path('admin_pharmacie_garde') }}" class="btn btn-success btn-xs">Liste des pharmacies de garde</a>
+                <div class="alert alert-info">
+                Format à respecter <a href="{{ asset('uploads/format_fichier_garde.xlsx') }}">Voir le Fichier Exemple</a>
+                </div>
+            
+                {{ form_errors(form)}}
+                
+                {{ form_start(form, { 'attr': {'data-parsley-validate': true} }) }}
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label class="col-sm-4 control-label">Fichier (format xls/xslx)</label>
+                        <div class="col-sm-8">
+                            {{ form_widget(form.file) }}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-4">
+                        <input type="submit" class="btn btn-success" value="Valider"/>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            {% else %}
+                <div class="box box-primary">
+                <div class="box-header">
+                    <!-- Horizontal Form -->
+                    <div class="">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Pharmacies de garde</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <a href="#" onclick="{{ grid.hash }}_reset()" class="btn btn-success"><i class="fa fa-repeat"></i></a>
+                    {% if canAdd %}
+                    <a href="{{ path ('admin_pharmacie_garde', {mode: 'new'}) }}" class="btn btn-success"><i class="fa fa-file-excel-o"></i>Exporter un fichier</a>
+                    {% endif %}
+                    {{ grid(grid) }}
+                </div>
+            </div>
+            {% endif %}
+            <!-- /.nav-tabs-custom -->
+        
+        </div>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('dropzone/dist/min/bootstrap-filestyle.min.js') }}"></script>
+     <script src="{{ asset('bundles/gestion/js/fr.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/profil.js') }}"></script>
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+    <script>
+        
+    </script>
+
+{% endblock %}
+
+{% block page_title %}
+   {% if mode == 'new' %}Exporter un fichier (Pharmacies de garde){% else %}Pharmacies de garde{% endif %}
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

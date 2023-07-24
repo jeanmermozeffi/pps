@@ -1,0 +1,24 @@
+{% extends "admin/login.html.twig" %}
+
+{% block fos_user_content %}
+    {{ form_errors(form) }}
+
+    {{ form_start(form) }}
+    
+        <p>Vous avez réçu un code de vérification par SMS ou par mail (vérifiez aussi dans vos SPAMS), veuillez le renseigner avant d'accéder à votre espace</p>
+        <div class="form-group has-feedback">
+             {{ form_widget(form.smsCode) }}
+        </div>
+        
+        <div class="row">
+            <div class="col-xs-8">
+                <button type="submit" class="btn btn-primary  btn-flat" id="submit" name="_submit">Valider</button>
+                <a href="{{ path('fos_user_security_logout') }}" class="btn btn-flat btn-default">Me reconnecter</a>
+            </div>
+        </div>
+   {{ form_end(form) }}
+
+{% endblock fos_user_content %}
+
+{% block entete %}Code de vérification {% endblock %}
+{% block title %}Code de vérification{% endblock %}

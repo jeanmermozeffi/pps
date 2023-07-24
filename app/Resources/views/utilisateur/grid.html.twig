@@ -1,0 +1,248 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+
+      <link rel="stylesheet" href="{{ asset('public/css/parsley.css') }}" />
+
+      <style>
+
+        .form-group {margin-bottom: 5px}
+
+        .validator-rules > li {display: inline;margin-right: 2px}
+
+      </style>
+
+{% endblock %}
+
+{% block page_content %}
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <!-- general form elements -->
+
+            <div class="box box-primary">
+
+                <div class="box-header">
+
+                    <!-- Horizontal Form -->
+
+                    <div class="">
+
+                        <div class="box-header with-border">
+
+                            <h3 class="box-title">Liste des utilisateurs</h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="box-body">
+
+                    <a href="#" class="btn btn-success"><i class="fa fa-repeat" onclick="return {{ grid.hash }}_reset();"></i></a>
+
+                    <a class="btn btn-default" data-toggle="modal" data-target="#modal-table"
+                            href="{{ path('admin_config_utilisateur_new') }}"
+                           ><i class="fa fa-plus"></i> Nouveau </a>
+
+                    {#{ render(controller('UtilisateurBundle:Utilisateur:new', {action: 'assurance'})) }#}
+
+                    {{ grid(grid, 'blocks_js.jquery.html.twig') }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+
+    <script>
+
+
+
+
+
+    console.log(100);
+
+
+
+
+
+        var hash = document.location.hash;
+
+        var current_url = document.location.href;
+
+
+
+        function setField($modal) {
+
+            const $pharmacie = $('.select2-pharmacie', $modal).closest('.form-group');
+
+            const $hopital = $('.select2-hopital', $modal).closest('.form-group');
+
+            const $specialites = $('.select2-specialite', $modal).closest('.form-group');
+
+            const $assurance = $('.select2-assurance', $modal).closest('.form-group');
+
+            $('.list-roles', $modal).on('change', function () {
+
+                const val = $(this).val();
+
+                console.log(val);
+
+                const hasHopital = (['ROLE_MEDECIN', 'ROLE_RECEPTION', 'ROLE_INFIRMIER', 'ROLE_ADMIN_LOCAL'].indexOf(val) != -1);
+
+                const hasPharmacie = (val == 'ROLE_PHARMACIE');
+
+                const hasSpecialite =(val == 'ROLE_MEDECIN');
+
+                const hasAssurance = (val == 'ROLE_ADMIN_LOCAL');
+
+
+
+                $assurance.addClass('hide');
+
+
+
+
+
+
+
+                if (hasPharmacie || hasHopital) {
+
+                    if (hasPharmacie) {
+
+                        $pharmacie.removeClass('hide');
+
+                        $hopital.addClass('hide');
+
+                    } else {
+
+                        $pharmacie.addClass('hide');
+
+                        $hopital.removeClass('hide');
+
+                    }
+
+                } else {
+
+                    $pharmacie.addClass('hide');
+
+                    $hopital.addClass('hide');
+
+                }
+
+
+
+
+
+                $assurance.toggleClass('hide', !hasAssurance);
+
+
+
+                if (!hasSpecialite) {
+
+                    $specialites.addClass('hide');
+
+                } else {
+
+                    $specialites.removeClass('hide');
+
+                }
+
+            }).trigger('change');
+
+        }
+
+
+
+
+
+    
+
+        if (hash && $(hash).length) {
+
+            
+
+            const $modal = $(hash).modal('show');
+
+            $modal.on('shown.bs.modal', function (x) {
+
+                //console.log(x);
+
+            });
+
+        }
+
+
+
+        $('.modal.in').each(function () {
+
+           //setField($(this));
+
+        });
+
+
+
+        $('.modal').on('shown.bs.modal', function() {
+
+            
+
+            //setField($(this));
+
+            //$('select').select2();
+
+        });
+
+            
+
+
+
+/*if (val == 'ROLE_PHARMACIE') {
+
+                    $('.select2-pharmacie').removeClass('hide');
+
+                } else if ( val.indexOf(['ROLE_MEDECIN', 'ROLE_RECEPTION']) != -1) {
+
+                     $('.select2-hopital').removeClass('hide');
+
+                } else {
+
+                    $('.select2-hopital').addClass('hide');
+
+                    $('.s*/
+
+       
+
+   
+
+
+
+
+
+        
+
+    </script>
+
+
+
+{% endblock %}
+

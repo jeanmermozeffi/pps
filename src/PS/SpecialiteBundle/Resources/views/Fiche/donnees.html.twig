@@ -1,0 +1,122 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+ {% form_theme form 'PSSpecialiteBundle:Macros:fields_bs3_horizontal.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+     {{ form_stylesheet(form) }}
+     <style>
+     .radio-inline label {font-weight: normal;}
+     .form-group {margin-bottom: 5px;}
+     /*.form-horizontal .mleft.is-parent {margin-left: 30px;}
+     .form-horizontal .mleft{margin-left: 80px;}*/
+     </style>
+{% endblock %}
+{% block page_content %}
+    <ul class="list-group">
+        {% for etape in etapes %}
+            <li class="list-group-item">
+
+                <a href="{% if not etape.etapeEnfants|length %}{{ path('admin_specialite_fiche_donnee', {fiche: fiche.id, etape: etape.id}) }}#form_fiche{% else %}#{% endif %}">
+                {% if not etape.etapeParente %}<strong>{{ etape.libEtape }}</strong>{% else %}{{ etape.libEtape }}{% endif %}</a>
+                {% if etape.etapeEnfants|length %}
+                <ul class="list-group">
+                    {% for _etape in etape.etapeEnfants %}
+                        <li class="list-group-item"><a href="{{ path('admin_specialite_fiche_donnee', {fiche: fiche.id, etape: _etape.id}) }}#form_fiche">{{ _etape.libEtape}}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+            </li>
+        {% endfor %}
+    </ul>
+    {% if etape %}
+
+    {{ form_start(form, {'attr': {id: 'form_fiche'}}) }}
+    <h4>{{ etape.libEtape }}</h4>   
+    <div class="alert alert-success ajax-success hide"></div>
+    <div class="alert alert-danger ajax-error hide"></div>
+    {{ form_widget(form._token, {id: form._token.vars.id ~ '_' ~ etape.id }) }}
+    {{ form_widget(form) }}
+
+    <div class="loader text-center hide">
+        <i class="fa fa-spinner fa-pulse"></i>
+    </div>
+    
+    {{ form_end(form) }}
+    {% endif %}
+
+    
+
+{% endblock %}
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('dropzone/dist/min/bootstrap-filestyle.min.js') }}"></script>
+     <script src="{{ asset('bundles/gestion/js/fr.js') }}"></script>
+     <script src="{{ asset('public/js/jquery.form.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/profil.js') }}"></script>
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+     <script src="{{ asset('bundles/specialite/js/fields.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+    <script>
+           $(document).on('click', '#form_save', function(e) {
+        //Formaulaires AJAX
+        e.preventDefault();
+        const $this = $(this);
+        const $form = $this.closest('form');
+        const form_id = $form.attr('id');
+        const $loader = $form.find('.loader');
+        $form.ajaxSubmit({
+            cache: false,
+            beforeSend: () => {
+                $loader.removeClass('hide');
+            },
+            complete: () => {
+                $loader.addClass('hide');
+            },
+            success: (data, status, $xhr, $form) => {
+                const close_html = '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+                const message = data.message;
+                const redirect = data.redirect;
+                if (data.statut) {
+                    $('.ajax-success', $form).removeClass('hide').html(close_html + message);
+                    $('.ajax-error', $form).addClass('hide');
+                    
+                    
+                    setTimeout(function () {
+                        document.location.href = redirect;
+                    },1000);
+                } else {
+                    let tpl = '';
+                    if (Array.isArray(message)) {
+                        for (let _message of message) {
+                            tpl += `<p class="small">${_message}</p>`;
+                        }
+                    } else {
+                        tpl = message;
+                    }
+                    $('.ajax-error', $form).removeClass('hide').html(close_html + tpl);
+                    $('.ajax-success', $form).addClass('hide');
+                    
+                }
+            },
+            error: (data) => {
+                $('.ajax-error', $form).removeClass('hide').html('Erreur interne du serveur');
+                $('.ajax-success', $form).addClass('hide');
+               
+            }
+        });
+    });
+    </script>
+
+{% endblock %}
+{% block javascripts_inline %}
+     {{ form_javascript(form) }}
+{% endblock %}
+
+{% block page_title %}
+  Nouvelle fiche
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

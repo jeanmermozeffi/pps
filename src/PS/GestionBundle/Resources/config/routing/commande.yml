@@ -1,0 +1,34 @@
+admin_gestion_commande_index:
+    path:     /
+    defaults: { _controller: "GestionBundle:Commande:index" }
+    methods:  [GET, POST]
+
+admin_gestion_commande_show:
+    path:     /{id}/show
+    defaults: { _controller: "GestionBundle:Commande:show" }
+    methods:  GET
+
+admin_gestion_commande_new:
+    path:     /new
+    defaults: { _controller: "GestionBundle:Commande:new" }
+    methods:  [GET, POST]
+
+admin_gestion_commande_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "GestionBundle:Commande:edit" }
+    methods:  [GET, POST]
+
+admin_gestion_commande_statut:
+    path:     /{id}/statut
+    defaults: { _controller: "GestionBundle:Commande:statut" }
+    methods:  [GET, POST]
+
+admin_gestion_commande_livraison:
+    path:     /{id}/livraison
+    defaults: { _controller: "GestionBundle:Commande:livraison" }
+    methods:  [GET, POST]
+
+admin_gestion_commande_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "GestionBundle:Commande:delete" }
+    methods:  DELETE

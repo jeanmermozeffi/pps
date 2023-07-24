@@ -1,0 +1,51 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+      <link rel="stylesheet" href="{{ asset('public/css/parsley.css') }}" />
+{% endblock %}
+{% block title %}Nouveau compte infirmier{% endblock %}
+{% block page_title %}{{ block('title') }}{% endblock %}
+{% block page_content %}
+    <div class="box">
+        <div class="box-body">
+            {{ form_errors(form) }}
+            {{ form_start(form, { 'attr': {'class': 'utilisateur form-horizontal', 'data-parsley-validate': true} }) }}     
+                <div class="form-group">
+                    <label for="{{ form.username.vars.id }}" class="col-sm-4">Pseudo</label>
+                    <div class="col-sm-8">
+                        {{ form_widget(form.username, {id: form.username.vars.id, class: 'validate-username'}) }}
+                        {% include 'UtilisateurBundle:Rules:username.html.twig' %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.email.vars.id }}" class="col-sm-4">Email</label>
+                    <div class="col-sm-8">
+                        {{ form_widget(form.email, {id: form.email.vars.id}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.plainPassword.first.vars.id }}" class="col-sm-4">Mot de passe</label>
+                    <div class="col-sm-8">
+                        {{ form_widget(form.plainPassword.first, {id: form.plainPassword.first.vars.id }) }}
+                        {% include 'UtilisateurBundle:Rules:password.html.twig' %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="nom" class="col-sm-4">Répétez mot de passe</label>
+                    <div class="col-sm-8">
+                        {{ form_widget(form.plainPassword.second, {id: form.plainPassword.second.vars.id}) }}
+                    </div>
+                </div>
+                {{ form_widget(form._token, {id: form._token.vars.id})}}
+                <button class=" btn btn-default">Valider</button>
+            {{ form_end(form, {render_rest: false}) }}    
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block page_content %}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+        {% from 'GestionBundle:Macros:macro.html.twig' import  info_patient %}
+
+<div class="row" xmlns="http://www.w3.org/1999/html">
+
+        <section class="col-md-3 connectedSortable">
+
+           {{ info_patient(patient.patient, true) }}
+
+        </section>
+         <section class="col-md-9">
+            <div class="box box-solid">
+                <div class="box-body">
+
+                  <a class="btn btn-default" 
+                            href="{{ path('gestion_patientquestionnaire_show', {id: patient.id}) }}">Retour </a>
+
+                   {{ form_widget(form) }}
+             {{ form_start(form_traitement, {'attr': {'role':'form', 'class': ''}}) }}
+            
+             {{ form_widget(form_traitement) }}
+
+              <button type="submit" class="btn btn-primary pull-left">Enregistrer</button>
+               {{ form_end(form_traitement) }}
+           </div>
+       </div>
+        </section>
+</div>
+   
+   
+        
+            
+{% endblock %}
+{% block javascripts_inline %}
+    <script>
+       
+    </script>
+     
+{% endblock %}
+
+    {% block page_title %}
+        Diagnostic
+    {% endblock %}

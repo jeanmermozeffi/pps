@@ -1,0 +1,41 @@
+admin_gestion_rdv_index:
+    path:     /{patient}
+    defaults: { _controller: GestionBundle:RendezVous:index, patient: null }
+    requirements:
+        patient: \d+
+
+admin_gestion_rdv_list:
+    path:     /rendez-vous/{patient}
+    defaults: { _controller: GestionBundle:RendezVous:rendezVous, patient: null }
+
+
+    
+admin_gestion_rdv_add:
+    path:     /add
+    defaults: { _controller: GestionBundle:RendezVous:add }
+    methods:  [GET, POST]
+
+admin_gestion_rdv_edit:
+    path:     /edit/{id}
+    defaults: { _controller: GestionBundle:RendezVous:edit }
+    options:
+        expose: true
+
+admin_gestion_rdv_search:
+    path:     /search
+    defaults: { _controller: GestionBundle:RendezVous:search }
+    options:
+        expose: true
+
+
+admin_gestion_rdv_delete:
+    path:     /delete/{id}
+    defaults: { _controller: GestionBundle:RendezVous:delete }
+    options:
+        expose: true
+
+admin_gestion_rdv_annuler:
+    path:     /annuler/{id}
+    defaults: { _controller: GestionBundle:RendezVous:annuler }
+    options:
+        expose: true

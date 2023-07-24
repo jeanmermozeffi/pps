@@ -1,0 +1,51 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+    {% block page_content %}
+     <div class="row">
+        <div class="col-md-12">
+           
+            <!-- general form elements -->
+            <div class="box box-danger">
+                <div class="box-header">
+                    <!-- Horizontal Form -->
+                    <div class="">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Octroi du crédit</h3>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="box-body">
+                    <p>Demandeur: {{ demandeCredit.patient.personne.nomComplet }}</p>
+                    <p>Contact: {{ demandeCredit.patient.personne.contact }}</p>
+                    <p>Pack: <strong><a href="{{ path('gestion_packcredit_show', {id: demandeCredit.pack.id}) }}" data-toggle="modal" data-target="#modal-table">{{ demandeCredit.pack.libelle}}</a> </strong></p>
+                    <p>Montant demandé: <strong>{{ demandeCredit.montant }} FCFA</strong></p>
+
+                    
+                    <div class="callout callout-info">
+                        <h4>Instruction de validation</h4>
+
+                        <p>{{ last_historique.details }}</p>
+                    </div>
+                    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+                    {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        <button class="btn btn-success">Valider</button>
+                    {{ form_end(form) }} 
+                   
+                </div>
+                    
+                    
+             
+            </div>
+        </div>
+           
+    </div>
+    
+    {% endblock %}
+{% block javascripts_inline %}
+    <script>
+        init_date_picker();
+    </script>
+     
+{% endblock %}

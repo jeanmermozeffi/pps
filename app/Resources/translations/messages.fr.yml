@@ -1,0 +1,1002 @@
+home:
+
+  title: Bienvenue sur le site officiel du PASS POSTE SANTE
+
+  button:
+
+    submit: Valider
+
+  banner:
+
+    title0: Le PASS POSTE<span class="fa fa-plus-square text-primary"></span>Santé
+
+    title1: Votre carnet de santé électronique
+
+  menu:
+
+    home: Accueil
+
+    PASS POSTE: PASS POSTE Santé
+
+    partners: Nos partenaires
+
+    contact: Nous Contacter
+
+    sensibilisation: Sensibilisation
+
+    surveillance: Surveillance COVID-19
+
+    login: Connexion
+
+    logout: Deconnexion
+
+    pharmacie_garde: Pharmacie de garde
+
+    account: Mon compte
+
+    register: Enregistrement
+
+    login_register: Connexion/Enregistrement
+
+    distrib: Réseaux de distribution
+
+    pharmacie: E-Pharmacie
+
+    franchise: Franchises
+
+    presentation: Présentation
+
+    hiw: Comment ça marche ?
+
+    download_app: Application PASS POSTE SANTE
+
+    cgv: CGV
+
+  slider:
+
+    PASS POSTE: ~
+
+  footer:
+
+    footer1:
+
+      title: "#PASS POSTE SANTE"
+
+      menu:
+
+        register: Créer un compte
+
+    footer2:
+
+      title: Centres de Santé
+
+    footer3:
+
+      title: Télécharger notre application
+
+    copyright: Fait avec <span class="fa fa-heart color-primary"></span>  par <a href="//mcm-ci.com"><strong><abbr title="Maurice Communication marketing">MCM</abbr></strong></a>
+
+  btn:
+
+    submit: Valider
+
+    send: Envoyer
+
+    logout: Déconnexion
+
+  form:
+
+    id: Entrez votre ID
+
+    pin: Entrez votre PIN
+
+    matricule: Entrez votre ID ou matricule
+
+    localisation: Entrez votre localisation (Peut être déterminé automatiquement par géolocalisation si en cas d'urgence)
+
+    lang:
+
+      chose_lang: Choisir la langue
+
+      fr: Français
+
+      en: English
+
+      es: Español
+
+    contact:
+
+      contact: N° de Téléphone
+
+      name: Nom et Prénom
+
+      email: Email
+
+      ville: Ville
+
+      subject: Objet
+
+      message: Message
+
+      categorie: Catégorie
+
+      dropdown_categories:
+
+        technical: Problèmes Techniques
+
+        info: Informations
+
+        convention: Demande de convention (Centres de santé, Ecoles, Pharmacies, Assurance)
+
+        franchise: Demande de Franchise
+
+        other: Autres
+
+      dropdown_villes:
+
+        ville1: TANDA
+
+        ville2: ABIDJAN
+
+        ville3: ABENGOUROU
+
+      form_message:
+
+        success: Votre mail a été envoyé. Nous vous repondrons dans les plus brefs délais!
+
+        error: Votre mail n\'a pas été envoyé. Merci réessayer!
+
+  section:
+
+    award:
+
+      title: Recompenses
+
+    vip:
+
+      title: Ils nous accompagnent
+
+    profile:
+
+      title: Mon profil
+
+      intro: Veuillez retourner votre bracelet ou utiliser votre carte PASS POSTE SANTE
+
+    distrib:
+
+      title: Réseaux de <b>distribution</b>
+
+      content1: >
+
+        Le PASS POSTE SANTE est disponible au siège de l'entreprise MCM sis à Marcory Sainte-Thérèse. Vous pouvez nous contacter au 
+
+        +22508289006 pour plus d'infos.
+
+      content2: >
+
+        Il est aussi disponible dans nos pharmacies , centres de santé partenaires et franchises
+
+    PASS POSTE:
+
+      title: Obtenir le PASS POSTE
+
+      content0: >
+
+        Particuliers ou professionnels, obtenez vos PASS POSTE en nous contactant:
+
+        <div class="row  small">
+
+          <div class="col-4">
+
+             <h4>Côte d'Ivoire</h4>
+
+             <div><span class="fa fa-map-marker"></span> MCM- Abidjan, Marcory Sainte-Thérèse</div>
+
+             <div><span class="fa fa-phone"></span> <a href="tel:+22508289006" class="color-white">+22508289006</a>/<a href="tel:+22554631663" class="color-white">+22554631663</a></div>
+
+             <div><span class="fa fa-at"></span> <a href="mailto:dg@mcm-ci.com" class="color-white">dg@mcm-ci.com</a></div>
+
+          </div>
+
+          <div class="col-4">
+
+            <h4>Bénin</h4>
+
+             <div><span class="fa fa-map-marker"></span> JENYSAS -  01BP3885, Cotonou</div>
+
+             <div><span class="fa fa-phone"></span> <a href="tel:+22962000061" class="color-white">+22962000061</a></div>
+
+             <div><span class="fa fa-at"></span> <a href="mailto:contact@PASS POSTEalafia.bj" class="color-white">contact@PASS POSTEalafia.bj</a></div>
+
+          </div>
+
+          <div class="col-4">
+
+            <h4>Togo</h4>
+
+             <div><span class="fa fa-map-marker"></span> TYNEL- Lomé</div>
+
+             <div><span class="fa fa-phone"></span> <a href="tel:+22892442113" class="color-white">+22892442113</a>/<a href="tel:+22898317575" class="color-white">+22898317575</a></div>
+
+             <div><span class="fa fa-at"></span> <a href="mailto:dg@mcm-ci.com" class="color-white">dg@mcm-ci.com</a></div>
+
+          </div>
+
+        </div>
+
+      content1: Vous pouvez utiliser notre formulaire de contact
+
+    contact:
+
+      title: >
+
+        <span>NOUS</span>CONTACTER
+
+    partners:
+
+      title: Nos <b>partenaires</b>
+
+    temoignage:
+
+      title: Témoignages
+
+      temoignage1:
+
+        content: >
+
+          Le PASS POSTE Santé est une solution novatrice qui plus qu'une solution TIC apporte une réelle réponse au problème de désert médical... C'est Rapide, fiable et pratique.
+
+        author: Anicet M. Dally (Social Media Manager)
+
+      temoignage2:
+
+        content: >
+
+          Avec le PASS POSTE Santé, j’ai l’assurance d’être prise en charge en cas d’urgence. Et surtout pour mes enfants, je suis plus rassurée quand je sais qu’ils seront assistés car le PASS POSTE parle pour eux.
+
+        author: Bogba Degne Mireille (Assistante de direction)
+
+      temoignage3:
+
+        content: >
+
+          Le PASS POSTE Santé est un bijou qui sert de carnet de santé électronique à toute personne le portant dans lequel on peut avoir toutes les informations médicales ; groupe sanguin, et bien d’autres informations capitales pour sa prise en charge efficience et efficace.
+
+        author: Gnanhi Zakpa Richmond (Radiothérapeute)
+
+      temoignage4:
+
+        content: >
+
+          Au-delà de l'Aspect technique, c'est la dimension de prise de conscience 
+
+          et de transformation de l'approche de l'autre vision de la santé en Afrique 
+
+          qui m'a impressioné.
+
+          En effet, en plus d'être un outil fonctionnel, qui améliore la capacité 
+
+          de prise en charge des patients, le PASS POSTE Santé , implique une 
+
+          coordination de différents service publics et privés, pour son 
+
+          utilisation optimale.
+
+        author: >
+
+          Mbépongo Dédy Bilamba (consultant en marketing et communication, Directeur Marketing de 
+
+          l'Africa Web Festival 2016)
+
+    presentation:
+
+      part_video: Appuyez sur le bouton pour lire la vidéo
+
+      section0:
+
+        title: PRESENTATION
+
+        content: >
+          Le <strong>PASS POSTE SANTÉ</strong> est un carnet de santé numérique qui conserve et sécurise vos informations de santé : traitements, résultats d’examens, allergies...
+          Il vous permet de les partager avec les professionnels de santé de votre choix, qui en ont besoin pour vous soigner.
+      section1:
+
+        title: Pourquoi ?
+
+        description: La solution aborde donc les problématiques suivantes
+
+        content: >
+
+          <ul>
+
+              <li>
+
+                  Détection/dépistage et prise en charge efficace et rapide
+
+              </li>
+
+              <li>
+
+                  Évaluer le risque individuel et guider la prise de décision ;
+
+              </li>
+
+              <li>
+
+                  Suivre et signaler les cas de transmissions ;
+
+              </li>
+
+              <li>
+
+                  Fournir des mises à jour et des alertes fiables aux autorités de santé publique
+
+                  ;
+
+              </li>
+
+              <li>
+
+                  Facture numérique et déficit énergétique pour des services de soin efficace ;
+
+              </li>
+
+              <li>
+
+                  Suivre efficacement l'évolution de la pandémie par la mise en place de rapports
+
+                  statistiques.
+
+              </li>
+
+              <li>
+
+                  S'assurer d'une large diffusion des mesures face au COVID-19 et pandémies à
+
+                  venir
+
+                  en
+
+                  introduisant des paramètres comme les langues locales.
+
+              </li>
+
+          </ul>
+
+      section2:
+
+        title: Fonctionnalités
+
+        content: >
+
+          <ul>
+
+              <li>
+
+                  Sensibilisation et Information au COVID-19
+
+              </li>
+
+              <li>
+
+                  Dépistage, cartographie et de géolocalisation des personnes infectées
+
+              </li>
+
+              <li>
+
+                  Profil Médical (Groupe Sanguin, Personnes à contacter, Allergies, Vaccins etc.)
+
+              </li>
+
+              <li>
+
+                  Gestion des données et statistiques
+
+              </li>
+
+              <li>
+
+                  Suivi consultation de vos proches par des comptes associés
+
+              </li>
+
+              <li>
+
+                  Alerte
+
+              </li>
+
+              <li>
+
+                  Historique Médical
+
+              </li>
+
+              <li>
+
+                  Demande d’autorisation de circulation
+
+              </li>
+
+              <li>
+
+                  Télémédecine
+
+              </li>
+
+              <li>
+
+                  Système de prise en charge financière
+
+              </li>
+
+          </ul>
+
+      section3:
+
+        title: Avec PASS POSTE SANTÉ
+
+        content: >
+          <ul class="list-target">
+              <li>
+                  IDENTIFIER-VOUS 
+              </li>
+              <li>
+                  ALERTER VOS PROCHES 
+              </li>
+              <li>
+                 RENSEIGNER LES SECOURS
+              </li>
+          </ul>
+      section4:
+
+        title: Cibles
+
+        n_content: >
+
+          <ul class="list-target">
+              <li>
+                Innover pour améliorer l’accès aux soins, la prise en charge…. tout en respectant sécurité et confidentialité des données de santé
+              </li>
+              <li>
+                  Améliorer l’accès aux soins de tous les usagers
+              </li>
+          </ul>
+
+        content:
+
+          content0:
+
+            title: Particulier (Homme, femme, enfants)
+
+            label: Il sert de carnet de santé. Il transporte les informations personnelles pour une prise en charge.
+
+          content1:
+
+            title: Centres de Santé
+
+            label: Il donne l'accès à l'historique médical pour une meilleure prise en charge et évite les erreurs médicales.
+
+          content2:
+
+            title: Entreprise
+
+            label: Les employés ont l'assurance d'être pris en charge en tout temps surtout ceux des BTP, électricité etc..
+
+          content3:
+
+            title: Etablissement Scolaire
+
+            label: Informe sur l'état de santé de nos enfants et étudiants et rassure le parent.
+
+          content4:
+
+            title: Assurance
+
+            label: >
+
+              Propose des services innovants (mise à disposition de données) pour améliorer
+
+              l'état de santé et le suivi des adhérents
+
+          content5:
+
+            title: Pharmacie
+
+            label: Accès aux ordonnances médicales et historique médicamenteux des patients
+
+    innovation:
+
+      titl0: PASS POSTE SANTE
+
+      title: L'innovation médicale
+
+      section0:
+
+        virsion: >
+
+          Notre objectif est de mettre à la disposition des populations, une solution qui ameliore leur prise 
+
+          en charge médicale.
+
+        pdg: Directrice Générale de MCM
+
+        titl0: Patients
+
+        content0: Systeme de gestion des événements importants , Notification sms.
+
+        content1: Améliorer l'observance et l'éducation thérapeuthique.
+
+        content2: Carnet de santé
+
+        content3: Objets connectés (Bijoux)
+
+        title1: PROFESSIONNELS DE SANTÉ
+
+        content4: Système de gestion du dossier patient.
+
+        content5: Outils de suivi du patient
+
+        content6: Gain de temps et d'efficience.
+
+      technique:
+
+        h1: Service technique, toujours à l'écoute de vos besoins 24H/24!
+
+        label: pour vous répondre le plus rapidement possible.
+
+      first_circle:
+
+        title: Sécurité et anonymisation des données
+
+        content:
+
+          ligne1: Données médicales sécurisées grâce à mes ID, mon PIN unique et mon MATRICULE.
+
+          ligne2: Anonymisation des données  Nous rendons anonymes toutes vos informations
+
+          ligne3: Historique médical sécurisé.
+
+          ligne4: Anonymisation des données, Notifications des consultations au patient.
+
+      second_circle:
+
+        title: Amélioration de la prise en charge médicale
+
+        content:
+
+          ligne1: Communication entre le patient et les professionnels de santé.
+
+          ligne2: Facilite la prise en charge à distance des Patients.
+
+          ligne3: Permettre de rester au contact avec le medecin et de faire une consultation en ligne.
+
+          ligne4: Eviter des examens à répétition.
+
+          ligne5: Permet aux patients et aux professionnels de santé d'optimiser leurs prise en charge médicale.
+
+          ligne6: Surveillance à distance des patients.
+
+      third_circle:
+
+        title1: Compte associé
+
+        content:
+
+          ligne1: Attacher le dossier de l'enfant à sa mère; tel un carnet mère-enfant pour participer à réduire la mortalité maternelle et infantile.
+
+        title2: 24/7 Echange avec toute l'equipe de soins
+
+
+
+    parteners:
+
+      label: <span>NOS</span>PARTENAIRES
+
+      titl0: POUR LE PASS POSTE SANTE
+
+      title: Ils nous font confiance
+
+
+
+api:
+
+  profil_not_found: Profil inexistant
+
+  medecin_not_found: Medecin avec cet ID inexistant
+
+  patient_not_found: Patient inexistant
+
+  access_denied: Vous n\'avez pas les permissions pour accéder à cette ressource
+
+  affection_not_found: Aucune
+
+
+
+sensibilisation:
+
+  section0:
+
+    title1: Mésure de prevention
+
+    content: >
+
+      La maladie à coronavirus 2019 (COVID-19) est une ‎maladie infectieuse due à un coronavirus découvert ‎récemment. 
+
+      ‎La majorité des personnes atteintes de la COVID-19 ‎ne ressentiront que des symptômes bénins ou ‎modérés et guériront sans traitement particulier.
+
+
+
+  section1:
+
+    title1: SENSIBILISATION
+
+  language:
+
+    title: LANGUE LOCALE
+
+    section1:
+
+      country: Sénégal
+
+
+
+  actions:
+
+    section1:
+
+      title: Se laver souvent les mains.
+
+      content: Utiliser du savon et ‎de l’eau, ou une solution hydroalcoolique
+
+
+
+    section2:
+
+      title: Maintenir une distance sociale.
+
+      content: Rester à distance de toute personne qui tousse ‎ou éternue. ‎
+
+
+
+    section3:
+
+      title: Eviter de se toucher le visage.
+
+      content: Ne pas toucher ses yeux, son nez ou sa bouche.
+
+
+
+    section4:
+
+      title: Utilisez un masque.
+
+      content: En cas de toux ou d’éternuement, couvrez-vous ‎la bouche et le nez avec le pli du coude ou avec un ‎mouchoir. ‎
+
+
+
+    section5:
+
+      title: Demandez des soins médicaux.
+
+      content: Si vous ne vous sentez pas bien, restez chez vous en cas de doute consultez un médecin ‎ ‎
+
+
+
+    section6:
+
+      title: Restez informé
+
+      content: Informez-vous constamement pour savoir quelles sont les zones où le virus se propage à grande échelle.
+
+
+
+rdv:
+  form:
+    specialite: Spécialité
+    identifiant: ID
+    pin: PIN
+    placeholder:
+      specialite: Veuillez choisir une spécialité
+    libRendezVous: Motif
+    statutRendezVous: Présence effective du patient/de la patiente
+    dateRendezVous: Date et heure du RDV
+
+specialite:
+  form:
+    identifiant: Identifiant
+    nom: Nom
+
+affection:
+  form:
+    nom: Nom
+    details: Détails
+    depistage: Dépistable
+
+allergie:
+  form:
+    nom: Nom
+    details: Détails
+
+analyse:
+  form:
+    nom: Nom
+    description: Description
+
+assurance:
+  form:
+    identifiant: Identification
+    nom: Nom
+
+attribut:
+  form:
+    libAttribut: Attribut
+
+etat:
+  form:
+    libEtat: Libelle
+    typeEtat: Type Etat
+
+groupesanguin:
+  form:
+    code: Code
+    libelle: Libellé
+
+telephone:
+  form:
+    nom: Nom
+    sms: Envoyer aussi un SMS de confirmation (Un parent seulement)
+    numero: Numéro
+
+typeetat:
+  form:
+    libTypeEtat: Libellé
+
+ville:
+  form:
+    nom: Nom de la ville
+    region: --- Choisir une région ---
+    pays: --- Choisir le pays ---
+  
+rules:
+  password:
+    length: "au moins %num% caratères"
+    special: "au moins %num% caractère spécial"
+    number: "au moins %num% chiffre"
+    upper_lower: "au moins %num% majuscule et minuscule"
+  username:
+    valid: Caractères alphanumériques et _
+
+codeverifi:
+  form:
+    smsCode: Code de vérification
+
+compteassocie:
+  form:
+    identifiant: Identifiant
+    pin: PIN
+    lien: --- Choisir le lien ---
+    associe: Associé
+
+
+personne:
+  nom_prenom: Nom et Prénoms
+  form:
+    corporate: Corporate
+    nom: Nom
+    prenom: Prénoms
+    signature: Signature
+    contact: Contact
+    datenaissance: Date de naissance
+
+preference:
+  form:
+    libPreference: Préférence
+    aliasPreference: Alias de votre préférence
+    descPreference: Decription 
+
+registration:
+  form:
+    condition: J'accepte les <a href="#" data-toggle="modal" data-target="#conditions">Termes et conditions</a>
+    message: Veuillez accepter nos conditions avant de continuer
+    PASS POSTE: J'ai un PASS POSTE
+    contact: N° de Téléphone
+
+utilisateurpersonne:
+  form:
+    username:
+      message: Votre pseudo ne doit contenir que des lettres , des chiffres et le caractère _
+      emptyMessage: Veuillez renseigner votre pseudo
+    plainPASS POSTEword:
+      invalid_message: Les mots de PASS POSTEe doivent être identiques.
+      firtsoption: Mot de PASS POSTEe
+      second_options: Répétez
+
+patient:
+  warning_gs: Nous vous conseillons de remplir cette information si possible
+  form:
+    identifiant: Identifiant
+    pin: Code PIN
+    poids: Poids
+    taille: Taille
+    nombreEnfant: Nombre d'enfant
+    ethnie: Ethnie
+    matricule: Matricule
+    regime: Régime
+    adresse: Adresse Postale
+    lieuhabitation: Lieu d'habitation
+    profession: Profession
+    societe: Entreprise/Ecole
+    nationalite: Nationalité
+    pays: Pays
+    region: Région d'origine
+    ville: Ville
+    religion: Religion
+    statut: Statut Drépano
+    sexe:
+      label: Genre
+      male:
+        choice: M
+        label: Masculin
+      female:
+        choice: F
+        label: Feminin
+    groupeSanguin: Groupe Sanguin
+    telephones: Personne à contacter
+    medecins: Medecins Traitants
+    associes: Comptes Associés
+    allergies: Allergies
+    affections: Affections
+    ligneAssurances: Assurances
+    vaccinations: Vaccins
+    traitements: Traitements suivis
+    lien: Lien de parenté
+    resent_login: Renvoyer les données de connexion
+    condition: En cliquant, vous consentez à partager vos informations dans le cadre de PASS POSTE SANTE
+
+pharmacie:
+  form:
+    libellePharmacie: Officine
+    info:
+      nomResponsable: Pharmacien
+      libCommune: Commune
+      localisationPharmacie: Localisation
+      contacts: Contact
+      ville: Ville
+
+site:
+  form:
+    url: Site WEB
+    libelle: Libellé
+    statut: API
+    pays: Pays
+    message: Veuillez renseigner un fichier
+
+admission:
+  form:
+    date: Date
+    message: Veuillez renseigner la date
+    patient: 
+      nom: Nom
+      prenoms: Prénoms
+      pin: PIN
+      identifiant: ID
+    prestation: Prestation
+
+medecin:
+  form:
+    personne:
+      nom: Nom
+      presnoms: Prénoms
+      username: Nom Utilisateur
+    hopital: Hôpital
+  
+ordonnance:
+  back: Retour
+  allergie: Allergies
+  traitementTilte: Traitement suivis
+
+
+consultation:
+  form:
+    dateConsultation: Date
+    specialite: 
+      label: Spécialité
+      empty_value: --- Choisir une specialité ---
+    motif: Modif
+    histoire: Histoire de la maladie
+    message: Veuillez renseigner le motif
+    diagnostique: Hypothèse Diagnostic
+    poids: Poids(kg)
+    medecin:
+      message: Veuillez renseigner le medecin
+      hopital: Hôpital
+      nom: Medecin
+      prenoms: Medecin
+    diagnostiqueFinal: Diagnostic Retenu
+    statut: Statut
+    refConsultation: Référence
+    temperature : Température T(°C)
+    tension: Tension
+    observation: Compte Rendu Médical
+    assurance:
+      nom: Assurance
+      empty_value: --- Choisir une assurance ---
+    hospitalisation: Demande d\'hospitalisation
+    info:
+      tilte:  Informations Patient
+      medecin:  Medecin Traitant
+    autreinfo: Autres Informations
+    listeDianostic: Diagnostic (Liste Affections)
+    listeMedicament: Liste Médicaments
+    affection: Affection
+    medicament:
+      nom: Médicaments
+      prix: Prix
+      commentaire: Commentaire
+      pesologie: Posologie
+      detail: Détail
+    analyse: 
+      label:  Liste Analyses
+      nom: Analyse
+      description: Description
+    medecinConseil: Action Medecin conseil
+
+
+
+corporate:
+  form:
+    raisonSociale: Raison sociale
+    contacts: Contacts
+    email: Email
+
+hopital:
+  form:
+    nom: Nom
+    ville: Ville
+    pays: Pays
+    info:
+      nomResponsable: Responsable
+      emailHopital: Email
+      localisationHopital: Localisation
+      contacts: Contact
+      fax: Fax
+      pointVente: Point de Vente
+
+medicament:
+  form:
+    nom: Nom
+
+region:
+  form:
+    nom: Nom
+
+utilisateur:
+  form:
+    username: Pseudo
+    email: Email
+
+PASS POSTE:
+  form:
+    id: ID
+    identifiant: Indentifiant
+    pin: Code PIN
+    patient: Patient
+    actif: Actif
+    dateCreation: Date de création
+
+export:
+  form:
+    file: Fichier
+
+btn:
+  save: Enregistrer
+
+infohopital:
+  form:
+    contacts: Contacts
+    localisationHopital: Localisation
+    nomResponsable: Responsable
+    logoHopital: Logo
+    pointVente: Point de vente

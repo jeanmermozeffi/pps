@@ -1,0 +1,465 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% from 'GestionBundle:Macros:macro-patient.html.twig' import assurances, affections, allergies, telephones, vaccinations %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-3">
+
+            <!-- Profile Image -->
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <img class="profile-user-img img-responsive img-circle" {% if app.user.personne.photo is not null %}src="{{ asset(app.user.personne.photo.webPath) }}" alt="{{ app.user.personne.photo.alt }}"{% else %}src="{{ asset('bundles/avanzuadmintheme/img/avatar.png') }}" alt="User profile picture"{% endif %}>
+
+                    <h3 class="profile-username text-center">{{ app.user.personne.getNomComplet }}</h3>
+
+                    <p class="text-muted text-center">{{ patient.profession }} / {{ patient.societe }}</p>
+
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Groupe sanguin</b> <a class="pull-right">{{ patient.groupesanguin.code }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Date naissance</b> <a class="pull-right">{{ app.user.personne.datenaissance|date('d/m/Y') }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Sexe</b> <a class="pull-right">{{ patient.sexe }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Enfant</b> <a class="pull-right">{{ patient.nombreenfant }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Contact</b> <a class="pull-right">{{ patient.contact }}</a>
+                        </li>
+                    </ul>
+
+                    <a href="#" id="edit_form" class="btn btn-primary btn-block"><b>Modifier</b></a>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+            <!-- About Me Box -->
+            {#<div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">About Me</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
+
+                    <p class="text-muted">
+                        B.S. in Computer Science from the University of Tennessee at Knoxville
+                    </p>
+
+                    <hr>
+
+                    <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+
+                    <p class="text-muted">Malibu, California</p>
+
+                    <hr>
+
+                    <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
+
+                    <p>
+                        <span class="label label-danger">UI Design</span>
+                        <span class="label label-success">Coding</span>
+                        <span class="label label-info">Javascript</span>
+                        <span class="label label-warning">PHP</span>
+                        <span class="label label-primary">Node.js</span>
+                    </p>
+
+                    <hr>
+
+                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+                </div>
+                <!-- /.box-body -->
+            </div>#}
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    {#<li><a href="#activity" data-toggle="tab">Activity</a></li>
+                    <li><a href="#timeline" data-toggle="tab">Timeline</a></li>#}
+                    <li class="active"><a href="#settings" data-toggle="tab">Informations</a></li>
+                </ul>
+                <div class="tab-content">
+
+                    <div class="active tab-pane" id="settings">
+                        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+                        <div id="list-affection" data-prototype="{{ affections(form.affection.vars.prototype)|e }}"></div>
+                        <div id="list-allergie" data-prototype="{{ allergies(form.allergie.vars.prototype)|e }}"></div>
+                        <div id="list-telephone" data-prototype="{{ telephones(form.telephone.vars.prototype)|e }}"></div>
+                        <div id="list-assurance" data-prototype="{{ assurances(form.assurance.vars.prototype)|e }}"></div>
+                        <div id="list-vaccination" data-prototype="{{ vaccinations(form.vaccination.vars.prototype)|e }}"></div>
+
+                        <div class="">
+                            <div class="box-footer">
+                                <div class="col-md-6 ">
+
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre">Informations générales</div>
+                                    </div>
+
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                {#<label class="col-sm-4 control-label">Date <span class="red">*</span></label>#}
+
+                                                <div class="col-sm-12">
+                                                    {{ form_widget(form.personne) }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+
+
+                                </div>
+
+                                <div class="col-md-6 barre">
+
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre success">Autres Informations</div>
+                                    </div>
+
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-3 control-label">Identifiant <span class="red">*</span></label>
+
+                                                <div class="col-sm-9">
+                                                    {{ form_widget(form.identifiant) }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-3 control-label">Sexe <span class="red">*</span></label>
+
+                                                <div class="col-sm-9">
+                                                    {{ form_widget(form.sexe) }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-3 control-label">Groupe sanguin <span class="red">*</span></label>
+
+                                                <div class="col-sm-9">
+                                                    {{ form_widget(form.groupeSanguin) }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-3 control-label">Société <span class="red">*</span></label>
+
+                                                <div class="col-sm-9">
+                                                    {{ form_widget(form.societe) }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-3 control-label">Profession <span class="red">*</span></label>
+
+                                                <div class="col-sm-9">
+                                                    {{ form_widget(form.profession) }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-3 control-label">Ville <span class="red">*</span></label>
+
+                                                <div class="col-sm-9">
+                                                    {{ form_widget(form.ville) }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-3 control-label">Enfant(s) <span class="red">*</span></label>
+
+                                                <div class="col-sm-9">
+                                                    {{ form_widget(form.nombreEnfant) }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <!-- /.box-body -->
+
+
+                                </div>
+
+                            </div>
+
+                            <div class="box-footer">
+                                <div class="col-md-12">
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-3 control-label">Contact <span class="red">*</span></label>
+
+                                                <div class="col-sm-9">
+                                                    {{ form_widget(form.contact, { 'attr': {'class': 'form-control'} }) }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-3 control-label">Adresse</label>
+
+                                                <div class="col-sm-9">
+                                                    {{ form_widget(form.adresse, { 'attr': {'class': 'form-control'} }) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-3 control-label">Lieu d'habitation <span class="red">*</span></label>
+
+                                                <div class="col-sm-9">
+                                                    {{ form_widget(form.lieuhabitation, { 'attr': {'class': 'form-control'} }) }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-3 control-label">Infos Medecin</label>
+
+                                                <div class="col-sm-9">
+                                                    {{ form_widget(form.medecin, { 'attr': {'class': 'form-control'} }) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-footer">
+                                <div class="col-md-12">
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre">Affection(s) chroniques</div>
+                                    </div>
+
+                                    <div>
+                                        <div class="box-footer">
+
+                                            <button type="button" class="btn btn-warning add_affection"
+                                                    id="add_affection">
+                                                <i class="fa fa-plus"></i>
+                                                Ajouter Affection
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Affection</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="list_affection" class="collection list_affection">
+                                        {% for item in form.affection %}
+                                            {{ affections(item|e) }}
+                                        {% endfor %}
+                                        </tbody>
+
+                                    </table>
+                                </div>
+
+                            </div>
+
+                            <div class="box-footer">
+                                <div class="col-md-12">
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre">Allergies</div>
+                                    </div>
+
+                                    <div>
+                                        <div class="box-footer">
+
+                                            <button type="button" class="btn btn-warning add_allergie" id="add_allergie">
+                                                <i class="fa fa-plus"></i>
+                                                Ajouter Allergie
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Allergie</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="list_allergie" class="collection list_allergie">
+                                        {% for item in form.allergie %}
+                                            {{ allergies(item|e) }}
+                                        {% endfor %}
+                                        </tbody>
+
+                                    </table>
+                                </div>
+
+                            </div>
+
+                            <div class="box-footer">
+                                <div class="col-md-12">
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre">Personne(s) à contacter </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="box-footer">
+
+                                            <button type="button" class="btn btn-warning add_telephone" id="add_telephone">
+                                                <i class="fa fa-plus"></i>
+                                                Ajouter contact
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Numero</th>
+                                            <th>Nom</th>
+                                            <th>Lien</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="list_telephone" class="collection list_telephone">
+                                        {% for item in form.telephone %}
+                                            {{ telephones(item|e) }}
+                                        {% endfor %}
+                                        </tbody>
+
+                                    </table>
+                                </div>
+
+                            </div>
+
+                            <div class="box-footer">
+                                <div class="col-md-12">
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre">Assurances</div>
+                                    </div>
+
+                                    <div>
+                                        <div class="box-footer">
+
+                                            <button type="button" class="btn btn-warning add_assurance" id="add_assurance">
+                                                <i class="fa fa-plus"></i>
+                                                Ajouter assurance
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Assureur</th>
+                                            <th>Numero</th>
+                                            <th>Taux</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="list_assurance" class="collection list_assurance">
+                                        {% for item in form.assurance %}
+                                            {{ assurances(item|e) }}
+                                        {% endfor %}
+                                        </tbody>
+
+                                    </table>
+                                </div>
+
+                            </div>
+
+                            <div class="box-footer">
+                                <div class="col-md-12">
+                                    <div class="box-header with-border">
+                                        <div type="button" class="pull-left titre">Vaccins</div>
+                                    </div>
+
+                                    <div>
+                                        <div class="box-footer">
+
+                                            <button type="button" class="btn btn-warning add_vaccination" id="add_vaccination">
+                                                <i class="fa fa-plus"></i>
+                                                Ajouter Vaccin
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Vaccins</th>
+                                            <th>Rappel</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="list_vaccination" class="collection list_vaccination">
+                                        {% for item in form.vaccination %}
+                                            {{ vaccinations(item|e) }}
+                                        {% endfor %}
+                                        </tbody>
+
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="box-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+                            <input type="submit" class="btn btn-primary pull-right" value="Enregistrer" />
+                            {#{{ form_widget(form.submit,{'attr':{'class':'btn btn-primary pull-right'}}) }}#}
+                            <!-- /.box -->
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('bundles/gestion/js/main.js') }}"></script>
+
+{% endblock %}
+
+{% block page_title %}
+    Profil Médical
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% if form is defined %}{% form_theme form 'bootstrap_3_layout.html.twig' %}{% endif %}
+{% block stylesheets %}
+    {{ parent() }}
+      <link rel="stylesheet" href="{{ asset('public/css/parsley.css') }}" />
+      <style>
+        .form-group {margin-bottom: 5px}
+        .validator-rules > li {display: inline;margin-right: 2px}
+        
+      </style>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <!-- /.col -->
+        <div class="col-md-12">
+            
+                {{ form_errors(form)}}
+                
+                {{ form_start(form) }}
+
+                <button class="btn btn-default">Valider</button>
+                
+                {{ form_end(form) }}
+            
+            <!-- /.nav-tabs-custom -->
+        
+        </div>
+        <!-- /.col -->
+    </div>
+
+{% endblock %}
+
+
+
+{% block page_title %}
+   
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

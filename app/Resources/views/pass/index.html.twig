@@ -1,0 +1,134 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <div class="col-md-12">
+                        <!-- Horizontal Form -->
+                        <div class="">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Liste des passes</h3>
+                            </div>
+                            <!-- box-header -->
+                            <!-- form start -->
+                            {#<form class="form-horizontal ng-pristine ng-valid">
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-8 col-sm-offset-2">
+                                            <label for="nom" class="col-sm-2 control-label">Nom</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control ng-pristine ng-untouched ng-valid" id="nom" placeholder="Nom">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- box-body -->
+
+                                <!-- box-footer -->
+                            </form>#}
+                            {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <div class="col-sm-8 col-sm-offset-2">
+                                        <label for="code" class="col-sm-2 control-label">Identifiant</label>
+
+                                        <div class="col-sm-6">
+                                            {{ form_widget(form.identifiant) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        {{ form_row(form.submit,{'attr':{'class':'btn btn-success pull-right glyphicon glyphicon-search'}}) }}
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+
+                            <!-- /.box-footer -->
+                            {{ form_end(form) }}
+
+                        </div>
+                        <!-- box -->
+                    </div>
+
+                </div>
+                <div class="box-footer">
+                    <a href="{{ path ('admin_config_pass_index') }}" class="btn btn-success"><i class="fa fa-repeat"></i></a>
+                    {{ render(controller('ParametreBundle:Pass:new')) }}
+                </div>
+                <div class="alert alert-danger">
+                    {% for messages in app.getSession().getFlashBag().get('pass_new_errors') %}
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Identifiant</th>
+                                <th>Pin</th>
+                                <th>Actif</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for pass in passes %}
+                            <tr>
+                                <td>{{ pass.id }}</td>
+                                <td>{{ pass.identifiant }}</td>
+                                <td>{{ pass.pin }}</td>
+                                <td>{% if pass.actif %}<span class="label label-success">Oui</span>{% else %}<span class="label label-danger">Non</span>{% endif %}</td>
+                                <td>                                                                                    {{ render(controller('ParametreBundle:Pass:show', { 'id':pass.id })) }}                                                                                                                                                                    {{ render(controller('ParametreBundle:Pass:edit', { 'id':pass.id })) }}                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete{{pass.id }}"><i class="fa fa-remove"></i></button>
+                                 
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                                        <div class="navigation">
+                        {{ knp_pagination_render(passes) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+    {% block page_title %}
+    Pass
+    {% endblock %}
+
+    {% block page_subtitle %}
+    {% endblock %}
+
+{% block javascripts_inline %}
+    <script>
+        $('#form_new_pass').on('submit', function (e) {
+            e.preventDefault();
+            const $this = $(this);
+            const $ajax_feedback = $('.ajax-feedback', $this);
+            $.post($this.attr('action'), $this.serialize(), function (data) {
+
+                if (!data.success) {
+                   
+                    const errors = data.message;
+                    let error_str = '';
+                    for (error of errors) {
+                        error_str += `<p>${error}</p>`;
+                    }
+                    
+                    $ajax_feedback.removeClass('hide').html(error_str);
+                }
+            }, 'json');
+        }); 
+    </script>
+{% endblock %}

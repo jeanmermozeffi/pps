@@ -1,0 +1,84 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+ {% block page_title %}
+    Infirmier
+{% endblock %}
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <!-- Horizontal Form -->
+                    <div class="">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Liste des Infirmiers</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                     <a href="{{ path ('admin_gestion_infirmier_index') }}" class="btn btn-success"><i class="fa fa-repeat"></i></a>
+                     {% if true %}
+                        {# <a href="{{ path ('admin_gestion_infirmier_new', {'id': infirmier.id}) }}" class="btn btn-success"><i class="fa fa-plus"></i></a> #}
+                    {% endif %}
+                    
+                    {{ grid(grid) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts_inline %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+     
+    <script>
+       
+        const default_url = "{{ path('admin_gestion_infirmier_index', {media_type: 'text/html'}) }}";
+        $('.btn-ajax').on('click', function (e) {
+            e.preventDefault();
+            const $this = $(this);
+            const $form = $this.closest('form');
+            const $ajax_feedback = $('.ajax-feedback', $form);
+            $.post($form.attr('action'), $form.serialize(), function (data) {
+                $ajax_feedback.addClass('hide').html('');
+                const message = data.message;
+                if (!data.success) {
+                    let error_str = '';
+                    for (error of message) {
+                        error_str += `<p>${error}</p>`;
+                    }
+
+                    //console.log(error_str);
+                    
+                    $ajax_feedback
+                        .removeClass('hide')
+                        .removeClass('alert-success')
+                        .addClass('alert-danger')
+                        .html(error_str);
+                } else {
+                    $ajax_feedback
+                        .removeClass('hide')
+                        .removeClass('alert-danger')
+                        .addClass('alert-success')
+                        .html(message);
+
+                    setTimeout(function () {
+                        document.location.href = Routing.generate('admin_gestion_infirmier_index');
+                        //$this.closest('.modal').modal('hide');
+                       
+                    }, 2000)
+                    
+                }
+            }, 'json');
+        });
+
+        $('.modal').on('shown.bs.modal', function (e) {
+            console.log(e.relatedTarget, default_url);
+        }).on('hidden.bs.modal', function () {
+            console.log(default_url);
+        });
+
+
+        
+    </script>
+{% endblock %}

@@ -1,0 +1,39 @@
+
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% block page_content %}
+     <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-danger">
+                <div class="box-header">
+                    <!-- Horizontal Form -->
+                    <div class="">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Nouvelle actualité</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                     
+                    {{ form_start(form, {'attr': {'role':'form', 'class': ''}}) }}
+                         {% include 'ajax/response.html.twig' %}
+                        {{ form_errors(form) }}
+                        {{ form_widget(form) }}
+                        {% include 'ajax/loader.html.twig' %}
+                        <button type="submit" class="btn btn-primary  btn-ajax ">Valider</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+   <script src="{{ asset('public/js/admin.js') }}"></script>
+ {% endblock %}   
+{% block javascripts_inline %}
+    <script>
+        init_select2();
+    </script>
+     
+{% endblock %}

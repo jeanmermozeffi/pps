@@ -1,0 +1,9 @@
+admin_parametre_fichier_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ParametreBundle:Fichier:delete" }
+    methods:  [GET, DELETE]
+
+admin_parametre_fichier_show:
+    path:     /{id}/show
+    defaults: { _controller: "ParametreBundle:Fichier:show" }
+    methods:  [GET]

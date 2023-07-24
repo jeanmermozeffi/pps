@@ -1,0 +1,171 @@
+gestion_info_patient_cancer_col:
+    resource: "@GestionBundle/Controller/InfoPatientCancerColController.php"
+    type:     annotation
+
+# app/config/routing.yml
+
+#NelmioApiDocBundle:
+    #resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    #prefix:   /api/v2/doc
+gestion_fiche_depistage_cancer:
+    resource: "@GestionBundle/Controller/FicheDepistageCancerController.php"
+    type:     annotation
+    
+gestion_ligne_alerte:
+    resource: "@GestionBundle/Controller/LigneAlerteController.php"
+    type:     annotation
+
+gestion_actualite:
+    resource: "@GestionBundle/Controller/ActualiteController.php"
+    type:     annotation
+
+gestion_alerte:
+    resource: "@GestionBundle/Controller/AlerteController.php"
+    type:     annotation
+
+parametre_type_alerte:
+    resource: "@ParametreBundle/Controller/TypeAlerteController.php"
+    type:     annotation
+
+gestion_fichier_patient:
+    resource: "@GestionBundle/Controller/FichierPatientController.php"
+    type:     annotation
+
+
+
+fos_user_profile_edit:
+    path:     admin/profile/edit
+    defaults: { _controller: "UtilisateurBundle:Profile:edit" }
+
+
+fos_user_profile_show:
+    path:     /admin/profile/
+    defaults: { _controller: "UtilisateurBundle:Profile:show" }
+
+psm_api_mobile:
+    resource: "@MobileBundle/Controller/"
+    type: annotation
+    prefix: /api/v2/
+
+gestion_patient_constante:
+    resource: "@GestionBundle/Controller/PatientConstanteController.php"
+    type: annotation
+
+gestion_urgence:
+    resource: "@GestionBundle/Controller/UrgenceController.php"
+    type: annotation
+
+gestion_historique_urgence:
+    resource: "@GestionBundle/Controller/HistoriqueUrgenceController.php"
+    type: annotation
+
+gestion_patient_questionnaire:
+    resource: "@GestionBundle/Controller/PatientQuestionnaireController.php"
+    type: annotation
+
+gestion_ligne_questionnaire:
+    resource: "@GestionBundle/Controller/LigneQuestionnaireController.php"
+    type: annotation
+
+gestion_questionnaire_depistage:
+    resource: "@GestionBundle/Controller/QuestionnaireDepistageController.php"
+    type: annotation
+
+gestion_fiche_affection:
+    resource: "@GestionBundle/Controller/FicheAffectionController.php"
+    type: annotation
+
+ps_gestion_vaccin:
+    resource: "@GestionBundle/Controller/VaccinationController.php"
+    type: annotation
+
+parametre_type_statut:
+    resource: "@ParametreBundle/Controller/TypeStatutController.php"
+    type: annotation
+
+parametre_statut:
+    resource: "@ParametreBundle/Controller/StatutController.php"
+    type: annotation
+
+parametre_liste_examen:
+    resource: "@ParametreBundle/Controller/ListeExamenController.php"
+    type: annotation
+
+parametre_categorie:
+    resource: "@ParametreBundle/Controller/CategorieController.php"
+    type: annotation
+
+parametre_type_categorie:
+    resource: "@ParametreBundle/Controller/TypeCategorieController.php"
+    type: annotation
+
+gestion_admission:
+    resource: "@GestionBundle/Controller/AdmissionController.php"
+    type: annotation
+
+    
+parametre_constante:
+    resource: "@ParametreBundle/Controller/ConstanteController.php"
+    type: annotation
+    
+parametre_prestation:
+    resource: "@ParametreBundle/Controller/PrestationController.php"
+    type: annotation
+
+parametre_type_hopital:
+    resource: "@ParametreBundle/Controller/TypeHopitalController.php"
+    type: annotation
+
+ps_gestion_examen:
+    resource: "@GestionBundle/Controller/ExamenController.php"
+    type: annotation
+
+gestion_suivi:
+    resource: "@GestionBundle/Controller/SuiviController.php"
+    type: annotation
+
+ps_gestion_fiche:
+    resource: "@GestionBundle/Controller/FicheController.php"
+    type: annotation
+
+ps_speciaite:
+    resource: "@PSSpecialiteBundle/Resources/config/routing.yml"
+    prefix: /admin/specialite
+
+ps_api:
+    resource: "@PSApiBundle/Resources/config/routing.yml"
+    prefix: api
+
+psm_login_check:
+    path: /login_check
+
+psm_logout:
+    path: /logout
+
+gestion:
+    resource: "@GestionBundle/Resources/config/routing.yml"
+    #prefix:   /
+
+utilisateur:
+    resource: "@UtilisateurBundle/Resources/config/routing.yml"
+    #prefix:   /
+
+parametre:
+    resource: "@ParametreBundle/Resources/config/routing.yml"
+    #prefix:   /
+
+site:
+    resource: "@SiteBundle/Resources/config/routing.yml"
+    #prefix:   /
+
+#app:
+#    resource: '@AppBundle/Controller/'
+#    type: annotation
+
+avanzu_admin:
+    resource: "@AvanzuAdminThemeBundle/Resources/config/routes.yml"
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+

@@ -1,0 +1,373 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% import 'GestionBundle:Macros:html.html.twig' as _html %}
+{% set _locale = app.request.locale %}
+{#% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('public/css/fullcalendar.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('public/css/fullcalendar.print.min.css') }}"  media='print'  />
+{% endblock %#}
+{% block page_title %}
+    {{ _html.text('Agenda') }}
+{% endblock %}
+{% block page_content %}
+    {% if is_granted('ROLE_ASSISTANT') and not idMedecin %}
+        <a href="{{ path('admin_gestion_rdv_add', {idMedecin: idMedecin}) }}" class="btn btn-success">{{ _html.text('rdv.new') }}</a>
+        <a href="{{ path('admin_gestion_rdv_search') }}" class="btn btn-primary">{{ _html.text('rdv.search') }} <!-- Rechercher --></a>
+        <div class="alert alert-info">
+            {{ _html.text('rdv.chose_doctor') }} <!-- Veuillez choisir un medecin pour voir son agenda -->
+        </div>
+        <div class="list-group">
+            <div class="list-group-item-heading">
+                <h4>{{ _html.text('Medecins') }}</h4>
+            </div>
+            {% for medecin in medecins %}
+                <a class="list-group-item" href="{{ path('admin_gestion_rdv_index', {idMedecin: medecin.id}) }}">
+                    {{ medecin.personne.nomComplet|default('Nom non renseigné') }}
+                </a>        
+            {% endfor %}
+        </div>
+    {% else %}
+    {% if is_granted('ROLE_MEDECIN') or (is_granted('ROLE_ASSISTANT') and idMedecin) %}
+    {% if medecin %}
+        <p>Medecin: <strong>{{ medecin.personne.nomComplet}}</strong></p>
+    {% endif %}
+    <a href="{{ path('admin_gestion_rdv_add', {idMedecin: idMedecin}) }}" class="btn btn-success">{{ _html.text('rdv.new') }}</a>
+    <a href="{{ path('admin_gestion_rdv_search') }}" class="btn btn-primary">{{ _html.text('rdv.search') }}</a>
+    {% endif %}
+    {% if is_granted('ROLE_CUSTOMER') %}
+        <a href="{{ path('admin_gestion_rdv_add') }}" class="btn btn-success">{{ _html.text('rdv.new') }}</a>
+    {% endif %}
+    {% if app.getSession().getFlashBag().has('success') %}
+          <div class="alert alert-success">
+            {% for messages in app.getSession().getFlashBag().get('success') %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% set __map = {'#016daf': 'rdv.new', '#ff0000': 'rdv.cancelled', '#50af01': 'rdv.patient'} %}
+    <h4>{{ _html.text('Légende') }}</h4>
+    
+    <ul class="list-unstyled">
+        {% for color, lib in __map %}
+        <li><span style="color:{{color}};width:15px;height:15px;border:2px solid {{ color }};display:inline-block;background-color:{{color}};vertical-align:middle"></span><span style="display:inline-block;vertical-align:middle;margin-left: 10px;">{{ _html.text(lib) }}</span></li>
+       {% endfor %}
+       {% if is_granted('ROLE_CUSTOMER') %}
+        {% set color = '#f1c232' %}
+        <li><span style="color:{{color}};width:15px;height:15px;border:2px solid {{ color }};display:inline-block;background-color:#f1c232;vertical-align:middle"></span><span style="display:inline-block;vertical-align:middle;margin-left: 10px;">{{ _html.text('Rappel de Vaccin') }}</span></li>
+       {% endif %}
+    </ul>
+     <div id="calendar-events"></div>
+    {% endif %}
+    
+{% endblock %}
+{% block javascripts_inline %}
+    
+    <script src="{{ asset('public/js/moment.min.js') }}"></script>
+   
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script>
+        $(document).ready(function () {
+            moment().locale("{{ app.request.locale }}");
+           /* $('#calendar-events').fullCalendar({
+                lang: "{{ app.request.locale }}",
+                //defaultView: 'basicDay',
+                eventSources: [
+                    {
+                        url: "{{ path('admin_gestion_rdv_list') }}",
+                        data: {
+                            id: "{{ idUser | default() }}",
+                            idMedecin: "{{ idMedecin | default() }}"
+                        }
+                    }
+                ], 
+                //events: "{{ path('admin_gestion_rdv_list') }}",
+                eventDataTransform : function (event) {
+                    if (event.dateAnnulationRendezVous) {
+                        event['date_annulation_rendez_vous'] = event['dateAnnulationRendezVous'];
+                    }
+
+                     if (event.motifAnnulationRendezVous) {
+                        event['motif_annulation_rendez_vous'] = event['motifAnnulationRendezVous'];
+                    }
+
+                    if ('statutRendezVous' in event) {
+                        event['statut_rendez_vous'] = event['statutRendezVous'];
+                    }
+                    
+                    if (event.motif_annulation_rendez_vous) {
+                        const color = '#ff0000';
+                        event['backgroundColor'] = color;
+                        event['borderColor'] = color;
+                        event['url'] = null;
+                        
+                    } else {
+                        let color = '#016daf';
+
+                        if (event.statut_rendez_vous == 2) {
+                            color = '#f1c232';
+                            //event['title'] += ' (Annulé)';
+                        }
+
+                        if (event.statut_rendez_vous == 1) {
+                            color = '#50af01';
+                        }
+
+
+                        if (event.statut_rendez_vous == 0) {
+
+                            event['url'] = Routing.generate('admin_gestion_rdv_edit', {id: event.id});
+                        } else {
+                            event['url'] = null;
+                        }
+
+                        event['backgroundColor'] = color;
+                        event['borderColor'] = color;
+                    }
+
+
+                    {% if not is_granted('ROLE_MEDECIN') %}
+                        //event['url'] = null;
+                    {% endif %}
+
+                    return event;
+                },
+                
+                eventRender: function(eventObj, $el) {
+                    
+                    const start = moment(eventObj.start).format('LLLL');
+                    let content = '';
+                    let title = eventObj.lib;
+                    {% if is_granted('ROLE_MEDECIN') and not is_granted('ROLE_ADMIN') %}
+                        content += `<p>Patient(e): ${eventObj.title}<\/p>`;
+                    {% else %}
+                        if (eventObj.statut_rendez_vous == 2) {
+                            content += `<p>Vaccin: ${eventObj.title}<\/p>`;
+                        } else {
+                            content += `<p>Medecin: ${eventObj.title}<\/p>`;
+                        }
+                        
+                    {% endif %}
+                    content += `<p>Date: ${start}</p>
+                    <p>Motif: ${eventObj.lib}</p>
+                    `;
+
+
+
+                    if (eventObj.statut_rendez_vous == -1) {
+                        $el.find('.fc-time').remove();
+                        $el.find('.fc-title').text($el.find('.fc-title').text() + ' (Annulé)');
+                        content += '<p class="text-danger"><strong>' + eventObj.motif_annulation_rendez_vous + '<\/strong><\p>';
+                        title += ' (<span class="text-danger">Annulé<\span>)';
+                    }
+                    $el.popover({
+                        title: title,
+                        content: content,
+                        trigger: 'hover',
+                        placement: 'top',
+                        html: true,
+                        container: 'body'
+                    });
+                },
+                
+                themeSystem: 'bootstrap3',
+                editable: true,
+                draggable: true,
+                dayClick: function (calEvent) {
+                    const timestamp = moment(calEvent).format('DD/MM/YYYY')
+                    document.location = "{{ path('admin_gestion_rdv_add') }}?d=" + encodeURIComponent(timestamp);
+                },
+                
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                buttonText: {
+                    today: 'Aujourd\'hui',
+                    month: 'Mois',
+                    week: 'Semaine',
+                    day: 'Jour'
+                }
+                
+            });*/
+
+            var calendar = new FullCalendar.Calendar(document.getElementById('calendar-events'), {
+                locale: '{{ _locale }}',
+                //events: "{{ path('admin_gestion_rdv_list') }}",
+                //initialView: 'dayGridWeek',
+                eventSources: [
+                    {
+                        url: "{{ path('admin_gestion_rdv_list') }}",
+                        data: {
+                            id: "{{ idUser | default() }}",
+                            idMedecin: "{{ idMedecin | default() }}"
+                        }
+                    }
+                ], 
+                /*eventContent : function (eventObj) {
+                    const event = eventObj.event;
+                    const $el = eventObj.el;
+                    console.log(eventObj);
+                     const props = event.extendedProps;
+                     console.log(props, event);
+                    if (props.dateAnnulationRendezVous) {
+                        props['date_annulation_rendez_vous'] = props['dateAnnulationRendezVous'];
+                    }
+
+                     if (props.motifAnnulationRendezVous) {
+                        props['motif_annulation_rendez_vous'] = props['motifAnnulationRendezVous'];
+                    }
+
+                    if ('statutRendezVous' in props) {
+                        props['statut_rendez_vous'] = props['statutRendezVous'];
+                    }
+
+            
+                    let backgroundColor, color, borderColor, url;
+                    if (props.motif_annulation_rendez_vous) {
+                        color = '#ff0000';
+                        backgroundColor = color;
+                        borderColor = color;
+                        url = null;
+                        
+                    } else {
+                        let color = '#016daf';
+
+                        if (props.statut_rendez_vous == 2) {
+                            color = '#f1c232';
+                        }
+
+                        if (props.statut_rendez_vous == 1) {
+                            color = '#50af01';
+                        }
+
+                        if (props.statut_rendez_vous == 0) {
+
+                            url = Routing.generate('admin_gestion_rdv_edit', {id: event.id});
+                        } else {
+                            event.url = null;
+                        }
+
+                        backgroundColor = color;
+                        borderColor = color;
+                    }
+
+
+                    {% if not is_granted('ROLE_MEDECIN') %}
+                        //event['url'] = null;
+                    {% endif %}
+                     const heure = moment(event.start).format('H:mm');
+                    eventData.backgroundColor = backgroundColor;
+                    $el.innerHtml = `<strong>${heure}</strong></span> ${props.lib}`;
+
+                   
+
+                   
+                    
+                    return eventData;
+                },*/
+
+                eventClick: function (info) {
+                    if (info.event.extendedProps.statut_rendez_vous == 0) {
+                        document.location.href = Routing.generate('admin_gestion_rdv_edit', {id: info.event.id})
+                    }
+                },
+                
+                eventDidMount: function(eventObj) {
+
+                    const event = eventObj.event;
+                    const $el = $(eventObj.el);
+
+                   
+                    const props = event.extendedProps;
+
+                    console.log(event);
+                    
+                    const start = moment(event.start).format('LLLL');
+                    let content = '';
+                    let title = event.lib;
+                    {% if is_granted('ROLE_MEDECIN') and not is_granted('ROLE_ADMIN') %}
+                        content += `<p>Patient(e): ${event.title}<\/p>`;
+                    {% else %}
+                        if (eventObj.statut_rendez_vous == 2) {
+                            content += `<p>Vaccin: ${event.title}<\/p>`;
+                        } else {
+                            content += `<p>Medecin: ${event.title}<\/p>`;
+                        }
+                        
+                    {% endif %}
+                    content += `<p>Date: ${start}</p>
+                    <p>Motif: ${props.lib}</p>
+                    `;
+                    
+
+                    const colors = {'-1': '#ff0000', '0': '#016daf', '1': '#50af01', '2': '#f1c232'};
+
+
+                    if (props.statut_rendez_vous == -1) {
+                        $el.find('.fc-time').remove();
+                        $el.find('.fc-title').text($el.find('.fc-title').text() + ' (Annulé)');
+                        content += '<p class="text-danger"><strong>' + props.motif_annulation_rendez_vous + '<\/strong><\p>';
+                        title += ' (<span class="text-danger">Annulé<\span>)';
+                       
+                    } else if (props.statut_rendez_vous == 0) {
+                        //$el.css({'backgroundColor': props.color, 'color': '#fff'});
+                    } else if (props.statut_rendez_vous == 1) {
+                        //$el.css({'backgroundColor': props.color, 'color': '#fff'});
+                    } else if (props.statut_rendez_vous == 2) {
+                        //$el.css({'backgroundColor': props.color, 'color': '#fff'});
+                        eventObj.event.url = Routing.generate('admin_gestion_rdv_edit', {id: event.id});
+                    }
+                    if (colors[props.statut_rendez_vous]) {
+                         $el.css({'backgroundColor': colors[props.statut_rendez_vous], 'color': '#fff'});
+                    } else {
+                        $el.css({'backgroundColor': '#016daf', 'color': '#fff'});
+                    }
+
+                    $el.find('.fc-daygrid-event-dot').css('borderColor', '#fff');
+                    
+                    $el.popover({
+                        title: title,
+                        content: content,
+                        trigger: 'hover',
+                        placement: 'top',
+                        html: true,
+                        container: 'body'
+                    });
+
+                    return eventObj;
+                },
+                
+                themeSystem: 'bootstrap3',
+                editable: true,
+                //draggable: true,
+                dateClick: function (calEvent) {
+                
+                    const timestamp = moment(calEvent.date).format('DD/MM/YYYY')
+                    document.location = "{{ path('admin_gestion_rdv_add') }}?d=" + encodeURIComponent(timestamp);
+                },
+                
+                headerToolbar: {
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'dayGridMonth,dayGridWeek,listWeek'
+                },
+                /*buttonText: {
+                    today: 'todya',
+                    month: 'month',
+                    week: 'week',
+                    day: 'day',
+                    list: 'list'
+                }*/
+               
+                
+            });
+
+             calendar.render();
+        });
+         
+    </script>
+{% endblock %}

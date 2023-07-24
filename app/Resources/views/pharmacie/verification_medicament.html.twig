@@ -1,0 +1,77 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+
+{% block page_content %}
+    {{ form_start(form) }}
+    <div class="box">
+        <div class="box-header">
+                    <!-- Horizontal Form -->
+            <h3 class="box-title">Formulaire de recherche</h3>
+        </div>
+        <div class="box-body">
+             
+            <div class="row">
+             <div class="col-md-12">
+                <div class="form-group">
+                    <label for="{{ form.keyword.vars.id }}"> Médicaments</label>
+                     {{ form_widget(form.keyword, {value: keyword}) }}
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-success">Valider</button>
+        {% if consultation %}
+        <a href="{{ path('admin_pharmacie_medicament', {patient: consultation.patient.id, id: consultation.id}) }}" class="btn btn-primary">Revenir à l'ordonnance</a>
+        </div>
+        {% endif %}
+    {{ form_end(form) }}
+    </div>
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Résultats</h3>
+        </div>
+        <div class="box-body">
+            <div class="list-group">
+               
+                {% for medicament in listMedicaments %}
+                    <div class="list-group-item">
+                        <h4>{{ medicament.libPharmacie }}</h4>
+                        <p class="text-muted"><span class="fa fa-user"></span> {{ medicament.nomResponsable}}</p>
+                        <p class="text-muted"><span class="fa fa-phone"></span> {{ medicament.contacts}}</p>
+                        <p class="text-muted"><span class="fa fa-money"></span> {{ medicament.prixMedicament|format_money }}</p>
+                    </div>
+                {% else %}
+                    <div class="list-group-item">
+                        Aucune disponibilité dans nos pharmacies enregistrées
+                    </div>
+                {% endfor %}
+            </div>
+            {% if listMedicaments|length %}
+            {{ knp_pagination_render(listMedicaments) }} 
+            {% endif %}
+        </div>
+    </div>
+   
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('dropzone/dist/min/bootstrap-filestyle.min.js') }}"></script>
+     <script src="{{ asset('bundles/gestion/js/fr.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/js/profil.js') }}"></script>
+    <script src="{{ asset('public/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('public/js/i18n/fr.js') }}"></script>
+    <script src="{{ asset('bundles/site/v2/js/validator-rules.min.js') }}"></script>
+    <script>
+        
+    </script>
+
+{% endblock %}
+
+{% block page_title %}
+  Vérification de médicaments
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

@@ -1,0 +1,30 @@
+admin_config_medecin_index:
+    path:     /
+    defaults: { _controller: "GestionBundle:Medecin:index" }
+
+admin_config_medecin_show:
+    path:     /{id}/show
+    defaults: { _controller: "GestionBundle:Medecin:show" }
+    methods:  GET
+
+admin_config_medecin_new:
+    path:     /new
+    defaults: { _controller: "GestionBundle:Medecin:new" }
+    methods:  [GET, POST]
+
+admin_config_medecin_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "GestionBundle:Medecin:edit" }
+    methods:  [GET, POST]
+
+admin_config_medecin_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "GestionBundle:Medecin:delete" }
+    methods:  DELETE
+
+admin_config_medecin_specialites:
+    path:     /{id}/specialites
+    defaults: { _controller: "GestionBundle:Medecin:specialites" }
+    methods:  [GET, POST]
+    options:
+      expose: true

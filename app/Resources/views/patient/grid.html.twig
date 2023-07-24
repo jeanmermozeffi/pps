@@ -1,0 +1,57 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% import 'GestionBundle:Macros:html.html.twig' as _html %}
+
+
+{% block page_content %}
+
+<div class="row">
+
+    <div class="col-md-12">
+
+        <!-- general form elements -->
+
+        <div class="box box-primary">
+
+            <div class="box-header">
+
+                <!-- Horizontal Form -->
+
+                <div class="">
+
+                    <div class="box-header with-border">
+
+                        <h3 class="box-title">{{ _html.text('patient.list_title') }}</h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+            <div class="box-body">
+                {% if is_granted('ROLE_ADMIN_SUP') %}
+                <a href="{{ path('admin_gestion_patient_new') }}" class="btn btn-default">{{ _html.text('btn.new') }}</a>
+
+                <a href="{{ path('admin_gestion_patient_photo') }}" class="btn btn-default">{{ _html.text('btn.patient_photo') }}</a>
+                {% endif %}
+                <a onclick="return {{ grid.hash }}_reset();" href="#" class="btn btn-success">
+                <span class="fa fa-refresh"></span>
+                </a>
+
+                {{ grid(grid, "grid/blocks.html.twig") }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

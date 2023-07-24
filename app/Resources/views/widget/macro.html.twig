@@ -1,0 +1,66 @@
+{% macro button(label, attr, icon, safe, translation_domain) %}
+     {% set translation_domain = translation_domain|default('admin') %}
+    {% set safe = safe|default(false) %}
+    {% set attr = attr|default({}) %}
+    <button class="btn {{ attr.class|default('') }}" {% for attrname, attrvalue in attr if attrname != 'class' %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{% if icon %}<i class="{{ icon }}"></i>{% endif %} {{ (safe ? label|raw: label)|trans }}</button>
+{% endmacro %}
+
+
+{% macro button_link(label, route, params, attr, icon,  safe, translation_domain) %}
+    {% set translation_domain = translation_domain|default('admin') %}
+    {% set safe = safe|default(false) %}
+    {% set attr = attr|default({}) %}
+    {% set route = route|default('#') %}
+    <a href="{% if route == '#' %}{{ url('#') }}{% else %}{{ path(route, params) }}{% endif %}" {% for attrname, attrvalue  in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{% if icon %}<i class="{{ icon }}"></i>{% endif %} {{ (safe ? label|raw: label)|trans({}, translation_domain)|capitalize }}</a>
+{% endmacro %}
+
+
+{% macro box_header(title, icon, translation_domain, classes) %}
+    {% set translation_domain = translation_domain|default('admin') %}
+    {% set classes = {header: 'bg-light-blue-gradient', button: 'btn-primary'}|merge(classes|default({})) %}
+    <div class="box-header {{ classes.header }}">
+        <div class=" box-tools">
+            <button type="button" class="btn {{ classes.button }} btn-sm pull-right" data-widget="collapse" data-toggle="tooltip" style="margin-right: 5px;" data-original-title="" title="">
+            <i class="fa fa-minus"></i></button>
+        </div>
+                                            <!-- /. tools -->
+        {% if icon %}
+        <i class="{{ icon }}"></i>
+        {% endif %}
+        <h3 class="box-title">{{ title |trans({}, translation_domain)|capitalize }}</h3>
+    </div>
+{% endmacro %}
+
+{% macro row_headers(headers, translation_domain, action) %}
+    
+    {% set action = action is same as(false) ?  action: true %}
+    {% set headers = action ? headers|merge(['actions']) : headers %}
+    {% set translation_domain = translation_domain|default('admin') %}
+    {% for header in headers %}
+
+        <th>{{ header|trans({}, translation_domain)|capitalize }}</th>
+        
+    {% endfor %}                                         
+{% endmacro %}
+
+{% macro proto_add_button(label, id, translation_domain) %}
+     {% set translation_domain = translation_domain|default('admin') %}
+     <div class="box-footer no-border">
+        <button type="button" class="btn btn-default {{ id }} "
+            id="{{ id }}">
+            <i class="fa fa-plus"></i>
+           {{ label|trans({}, translation_domain)|capitalize }}
+        </button>
+    </div>
+{% endmacro %}
+
+{% macro row_info(label, data, key, default, translation_domain) %}
+     {% set translation_domain = translation_domain|default('admin') %}
+     <div class="row">
+        <div class="col-sm-4">{{ label|trans({}, translation_domain)|capitalize }}</div>
+        <div class="col-sm-8"><strong>{{ data_get(data, key, default) }}</strong></div>
+    </div>
+{% endmacro %}
+
+
+

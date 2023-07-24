@@ -1,0 +1,116 @@
+# SITE PAGE ROUTING
+
+homepage:
+
+    path: /
+
+    defaults: { _controller: SiteBundle:Default:index }
+
+
+
+home_paiement:
+
+    path: /test-paiement
+
+    defaults: { _controller: SiteBundle:Default:paiement }
+
+
+
+home_valid_paiement:
+
+    path: /validation-paiement
+
+    defaults: { _controller: SiteBundle:Default:validationPaiement }
+
+
+
+home_sensibilisation:
+
+    path: /sensibilisation
+
+    defaults: { _controller: SiteBundle:Default:sensibilisation }
+
+
+
+home_demo:
+
+    path: /demo
+
+    defaults: { _controller: SiteBundle:Default:demo }
+
+
+
+site_apropos:
+
+    pattern: /apropos/
+
+    defaults: { _controller: SiteBundle:Default:apropos }
+
+
+
+site_distrib:
+
+    path: /reseaux-distribution/
+
+    defaults: { _controller: SiteBundle:Default:distribution }
+
+
+
+site_franchise:
+
+    path: /devenir-franchise/
+
+    defaults: { _controller: SiteBundle:Default:franchise }
+
+
+
+site_contact:
+
+    pattern: /contact/
+
+    defaults: { _controller: SiteBundle:Default:contact }
+
+
+
+patient_print:
+
+    path: /{id}/print
+
+    defaults: { _controller: GestionBundle:Patient:print }
+
+
+
+patient_profil:
+
+    pattern: /profil/
+
+    defaults: { _controller: GestionBundle:Patient:profil }
+
+    #requirements:
+
+    #   _method:  GET|POST
+
+
+
+patient_scanne:
+
+    pattern: /scanne/
+
+    defaults: { _controller: GestionBundle:Patient:scanne }
+
+
+
+site_about:
+
+    pattern: /about/
+
+    defaults: { _controller: SiteBundle:Default:about }
+
+
+
+site_faq:
+
+    pattern: /faq/
+
+    defaults: { _controller: SiteBundle:FaqUser:index }
+
