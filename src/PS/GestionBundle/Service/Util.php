@@ -49,15 +49,15 @@ class Util
         $title = "PPS | TRANSMISSION PARAMÈTRES CONNEXION !";
 
 
-        $transport = (new \Swift_SmtpTransport('mail.pass-sante.net', 465, 'ssl'))
-        ->setUsername('info@pass-sante.net')
-        ->setPassword(urldecode('{k7S^8Fu=.XN'));
+        $transport = (new \Swift_SmtpTransport('mail.postesante.net', 465, 'ssl'))
+        ->setUsername('no-reply@postesante.net')
+        ->setPassword(urldecode('Fsi8p0XUrHoD4Kly'));
 
         $mailer = new \Swift_Mailer($transport);
 
         $message = (new \Swift_Message($transport))
             ->setSubject($title)
-            ->setFrom('info@pass-sante.net')
+            ->setFrom('no-reply@postesante.net')
             ->setTo($email)
             ->setBody($this->getMessage($email, $username, $passord), 'text/plain');
 
