@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 //use PS\UtilisateurBundle\Validator\Constraints\UserPassword;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PS\GestionBundle\Form\ExportType;
+use PS\UtilisateurBundle\Entity\Personne;
 
 /**
  * Utilisateur controller.
@@ -100,7 +103,7 @@ class UtilisateurController extends Controller
 
         if (!$this->isGranted('ROLE_ASSISTANT')) {
             $rowAction = new RowAction('Supprimer', 'admin_config_utilisateur_delete');
-            $rowAction->manipulateRender(function ($action, $row) use ($user) {
+            $rowAction->addManipulateRender(function ($action, $row) use ($user) {
             if ($row->getField('id') != $user->getid()) {
             return ['controller' => 'UtilisateurBundle:Utilisateur:delete', 'parameters' => ['id' => $row->getField('id')]];
             }
@@ -878,4 +881,169 @@ class UtilisateurController extends Controller
 
         return $this->render('utilisateur/code.html.twig', ['form' => $form->createView()]);
     }
+
+    public function importAction(Request $request)
+    {
+        $util = $this->get('app.psm_util');
+        $form   = $this->createForm(ExportType::class);
+        $form->handleRequest($request);
+        $errors = [];
+
+        $userManager = $this->get('fos_user.user_manager');
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('file')->getData();
+
+            // Chemin vers le répertoire où les fichiers Excel sont stockés
+            $uploadDirectory = $this->get('kernel')->getRootDir() . '/../web/uploads/excel/';
+
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+
+            $file->move($uploadDirectory, $fileName);
+
+            // Charger le fichier Excel
+            $spreadsheet = IOFactory::load($uploadDirectory . $fileName);
+            $sheet = $spreadsheet->getActiveSheet();
+
+            // Start from the second row (index 2)
+            $rowIndex = 1;
+            $importLimit = 2; // Limite d'importation
+
+            foreach ($sheet->getRowIterator() as $row) {
+                if ($rowIndex === 1) {
+                    $rowIndex++;
+                    continue;
+                }
+
+                if ($rowIndex > $importLimit) {
+                    break; // Arrêter la boucle après 10 enregistrements
+                }
+
+                $data = [];
+                $cellIterator = $row->getCellIterator();
+                $cellIterator->setIterateOnlyExistingCells(false);
+
+                foreach ($cellIterator as $cell) {
+                    $data[] = $cell->getValue();
+                }
+
+                $user = $this->createUser($data);
+
+                if($user){
+                    $data = $user[1];
+                    $util->sendMessage($data['email'], $data['username'], $data['password']);
+                }
+
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->flush();
+
+                $rowIndex++;
+
+            }
+
+            // Supprimer le fichier Excel
+            unlink($uploadDirectory . $fileName);
+
+            // Rediriger vers la liste des utilisateurs
+            return $this->redirectToRoute('admin_config_utilisateur_index'); 
+        }
+
+        return $this->render('utilisateur/import.html.twig', [
+            'errors' => $errors,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @param data = []
+     */
+    private function createUser($data = [], $resent = false, $telephones = null)
+    {
+        $personne    = new Personne();
+        $username = isset($data[0]) ? $data[0] : '';
+        // $password = isset($data[1]) ? $data[1] : '';
+        $email = isset($data[2]) ? $data[2] : '';
+        $fullName = isset($data[3]) ? $data[3] : '';
+
+        $dataSecurity = [];
+
+        if (strpos($fullName, ' ') !== false) {
+            $nameParts = explode(' ', $fullName);
+
+            $firstName = $nameParts[0];
+            $lastNameParts = array_slice($nameParts, 1);
+            $lastName = implode(' ', $lastNameParts);
+            // list($lastName, $firstName) = explode(' ', $fullName);
+        } else {
+            $lastName = '';
+            $firstName = $fullName;
+        }
+
+        $userManager = $this->get('fos_user.user_manager');
+        $util = $this->get('app.psm_util');
+
+        $personne->setNom($firstName)
+            ->setPrenom($lastName)
+            ->setDatenaissance(NULL)
+            ->setDateInscription(new \DateTime());
+
+        $password = $util->random(8, ['alphabet' => true]);
+        
+        $utilisateur = $userManager->findUserBy(['personne' => $personne]);
+
+        $smsMtarget  = $this->get('app.mtarget_sms');
+
+        $sender = 'COMPTE PSM';
+        $authUser = $this->getUser();
+
+        $em = $this->getDoctrine()->getManager();
+
+        if (!$utilisateur) 
+        {
+            $utilisateur = new Utilisateur();
+
+            if (!$userManager->findUserByEmail($email) || !$userManager->findUserByEmail($username)) {
+                $utilisateur->setRoles(['ROLE_ADMIN_SUP'])
+                ->setEnabled(true)
+                ->setEmail($email)
+                ->setPlainPassword($password)
+                ->setUsername($username)
+                ->setPersonne($personne);
+
+                $userManager->updateUser($utilisateur, false);
+
+                $dataSecurity['email'] = $email;
+                $dataSecurity['password'] = $password;
+                $dataSecurity['username'] = $username;
+
+                $em->persist($utilisateur);
+            }
+        }
+
+        // if ($resent && $utilisateur && $personne->getSmsContact()) {
+        //     $utilisateur->setPlainPassword($password);
+        //     $userManager->updateUser($utilisateur, false);
+
+        //     if ($additionalContact) {
+        //         $msg = sprintf("Le Profil médical PPS du %s vient d'être crée. Les infos de connexion sont:nLogin: %s\nMot de Passe: %s\nhttps://passpostesante.ci/login", $personne->getSmsContact(), $username, $password);
+        //         $smsMtarget->sendSms($additionalContact, $msg, $sender);
+
+        //         $msgID = sprintf("Veuillez garder ces ID\PIN à la proté de toute personne !\nID:%s\nPIN:%s", $identifiant, $pin);
+        //         $smsMtarget->sendSms($additionalContact, $msgID, $sender);
+        //     }
+
+        //     $msg = sprintf(
+        //         "Votre profil médical PPS vient d'être crée. Vos infos de connexion sont:Login: %s\nMot de Passe: %s\nhttps://passpostesante.ci/login",
+        //         $username,
+        //         $password
+        //     );
+        //     $smsMtarget->sendSms($contact, $msg, $sender);
+        //     $msgID = sprintf("Veuillez garder ces ID\PIN à la proté de toute personne !\nID:%s\nPIN:%s", $identifiant, $pin);
+        //     $smsMtarget->sendSms($additionalContact, $msgID, $sender);
+        // }
+
+        return [$utilisateur, $dataSecurity];
+    }
+    
 }

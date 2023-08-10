@@ -38,4 +38,42 @@ class Util
 
         return $str;
     }
+
+    /**
+     * @return mixed
+     */
+    public function sendMessage(?string $email, string $username, string $passord)
+    {
+        $totalsentMessages         = 0;
+        $totalNumbers = 0;
+        $title = "PPS | TRANSMISSION PARAMÈTRES CONNEXION !";
+
+
+        $transport = (new \Swift_SmtpTransport('mail.pass-sante.net', 465, 'ssl'))
+        ->setUsername('info@pass-sante.net')
+        ->setPassword(urldecode('{k7S^8Fu=.XN'));
+
+        $mailer = new \Swift_Mailer($transport);
+
+        $message = (new \Swift_Message($transport))
+            ->setSubject($title)
+            ->setFrom('info@pass-sante.net')
+            ->setTo($email)
+            ->setBody($this->getMessage($email, $username, $passord), 'text/plain');
+
+        return $mailer->send($message);
+    }
+
+    /**
+     * @param $patient
+     * @return mixed
+     */
+    private function getMessage($email, $username, $passord)
+    {
+        $message = sprintf("Vos paramètres de connexion sont: \nNom d'utilisateur: %s\nMot de passe par défaut: %s", $username, $passord);
+
+
+        $message .= "\n\nPASS SANTE";
+        return $message;
+    }
 }

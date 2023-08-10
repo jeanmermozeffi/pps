@@ -16,6 +16,11 @@ admin_config_utilisateur_new:
     defaults: { _controller: "UtilisateurBundle:Utilisateur:new" }
     methods:  [GET, POST]
 
+admin_config_utilisateur_import_new:
+    path:     /import
+    defaults: { _controller: "UtilisateurBundle:Utilisateur:import" }
+    methods:  [GET, POST]
+
 admin_config_utilisateur_unregister:
     path:     /unregister
     defaults: { _controller: "UtilisateurBundle:Utilisateur:unregister" }

@@ -48,7 +48,14 @@
 
                     <a class="btn btn-default" data-toggle="modal" data-target="#modal-table"
                             href="{{ path('admin_config_utilisateur_new') }}"
-                           ><i class="fa fa-plus"></i> Nouveau </a>
+                           >
+                        <i class="fa fa-plus"></i> Nouveau 
+                    </a>
+                    <a class="btn btn-success"
+                            href="{{ path('admin_config_utilisateur_import_new') }}"
+                           >
+                        <i class="fa fa-plus"></i> Importer 
+                    </a>
 
                     {#{ render(controller('UtilisateurBundle:Utilisateur:new', {action: 'assurance'})) }#}
 
