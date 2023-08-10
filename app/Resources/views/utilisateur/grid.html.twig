@@ -51,11 +51,11 @@
                            >
                         <i class="fa fa-plus"></i> Nouveau 
                     </a>
-                    <a class="btn btn-success"
-                            href="{{ path('admin_config_utilisateur_import_new') }}"
-                           >
-                        <i class="fa fa-plus"></i> Importer 
-                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="btn btn-success" href="{{ path('admin_config_utilisateur_import_new') }}">
+                            <i class="fa fa-plus"></i> Importer
+                        </a>
+                    {% endif %}
 
                     {#{ render(controller('UtilisateurBundle:Utilisateur:new', {action: 'assurance'})) }#}
 
