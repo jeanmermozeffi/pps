@@ -7,6 +7,12 @@
     <div class="col-md-12">
         <div class="alert alert-info">
             Format à respecter <a href="{{ asset('uploads/format_liste_des_comptes_PPS.xlsx') }}">Voir le Fichier Exemple</a>
+
+            <div>
+                <span class="bg-color-danger">
+                    Veuillez indiquer le rôle des utilisateurs, s'il n'existe pas dans le fichier Excel.
+                </span>
+            </div>
         </div>
 
         {{ form_errors(form)}}
@@ -25,15 +31,19 @@
         {% endif %}
 
         {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'data-parsley-validate': true} }) }}
-
         <div class="form-group">
-
             <div class="col-sm-12">
-
                 <label class="col-sm-4 control-label">{{ form_label(form.file) }}</label>
-
                 <div class="col-sm-8">
                     {{ form_widget(form.file) }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <label class="col-sm-4 control-label">{{ form_label(form.roles) }}</label>
+                <div class="col-sm-8">
+                    {{ form_widget(form.roles) }}
                 </div>
             </div>
         </div>
@@ -46,7 +56,11 @@
     </div>
 </div>
 {% endblock %}
-
+{% block javascripts %}
+    <script>
+    $('select').select2();
+    </script>
+{% endblock javascripts %}
 
 
 

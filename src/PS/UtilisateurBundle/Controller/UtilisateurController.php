@@ -21,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PS\GestionBundle\Form\ExportType;
+use PS\GestionBundle\Form\ExportUtilisateurType;
 use PS\UtilisateurBundle\Entity\Personne;
 
 /**
@@ -885,7 +886,7 @@ class UtilisateurController extends Controller
     public function importAction(Request $request)
     {
         $util = $this->get('app.psm_util');
-        $form   = $this->createForm(ExportType::class);
+        $form   = $this->createForm(ExportUtilisateurType::class);
         $form->handleRequest($request);
         $errors = [];
 
