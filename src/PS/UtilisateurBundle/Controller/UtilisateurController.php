@@ -879,6 +879,7 @@ class UtilisateurController extends Controller
 
     public function importAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $util = $this->get('app.psm_util');
         $form   = $this->createForm(ExportUtilisateurType::class);
         $form->handleRequest($request);
@@ -903,8 +904,10 @@ class UtilisateurController extends Controller
 
             // Start from the second row (index 2)
             $rowIndex = 1;
-            $importLimit = null; // Limite d'importation
+            $importLimit = 100; // Limite d'importation
 
+            $userCounter = 0;
+            $batchSize = 25; // Nombre d'utilisateurs par flux
             foreach ($sheet->getRowIterator() as $row) {
                 if ($rowIndex === 1) {
                     $rowIndex++;
@@ -931,9 +934,15 @@ class UtilisateurController extends Controller
                 if ($user['isCreated']) 
                 {
                     $data = $user['dataSecurity'];
+                    $userCounter++;
 
                     // Envoie de mail à l'utilisateur
-                    $util->sendMessage($data['email'], $data['username'], $data['password']);
+                    // $util->sendMessage($data['email'], $data['username'], $data['password']);
+                }
+
+                if ($userCounter % $batchSize === 0) {
+                    $em->flush();
+                    $em->clear();
                 }
 
                 $errors[] = $user['errors'];
@@ -1016,7 +1025,7 @@ class UtilisateurController extends Controller
                 'nom'=> $fullName
             ];
         }
-
+       
         if (!$isExistEmail || !$isExistUsername) {
             $personne    = new Personne();
             $personne->setNom($firstName)
@@ -1034,14 +1043,14 @@ class UtilisateurController extends Controller
                 ->setUsername($username)
                 ->setPersonne($personne);
 
-            // $userManager->updateUser($utilisateur, false);
+            $userManager->updateUser($utilisateur, false);
 
             $dataSecurity['email'] = $email;
             $dataSecurity['password'] = $password;
             $dataSecurity['username'] = $username;
 
             $em->persist($utilisateur);
-            $em->flush();
+           
             $isCreated = true;
         }
 
