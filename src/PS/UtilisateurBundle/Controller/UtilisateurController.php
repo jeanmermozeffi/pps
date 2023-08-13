@@ -53,10 +53,10 @@ class UtilisateurController extends Controller
                         ->setParameter('assurance', $assurance)
                         ->setParameter('role', '%"ROLE_MEDECIN"%');
                 } else if ($this->isGranted('ROLE_ADMIN_SUP')) {
-                    
+
                     $qb->andWhere('_a.roles LIKE :role1')->orWhere('_a.roles LIKE :role2')
-                    ->setParameter('role1', '%"ROLE_ADMIN_LOCAL"%')
-                    ->setParameter('role2', '%"ROLE_PHARMACIE"%');
+                        ->setParameter('role1', '%"ROLE_ADMIN_LOCAL"%')
+                        ->setParameter('role2', '%"ROLE_PHARMACIE"%');
                 } else {
                     $hopital = $user->getHopital()->getId();
                     $qb->join('UtilisateurBundle:UtilisateurHopital', 'h', 'WITH', 'h.utilisateur = _a.id')
@@ -78,7 +78,7 @@ class UtilisateurController extends Controller
                 $qb->join('UtilisateurBundle:Personne', 'p', 'WITH', 'p.id = _a.personne');
                 $qb->andWhere('p.corporate = :corporate');
 
-               
+
 
                 $qb->andWhere('_a.roles LIKE \'%"ROLE_ADMIN_CORPORATE"%\' OR _a.roles LIKE \'%"ROLE_ADMIN_LOCAL"%\'');
                 $qb->setParameter('corporate', $corporate);
@@ -95,24 +95,23 @@ class UtilisateurController extends Controller
         $grid->setSource($source);
 
         $rowAction = new RowAction('Détails', 'admin_config_utilisateur_show');
-      
+
         $grid->addRowAction($rowAction);
 
         $rowAction = new RowAction('Modifier', 'admin_config_utilisateur_edit');
-        
+
         $grid->addRowAction($rowAction);
 
         if (!$this->isGranted('ROLE_ASSISTANT')) {
             $rowAction = new RowAction('Supprimer', 'admin_config_utilisateur_delete');
             $rowAction->addManipulateRender(function ($action, $row) use ($user) {
-            if ($row->getField('id') != $user->getid()) {
-            return ['controller' => 'UtilisateurBundle:Utilisateur:delete', 'parameters' => ['id' => $row->getField('id')]];
-            }
-
+                if ($row->getField('id') != $user->getid()) {
+                    return ['controller' => 'UtilisateurBundle:Utilisateur:delete', 'parameters' => ['id' => $row->getField('id')]];
+                }
             });
 
             $rowAction = new RowAction('Désactiver', 'admin_config_utilisateur_deactivate');
-           
+
             $grid->addRowAction($rowAction);
         }
 
@@ -155,11 +154,11 @@ class UtilisateurController extends Controller
         $errorUrl = $url . '#modal-utilisateur-new';
 
         if ($user->getHopital() && $user->getHopital()->getInfo()) {
-             $form->get('email')->setData($user->getHopital()->getInfo()->getEmailHopital());
+            $form->get('email')->setData($user->getHopital()->getInfo()->getEmailHopital());
         }
 
 
-       
+
 
         $form->handleRequest($request);
 
@@ -170,7 +169,7 @@ class UtilisateurController extends Controller
             $redirectRoute = 'gestion_admission_index';
             $redirect = $this->generateUrl('admin_config_utilisateur_index');
 
-            
+
 
             $userManager = $this->get('fos_user.user_manager');
 
@@ -213,10 +212,10 @@ class UtilisateurController extends Controller
                 }
             }
 
-    
+
 
             if (!isset($hopital)) {
-                 if ($userManager->findUserByEmail($email)) {
+                if ($userManager->findUserByEmail($email)) {
                     $form->addError(new FormError('Cette adresse mail est déjà existante, veuillez en choisir une autre'));
                 }
             }
@@ -285,10 +284,9 @@ class UtilisateurController extends Controller
                 $statut = 1;
                 $this->addFlash('success', $message);
 
-               
+
                 //return new RedirectResponse($url);
             } else {
-
                 $message = $this->get('app.form_error')->all($form);
                 $statut = 0;
                 $this->addFlash('warning', $message);
@@ -299,7 +297,7 @@ class UtilisateurController extends Controller
                 $response = compact('statut', 'message', 'redirect');
                 return new JsonResponse($response);
             } else {
-                
+
                 if ($statut == 1) {
                     return $this->redirect($redirect);
                 }
@@ -411,8 +409,8 @@ class UtilisateurController extends Controller
         } else {
             $oldSpecialites = [];
         }
-        
-        
+
+
 
 
 
@@ -480,7 +478,7 @@ class UtilisateurController extends Controller
 
 
             if (!$user->getHopital()) {
-                 if (($_utilisateur = $userManager->findUserByEmail($email)) && $_utilisateur != $utilisateur) {
+                if (($_utilisateur = $userManager->findUserByEmail($email)) && $_utilisateur != $utilisateur) {
                     $editForm->addError(new FormError('Cette adresse mail est déjà existante, veuillez en choisir une autre'));
                 }
             }
@@ -508,22 +506,21 @@ class UtilisateurController extends Controller
                             }
 
                             $medecin->setPersonne($utilisateur->getPersonne());
-                            
+
                             $em->persist($medecin);
                         } else {
                             $utilisateur->getPersonne()->getMedecin()->setHopital($utilisateur->getHopital());
                         }
-                        
                     }
 
 
 
 
-                    
+
                     //($specialites);exit;
 
 
-                    if ( $utilisateur->getPersonne()->getMedecin()) {
+                    if ($utilisateur->getPersonne()->getMedecin()) {
                         $utilisateur->getPersonne()->getMedecin()->setSpecialites($specialites);
 
 
@@ -533,12 +530,12 @@ class UtilisateurController extends Controller
                             }
                         }
                     }
-                   
-
-                   // dump($specialites);exit;
 
 
-                    
+                    // dump($specialites);exit;
+
+
+
                 }
 
                 if ($utilisateur->hasRole('ROLE_PHARMACIE')) {
@@ -568,12 +565,11 @@ class UtilisateurController extends Controller
                 $response = compact('statut', 'message', 'redirect');
                 return new JsonResponse($response);
             } else {
-                
+
                 if ($statut == 1) {
                     return $this->redirect($redirect);
                 }
             }
-
         }
 
         return $this->render('utilisateur/edit.html.twig', [
@@ -725,7 +721,7 @@ class UtilisateurController extends Controller
             $em->flush();
 
             $redirect =  $this->generateUrl('admin_config_utilisateur_index');
-            
+
             $message = 'Opération effectuée avec succès';
 
             $response = [
@@ -741,7 +737,6 @@ class UtilisateurController extends Controller
             } else {
                 return new JsonResponse($response);
             }
-           
         }
 
         return $this->render('utilisateur/deactivate.html.twig', [
@@ -831,7 +826,8 @@ class UtilisateurController extends Controller
 
         //dump($_SESSION);exit;
 
-        if ($request->query->get('fully')) { }
+        if ($request->query->get('fully')) {
+        }
 
         return $request->query->get('fully') ?
             $this->redirectToRoute('gestion_homepage') : $this->redirectToRoute('admin_config_utilisateur_sms_verif', ['id' => $utilisateur->getId()]);
@@ -864,15 +860,13 @@ class UtilisateurController extends Controller
                 && $user->getSmsCodeExpiredAt() > new \DateTime()
             ) {
 
-                
-
                 $utilisateur->setSmsCode(null);
                 $utilisateur->setSmsCodeExpireAt(null);
-                
+
 
                 $userManager->updateUser($utilisateur);
 
-               
+
 
                 return $this->redirectToRoute('gestion_homepage');
             }
@@ -894,6 +888,7 @@ class UtilisateurController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('file')->getData();
+            $role = $form->get('roles')->getData();
 
             // Chemin vers le répertoire où les fichiers Excel sont stockés
             $uploadDirectory = $this->get('kernel')->getRootDir() . '/../web/uploads/excel/';
@@ -908,7 +903,7 @@ class UtilisateurController extends Controller
 
             // Start from the second row (index 2)
             $rowIndex = 1;
-            $importLimit = 2; // Limite d'importation
+            $importLimit = null; // Limite d'importation
 
             foreach ($sheet->getRowIterator() as $row) {
                 if ($rowIndex === 1) {
@@ -916,8 +911,11 @@ class UtilisateurController extends Controller
                     continue;
                 }
 
-                if ($rowIndex > $importLimit) {
-                    break; // Arrêter la boucle après 10 enregistrements
+                if ($importLimit !== null) {
+                    if ($rowIndex > $importLimit) 
+                    {
+                        break; // Arrêter la boucle après le nombre souhaitez d'enregistrements
+                    }
                 }
 
                 $data = [];
@@ -928,26 +926,43 @@ class UtilisateurController extends Controller
                     $data[] = $cell->getValue();
                 }
 
-                $user = $this->createUser($data);
+                $user = $this->createUser($data, $role);
 
-                if($user){
-                    $data = $user[1];
+                if ($user['isCreated']) 
+                {
+                    $data = $user['dataSecurity'];
+
+                    // Envoie de mail à l'utilisateur
                     $util->sendMessage($data['email'], $data['username'], $data['password']);
                 }
 
-
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->flush();
-
+                $errors[] = $user['errors'];
                 $rowIndex++;
-
             }
 
             // Supprimer le fichier Excel
-            unlink($uploadDirectory . $fileName);
+            try {
+                if (file_exists($uploadDirectory . $fileName)) {
+                    unlink($uploadDirectory . $fileName);
+                } else {
+                    throw new \Exception("Le fichier à supprimer n'existe pas.");
+                }
 
-            // Rediriger vers la liste des utilisateurs
-            return $this->redirectToRoute('admin_config_utilisateur_index'); 
+                if ($errors) {
+                    return $this->render('utilisateur/import.html.twig', [
+                        'errors' => $errors,
+                        'form' => $form->createView(),
+                    ]);
+                }
+
+                return $this->redirectToRoute('admin_config_utilisateur_index');
+            } catch (\Exception $e) {
+                // echo "Erreur lors de la suppression du fichier : " . $e->getMessage();
+                return $this->render('utilisateur/import.html.twig', [
+                    'errors' => $errors,
+                    'form' => $form->createView(),
+                ]);
+            }
         }
 
         return $this->render('utilisateur/import.html.twig', [
@@ -959,14 +974,22 @@ class UtilisateurController extends Controller
     /**
      * @param data = []
      */
-    private function createUser($data = [], $resent = false, $telephones = null)
+    private function createUser($data = [], $role = ['ROLE_ADMIN_SUP'], $resent = false, $telephones = null)
     {
-        $personne    = new Personne();
+        $isCreated = false;
+        $em = $this->getDoctrine()->getManager();
+        $smsMtarget  = $this->get('app.mtarget_sms');
+        $sender = 'COMPTE PSM';
+        $authUser = $this->getUser();
+        $userManager = $this->get('fos_user.user_manager');
+        $util = $this->get('app.psm_util');
+
         $username = isset($data[0]) ? $data[0] : '';
         // $password = isset($data[1]) ? $data[1] : '';
         $email = isset($data[2]) ? $data[2] : '';
         $fullName = isset($data[3]) ? $data[3] : '';
 
+        $dataErrors = [];
         $dataSecurity = [];
 
         if (strpos($fullName, ' ') !== false) {
@@ -981,45 +1004,45 @@ class UtilisateurController extends Controller
             $firstName = $fullName;
         }
 
-        $userManager = $this->get('fos_user.user_manager');
-        $util = $this->get('app.psm_util');
+        $isExistEmail = $userManager->findUserByEmail($email);
+        $isExistUsername = $userManager->findUserByUsername($username);
 
-        $personne->setNom($firstName)
-            ->setPrenom($lastName)
-            ->setDatenaissance(NULL)
-            ->setDateInscription(new \DateTime());
+        $utilisateur = $isExistEmail;
 
-        $password = $util->random(8, ['alphabet' => true]);
-        
-        $utilisateur = $userManager->findUserBy(['personne' => $personne]);
+        if ($isExistEmail || $isExistUsername) {
+            $dataErrors = [
+                'email' => $email,
+                'username'=> $username,
+                'nom'=> $fullName
+            ];
+        }
 
-        $smsMtarget  = $this->get('app.mtarget_sms');
+        if (!$isExistEmail || !$isExistUsername) {
+            $personne    = new Personne();
+            $personne->setNom($firstName)
+                ->setPrenom($lastName)
+                ->setDatenaissance(NULL)
+                ->setDateInscription(new \DateTime());
 
-        $sender = 'COMPTE PSM';
-        $authUser = $this->getUser();
+            $password = $util->random(8, ['alphabet' => true]);
 
-        $em = $this->getDoctrine()->getManager();
-
-        if (!$utilisateur) 
-        {
             $utilisateur = new Utilisateur();
-
-            if (!$userManager->findUserByEmail($email) || !$userManager->findUserByEmail($username)) {
-                $utilisateur->setRoles(['ROLE_ADMIN_SUP'])
+            $utilisateur->setRoles($role)
                 ->setEnabled(true)
                 ->setEmail($email)
                 ->setPlainPassword($password)
                 ->setUsername($username)
                 ->setPersonne($personne);
 
-                $userManager->updateUser($utilisateur, false);
+            $userManager->updateUser($utilisateur, false);
 
-                $dataSecurity['email'] = $email;
-                $dataSecurity['password'] = $password;
-                $dataSecurity['username'] = $username;
+            $dataSecurity['email'] = $email;
+            $dataSecurity['password'] = $password;
+            $dataSecurity['username'] = $username;
 
-                $em->persist($utilisateur);
-            }
+            $em->persist($utilisateur);
+            $em->flush();
+            $isCreated = true;
         }
 
         // if ($resent && $utilisateur && $personne->getSmsContact()) {
@@ -1044,7 +1067,11 @@ class UtilisateurController extends Controller
         //     $smsMtarget->sendSms($additionalContact, $msgID, $sender);
         // }
 
-        return [$utilisateur, $dataSecurity];
+        return [
+            'user' => $utilisateur,
+            'dataSecurity' => $dataSecurity,
+            'errors' => $dataErrors,
+            'isCreated' => $isCreated,
+        ];
     }
-    
 }
