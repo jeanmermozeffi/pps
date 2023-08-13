@@ -1026,7 +1026,8 @@ class UtilisateurController extends Controller
             ];
         }
        
-        if (!$isExistEmail || !$isExistUsername) {
+        if (!$isExistEmail || !$isExistUsername) 
+        {
             $personne    = new Personne();
             $personne->setNom($firstName)
                 ->setPrenom($lastName)
