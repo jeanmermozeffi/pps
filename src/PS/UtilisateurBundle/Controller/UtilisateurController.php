@@ -1076,7 +1076,6 @@ class UtilisateurController extends Controller
         //     $msgID = sprintf("Veuillez garder ces ID\PIN à la proté de toute personne !\nID:%s\nPIN:%s", $identifiant, $pin);
         //     $smsMtarget->sendSms($additionalContact, $msgID, $sender);
         // }
-
         return [
             'user' => $utilisateur,
             'dataSecurity' => $dataSecurity,
