@@ -1034,7 +1034,7 @@ class UtilisateurController extends Controller
                 ->setUsername($username)
                 ->setPersonne($personne);
 
-            $userManager->updateUser($utilisateur, false);
+            // $userManager->updateUser($utilisateur, false);
 
             $dataSecurity['email'] = $email;
             $dataSecurity['password'] = $password;
