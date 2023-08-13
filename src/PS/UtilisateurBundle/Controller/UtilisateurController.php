@@ -904,7 +904,7 @@ class UtilisateurController extends Controller
 
             // Start from the second row (index 2)
             $rowIndex = 1;
-            $importLimit = 100; // Limite d'importation
+            $importLimit = null; // Limite d'importation
 
             $userCounter = 0;
             $batchSize = 25; // Nombre d'utilisateurs par flux
