@@ -6,6 +6,7 @@ use PS\GestionBundle\Form\Type\RoleChoiceType;
 use PS\ParametreBundle\Entity\Fichier;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
@@ -30,6 +31,14 @@ class ExportUtilisateurType extends AbstractType
                         ]
                     ),
                 ]
+            ])
+            ->add('startCell', IntegerType::class, [
+                'label' => 'De la ligne',
+                'required' => false,
+            ])
+            ->add('endCell', IntegerType::class, [
+                'label' => 'à la ligne',
+                'required' => false,
             ])
             ->add('roles', RoleChoiceType::class, [
                 'label' => 'Rôles',

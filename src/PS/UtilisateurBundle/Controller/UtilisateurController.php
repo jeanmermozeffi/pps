@@ -891,7 +891,9 @@ class UtilisateurController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('file')->getData();
             $role = $form->get('roles')->getData();
-
+            $startCell = $form->get('startCell')->getData();
+            $endCell = $form->get('endCell')->getData();
+            
             // Chemin vers le répertoire où les fichiers Excel sont stockés
             $uploadDirectory = $this->get('kernel')->getRootDir() . '/../web/uploads/excel/';
 
@@ -904,12 +906,30 @@ class UtilisateurController extends Controller
             $sheet = $spreadsheet->getActiveSheet();
 
             // Start from the second row (index 2)
-            $rowIndex = 1;
-            $importLimit = null; // Limite d'importation
+            $rowIndex = 2;
+            $importLimit = 501; // Limite d'importation
+
+            if ($startCell && !$endCell) {
+                $importLimit = 500 + $startCell;
+            }
+
+            if ($endCell !== null) 
+            {
+                if ($startCell === 1) 
+                {
+                    $endCell++;
+                }
+                $importLimit = $endCell;
+            }
 
             $userCounter = 0;
             $batchSize = 25; // Nombre d'utilisateurs par flux
             foreach ($sheet->getRowIterator() as $row) {
+                if ($rowIndex <= $startCell) {
+                    $rowIndex++;
+                    continue;
+                }
+
                 if ($rowIndex === 1) {
                     $rowIndex++;
                     continue;
@@ -938,7 +958,8 @@ class UtilisateurController extends Controller
                     $userCounter++;
 
                     // Envoie de mail à l'utilisateur
-                    // $util->sendMessage($data['email'], $data['username'], $data['password']);
+                    dump($data['email']);
+                    $util->sendMessage($data['email'], $data['username'], $data['password']);
                 }
 
                 if ($userCounter % $batchSize === 0) {
