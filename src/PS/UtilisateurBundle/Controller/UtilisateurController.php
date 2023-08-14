@@ -903,7 +903,7 @@ class UtilisateurController extends Controller
 
             if ($endCell !== null) 
             {
-                if ($startCell === 1) 
+                if ($startCell === 1 || $rowIndex === 1) 
                 {
                     $endCell++;
                 }
