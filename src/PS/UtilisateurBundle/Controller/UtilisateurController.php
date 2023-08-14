@@ -878,7 +878,7 @@ class UtilisateurController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('file')->getData();
-            $role = $form->get('roles')->getData();
+            $roles = $form->get('roles')->getData();
             $startCell = $form->get('startCell')->getData();
             $endCell = $form->get('endCell')->getData();
             
@@ -938,11 +938,12 @@ class UtilisateurController extends Controller
                     $data[] = $cell->getValue();
                 }
 
-                $user = $this->createUser($data, $role);
+                // $role = ['ROLE_ADMIN_SUP'];
+                $result = $this->createUser($data, $roles);
 
-                if ($user['isCreated']) 
+                if ($result['isCreated']) 
                 {
-                    $data = $user['dataSecurity'];
+                    $data = $result['dataSecurity'];
                     $userCounter++;
 
                     // Envoie de mail à l'utilisateur
@@ -954,7 +955,7 @@ class UtilisateurController extends Controller
                     $em->clear();
                 }
 
-                $errors[] = $user['errors'];
+                $errors[] = $result['errors'];
                 $rowIndex++;
             }
             $em->flush();
@@ -994,8 +995,12 @@ class UtilisateurController extends Controller
     /**
      * @param data = []
      */
-    private function createUser($data = [], $role = ['ROLE_ADMIN_SUP'], $resent = false, $telephones = null)
+    private function createUser($data = [], $roles = 'ROLE_ADMIN_SUP', $resent = false, $telephones = null)
     {
+        if ($roles === null) {
+            $roles = 'ROLE_ADMIN_SUP';
+        }
+
         $isCreated = false;
         $em = $this->getDoctrine()->getManager();
         $smsMtarget  = $this->get('app.mtarget_sms');
@@ -1027,17 +1032,18 @@ class UtilisateurController extends Controller
         $isExistEmail = $userManager->findUserByEmail($email);
         $isExistUsername = $userManager->findUserByUsername($username);
 
-        $utilisateur = $isExistEmail;
+        $user = null;
+        $utilisateur = ($isExistEmail || $isExistUsername);
 
-        if ($isExistEmail || $isExistUsername) {
+        if ($utilisateur) {
             $dataErrors = [
                 'email' => $email,
                 'username'=> $username,
                 'nom'=> $fullName
             ];
         }
-       
-        if (!$isExistEmail || !$isExistUsername) 
+        
+        if (!$utilisateur) 
         {
             $personne    = new Personne();
             $personne->setNom($firstName)
@@ -1047,21 +1053,21 @@ class UtilisateurController extends Controller
 
             $password = $util->random(8, ['alphabet' => true]);
 
-            $utilisateur = new Utilisateur();
-            $utilisateur->setRoles($role)
+            $user = new Utilisateur();
+            $user->setRoles([$roles])
                 ->setEnabled(true)
                 ->setEmail($email)
                 ->setPlainPassword($password)
                 ->setUsername($username)
                 ->setPersonne($personne);
 
-            $userManager->updateUser($utilisateur, false);
+            // $userManager->updateUser($utilisateur, false);
 
             $dataSecurity['email'] = $email;
             $dataSecurity['password'] = $password;
             $dataSecurity['username'] = $username;
 
-            $em->persist($utilisateur);
+            $em->persist($user);
            
             $isCreated = true;
         }
@@ -1088,7 +1094,7 @@ class UtilisateurController extends Controller
         //     $smsMtarget->sendSms($additionalContact, $msgID, $sender);
         // }
         return [
-            'user' => $utilisateur,
+            'user' => $user,
             'dataSecurity' => $dataSecurity,
             'errors' => $dataErrors,
             'isCreated' => $isCreated,

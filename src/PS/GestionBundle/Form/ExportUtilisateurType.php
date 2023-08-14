@@ -5,6 +5,7 @@ namespace PS\GestionBundle\Form;
 use PS\GestionBundle\Form\Type\RoleChoiceType;
 use PS\ParametreBundle\Entity\Fichier;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -40,7 +41,7 @@ class ExportUtilisateurType extends AbstractType
                 'label' => 'à la ligne',
                 'required' => false,
             ])
-            ->add('roles', RoleChoiceType::class, [
+            ->add('roles', ChoiceType::class, [
                 'label' => 'Rôles',
                 'required' => false,
                 'choices'           => array_flip([
