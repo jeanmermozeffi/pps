@@ -21,6 +21,7 @@
                     <th style="width: 40px">Status</th>
                 </tr>
                 {% for error in errors %}
+                {% if error %}
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td>{{ error.nom|default('')|upper }}</td>
@@ -28,6 +29,7 @@
                     <td>{{ error.username|default('')}}</td>
                     <td><span class="badge bg-red">Echec</span></td>
                 </tr>
+                {% endif %}
                 {% endfor %}
                 <tr class="alert alert-danger">
                     <td colspan="5">

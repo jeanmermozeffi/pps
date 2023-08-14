@@ -946,7 +946,7 @@ class UtilisateurController extends Controller
                     $userCounter++;
 
                     // Envoie de mail à l'utilisateur
-                    $util->sendMessage($data['email'], $data['username'], $data['password']);
+                    // $util->sendMessage($data['email'], $data['username'], $data['password']);
                 }
 
                 if ($userCounter % $batchSize === 0) {
