@@ -121,8 +121,6 @@ class UtilisateurController extends Controller
 
         $grid->getColumn('roles')->setFilterable($user->hasRoles(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN', 'ROLE_ADMIN_SUP']));
 
-        //dump($grid->getColumn('roles')->getValues());exit;
-
         return $grid->getGridResponse('utilisateur/grid.html.twig');
     }
 
@@ -530,12 +528,6 @@ class UtilisateurController extends Controller
                             }
                         }
                     }
-
-
-                    // dump($specialites);exit;
-
-
-
                 }
 
                 if ($utilisateur->hasRole('ROLE_PHARMACIE')) {
@@ -590,8 +582,6 @@ class UtilisateurController extends Controller
 
         if ($editForm->isSubmitted()) {
 
-            //    print_r($editForm);die();
-            //var_dump($editForm);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('admin_gestion_patient_modifier', ['id' => $patient->getId()]);
@@ -824,8 +814,6 @@ class UtilisateurController extends Controller
     {
         $this->updateToken($utilisateur);
 
-        //dump($_SESSION);exit;
-
         if ($request->query->get('fully')) {
         }
 
@@ -958,7 +946,6 @@ class UtilisateurController extends Controller
                     $userCounter++;
 
                     // Envoie de mail à l'utilisateur
-                    dump($data['email']);
                     $util->sendMessage($data['email'], $data['username'], $data['password']);
                 }
 
