@@ -879,6 +879,7 @@ class UtilisateurController extends Controller
 
     public function importAction(Request $request)
     {
+        set_time_limit(0);
         $em = $this->getDoctrine()->getManager();
         $util = $this->get('app.psm_util');
         $form   = $this->createForm(ExportUtilisateurType::class);
