@@ -894,7 +894,7 @@ class UtilisateurController extends Controller
             $sheet = $spreadsheet->getActiveSheet();
 
             // Start from the second row (index 2)
-            $rowIndex = 2;
+            $rowIndex = 1;
             $importLimit = 501; // Limite d'importation
 
             if ($startCell && !$endCell) {
@@ -909,16 +909,16 @@ class UtilisateurController extends Controller
                 }
                 $importLimit = $endCell;
             }
-
+            
             $userCounter = 0;
             $batchSize = 25; // Nombre d'utilisateurs par flux
             foreach ($sheet->getRowIterator() as $row) {
-                if ($rowIndex <= $startCell) {
+                if ($rowIndex === 1) {
                     $rowIndex++;
                     continue;
                 }
 
-                if ($rowIndex === 1) {
+                if ($startCell && ($rowIndex < $startCell)) {
                     $rowIndex++;
                     continue;
                 }
@@ -957,6 +957,8 @@ class UtilisateurController extends Controller
                 $errors[] = $user['errors'];
                 $rowIndex++;
             }
+            $em->flush();
+            $em->clear();
 
             // Supprimer le fichier Excel
             try {
