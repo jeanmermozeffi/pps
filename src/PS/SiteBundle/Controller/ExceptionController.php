@@ -18,7 +18,7 @@ class ExceptionController extends Controller
             $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
-        return $this->render('@Twig/Exception/error' . $statusCode . '.html.twig', [
+        return $this->render('twig/exception/error' . $statusCode . '.html.twig', [
             'exception' => $exception,
             'status_code' => $statusCode,
         ]);
