@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ExceptionController extends AbstractController
+class ExceptionController extends Controller
 {
     public function showExceptionAction(\Throwable $exception)
     {
