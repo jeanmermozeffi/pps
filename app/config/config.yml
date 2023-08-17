@@ -54,6 +54,9 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
       admin_skin: '%admin_skin%'
+
+    exception_controller: 'SiteBundle:Exception:showException'
+    
     #form_themes:
             #- 'TetranzSelect2EntityBundle:Form:fields.html.twig'
 
