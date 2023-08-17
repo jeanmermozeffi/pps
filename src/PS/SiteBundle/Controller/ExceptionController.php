@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ExceptionController extends Controller
+class ExceptionController extends AbstractController
 {
     public function showExceptionAction(\Throwable $exception)
     {
@@ -18,7 +18,7 @@ class ExceptionController extends Controller
             $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
-        return $this->render('twig/exception/error' . $statusCode . '.html.twig', [
+        return $this->render('@Twig/Exception/error' . $statusCode . '.html.twig', [
             'exception' => $exception,
             'status_code' => $statusCode,
         ]);
