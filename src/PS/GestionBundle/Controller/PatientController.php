@@ -37,6 +37,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use PS\GestionBundle\Service\MtargetApiService;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Patient controller.
@@ -1412,5 +1413,45 @@ class PatientController extends Controller
                 'errors' => $errors
             ]
         );
+    }
+
+    public function printBadgeAction(Request $request, Patient $patient)
+    {
+        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+
+        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+
+        $mpdf = new \Mpdf\Mpdf([
+            'mode' => 'utf-8',
+            'orientation' => 'P',
+            'fontDir' => array_merge($fontDirs, [$this->getParameter('bundle_dir') . '/public/fonts/montserrat/']),
+            'fontdata' => $fontData + [
+                'Montserrat' => [
+                    'B' => 'Montserrat-Bold.ttf',
+                    'R' => 'Montserrat-Regular.ttf',
+                    'L' => 'Montserrat-Light.ttf',
+                ],
+            ],
+            'default_font' => 'Montserrat',
+            'format' => [134, 84]
+        ]);
+
+
+        $mpdf->shrink_tables_to_fit = 1;
+
+        $vars = [
+            'patient' => $patient
+        ];
+
+        $template = 'patient/badge.html.twig';
+
+        $mpdf->WriteHTML($this->renderView($template, $vars));
+
+        $mpdf->Output('BADGE ' . $patient->getIdentifiant() . '.pdf', 'I');
+
+        return new Response();
     }
 }

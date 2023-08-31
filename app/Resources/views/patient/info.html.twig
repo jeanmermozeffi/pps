@@ -47,9 +47,12 @@
                                             {% endif %}#}
                                             {% if 'ROLE_CUSTOMER' not in app.user.roles %}
                                                 <a href="{{ path('admin_gestion_patient_new') }}"
-                                               class="btn btn-info pull-right">
-                                                <i class="fa fa-plus"></i> {{ _html.text('Nouveau') }}
-                                            </a>
+                                                    class="btn btn-info pull-right">
+                                                    <i class="fa fa-plus"></i> {{ _html.text('Nouveau') }}
+                                                </a>
+                                                <a href="{{ path ('admin_gestion_patient_print_badge', {'id': patient.id}) }}" target="_blank" class="btn btn-success pull-right">
+                                                    {{ _html.text('Imprimer le badge') }}
+                                                </a>
                                            {% endif %}
                                         {% endif %}
                                     </div>

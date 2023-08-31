@@ -52,3 +52,7 @@ admin_gestion_patient_associe:
     path:     /associe/{id}
     defaults: { _controller: "GestionBundle:Patient:associe", id: null }
     methods:  [GET, POST]
+
+admin_gestion_patient_print_badge:
+    path:     /{id}/print-badge
+    defaults: { _controller: "GestionBundle:Patient:printBadge" }

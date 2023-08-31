@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Badge {{ patient.identifiant }}</title>
+    <style>
+      {% block page_css %}
+        @page :first {
+            footer: html_pageFooter;
+        }
+        
+        @page {
+
+          margin-footer: 0.3cm;
+          footer: html_empty;
+          /*header: html_headerContent;*/
+          
+          margin-top: 0cm;
+          margin-header: 0cm;
+          margin-left: 0cm;
+           margin-right: 0cm
+          /*background: ...
+  background-image: ...
+  background-position ...
+  background-repeat ...
+  background-color ...
+  background-gradient: ...*/
+        }
+        .clearfix:after,
+        {% endblock %} .clearfix:before {
+          content: " ";
+          display: table;
+        }
+
+        .clearfix:after {
+          clear: both;
+        }
+
+        .mention {
+  position: absolute;
+  bottom: 100px;
+}
+
+        /*@page :first {
+   header: html_headerContent;
+}*/
+
+        .table {
+          width: 100%;
+          max-width: 100%;
+          border-collapse: collapse;
+
+        }
+        .table {
+          page-break-before: auto;
+        }
+
+        body {
+          font-family: Montserrat;
+        }
+
+        .table td,
+        .table th {
+          padding: 2px;
+          vertical-align: top;
+          border-top: 1px solid #191919;
+        }
+
+        .table thead th {
+          vertical-align: bottom;
+          border-bottom: 2px solid #191919;
+        }
+
+        .table tbody + tbody {
+          border-top: 1px solid #191919;
+        }
+
+        .table .table {
+          background-color: #fff;
+        }
+
+        .table-sm td,
+        .table-sm th {
+          padding: 0.3rem;
+        }
+
+        .table-bordered {
+          border: 1px solid #191919;
+        }
+
+        .table-bordered td,
+        .table-bordered th {
+          border: 1px solid #191919;
+        }
+
+        .table-bordered thead td,
+        .table-bordered thead th {
+          border-bottom-width: 1px;
+        }
+
+        @media all {
+          /*.content { display: block; page-break-inside: avoid; }*/
+        }
+
+        .content {
+          /*margin-top: 18cm;*/
+        }
+
+        .table-responsive.table-bordered {
+          border: 0;
+        }
+
+        .double_underline {
+            text-decoration:underline;
+            border-bottom: 1px solid #000;
+            text-align: center;
+        }
+        
+        .mention {
+            position: absolute;
+            bottom: 25px;
+            left: 10px;
+        }
+    </style>
+  </head>
+  <body style="font-size:12px;">
+    <div class="clearfix">
+        <div style="width:15%;text-align:center;float:left;"  class="">
+            <img src="{{ absolute_url(asset('public/img/CNRAO.png')) }}" height="50px" style="max-width:100%" />
+        </div>
+         <div style="width:85%;text-align:center;float:right;background-color:#F79926;padding:5px 0;font-family:Montserrat"  class="">
+            <h1 style="font-size:23px;color:#fff;margin:0;">{{ 'Le carnet de santé numérique' | upper }}</h1>
+        </div>
+    </div>
+    <h2 style="color:#53B347;text-align:center;margin-top:-8px;font-size:16px;margin-bottom:0">CNRAO - PASS SANTE</h2>
+    <div>
+        <div style="padding-left:10px">
+            <table style="width:100%;border:none;font-weight: bold;padding-top:10px">
+                <tr>
+                    <td style="width:100%;padding-top:12px;font-size:21px"><span style="color:#000">{{ patient.personne.nomComplet }}</span></td>
+                </tr>
+            </table>
+         </div>
+        <div class="clearfix">
+            <div style="width:80%;text-align:center;float:left;padding-left:10px;padding-top:0px"  class="">
+                 
+                <table style="width:100%;border:none;font-weight: bold;">
+                    <tr>
+                        <td style="width:50%;padding-top:5px"> <span style="font-size:18px;">{{ patient.pin}}</span><br> <span style="color:#F79926;font-size:12px;">ID</span></td>
+                         <td style="width:50%;font-size:18px;padding-top:5px;"> <span style="font-size:18px;">{{ patient.identifiant}}</span><br> <span style="color:#F79926;font-size:12px;">PIN</span></td>
+                    </tr>
+                </table>
+                 <table style="width:100%;border:none;font-weight: bold;">
+                     <tr>
+                        <td style="width:50%;padding-top:5px;font-size:18px;"> <span style="font-size:18px;">{{ patient.fichePatientCancer.numeroDossier|default('') }}</span><br> <span style="color:#F79926;font-size:12px;">N° DOSSIER PATIENT</span></td>
+                         <td style="width:50%;padding-top:5px;font-size:18px;"> <span style="font-size:18px;">{{ patient.ville.nom|default('') }}</span><br> <span style="color:#F79926;font-size:12px;">VILLE</span></td>
+                    </tr>
+                </table>
+                
+               
+            </div>
+           
+             <div style="width:15%;margin-top:-3px;text-align:right;"  class="">
+               <img src="{{ absolute_url(asset('public/img/qrcode_cnrao.png')) }}" height="100px" style="max-width:100%" />
+            </div>
+        </div>
+             <div style="padding-right:10px;">
+                <table style="width:100%;border:none;font-weight: bold;">
+                     <tr>
+                        <td>&nbsp;</td>
+                        <td style="width:50%;text-align:right"><span style="color:#F79926;font-size:12px;">DATE D'EMISSION </span><br><span style="font-size:18px">{{ 'now' | date('d-m-Y') }}</span></td>
+                    </tr>
+                </table>
+            </div>
+    
+    </div>
+    <pagebreak />
+    <div>
+        <div style="width:300px;margin:0 auto;">
+            
+             <img src="{{ absolute_url(asset('public/img/logo_VERSO_CNRAO.png')) }}" height="300px" style="max-width:100%;margin-left:50px;margin-top:35px" />
+        </div>
+    </div>
+    <htmlpagefooter name="pageFooter">
+        
+        <div style="border:2px solid #53B347;width:60%;margin:0 auto"></div>
+        <div style="text-align:center;font-weight:bold;font-size:10px;margin-top:2px;">
+            Cette carte est strictement personnelle et n'est valable qu'après avoir été complétée.<br>
+            Toute personne trouvant la carte est priée de la retourner<br>
+            à COCODY, derrière le CHU, en entrant par la Faculté de Médecine. Tél:0768262662
+        </div>
+        </div>
+    </htmlpagefooter>
+    <htmlpagefooter name="empty"></htmlpagefooter>
+  </body>
+</html>
