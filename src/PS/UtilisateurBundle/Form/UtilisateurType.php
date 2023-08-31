@@ -131,9 +131,9 @@ class UtilisateurType extends AbstractType
             )
             ->add('roles', RoleChoiceType::class, [
                 'choices'           => array_flip([
-                    /*'ROLE_CUSTOMER'        => 'Patient',
+                    'ROLE_CUSTOMER'        => 'Patient',
                     'ROLE_INFIRMIER'       => 'Infirmier',
-                    'ROLE_MEDECIN'         => 'Medecin',*/
+                    'ROLE_MEDECIN'         => 'Medecin',
                     'ROLE_ADMIN'           => 'ADMINISTRATION DSI',
                     'ROLE_ADMIN_CORPORATE' => 'Administrateur groupe médical',
                     'ROLE_ADMIN_LOCAL'     => 'Administrateur local',
