@@ -95,7 +95,7 @@ class UtilisateurSubscriber implements EventSubscriberInterface
         $idUser = $data->getId();
 
         $roles = [
-            // 'ROLE_CUSTOMER'        => 'Patient',
+            'ROLE_CUSTOMER'        => 'Patient',
             'ROLE_INFIRMIER'       => 'Infirmier',
             'ROLE_MEDECIN'         => 'Medecin',
             'ROLE_ADMIN_SUP'       => 'AGENT ENROLEUR',
