@@ -97,7 +97,8 @@ security:
         - { path: ^/_profiler/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/js/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/css/, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http, ip: 127.0.0.1 }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https, host: passpostesante\.ci$ }
         - { path: ^/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/gestion/patient/new$, role: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -160,6 +161,7 @@ security:
         - { path: ^/((fr|es|en)/)?admin/, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/, role: [ROLE_CUSTOMER, ROLE_MEDECIN] }
         # PAGES ACCESSIBLES À TOUS
-        - { path: ^.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http, ip: 127.0.0.1 }
+        - { path: ^.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https, host: passpostesante.\.ci$ }
 
         #, requires_channel: https
