@@ -99,7 +99,7 @@ class Urgence
 
 
     /**
-     * @ORM\OneToMany(targetEntity="HistoriqueUrgence", cascade={"persist"}, mappedBy="urgenc")
+     * @ORM\OneToMany(targetEntity="HistoriqueUrgence", cascade={"persist"}, mappedBy="urgence")
      * @ORM\OrderBy({"date"="DESC"})
      */
     private $historiques;

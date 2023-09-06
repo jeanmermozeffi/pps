@@ -30,7 +30,7 @@ class PassHopital
 
 
     /**
-     * @ORM\OneToOne(targetEntity="PS\ParametreBundle\Entity\Pass")
+     * @ORM\ManyToOne(targetEntity="PS\ParametreBundle\Entity\Pass", inversedBy="passHopital")
      * @ORM\JoinColumn(nullable=false)
      */
     private $pass;

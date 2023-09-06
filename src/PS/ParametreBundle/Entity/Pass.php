@@ -3,9 +3,10 @@
 namespace PS\ParametreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use APY\DataGridBundle\Grid\Mapping as GRID;
+use PS\GestionBundle\Entity\PassHopital;
 use PS\GestionBundle\Entity\PassCorporate;
+use APY\DataGridBundle\Grid\Mapping as GRID;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Pass
@@ -61,17 +62,19 @@ class Pass
 
     /**
      * @ORM\OneToMany(targetEntity="PS\GestionBundle\Entity\PassCorporate", mappedBy="pass", cascade={"persist"})
+     * @ORM\JoinColumn(name="pass_id", referencedColumnName="id")
      */
     private $passCorporate;
 
 
     private $corporate;
 
-
     /**
-     * @ORM\OneToMany(targetEntity="PS\GestionBundle\Entity\PassHopital", mappedBy="pass")
+     * @ORM\OneToMany(targetEntity="PS\GestionBundle\Entity\PassHopital", mappedBy="pass", cascade={"persist"})
+     * @ORM\JoinColumn(name="pass_id", referencedColumnName="id")
      */
     private $passHopital;
+
 
 
     private $hopital;

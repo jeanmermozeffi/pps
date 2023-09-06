@@ -22,7 +22,7 @@ class InfoPersonne
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Personne", inversedBy="info")
+     * @ORM\OneToOne(targetEntity="Personne", inversedBy="infoPersonne")
      */
     private $personne;
 

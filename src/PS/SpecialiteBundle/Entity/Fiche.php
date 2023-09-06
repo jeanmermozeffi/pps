@@ -8,7 +8,7 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
 /**
  * Fiche
  *
- * @ORM\Table(name="fiche")
+ * @ORM\Table(name="fiche_specialite")
  * @ORM\Entity(repositoryClass="PS\SpecialiteBundle\Repository\FicheRepository")
  *  @GRID\Source(columns="id,dateFiche,numFiche,specialite.nom", filterable=false, sortable=false)
  *  @GRID\Column(id="nom_complet", type="join", title="Nom et prénoms", columns={"patient.personne.nom", "patient.personne.prenom"}, operatorsVisible=false)

@@ -3,6 +3,7 @@
 namespace PS\GestionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PS\GestionBundle\Entity\Corporate;
 
 /**
  * PassCorporate
@@ -22,14 +23,14 @@ class PassCorporate
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Corporate", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="PS\GestionBundle\Entity\Corporate", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $corporate;
 
 
     /**
-     * @ORM\OneToOne(targetEntity="PS\ParametreBundle\Entity\Pass", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="PS\ParametreBundle\Entity\Pass", inversedBy="passCorporate")
      * @ORM\JoinColumn(nullable=false)
      */
     private $pass;

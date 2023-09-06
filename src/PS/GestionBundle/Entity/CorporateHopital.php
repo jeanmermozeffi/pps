@@ -2,10 +2,10 @@
 namespace PS\GestionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use APY\DataGridBundle\Grid\Mapping as GRID;
 use JMS\Serializer\Annotation\Groups;
 use PS\UtilisateurBundle\Entity\Personne;
+use APY\DataGridBundle\Grid\Mapping as GRID;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 
@@ -25,14 +25,14 @@ class CorporateHopital
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="PS\ParametreBundle\Entity\Hopital", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="PS\ParametreBundle\Entity\Hopital", inversedBy="corporateHopital", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $hopital;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Corporate", inversedBy="corporateHopitaux", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="PS\GestionBundle\Entity\Corporate", inversedBy="corporateHopital", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $corporate;

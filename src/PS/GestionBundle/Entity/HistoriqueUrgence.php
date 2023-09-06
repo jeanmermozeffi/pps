@@ -37,7 +37,7 @@ class HistoriqueUrgence
 
 
      /**
-     * @ORM\ManyToOne(targetEntity="Urgence", inversedBy="historiques")
+     * @ORM\ManyToOne(targetEntity="Urgence", inversedBy="historiqueUrgence")
      * @ORM\JoinColumn(nullable=false)
      */
     private $urgence;

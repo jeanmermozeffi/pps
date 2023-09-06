@@ -53,7 +53,7 @@ class Personne
 
     /**
      * @Expose
-     * @ORM\Column(name="datenaissance", type="date", options={"default": "0000-00-00"}, nullable=true)
+     * @ORM\Column(name="datenaissance", type="date", options={"default": "1970-01-01"}, nullable=true)
      * @Groups({"personne"})
      * @Assert\NotBlank(message="Veuillez renseigner la date de naissance")
      */

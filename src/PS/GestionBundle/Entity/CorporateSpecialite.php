@@ -2,10 +2,12 @@
 namespace PS\GestionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use APY\DataGridBundle\Grid\Mapping as GRID;
 use JMS\Serializer\Annotation\Groups;
+use PS\GestionBundle\Entity\Corporate;
+use PS\ParametreBundle\Entity\Specialite;
 use PS\UtilisateurBundle\Entity\Personne;
+use APY\DataGridBundle\Grid\Mapping as GRID;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 
@@ -25,14 +27,14 @@ class CorporateSpecialite
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="PS\ParametreBundle\Entity\Specialite")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="PS\ParametreBundle\Entity\Specialite", inversedBy="corporates")
+     * @ORM\JoinColumn(name="specialite_id", referencedColumnName="id")
      */
     private $specialite;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Corporate", inversedBy="corporateSpecialites")
+     * @ORM\ManyToOne(targetEntity="PS\GestionBundle\Entity\Corporate", inversedBy="corporateSpecialites")
      * @ORM\JoinColumn(nullable=false)
      */
     private $corporate;

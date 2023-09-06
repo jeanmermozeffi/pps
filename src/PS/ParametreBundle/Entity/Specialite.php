@@ -43,17 +43,11 @@ class Specialite
      */    
     private $nom;
 
-    
-
-
     /**
      * 
      * @ORM\OneToMany(targetEntity="PS\GestionBundle\Entity\CorporateSpecialite", mappedBy="specialites", cascade={"persist"})
      */
     private $corporates;
-
-
-   
 
     /**
      * Get id

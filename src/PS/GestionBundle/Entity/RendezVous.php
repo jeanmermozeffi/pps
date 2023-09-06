@@ -62,7 +62,7 @@ class RendezVous
 
     /**
      * @Expose
-     * @ORM\Column(type="datetime", options={"default": "0000-00-00 00:00:00"}, nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"rdv"})
      * @SerializedName("dateAnnulation")
      */

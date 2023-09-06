@@ -59,7 +59,7 @@ class InfoPatientCancerCol
     private $ageRapportSexuel = 0;
 
     /**
-     * @ORM\OneToOne(targetEntity="\PS\GestionBundle\Entity\StatutTraitementIVH", inversedBy="InfoPatientCancerCol", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="\PS\GestionBundle\Entity\StatutTraitementIVH", inversedBy="infoPatientCancerCol", cascade={"persist"})
      *
      */
     private $statutTraitementIVH;
@@ -72,33 +72,33 @@ class InfoPatientCancerCol
 
 
     /**
-     * @ORM\OneToOne(targetEntity="\PS\GestionBundle\Entity\RealisationIva", inversedBy="InfoPatientCancerCol", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="\PS\GestionBundle\Entity\RealisationIva", inversedBy="infoPatientCancerCol", cascade={"persist"})
      *
      */
     private $realisationIva;
 
 
     /**
-     * @ORM\OneToOne(targetEntity="\PS\GestionBundle\Entity\TraitementCol", inversedBy="InfoPatientCancerCol", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="\PS\GestionBundle\Entity\TraitementCol", inversedBy="infoPatientCancerCol", cascade={"persist"})
      *
      */
     private $TraitementCol;
 
 
     /**
-     * @ORM\OneToOne(targetEntity="\PS\GestionBundle\Entity\ReferenceCancerCol", inversedBy="InfoPatientCancerCol", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="\PS\GestionBundle\Entity\ReferenceCancerCol", inversedBy="infoPatientCancerCol", cascade={"persist"})
      *
      */
     private $referenceCancerCol;
 
     /**
-     * @ORM\OneToOne(targetEntity="\PS\GestionBundle\Entity\TraitementCdip", inversedBy="InfoPatientCancerCol", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="\PS\GestionBundle\Entity\TraitementCdip", inversedBy="infoPatientCancerCol", cascade={"persist"})
      *
      */
     private $traitementCdip;
 
     /**
-     * @ORM\OneToOne(targetEntity="\PS\GestionBundle\Entity\VisiteCancer", inversedBy="InfoPatientCancerCol", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="\PS\GestionBundle\Entity\VisiteCancer", inversedBy="infoPatientCancerCol", cascade={"persist"})
      *
      */
     private $visiteCancer;

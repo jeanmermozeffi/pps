@@ -23,7 +23,7 @@ class Groupe extends BaseGroup
     protected $id;
 
     /** 
-     * @ORM\ManyToMany(targetEntity="Utilisateur", mappedBy="groups") 
+     * @ORM\ManyToMany(targetEntity="Utilisateur", mappedBy="groupe") 
      * 
      */
     protected $utilisateurs;
