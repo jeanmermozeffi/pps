@@ -1436,7 +1436,9 @@ class PatientController extends Controller
                 ],
             ],
             'default_font' => 'Montserrat',
-            'format' => [134, 84]
+            'img_dpi' => 300,
+            'dpi' => 300,
+            'format' => [85, 55],
         ]);
 
 
