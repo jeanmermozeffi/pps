@@ -2,6 +2,8 @@
 
 namespace PS\GestionBundle\Repository;
 
+use PS\GestionBundle\Entity\Paiement;
+
 /**
  * PaiementRepository
  *
@@ -10,4 +12,12 @@ namespace PS\GestionBundle\Repository;
  */
 class PaiementRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findOneByReference($reference): ?Paiement
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.referencePayement = :reference')
+            ->setParameter('reference', $reference)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

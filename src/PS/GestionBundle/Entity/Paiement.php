@@ -53,7 +53,7 @@ class Paiement
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $emailPaiementt;
+    private $emailPaiement;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -83,9 +83,10 @@ class Paiement
     public function __construct()
     {
         $this->datePayement = new \DateTime();
-        $this->referencePayement = '878AABCDEFZ' . time();
-        $this->device = 'CFA';
+        $this->referencePayement = 'REF-' . time();
+        $this->device = 'XOF';
         $this->statutPayement = false;
+        $this->description = '';
     }
 
     public function getId(): ?int
@@ -167,12 +168,12 @@ class Paiement
 
     public function getEmailPaiement(): ?string
     {
-        return $this->emailPaiementt;
+        return $this->emailPaiement;
     }
 
     public function setEmailPaiement(string $emailPaiementt): self
     {
-        $this->emailPaiementt = $emailPaiementt;
+        $this->emailPaiement = $emailPaiementt;
 
         return $this;
     }

@@ -481,7 +481,6 @@ class PatientController extends Controller
      */
     public function infoAction(Patient $patient = null)
     {
-
         //$showForm = $this->createForm(PatientType::class, $patient);
         $em = $this->getDoctrine()->getManager();
 
