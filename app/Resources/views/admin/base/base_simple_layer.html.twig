@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<!--
+Author: Keenthemes
+Product Name: Metronic - Bootstrap 5 HTML, VueJS, React, Angular & Laravel Admin Dashboard Theme
+Purchase: https://1.envato.market/EA4JP
+Website: http://www.keenthemes.com
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Dribbble: www.dribbble.com/keenthemes
+Like: www.facebook.com/keenthemes
+License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
+-->
+<html lang="en">
+	<!--begin::Head-->
+	<head><base href="../../../">
+		<title>Authentication</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Site officiel du Pass Santé">
+		<meta property="og:locale" content="en_FR" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content={% if app.request.attributes.get('_route') is same as 'app_login_cnrao' %}
+            'PASS MOUSSO-CNRAO'
+        {% else %}
+            'PASS MOUSSO- URGENCES & SOLUTIONS MÉDICALES'
+        {% endif %} />
+		<meta property="og:url" content="{{ app.request.uri }}" />
+		<meta property="og:site_name" content="PASS MOUSSO" />
+		<link rel="canonical" href="{{ app.request.uri }}" />
+        <link rel="shortcut Icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
+		<!--begin::Fonts-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Global Stylesheets Bundle(used by all pages)-->
+        <link href="{{ asset('https://psm4.postesante.net/admin/assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" />
+        <link href="{{ asset('https://psm4.postesante.net/admin/assets/css/style.bundle.css')}}" rel="stylesheet" />
+		<!--end::Global Stylesheets Bundle-->
+	</head>
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body id="kt_body" class="bg-body">
+		<!--begin::Main-->
+		<!--begin::Root-->
+		<div class="d-flex flex-column flex-root">
+			<div class="d-flex flex-column flex-lg-row flex-column-fluid">
+				<!--begin::Aside-->
+				{% block aside %}
+					<div class="d-flex flex-column flex-lg-row-auto w-xl-600px positon-xl-relative" style="opacity: 0.8;background-repeat:no-repeat; background-size:cover; background-image: url({{ asset('public/img/paiement.jpg') }})">
+						<!--begin::Wrapper-->
+						<div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px scroll-y">
+							<!--begin::Content-->
+							<div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
+								<!--begin::Logo-->
+								<div class="row py-9 mb-18">
+									<div class="col-md-6">
+										<a href="{{ path('print_invoice_stamp_patient') }}" class="">
+											{# <img alt="Logo" src="" class="h-90px" /> #}
+										</a>
+									</div>
+									<div class="col-md-6">
+										<a href="{{ path('print_invoice_stamp_patient') }}" class="">
+											{# <img alt="Logo" src="" class="h-90px" /> #}
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--end::Wrapper-->
+					</div>
+				{% endblock %}
+				<!--end::Aside-->
+				<!--begin::Body-->
+				{% block content %}
+
+				{% endblock %}
+				<!--end::Body-->
+			</div>
+		</div>
+		<!--end::Root-->
+		<!--end::Main-->
+		<!--begin::Javascript-->
+		<script>var hostUrl = "assets/";</script>
+		<!--begin::Global Javascript Bundle(used by all pages)-->
+         {# <script src="{{ asset('bundles/site/plugins.bundle.js')}}"></script>
+         <script src="{{ asset('bundles/site/scripts.bundle.js')}}"></script>
+         <script src="{{ asset('bundles/site/general.js')}}"></script> #}
+	</body>
+	<!--end::Body-->
+</html>

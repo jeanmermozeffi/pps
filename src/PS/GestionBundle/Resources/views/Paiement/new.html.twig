@@ -1,0 +1,118 @@
+{% extends "admin/base/base_simple_layer.html.twig" %}
+
+{% block title %}Achat Timbre | PPS{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-lg-row-fluid py-2">
+    <!--begin::Content-->
+    <div class="d-flex flex-center flex-column flex-column-fluid">
+        <!--begin::Wrapper-->
+        <div class="w-lg-700px p-6 p-lg-5 mx-auto">
+            {% if app.request.attributes.get('_route') is same as 'app_login_cnrao' %}
+                {% set check_login = 'cnrao_login_check' %}
+            {% else %}
+                {% set check_login = 'print_invoice_stamp_patient' %}
+            {% endif %}
+            <!--begin::Form-->
+            {{ form_start(form, { 'attr': {'class': 'form w-100', 'novalidate': 'novalidate', 'data-parsley-validate': true, 'id': 'pps_paye_stamp_form'} }) }}
+                <!--begin::Heading-->
+                <div class="text-center mb-2">
+                    <!--begin::Title-->
+                    <h1 class="text-dark mb-8">{{('Paiement de timbre PPS')|upper}}</h1>
+                    <!--end::Title-->
+                    <!--begin::Link-->
+                    <div class="text-gray-400 fw-bold fs-4">
+                        {# {% if error %}
+                            <span class="link-danger fw-bolder">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                            </span>
+                        {% endif %} #}
+                    </div>
+                </div>
+                <!--begin::Heading-->
+                <!--begin::Input group-->
+                <div class="row">
+                    <div class="fv-row mb-10 col-md-6">
+                        <!--begin::Label-->
+                        <label class="form-label fs-6 fw-bolder text-dark required">
+                        Nom
+                        </label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        {{ form_widget(form.nom, {attr: {'class':"form-control form-control-lg form-control-solid", 'autocomplete':"off", 'required':"required", disabled:false}}) 
+                        }}
+                    </div>
+                    <div class="fv-row mb-10 col-md-6">
+                        <label class="form-label fs-6 fw-bolder text-dark required">
+                        Prénoms
+                        </label>
+                        {{ form_widget(form.prenoms, {attr: {'class':"form-control form-control-lg form-control-solid", 'autocomplete':"off", 'required':"required" }}) 
+                        }}
+                    </div>
+                    <div class="fv-row mb-10 col-md-6">
+                        <!--begin::Label-->
+                        <label class="form-label fs-6 fw-bolder text-dark required">
+                        Contact
+                        </label>
+                        {{ form_widget(form.contact, {attr: {'class':"form-control form-control-lg form-control-solid", 'autocomplete':"off", 'required':"required" }}) 
+                        }}
+                    </div>
+                    <div class="fv-row mb-10 col-md-6">
+                        <!--begin::Label-->
+                        <label class="form-label fs-6 fw-bolder text-dark required">
+                        Email
+                        </label>
+                        {{ form_widget(form.emailPaiement, {attr: {'class':"form-control form-control-lg form-control-solid", 'autocomplete':"off", 'required':"required" }}) 
+                        }}
+                    </div>
+                    <div class="fv-row mb-10 col-md-6">
+                        <!--begin::Label-->
+                        <label class="form-label fs-6 fw-bolder text-dark required">
+                        Moyen de paiement
+                        </label>
+                        {{ form_widget(form.moyenPayement, {attr: {'class':"form-control form-control-lg form-control-solid", 'autocomplete':"off", 'required':"required" }}) 
+                        }}
+                    </div>
+                    <div class="fv-row mb-10 col-md-6">
+                        <!--begin::Wrapper-->
+                        <div class="d-flex flex-stack mb-2">
+                            <!--begin::Label-->
+                            <label class="form-label fw-bolder text-dark fs-6 mb-0">
+                            Montant (FCFA)
+                            </label>
+                        </div>
+                        {{ form_widget(form.montant, {attr: {'class':"form-control form-control-lg form-control-solid", 'autocomplete':"off", 'required':"required" }}) 
+                        }}
+                    </div>
+                </div>
+                <!--end::Input group-->
+                <!--begin::Input group-->
+                <!--end::Input group-->
+                <!--begin::Actions-->
+                <div class="text-center">
+                    <!--begin::Submit button-->
+                    <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5" name="_submit">
+                        <span class="indicator-label">Continue</span>
+                        <span class="indicator-progress">Please wait...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                    </button>
+                </div>
+                <!--end::Actions-->
+            {{ form_end(form) }}
+            <!--end::Form-->
+        </div>
+        <!--end::Wrapper-->
+    </div>
+    <!--end::Content-->
+    <!--begin::Footer-->
+    <div class="d-flex flex-center flex-wrap fs-6 p-5 pb-0">
+        <!--begin::Links-->
+        <div class="d-flex flex-center fw-bold fs-6">
+            <a href="#" class="text-muted text-hover-primary px-2">
+            Copyright © 2023 MCM</a>
+        </div>
+        <!--end::Links-->
+    </div>
+    <!--end::Footer-->
+</div>
+{% endblock %}

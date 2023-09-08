@@ -1,0 +1,109 @@
+{% extends "admin/base/base_simple_layer.html.twig" %}
+
+{% block title %}Achat Timbre | PPS{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-center flex-column flex-column-fluid">
+    <div class="w-lg-500px rounded shadow-sm p-6 p-lg-5 mx-auto">
+        <!--begin::Form-->
+        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="" action="#">
+            <!--begin::Heading-->
+            <div class="text-center mb-2">
+                <!--begin::Title-->
+                {% if transaction.reponseCode == - 1 %}
+                <h1 class="text-dark mb-3">Achat de timbre CSM</h1>
+                {% else %}
+                <h1 class="text-dark mb-3" style="color:red;">Achat de timbre CSM annuler !</h1>
+                {% endif %}
+                <!--end::Title-->
+                <!--begin::Link-->
+                <div class="text-gray-400 fw-bold fs-4">
+                Vous-venez {% if transaction.reponseCode == false %}d'effectuer 
+                {% else %}
+                d'annuler
+                {% endif %}
+                        l'achat de votre timbre CSM. <br>
+                {% if transaction.reponseCode == false %}
+                <a href="" class="link-primary fw-bolder">
+                Ci-dessous, les details du payement.
+                </a>
+                {% endif %}
+                </div>
+                <!--end::Link-->
+            </div>
+            {% if transaction.reponseCode == - 1 %}
+            <div class="row fv-row mb-7">
+                <div class="col-xl-6">
+                    <label class="form-label fw-bolder text-dark fs-6">Nom</label>
+                    <p class="form-control form-control-lg form-control-solid" type="text" placeholder="" name="first-name" autocomplete="off">
+                    {{(transaction.nom)|upper}}
+                    </p>
+                </div>
+                <div class="col-xl-6">
+                    <label class="form-label fw-bolder text-dark fs-6">
+                    Prénoms
+                    </label>
+                    <p class="form-control form-control-lg form-control-solid" type="text" placeholder="" name="first-name" autocomplete="off">
+                    {{(transaction.prenoms)|upper}}
+                    </p>
+                </div>
+            </div>
+            <div class="row fv-row mb-7">
+                <div class="col-xl-6">
+                    <label class="form-label fw-bolder text-dark fs-6">Montant</label>
+                    <p class="form-control form-control-lg form-control-solid" type="text" placeholder="" name="first-name" autocomplete="off">
+                    {{(transaction.montant)|upper}} FCA
+                    </p>
+                </div>
+                <div class="col-xl-6">
+                    <label class="form-label fw-bolder text-dark fs-6">
+                    Frais
+                    </label>
+                    <p class="form-control form-control-lg form-control-solid" type="text" placeholder="" name="first-name" autocomplete="off">
+                    0 FCA
+                    </p>
+                </div>
+            </div>
+            <div class="fv-row mb-10">
+                <label class="form-label fs-6 fw-bolder text-dark">Montant Net </label>
+                <p class="form-control form-control-lg form-control-solid" type="text" name="email" autocomplete="off">
+                    {{(transaction.montant)|upper}} FCA
+                </p>
+            </div>
+            <div class="fv-row mb-10">
+                <label class="form-label fs-6 fw-bolder text-dark">Réference Paiement</label>
+                <p class="form-control form-control-lg form-control-solid" type="text" name="email" autocomplete="off">
+                    {{(transaction.referencePayement)|upper}}
+                </p>
+            </div>
+            <div class="fv-row mb-10">
+                <label class="form-label fs-6 fw-bolder text-dark">Email</label>
+                <p class="form-control form-control-lg form-control-solid" type="text" name="email" autocomplete="off">
+                    mangoua.effi@gmail.com
+                </p>
+            </div>
+            {% endif %}
+
+            <div class="text-center">
+                <!--begin::Submit button-->
+                {% if transaction.reponseCode == - 1 %}
+                <a href="{{ path('app_payement_recu', {id:transaction.id}) }}" class="btn btn-lg btn-primary w-100 mb-5">
+                    <span class="indicator-label">Imprimer votre reçu</span>
+                    <span class="indicator-progress">Please wait...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                </a>
+                {% endif %}
+                <a href="{{ path('homepage') }}" class="btn btn-lg btn-primary w-100 mb-5">
+                    <span class="indicator-label">Retour sur le site</span>
+                    <span class="indicator-progress">Please wait...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                </a>
+            </div>
+            
+            <!--end::Actions-->
+        </form>
+        <!--end::Form-->
+    </div>
+    <!--end::Wrapper-->
+    </div>
+{% endblock %}
