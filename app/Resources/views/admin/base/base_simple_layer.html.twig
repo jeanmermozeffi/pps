@@ -17,16 +17,12 @@ License: For each use you must have a valid license purchased only from above li
 		<title>Authentication</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="description" content="Site officiel du Pass Santé">
+		<meta name="description" content="Site officiel du Pass Poste Santé">
 		<meta property="og:locale" content="en_FR" />
 		<meta property="og:type" content="article" />
-		<meta property="og:title" content={% if app.request.attributes.get('_route') is same as 'app_login_cnrao' %}
-            'PASS MOUSSO-CNRAO'
-        {% else %}
-            'PASS MOUSSO- URGENCES & SOLUTIONS MÉDICALES'
-        {% endif %} />
+		<meta property="og:title" content="PPS | ACHAT TIMBRE" />
 		<meta property="og:url" content="{{ app.request.uri }}" />
-		<meta property="og:site_name" content="PASS MOUSSO" />
+		<meta property="og:site_name" content="PPS" />
 		<link rel="canonical" href="{{ app.request.uri }}" />
         <link rel="shortcut Icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
 		<!--begin::Fonts-->
