@@ -1,0 +1,665 @@
+{#<style type="text/css">
+    fieldset {
+        min-width: 0;
+        padding: 0;
+        padding-left: 10px;
+        margin: 0;
+        border: solid 1px #aaaaaa;
+    }
+    fieldset table{
+        padding-bottom: 15px;
+    }
+    legend {
+        display: block;
+        width: 100%;
+        padding: 0;
+        margin-bottom: 20px;
+        font-size: 16px;
+        line-height: inherit;
+        color: #333;
+        border: 0;
+    }
+    .rci{
+        width: 100%;
+        padding-bottom: 5px;
+        border-bottom: solid 1px #aaaaaa;
+    }
+    .udt{
+        width: 100%;
+    }
+    table{width: 100%; border-collapse: collapse; border: none}
+    table td{min-height: 100px}
+    .text-left{text-align: left;}
+    .text-right{text-align: right;}
+    .text-center{text-align: center;}
+    .border-top{border-top: solid 1px #000000}
+    .titre0{width: 20%}
+    .titre1{width: 20%}
+    .titre{font-size: 21px;font-weight: bold; width: 60%}
+    .left{float: left}
+    .right{float: right}
+    .republic{font-size: 12px}
+    .italique{font-style: italic;}
+    .separator{width: 100%; height: 10px;}
+    .pad5{padding-left: 5px}
+
+    .header td{width: 33%; vertical-align: top; border: 0; padding: 5px;}
+
+    .signature td{width: 50%; vertical-align: top; border: none; padding: 5px;}
+
+    .general td{width: 50%; vertical-align: top; border:none; padding: 5px;}
+
+    .client td{border-right: solid 1px #000; border-left: solid 1px #000;}
+    .client td.libelle{width: 33%;}
+    .client td.infos{width: 66%;}
+    .client td.first{border-top: solid 1px #000;}
+    .client td.last{border-bottom: solid 1px #000;}
+
+    .content th.code, .content th.quantite{width: 7%}
+    .content th.nature{width: 46%}
+    .content th.date{width: 36%}
+    .content td.last{border-bottom: solid 1px #000;}
+    .content td{border-right: solid 1px #000; border-left: solid 1px #000; padding: 5px;}
+    .content th{border: solid 1px #000; padding: 5px; background-color: #ccc; color: #000}
+
+    .motif td{width:14.1%; border: solid 1px #000; text-align: center;}
+    .motif td.titre{border: none;}
+
+    .analyse td{width: 33%; text-align: center;}
+
+    .signature td.note{font-size: 9px;}
+
+    #footerContent{font-size: 11px}
+
+    .sigle{font-size: 25px;}
+    /* Page margins are defined using CSS */
+    @page {
+        margin: 1cm;
+        margin-top:2.5cm;
+        margin-bottom: 2.5cm;
+
+        /* Header frame starts within margin-top of @page */
+        @frame header {
+    -pdf-frame-content: headerContent; /* headerContent is the #id of the element */
+        top: 1cm;
+        margin-left: 1cm;
+        margin-right:1cm;
+        height:1cm;
+    }
+
+        /* Footer frame starts outside margin-bottom of @page */
+    @frame footer {
+    -pdf-frame-content: footerContent;
+    bottom: 0.5cm;
+    margin-left: 1cm;
+    margin-right: 1cm;
+    height: 1cm;
+    }
+    }
+</style>
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/bootstrap/dist/css/bootstrap.min.css') }}" />
+{% endblock %}
+
+<page backtop="" backright="0" backleft="0" backbottom="10mm">
+
+    <table class="header">
+        <tr>
+            <td class="text-center">
+                MINISTERE DE LA SANTE ET DE LA LUTTE CONTRE LE SIDA
+            </td>
+            <td class="text-center right">
+
+            </td>
+            <td class="text-center right">
+                <span>REPUBLIQUE DE CÔTE D'IVOIRE</span>
+                <span>UNION - DISCIPLINE - TRAVAIL</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center">
+                <span class="rci">{% if consultation.hopital %}{{ consultation.hopital.nom }}{% else %}HOPITAL{% endif %}</span>
+                <span class="udt">Tèl : 22 44 00 00</span>
+            </td>
+            <td class="text-center right">
+
+            </td>
+            <td class="text-center right">
+                Abidjan, le {{ consultation.dateConsultation|date("d/m/Y") }}
+            </td>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <table>
+        <tr>
+            <th class="titre0">
+            </th>
+            <th class="text-center titre">
+                FICHE DE CONSULTATION
+            </th>
+            <th class="titre1">
+            </th>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <div class="transaction">
+          REF: <strong>{{ consultation.refConsultation }}</strong> <i>(Pour les paiements , labo et hospitalisation)</i><br><br>
+            <div  style="text-align:right;border-bottom:1px solid #DDD;margin-bottom: 5px;padding-bottom: 5px;">
+                MEDECIN TRAITANT<br>
+                Nom : {{ consultation.medecin.personne.nom }}<br>
+                Prenom : {{ consultation.medecin.personne.prenom }}<br>
+                Spécialité : <b>{{ consultation.specialite.nom }}</b>
+            </div>
+            <table class="">
+                <tr>
+                    <td width="50%">
+                    <table>
+                        <tr>
+                            <td>INFORMATIONS transaction</td>
+                        </tr>
+                        <tr>
+                            <td>Nom : {{ consultation.transaction.personne.nom }}</td>
+                        </tr>
+                        <tr>
+                            <td>Prenom : {{ consultation.transaction.personne.prenom }}</td>
+                        </tr>
+                        <tr>
+                            <td>Âge : {{ consultation.transaction.personne.age }} ans</td>
+                        </tr>
+                    </table>
+                    </td>
+                </tr>
+            </table>
+
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="transaction">
+        <fieldset>
+            <legend>CONSTANTES</legend>
+            <table class="">
+                {% for item in consultation.constantes %}
+                    {% if item.valeur is not same as('') %}
+                        <tr>
+                            <td>{{ item.constante.libelle }} : {{ item.valeur }}</td>
+                        </tr>
+                    {% endif %}
+               {% endfor %}
+            </table>
+        </fieldset>
+
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="transaction">
+        <table class="">
+            <tr>
+                <td>Motif : {{ consultation.motif }}</td>
+            </tr>
+             <tr>
+                <td>Hypothèse : {{ consultation.diagnostique }}</td>
+            </tr>
+             <tr>
+                <td>Diagnostic Retenu : {{ consultation.diagnostiqueFinal }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="separator"></div>
+
+    <!--<div class="transaction" style="display: none;">
+        <fieldset>
+            <legend>DIAGNOSTIC (AFFECTIONS)</legend>
+            <table class="">
+                {% for key, item in consultation.affections %}
+                <tr>
+                    <td>{{ item.affection }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </fieldset>
+
+    </div>-->
+    <div class="separator"></div>
+
+    <div class="transaction">
+        <fieldset>
+            <legend>ANALYSES</legend>
+            <table class="">
+                {% set i = 0 %}
+                {% for key, item in consultation.analyses %}
+                {% set i = i + 1 %}
+                <tr>
+                    <td>{{ i }} - {{ item.analyse }} : {{ item.libelle }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </fieldset>
+
+    </div>
+
+
+    <div class="separator"></div>
+
+    <div class="transaction">
+        <fieldset>
+            <legend>ORDONNANCE (LISTE DE MEDICAMENTS)</legend>
+            <table class="">
+                {% set i = 0 %}
+                {% for key, item in consultation.medicaments %}
+                    {% set i = i + 1 %}
+                <tr>
+                    <td>{{ i }} - {{ item.medicament }} : {{ item.posologie }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </fieldset>
+
+    </div>
+
+    
+    <page_footer>
+        <table class="signature">
+            <tr>
+                <td class="text-left">Nom et visa du transaction </td>
+                <td class="text-right">Nom et visa du médécin</td>
+            </tr>
+            <tr>
+                <td class="text-left">{% if consultation.transaction.personne.signature %}<img src="{{ signaturePath ~ consultation.transaction.personne.signature }}" height="50" />{% endif %}<br><br><br><br><br></td>
+                <td class="text-right">{% if consultation.medecin.personne.signature %}<img src="{{ signaturePath ~ consultation.medecin.personne.signature }}" height="50" />{% endif %}<br><br><br><br><br></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-center note">
+                    <i>"La signature de ce document atteste que le client a pris connaissance et approuve les termes de la plateforme."</i>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <div id="footerContent" class="text-center">
+            PASS+SANTE | LA SANTE N'A PAS DE PRIX, CAR NOUS N'AVONS QU'UNE VIE
+        </div>
+    </page_footer>
+</page>#}
+
+{% macro page_header() %}
+
+   
+{% endmacro %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fiche de consultation transaction</title>
+  <style>
+  {% block page_css %}
+  @page {
+  margin-top: 0.5cm;
+  margin-header: 10cm; /* <any of the usual CSS values for margins> */
+  margin-footer: 5mm; /* <any of the usual CSS values for margins> */
+  /*header: html_headerContent;*/
+  footer: html_pageFooter;
+  /*background: ...
+  background-image: ...
+  background-position ...
+  background-repeat ...
+  background-color ...
+  background-gradient: ...*/
+    }
+  {% endblock %}
+/*$body,
+html {
+    color: #777777;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5em;
+    overflow-x: hidden;
+    background-color: #f5f7ff;
+}*/
+
+  .clearfix:before, .clearfix:after {
+  content: " ";
+  display: table; }
+
+.clearfix:after {
+  clear: both; }
+
+
+/*@page :first {
+   header: html_headerContent;
+}*/
+
+  .table {
+  width: 100%;
+  max-width: 100%;
+
+}
+.table {page-break-before:auto;}
+
+body { font-family: Arial,Helvetica,DejaVu Sans; }
+
+.table th,
+.table td {
+  padding: 0.5rem;
+  vertical-align: top;
+  border-top: 1px solid #191919;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #191919;
+}
+
+.table tbody + tbody {
+  border-top: 2px solid #191919;
+}
+
+.table .table {
+  background-color: #fff;
+}
+
+.table-sm th,
+.table-sm td {
+  padding: 0.3rem;
+}
+
+.table-bordered {
+  border: 1px solid #191919;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #191919;
+}
+
+.table-bordered thead th,
+.table-bordered thead td {
+  border-bottom-width: 2px;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.table-active,
+.table-active > th,
+.table-active > td {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.table-hover .table-active:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.table-hover .table-active:hover > td,
+.table-hover .table-active:hover > th {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.table-success,
+.table-success > th,
+.table-success > td {
+  background-color: #dff0d8;
+}
+
+.table-hover .table-success:hover {
+  background-color: #d0e9c6;
+}
+
+.table-hover .table-success:hover > td,
+.table-hover .table-success:hover > th {
+  background-color: #d0e9c6;
+}
+
+.table-info,
+.table-info > th,
+.table-info > td {
+  background-color: #d9edf7;
+}
+
+.table-hover .table-info:hover {
+  background-color: #c4e3f3;
+}
+
+.table-hover .table-info:hover > td,
+.table-hover .table-info:hover > th {
+  background-color: #c4e3f3;
+}
+
+.table-warning,
+.table-warning > th,
+.table-warning > td {
+  background-color: #fcf8e3;
+}
+
+.table-hover .table-warning:hover {
+  background-color: #faf2cc;
+}
+
+.table-hover .table-warning:hover > td,
+.table-hover .table-warning:hover > th {
+  background-color: #faf2cc;
+}
+
+.table-danger,
+.table-danger > th,
+.table-danger > td {
+  background-color: #f2dede;
+}
+
+.table-hover .table-danger:hover {
+  background-color: #ebcccc;
+}
+
+.table-hover .table-danger:hover > td,
+.table-hover .table-danger:hover > th {
+  background-color: #ebcccc;
+}
+
+.thead-inverse th {
+  color: #fff;
+  background-color: #292b2c;
+}
+
+.thead-default th {
+  color: #464a4c;
+  background-color: #191919;
+}
+
+.table-inverse {
+  color: #fff;
+  background-color: #292b2c;
+}
+
+.table-inverse th,
+.table-inverse td,
+.table-inverse thead th {
+  border-color: #fff;
+}
+
+.table-inverse.table-bordered {
+  border: 0;
+}
+
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+td .td-label, .td-info{
+    font-size:2rem;
+}
+
+@media all {
+    /*.content { display: block; page-break-inside: avoid; }*/
+}
+
+.content {
+  /*margin-top: 18cm;*/
+}
+
+.table-responsive.table-bordered {
+  border: 0;
+}
+
+{# .cs-container {
+    max-width: 880px;
+    padding: 30px 15px;
+    margin-left: auto;
+    margin-right: auto;
+} #}
+
+.fiche-title{
+    text-align:center;
+    border: 2px solid;
+}
+
+.title-section{
+    text-align:center;
+    background-color: #2e423ad4;
+    color: #fff;
+    padding: 3px;
+    border: 0px solid;
+    font-size: 1.80rem;
+}
+
+</style>
+</head>
+<body style="font-size:13px;">
+    <div class="cs-container">
+        <table style="width:100%";>
+            <tr>
+                <td align="left" width="40%">
+                    <span>MINISTERE DE LA SANTE ET </span><br>
+                    <span>DE LA LUTTE CONTRE LE SIDA</span>
+                </td>
+                <td class="text-center">
+
+                </td>
+                <td align="right" width="40%" style="text-align:center;">
+                    <span>REPUBLIQUE DE CÔTE D'IVOIRE <br>
+                    -----------------------------------------
+                    <br>
+                    UNION - DISCIPLINE - TRAVAIL</span> 
+                </td>
+            </tr>
+            {# <tr>
+                <td class="text-center">
+                    <span class="rci">HOPITAL</span>
+                    <span class="udt">Tèl : 22 44 00 00</span>
+                </td>
+                <td class="text-center right">
+
+                </td>
+                <td class="text-center right">
+                    Abidjan, le 12/08/2022
+                </td>
+            </tr> #}
+        </table>
+
+        <div class="separator"></div>
+        <table style="width:100%; font-family:Times;">
+        <tr>
+            <td align="left" width="30%">
+                <img class="img-fluid" src="{{ asset('/Users/effijeanmermoz/Desktop/Projet/psm4/public//admin/assets/media/logos/logo-mistere.png') }}" alt="logo" style="max-width: 100%; height: 150px;" >
+            </td>
+            <td align="center">
+            <h2>
+            {{('Carnet de santé médicale')|upper}}<br>
+            </h2>
+            -----------------------------------------------------<br>
+            <span style="font-size:1.27rem">{{('Tèl : (+225) 27 22 44 00 00')|upper}}, <br> Adresse : Abidjan, Marcory Sainte Thérèse <br>
+            E-mail : info@hme.ci, BP 722 Bingerville
+            </span>
+            </td>
+            <td align="right"  width="30%">
+            <img class="img-fluid" src="{{ asset('/Users/effijeanmermoz/Desktop/Projet/psm4/public/' ~ '/test/LOGO-PPS-160X60.png') }}" alt="logo" style="max-width: 100%; height: 100px;" >
+
+            </td>
+        </tr>
+    </table>
+    <div style="height:1px;border:1px solid #000"></div>
+        <h1 class="fiche-title">
+        {{('réçu timbre csm N°: CSM90271008')|upper}} 
+        {# {{ consultation.refConsultation }} du {{ consultation.dateConsultation|date("d/m/Y") }}#}
+        </h1> 
+        <h3 class="title-section">
+        {{('Information de paiement')|upper}} 
+        </h3> 
+        <table width="100%">
+            <tr>
+                <td width="15%">
+                <img class="profile-user-img" src="{{ asset('/Users/effijeanmermoz/Desktop/Projet/psm4/public/' ~ '/test/codeBar.png') }}" alt="User profile picture" style="max-width:100%" width="150px">
+                </td>
+                <td width="70%" style="vertical-align:top;">
+                <table width="100%">
+                    <tr>
+                    <td class="td-label">Reference Paiement : </td>
+                    <td class="td-info" style=""><b>{{ (transaction.referencePayement)|upper }}</b></td>
+                    </tr>
+                    <tr>
+                    <td class="td-label">Nom : </td>
+                    <td class="td-info" style=""><b>{{ (transaction.nom)|upper }}</b></td>
+                    </tr>
+                    <tr>
+                    <td class="td-label">Prénoms : </td>
+                    <td class="td-info" style=""><b>{{ (transaction.prenoms)|upper }}</b></td>
+                    </tr>
+                    <tr>
+                    <td class="td-label">Date Paiement</td>
+                    <td class="td-info" style=""><b>
+                    {{ transaction.datePayement ? transaction.datePayement|date('Y-m-d') : '' }}
+                    </b></td>
+                    </tr>
+                    <tr>
+                    <td class="td-label">Montant : </td>
+                    <td class="td-info" style=""><b>{{ (transaction.montant)|upper }} FCA</b></td>
+                    </tr>
+                    <tr>
+                    <td class="td-label">Frais : </td>
+                    <td class="td-info" style=""><b>{{ ('0')|upper }} FCA</b></td>
+                    </tr>
+                    <tr>
+                    <td class="td-label">Opérateur : </td>
+                    <td class="td-info" style="">
+                    {% if transaction.moyenPayement == 'OMCIV2' %}
+                        <img class="img-fluid" src="{{ asset('/Users/effijeanmermoz/Desktop/Projet/psm4/public/' ~ '/test/logo-OM.jpeg') }}" alt="logo" style="max-width: 100%; height: 100px;" >
+                    {% endif %}
+                    </td>
+                    </tr>
+                </table>
+                </td>
+            </tr>
+            
+        </table>
+        
+        <htmlpagefooter name="pageFooter">
+            <div style="height:2px;border:1px solid #000"></div>
+            <table style="width:100%;">
+                <tr>
+                    <td style="color:rgb(0,0,0);text-align:center;font-family:dejavusans,font-size:8px;font-style:italic;font-weight:bold;width:90%">
+                        <span style="font-size:10px;"> TÈL : (+225) 27 22 44 00 00, Abidjan, Marcory Sainte Thérèse | LA SANTE N'A PAS DE PRIX, CAR NOUS N'AVONS QU'UNE VIE
+                    </span><br>
+                    </td>
+                    <td style="text-align:right;">
+                        <span style="font-size:10px;">{PAGENO}/{nbpg}</span><br>
+                    </td> 
+                </tr>
+            </table>
+        </htmlpagefooter>
+    </div>
+</body>
+</html>
