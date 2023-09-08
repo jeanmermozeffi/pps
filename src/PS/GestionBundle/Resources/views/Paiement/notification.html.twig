@@ -10,15 +10,15 @@
             <!--begin::Heading-->
             <div class="text-center mb-2">
                 <!--begin::Title-->
-                {% if transaction.reponseCode == - 1 %}
+                {% if transaction.reponseCode == false %}
                 <h1 class="text-dark mb-3">Achat de timbre CSM</h1>
                 {% else %}
-                <h1 class="text-dark mb-3" style="color:red;">Achat de timbre CSM annuler !</h1>
+                <h1 class="text-danger mb-3" style="color:red;">Achat de timbre CSM annuler !</h1>
                 {% endif %}
                 <!--end::Title-->
                 <!--begin::Link-->
-                <div class="text-gray-400 fw-bold fs-4">
-                Vous-venez {% if transaction.reponseCode == false %}d'effectuer 
+                <div class="text-gray-400 fw-bold fs-4 mb-5">
+                Vous-venez {% if transaction.reponseCode == false %} d'effectuer 
                 {% else %}
                 d'annuler
                 {% endif %}
@@ -86,7 +86,7 @@
 
             <div class="text-center">
                 <!--begin::Submit button-->
-                {% if transaction.reponseCode == - 1 %}
+                {% if transaction.reponseCode == false %}
                 <a href="{{ path('app_payement_recu', {id:transaction.id}) }}" class="btn btn-lg btn-primary w-100 mb-5">
                     <span class="indicator-label">Imprimer votre reçu</span>
                     <span class="indicator-progress">Please wait...

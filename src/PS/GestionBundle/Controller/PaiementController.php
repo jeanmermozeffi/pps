@@ -211,7 +211,6 @@ class PaiementController extends Controller
                 ]
             ],
         ]);
-
         $html = $this->renderView('GestionBundle:Paiement:print-recu-csm.html.twig', [
             'transaction' => $transaction,
         ]);
