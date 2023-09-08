@@ -283,6 +283,11 @@ services:
     autowire: true
     arguments: ['@security.token_storage', "@doctrine.orm.entity_manager"]
 
+  app.paiement_pro_api:
+    class: PS\GestionBundle\Service\Paiement\PaiementProApi
+    autowire: true
+    arguments: ['@router']
+
   acme_api.event.jwt_created_listener:
     class: PS\MobileBundle\EventListener\JWTCreatedListener
     arguments: ["@security.authorization_checker", "@doctrine.orm.entity_manager", "@fos_user.user_manager"]

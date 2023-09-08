@@ -1,3 +1,7 @@
+gestion_price_stamp_patient:
+    resource: "@GestionBundle/Controller/PaiementController.php"
+    type:     annotation
+
 gestion_info_patient_cancer_col:
     resource: "@GestionBundle/Controller/InfoPatientCancerColController.php"
     type:     annotation
