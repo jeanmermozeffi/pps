@@ -340,6 +340,12 @@ class PatientController extends Controller
         $pin = $patient->getPin();
         $nom = str_slug($nom, '_');
         $username = $identifiant ?  $nom . $identifiant : $nom . $util->random(5, ['alphabet' => false ]);
+
+        if(!$email)
+        {
+            $email = $username . '@santemousso.net';
+        }
+       
         $utilisateur = $userManager->findUserBy(['personne' => $personne]);
         $smsManager  = $this->get('app.ps_sms');
         $additionalContact = null;

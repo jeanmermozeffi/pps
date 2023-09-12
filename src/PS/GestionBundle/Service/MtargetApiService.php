@@ -67,6 +67,7 @@ class MtargetApiService
 
         $success = 0;
         $failed  = 0;
+        $result = [];
 
         if (!$user && !is_object($this->token->getToken()->getUser())) {
             $user = null;
@@ -77,12 +78,14 @@ class MtargetApiService
         $_message->setContenu($message);
         $_message->setDate(new \DateTime());
 
-        foreach ($numbers as $receiverAddress) {
-            $receiverAddress = $this->getReceiverAddress($receiverAddress);
-            if ($receiverAddress) {
+        foreach ($numbers as $receiverAddres) {
+            $receiverAddresValited = $this->getReceiverAddress($receiverAddres);
+
+            if ($receiverAddresValited) {
                 $destinataire = new DestinataireMessage();
-                $response     = $this->toSend($receiverAddress, $message, $senderName);
-                $destinataire->setContact($receiverAddress);
+                $response     = $this->toSend($receiverAddresValited, $message, $senderName);
+                
+                $destinataire->setContact($receiverAddresValited);
                 
                 if (!empty($response['error'])) {
                     $destinataire->setStatut(false);
@@ -90,30 +93,29 @@ class MtargetApiService
                     $failed += 1;
                 } else {
                     $destinataire->setStatut(true);
-
-                    $this->messages[] = sprintf('SMS envoyé avec succès à %s', $receiverAddress);
+                    $this->messages[] = sprintf('SMS envoyé avec succès à %s', $receiverAddresValited);
                     $success += 1;
                 }
                 $_message->addDestinataire($destinataire);
             } else {
                 $failed += 1;
             }
+
         }
 
         if ($success > 0) {
             $_message->setStatut(true);
             $_message->setDateEnvoi(new \DateTime());
-            $result = ['success' => $success, 'failed' => $failed, 'response' => $response];
+            $result = ['success' => $success, 'failed' => $failed];
         } else {
             $_message->setStatut(false);
-            $result = ['response' => $response];
         }
+
 
         $this->em->persist($_message);
         $this->em->flush();
 
         return $result;
-
     }
 
     
