@@ -50,7 +50,7 @@ class PatientType extends AbstractType
         $isAssociated = $options['is_associated'];
         $builder
             ->add('personne', PersonneType::class, ['label' => true, 'date_format' => $options['date_format']])
-            ->add('email', EmailType::class, ['label' => 'Votre Email', 'required' => true,])
+            ->add('email', EmailType::class, ['label' => 'Votre Email', 'required' => false])
             // ->add('identifiant', TextType::class, ['label' => 'patient.form.identifiant', 'required' => false,])
             // ->add('pin', TextType::class, ['label' => 'patient.form.pin', 'required' => false,])
             ->add('poids', IntegerType::class, ['required' => false, 'label' => 'patient.form.poids'])
