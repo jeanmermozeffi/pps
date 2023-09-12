@@ -57,6 +57,7 @@ class MtargetApiService
 
     public function sendSMS($receiverAddress, $message, $senderName)
     {
+
         $user = null;
         $numbers = $this->normalizeNumbers($receiverAddress);
 
@@ -78,11 +79,9 @@ class MtargetApiService
 
         foreach ($numbers as $receiverAddress) {
             $receiverAddress = $this->getReceiverAddress($receiverAddress);
-           
             if ($receiverAddress) {
                 $destinataire = new DestinataireMessage();
                 $response     = $this->toSend($receiverAddress, $message, $senderName);
-                
                 $destinataire->setContact($receiverAddress);
                 
                 if (!empty($response['error'])) {
@@ -202,8 +201,6 @@ class MtargetApiService
             $receiverAddress = sprintf('%s', $receiverAddress);
         } elseif (strlen($receiverAddress) == 10) {
             $receiverAddress = sprintf('+225%s', $receiverAddress);
-        } else {
-            $receiverAddress = '';
         }
 
         return $receiverAddress;
