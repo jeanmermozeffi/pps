@@ -39,12 +39,13 @@
                                             {{ _html.text('patient.info_title') }}
                                         </div>
                                         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ADMIN_LOCAL') or is_granted('ROLE_ADMIN_SUP') %}
-                                            {#}{% if is_granted('ROLE_EDIT_PATIENT', patient) %}
+                                        
+                                            {% if is_granted('ROLE_EDIT_PATIENT', patient) %}
                                             <a href="{{ path ('admin_gestion_patient_modifier', {'id': patient.id}) }}"
                                                class="btn btn-warning pull-right">
                                                 <i class="fa fa-edit"></i> {{ _html.text('btn.edit') }}
                                             </a>
-                                            {% endif %}#}
+                                            {% endif %}
                                             {% if 'ROLE_CUSTOMER' not in app.user.roles %}
                                                 <a href="{{ path('admin_gestion_patient_new') }}"
                                                     class="btn btn-info pull-right">
