@@ -19,16 +19,6 @@ class PaiementController extends Controller
      */
     public function newAction(Request $request, Patient $patient)
     {
-        $sender = 'COMPTE PSM';
-        $identifiant = 76567;
-        $pin = 76567;
-        $smsMtarget  = $this->get('app.mtarget_sms');
-        $msgID = sprintf("Veuillez garder ces ID\PIN à la proté de toute personne !\nID:%s\nPIN:%s", $identifiant, $pin);
-        $rest = $smsMtarget->sendSms('0021624374693', $msgID, $sender);
-        dump($rest);
-        die();
-
-
         $em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
         $repositotyPatient = $em->getRepository(Patient::class);
