@@ -96,6 +96,7 @@
                 {{ form_widget(form.personne.contact) }}
             </div>
         </div>
+        {% if form.plainPassword.first is defined %}
         <div class="form-group">
             <label for="nom" class="col-sm-4">Mot de passe</label>
 
@@ -111,6 +112,8 @@
                 {{ form_widget(form.plainPassword.second) }}
             </div>
         </div>
+        {% endif %}
+        
 
     </div>
 </div>

@@ -112,23 +112,23 @@ class UtilisateurType extends AbstractType
             ->add('email', null,[
                 'label'=>'utilisateur.form.email'
             ])
-            ->add('plainPassword',
-                RepeatedType::class, [
-                    'type'            => PasswordType::class,
-                    'invalid_message' => 'utilisateur.form.invalid_message',
-                    'required'        => $options['passwordRequired'],
-                    'first_options'   => [
-                        'label' => 'utilisateur.form.first_options'
-                        , 'constraints' => [
-                            new PasswordStrength(),
-                        ],
-                        'attr'  => [
-                            'class' => 'validate-password',
-                        ],
-                    ],
-                    'second_options'  => ['label' => 'Répétez'],
-                ]
-            )
+            // ->add('plainPassword',
+            //     RepeatedType::class, [
+            //         'type'            => PasswordType::class,
+            //         'invalid_message' => 'utilisateur.form.invalid_message',
+            //         'required'        => $options['passwordRequired'],
+            //         'first_options'   => [
+            //             'label' => 'utilisateur.form.first_options'
+            //             , 'constraints' => [
+            //                 new PasswordStrength(),
+            //             ],
+            //             'attr'  => [
+            //                 'class' => 'validate-password',
+            //             ],
+            //         ],
+            //         'second_options'  => ['label' => 'Répétez'],
+            //     ]
+            // )
             ->add('roles', RoleChoiceType::class, [
                 'choices'           => array_flip([
                     'ROLE_CUSTOMER'        => 'Patient',

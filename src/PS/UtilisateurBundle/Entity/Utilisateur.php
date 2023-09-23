@@ -43,7 +43,7 @@ class Utilisateur extends BaseUser implements EquatableInterface, EncoderAwareIn
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @GRID\Column(title="ID", primary=true, filterable=false, sortable=false)
+     * @GRID\Column(title="ID", primary=true, filterable=false, sortable=false, visible=false)
      * @Groups({"user"})
      */
     protected $id;

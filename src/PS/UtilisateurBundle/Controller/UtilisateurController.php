@@ -2,6 +2,7 @@
 
 namespace PS\UtilisateurBundle\Controller;
 
+use APY\DataGridBundle\Grid\Column\RankColumn;
 use PS\GestionBundle\Service\RowAction;
 use APY\DataGridBundle\Grid\Source\Entity;
 use PS\GestionBundle\Entity\Infirmier;
@@ -59,8 +60,7 @@ class UtilisateurController extends Controller
                         ->setParameter('role2', '%"ROLE_PHARMACIE"%');
                 } else {
                     $hopital = $user->getHopital()->getId();
-                    $qb->join('UtilisateurBundle:UtilisateurHopital', 'h', 'WITH', 'h.utilisateur = _a.id')
-                        ->andWhere('h.hopital = :hopital');
+                    $qb->join('_a.utilisateurHopital', 'u', 'WITH', 'u.hopital = :hopital');
 
                     $parameters['hopital'] = $hopital;
 
@@ -93,7 +93,7 @@ class UtilisateurController extends Controller
         });
 
         $grid->setSource($source);
-
+        $grid->addColumn(new RankColumn(array('title' => 'N°')), 1);
         $rowAction = new RowAction('Détails', 'admin_config_utilisateur_show');
 
         $grid->addRowAction($rowAction);
@@ -130,6 +130,9 @@ class UtilisateurController extends Controller
      */
     public function newAction(Request $request)
     {
+        $smsMtarget  = $this->get('app.mtarget_sms');
+        $sender = 'COMPTE PSM';
+        $util = $this->get('app.psm_util');
 
         $idPersonne  = $request->get('idPersonne');
         $user        = $this->getUser();
@@ -151,12 +154,10 @@ class UtilisateurController extends Controller
         $url = $this->generateUrl('admin_config_utilisateur_index');
         $errorUrl = $url . '#modal-utilisateur-new';
 
-        if ($user->getHopital() && $user->getHopital()->getInfo()) {
+        if ($user->getHopital() && $user->getHopital()->getInfo()) 
+        {
             $form->get('email')->setData($user->getHopital()->getInfo()->getEmailHopital());
         }
-
-
-
 
         $form->handleRequest($request);
 
@@ -167,8 +168,6 @@ class UtilisateurController extends Controller
             $redirectRoute = 'gestion_admission_index';
             $redirect = $this->generateUrl('admin_config_utilisateur_index');
 
-
-
             $userManager = $this->get('fos_user.user_manager');
 
             $idHopital   = $form->has('hopital') ? $form->get('hopital')->getData() : null;
@@ -177,6 +176,9 @@ class UtilisateurController extends Controller
             $idCorporate = $form->get('personne')->has('corporate') ? $form->get('personne')->get('corporate')->getData() : null;
             $roles       = $form->has('roles') ? (array)$form->get('roles')->getData() : [];
             $email       = $form->get('email')->getData();
+            $username = $form->get('username')->getData();
+            $contact = $form->get('personne')['contact']->getData();
+            
             $assurance = $form->has('assurance') ? $form->get('assurance')->getData() : null;
 
             $requireHospital = (in_array('ROLE_MEDECIN', $roles, true)
@@ -185,7 +187,8 @@ class UtilisateurController extends Controller
                 || in_array('ROLE_RECEPTION', $roles, true)
                 || in_array('ROLE_SF', $roles, true);
 
-            if ($user->getHopital() && !in_array('ROLE_ADMIN_CORPORATE', $roles, true)) {
+            if ($user->getHopital() && !in_array('ROLE_ADMIN_CORPORATE', $roles, true)) 
+            {
                 $hopital = $user->getHopital();
             }
 
@@ -210,8 +213,6 @@ class UtilisateurController extends Controller
                 }
             }
 
-
-
             if (!isset($hopital)) {
                 if ($userManager->findUserByEmail($email)) {
                     $form->addError(new FormError('Cette adresse mail est déjà existante, veuillez en choisir une autre'));
@@ -219,12 +220,12 @@ class UtilisateurController extends Controller
             }
 
             if ($form->isValid()) {
+                $password = $util->random(8, ['alphabet' => true]);
+                $utilisateur->setPlainPassword($password);
+
                 if ($user->getHopital() && !$assurance) {
                     $utilisateur->setHopital($hopital);
                 }
-
-
-
 
                 if ($corporate) {
                     $utilisateur->getPersonne()->setCorporate($corporate);
@@ -233,9 +234,8 @@ class UtilisateurController extends Controller
                 if (!$roles) {
                     $utilisateur->setRoles(['ROLE_CUSTOMER']);
                 }
+
                 $utilisateur->setEnabled(true);
-
-
 
                 if ($this->isGranted('ROLE_LOCAL_ASSURANCE', $user)) {
                     $utilisateur->setAssurance($user->getAssurance());
@@ -243,16 +243,7 @@ class UtilisateurController extends Controller
                     $utilisateur->setAssurance($assurance);
                 }
 
-
-
-                //$info = new InfoPersonne();
-
-                //$utilisateur->getPersonne()->setInfo($info);
-
                 $userManager->updateUser($utilisateur, false);
-
-
-
 
                 if ($utilisateur->hasRole('ROLE_MEDECIN')) {
                     $medecin = new Medecin();
@@ -276,14 +267,27 @@ class UtilisateurController extends Controller
                     $em->persist($utilisateur);
                 }
 
+                $personne = $utilisateur->getPersonne();
+                $nomComplet = $personne->getNomComplet();
+
+                if ($utilisateur->hasRole('ROLE_MEDECIN')) {
+                    $nomMedecin = "Dr. " . strtoupper($nomComplet);
+                }
+
+                $nomHopital = $hopital->getNom();
+                $nomMedecin = "M. " . strtoupper($nomComplet);
+                $lienConnexion = "https://passpostesante.ci/login";
+
+                $msg = sprintf("Cher %s, Bienvenue à la clinique %s ! Votre compte a été créé avec succès.\n\nVos informations de connexion :\n- Utilisateur : %s\n- Mot de passe : %s\nConnectez-vous sur %s.\n\nModifiez votre mot de passe dès la première connexion pour la sécurité.", $nomMedecin, $nomHopital, $username, $password, $lienConnexion);
+                
+                $smsMtarget->sendSms($contact, $msg, $sender);
+
                 $em->flush();
 
-                $message       = 'Opération effectuée avec succès';
+                $message = 'Opération effectuée avec succès';
                 $statut = 1;
                 $this->addFlash('success', $message);
 
-
-                //return new RedirectResponse($url);
             } else {
                 $message = $this->get('app.form_error')->all($form);
                 $statut = 0;
