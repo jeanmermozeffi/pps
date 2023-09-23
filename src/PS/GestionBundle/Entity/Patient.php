@@ -32,7 +32,7 @@ class Patient
      * @ORM\GeneratedValue
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @GRID\Column(title="ID", primary=true, filterable=false)
+     * @GRID\Column(title="ID", primary=true, filterable=false, visible=false)
      * @Groups({"patient", "patient-associe", "info-patient"})
      */
     private $id;

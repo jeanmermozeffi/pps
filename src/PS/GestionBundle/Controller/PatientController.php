@@ -2,7 +2,7 @@
 
 namespace PS\GestionBundle\Controller;
 
-
+use APY\DataGridBundle\Grid\Column\RankColumn;
 use APY\DataGridBundle\Grid\Source\Entity;
 use PS\GestionBundle\Entity\Patient;
 use PS\GestionBundle\Entity\Historique;
@@ -120,7 +120,7 @@ class PatientController extends Controller
         });
 
         $grid->setSource($source);
-
+        $grid->addColumn(new RankColumn(array('title' => 'N°')), 1);
         $grid->getColumn('sexe')->manipulateRenderCell(function ($value) {
             if ($value == 'M') {
                 return 'Masculin';
