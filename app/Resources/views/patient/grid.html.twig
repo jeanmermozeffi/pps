@@ -35,10 +35,10 @@
 
 
             <div class="box-body">
-                {% if is_granted('ROLE_ADMIN_SUP') %}
-                <a href="{{ path('admin_gestion_patient_new') }}" class="btn btn-default">{{ _html.text('btn.new') }}</a>
+                {% if is_granted('ROLE_ADMIN_SUP') or is_granted('ROLE_ADMIN_LOCAL') %}
+                <a href="{{ path('admin_gestion_patient_new') }}" class="btn btn-success">{{ _html.text('btn.new') }}</a>
 
-                <a href="{{ path('admin_gestion_patient_photo') }}" class="btn btn-default">{{ _html.text('btn.patient_photo') }}</a>
+                <a href="{{ path('admin_gestion_patient_photo') }}" class="btn btn-primary">{{ _html.text('btn.patient_photo') }}</a>
                 {% endif %}
                 <a onclick="return {{ grid.hash }}_reset();" href="#" class="btn btn-success">
                 <span class="fa fa-refresh"></span>
