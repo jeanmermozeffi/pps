@@ -45,7 +45,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class PatientController extends Controller
 {
-    
+
     /**
      * Lists all patient entities.
      *
@@ -62,55 +62,52 @@ class PatientController extends Controller
 
         $grid->setRouteUrl($this->generateUrl('admin_gestion_patient_index', compact('max', 'date')));
 
-        
+
         $source->manipulateQuery(function (QueryBuilder $qb) use ($user, $max, $grid) {
             $filters = $grid->getFilters();
 
-          
+
 
 
             if ($user->hasRole('ROLE_ADMIN_CORPORATE')) {
                 $corporate = $user->getPersonne()->getCorporate()->getId();
-               
+
                 $qb->andWhere('_personne.corporate = :corporate')->setParameter('corporate', $corporate);
-            } elseif ($user->hasRole('ROLE_ADMIN_LOCAL') || $user->hasRole('ROLE_RECEPTION')) {
+            } elseif (
+                $user->hasRole('ROLE_ADMIN_LOCAL') ||
+                $user->hasRole('ROLE_RECEPTION') ||
+                $user->hasRole('ROLE_MEDECIN')
+            ) 
+
+            {
                 $hopital = $user->getHopital()->getId();
-                //dump($qb);exit;
-               
-                $qb->leftjoin('_personne.utilisateur', 'u');
-                $qb->leftjoin('UtilisateurBundle:UtilisateurHopital', 'h', 'WITH', 'h.utilisateur = u.id');
 
-                $qb->leftjoin('UtilisateurBundle:PersonneHopital', 'p0', 'WITH', 'p0.personne = _personne.id');
-
-                $qb->andWhere('(h.hopital = :hopital OR p0.hopital = :hopital2)');
-                //$qb->andWhere('p0.hopital = :hopital2');*/
-
-                $qb->setParameter('hopital', $hopital);
-                $qb->setParameter('hopital2', $hopital);
-
-               
-
+                $qb->leftjoin('_personne.personneHopital', 'pp')
+                // ->join('UtilisateurBundle:PersonneHopital', 'p0', 'WITH', 'p0.personne = _personne.id')
+                // ->join('UtilisateurBundle:UtilisateurHopital', 'h', 'WITH', 'h.utilisateur = :user')
+                ->andWhere('pp.hopital = :hopital')
+                // ->andWhere('h.hopital = :hopital OR p0.hopital = :hopital')
+                ->setParameter('hopital', $hopital);
+                // ->setParameter('user', $user);
             }
 
 
             if ($filters) {
-                
+
                 if (!empty($filters['nom_complet'])) {
-                   
+
                     $value = trim($filters['nom_complet']->getValue());
                     $parts = array_map('trim', explode(' ', $value, 2));
-                    
-                   
-                   
-                    $qb->orWhere("CONCAT(_personne.nom, ' ', _personne.prenom) LIKE :nom2");
-                    $qb->setParameter('nom2', '%'.$value.'%');
 
-                   
+
+
+                    $qb->orWhere("CONCAT(_personne.nom, ' ', _personne.prenom) LIKE :nom2");
+                    $qb->setParameter('nom2', '%' . $value . '%');
+
+
 
                     /*$qb->setParameter('nom1', '%'.$nom.'%');
                     $qb->setParameter('nom2', '%'.$prenom.'%');*/
-
-                    
                 }
             }
 
@@ -274,13 +271,13 @@ class PatientController extends Controller
                         ->setIdentifiant($data[0]);
                     $em->persist($pass);
                 }
-                
-//                $inscription = new Inscription();
-//
-//                $inscription->setDateInscription(new \DateTime());
+
+                //                $inscription = new Inscription();
+                //
+                //                $inscription->setDateInscription(new \DateTime());
                 //$inscription->setPatient($_patient);
 
-//                $_patient->setInscription($inscription);
+                //                $_patient->setInscription($inscription);
 
                 //$patient->getPersonne()->setCorporate($this->getUser()->getPersonne()->getCorporate());
                 $em->persist($_patient);
@@ -306,7 +303,6 @@ class PatientController extends Controller
                 } else {
                     return $this->redirectToRoute('fos_user_security_login');
                 }
-
             } else {
                 //dump($form->getErrors(true, true));
             }
@@ -339,13 +335,12 @@ class PatientController extends Controller
         $identifiant = $patient->getIdentifiant();
         $pin = $patient->getPin();
         $nom = str_slug($nom, '_');
-        $username = $identifiant ?  $nom . $identifiant : $nom . $util->random(5, ['alphabet' => false ]);
+        $username = $identifiant ?  $nom . $identifiant : $nom . $util->random(5, ['alphabet' => false]);
 
-        if(!$email)
-        {
+        if (!$email) {
             $email = $username . '@santemousso.net';
         }
-       
+
         $utilisateur = $userManager->findUserBy(['personne' => $personne]);
         $smsManager  = $this->get('app.ps_sms');
         $additionalContact = null;
@@ -425,9 +420,9 @@ class PatientController extends Controller
 
             $msg = sprintf(
                 "Votre profil médical PPS vient d'être crée. Vos infos de connexion sont:Login: %s\nMot de Passe: %s\nhttps://passpostesante.ci/login",
-                    $username,
-                    $password
-                );
+                $username,
+                $password
+            );
             $smsMtarget->sendSms($contact, $msg, $sender);
             $msgID = sprintf("Veuillez garder ces ID\PIN à la proté de toute personne !\nID:%s\nPIN:%s", $identifiant, $pin);
             $smsMtarget->sendSms($additionalContact, $msgID, $sender);
@@ -574,7 +569,7 @@ class PatientController extends Controller
                         $logger->add("Votre profil médical a été consulté par le N° {$contact}", $patient, true);
 
                         $telephones = array_slice($patient->getTelephones()->toArray(), 0);
-                        
+
                         $session->set('profile_identifiant', $identifiant);
                         $session->set('profile_pin', $pin);
 
@@ -592,7 +587,7 @@ class PatientController extends Controller
                                 if ($telephone && $telephone->getSms()) {
                                     $nomComplet = $personne->getNomComplet();
                                     $numeroParent = $telephone->getNumero();
-                                    $msg = sprintf("Urgence possible concernant %s. Contactez le %s \nPASS POSTE SANTE CI",$nomComplet, $contact);
+                                    $msg = sprintf("Urgence possible concernant %s. Contactez le %s \nPASS POSTE SANTE CI", $nomComplet, $contact);
                                     $smsMtarget->sendSms($numeroParent, $msg, $senderNameUrgence);
 
                                     if (!is_null($localisation)) {
@@ -601,7 +596,6 @@ class PatientController extends Controller
                                     }
                                 }
                             }
-                           
                         }
 
                         $session->set('sms_' . $identifiant, new \DateTime());
@@ -859,7 +853,7 @@ class PatientController extends Controller
         return $form;
     }
 
-     /**
+    /**
      * Deletes a patient entity.
      *
      */
@@ -874,7 +868,7 @@ class PatientController extends Controller
             $em->flush();
 
             $redirect =  $this->generateUrl('admin_gestion_patient_index');
-            
+
             $message = 'Opération effectuée avec succès';
 
             $response = [
@@ -1349,7 +1343,6 @@ class PatientController extends Controller
                         } else {
                             $patient = null;
                         }
-                       
                     }
                 } else {
                     $matricule = $form->get('matricule')->getData();
