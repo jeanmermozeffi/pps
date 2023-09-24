@@ -274,15 +274,26 @@ class UtilisateurController extends Controller
                     $nomMedecin = "Dr. " . strtoupper($nomComplet);
                 }
 
-                $nomHopital = $hopital->getNom();
+
+                $em->flush();
+
+                if ($this->isGranted('ROLE_ADMIN') ||
+                    $this->isGranted('ROLE_ADMIN_SUP')
+                ){
+                    $nomHopital = $idHopital->getNom();
+                }
+
+                if ($this->isGranted('ROLE_ADMIN_LOCAL')) 
+                {
+                    $nomHopital = $hopital->getNom();
+                }
+
                 $nomMedecin = "M. " . strtoupper($nomComplet);
                 $lienConnexion = "https://passpostesante.ci/login";
 
                 $msg = sprintf("Cher %s, Bienvenue à la clinique %s ! Votre compte a été créé avec succès.\n\nVos informations de connexion :\n- Utilisateur : %s\n- Mot de passe : %s\nConnectez-vous sur %s.\n\nModifiez votre mot de passe dès la première connexion pour la sécurité.", $nomMedecin, $nomHopital, $username, $password, $lienConnexion);
                 
                 $smsMtarget->sendSms($contact, $msg, $sender);
-
-                $em->flush();
 
                 $message = 'Opération effectuée avec succès';
                 $statut = 1;
