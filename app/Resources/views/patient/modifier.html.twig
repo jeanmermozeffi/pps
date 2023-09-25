@@ -725,9 +725,6 @@
       $('#{{ edit_form.pays.vars.id }}').change(function () {
             var paysSelector = $(this);
             var villeSelector = $('#{{ edit_form.ville.vars.id }}');
-             console.log(100);
-            
-
 
             if (paysSelector.val()) {
                 $.ajax({
@@ -750,16 +747,6 @@
                     }
                 });
             }
-
-            //var medecinSelect = $("#ps_gestionbundle_rdv_medecin");
-
-
-           
-                
-            
-            
-            // Request the medecins of the selected specialite.
-            
         });
     </script>
 

@@ -110,9 +110,9 @@
     {{ parent() }}
      {{ form_javascript(form) }}
 
-     <script>
-
-     $('#{{ form.medecin.vars.id }}').change(function () {
+    <script>
+    init_select2();
+    $('#{{ form.medecin.vars.id }}').change(function () {
             var medecinSelector = $(this);
 
             var oldSpecialite = "{{ consultation.specialite.id|default(0) }}";

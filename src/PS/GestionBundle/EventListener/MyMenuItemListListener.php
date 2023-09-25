@@ -131,7 +131,7 @@ class MyMenuItemListListener
             ];
 
             if (!$isSuperAdmin) {
-                unset($menuItems[2]);
+                // unset($menuItems[2]);
             }
 
 
@@ -265,8 +265,9 @@ class MyMenuItemListListener
             $menuItems = [
                 $menu = new MenuItemModel('menu', 'menu.title', false, [/*options*/], 'iconclasses fa fa-users'),
                 $logout = new MenuItemModel('logout', 'menu.logout', 'fos_user_security_logout', [], 'iconclasses fa fa-power-off'),
+                $dashboard = new MenuItemModel('dashboard', 'menu.dashboard', 'gestion_homepage', [/* options */], 'iconclasses fa fa-dashboard'),
                 new MenuItemModel('admission', 'menu.admission.title', 'gestion_admission_index', [], 'iconclasses fa fa-circle'),
-                $utilisateur = new MenuItemModel('user', 'menu.configuration.patients', 'admin_config_utilisateur_index', [], 'iconclasses fa fa-users'),
+                $utilisateur = new MenuItemModel('user', 'menu.configuration.patients', 'admin_gestion_patient_index', [], 'iconclasses fa fa-users'),
                 $patient = new MenuItemModel('menu.patient.title', 'Prise de constantes', 'admin_gestion_infirmier_patient', [/* options */], 'iconclasses fa fa-th-list'),
                 $patient = new MenuItemModel('historique', 'Mon historique', 'admin_gestion_infirmier_historique', [/* options */], 'iconclasses fa fa-edit'),
                 $rdv = new MenuItemModel('rdv', 'menu.rdv.title', 'admin_gestion_rdv_index', [], 'iconclasses fa fa-calendar'),

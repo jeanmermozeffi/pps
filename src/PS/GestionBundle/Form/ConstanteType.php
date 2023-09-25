@@ -47,12 +47,7 @@ class ConstanteType extends AbstractType
         $patient = $options['patient'];
 
         $builder
-           
-            
-            /*->add('poids')
-            ->add('temperature')
-            ->add('tension')*/
-             ->add('constantes', CollectionType::class, [
+            ->add('constantes', CollectionType::class, [
                 'type'         => ConsultationConstanteType::class,
                 'label'        => false,
                 'allow_add'    => true,
@@ -75,20 +70,13 @@ class ConstanteType extends AbstractType
                 },
 
             ])
-            
-            //->add('patient', PatientType::class)
-            /*->add('specialite', EntityType::class, [
-                'class'       => 'ParametreBundle:Specialite',
-                'property'    => 'nom',
-                'empty_value' => "--- Choisir une specialité ---",
-                'empty_data'  => null,
-            ])*/
             ->add('medecin', EntityType::class, [
-                'class' => Medecin::class
-                , 'choice_label' => 'personne.getNomComplet'
-                , 'query_builder' => function (MedecinRepository $m) use ($user) {
+                'class' => Medecin::class, 
+                'choice_label' => 'personne.getNomComplet', 
+                'query_builder' => function (MedecinRepository $m) use ($user) {
                     return $m->findByMedecinByPersonne($user);
                 },
+                'attr' => ['class' => 'select2']
 
             ]
         );
@@ -134,6 +122,7 @@ class ConstanteType extends AbstractType
                 'choices' =>  $specialites,
                 'placeholder' => "--- Choisir une specialité ---",
                 'empty_data'  => null,
+                'attr' => ['class' => 'select2']
                 //'data' => $specialite
 
             ]);

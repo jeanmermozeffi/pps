@@ -4,6 +4,7 @@ namespace PS\GestionBundle\Controller;
 
 use PS\GestionBundle\Service\RowAction;
 use APY\DataGridBundle\Grid\Source\Entity;
+use Doctrine\ORM\QueryBuilder;
 use PS\GestionBundle\Entity\Consultation;
 use PS\GestionBundle\Entity\ConsultationConstante;
 use PS\ParametreBundle\Entity\Constante;
@@ -109,8 +110,6 @@ class InfirmierController extends Controller
         ]);
 
         $form->handleRequest($request);
-
-
 
         if ($form->isSubmitted()) {
 
@@ -248,9 +247,6 @@ class InfirmierController extends Controller
             $consultation = new Consultation();
             $consultation->setDateConsultation(new \DateTime());
             $consultation->setRefConsultation($this->get('app.psm_util')->random(8));
-
-
-
             foreach ($constantes as $constante) {
                 $consultation->addConstante((new ConsultationConstante)->setConstante($constante));
             }
@@ -265,7 +261,7 @@ class InfirmierController extends Controller
         }
 
         $consulationInfirmier = new ConsultationInfirmier();
-        $form                 = $this->createForm($this->get('app.constance_type'), $consultation, [
+        $form = $this->createForm($this->get('app.constance_type'), $consultation, [
             'action' => $this->generateUrl('admin_gestion_infirmier_consultation', ['id' => $patient->getId()]),
             'method' => 'POST',
             'patient' => $patient
@@ -313,12 +309,8 @@ class InfirmierController extends Controller
                 $em->persist($consultationInfirmier);
             }
 
-
-
             $em->flush();
 
-
-            
             $this->addFlash(
                 'message',
                 $this->get('translator')->trans('constantes.save_successfully')
@@ -366,7 +358,8 @@ class InfirmierController extends Controller
                         'Ce patient n\'existe pas dans la base de données!'
                     );
                 } else {
-                    return $this->redirectToRoute('admin_gestion_infirmier_consultation', ['id' => $patient[0]->getId()]);
+                    return $this->redirectToRoute('admin_gestion_infirmier_consultation', [
+                        'id' => $patient->getId()]);
                 }
             } else {
                 $this->addFlash(
@@ -391,11 +384,12 @@ class InfirmierController extends Controller
         $em           = $this->getDoctrine()->getManager();
         $infirmier    = $this->getInfirmier();
         $consulations = $em->getRepository(Consultation::class)->findAllInfirmier($infirmier, false);
-
+        
         $source = new Entity(Consultation::class);
         $grid   = $this->get('grid');
 
-        $source->initQueryBuilder($consulations);
+        // Lorsqu'il s'agit d'une request du repository alors utiliser "prepareQuery"
+        $source->prepareQuery($consulations);
 
         $grid->setSource($source);
 
@@ -407,7 +401,7 @@ class InfirmierController extends Controller
         });
 
         $rowAction = new RowAction('Modifier', 'admin_gestion_infirmier_consultation');
-        $rowAction->manipulateRender(function ($action, $row) {
+        $rowAction->addManipulateRender(function ($action, $row) {
             if ($row->getField('statut') == -1) {
                 $action->setRouteParameters([
                     'id' => $row->getField('patient.id'), 'consultation' => $row->getField('id'),
@@ -418,7 +412,6 @@ class InfirmierController extends Controller
             }
         });
         $grid->addRowAction($rowAction);
-
         //$grid->getColumn('statut')->setSafe(false);
         $grid->getColumn('diagnostique')->setVisible(false);
         $grid->getColumn('medecin.hopital.nom')->setVisible(false);

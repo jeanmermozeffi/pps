@@ -157,7 +157,7 @@ security:
         # PAGES ACCESSIBLES AUX UTILISATEURS CONNECTES
         - { path: ^/change-password, role: ROLE_CUSTOMER }
         - { path: ^/reseting$, role: ROLE_CUSTOMER }
-        - { path: ^/((fr|es|en)/)?admin/patient/, role: [ROLE_CUSTOMER, ROLE_RECEPTION, ROLE_ADMIN_LOCAL, ROLE_ADMIN_CORPORATE, ROLE_PHARMACIE, ROLE_ADMIN_SUP, ROLE_ADMIN] }
+        - { path: ^/((fr|es|en)/)?admin/patient/, role: [ROLE_CUSTOMER, ROLE_RECEPTION, ROLE_ADMIN_LOCAL, ROLE_ADMIN_CORPORATE, ROLE_PHARMACIE, ROLE_ADMIN_SUP, ROLE_ADMIN, ROLE_INFIRMIER] }
         - { path: ^/((fr|es|en)/)?admin/, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/, role: [ROLE_CUSTOMER, ROLE_MEDECIN] }
         # PAGES ACCESSIBLES À TOUS

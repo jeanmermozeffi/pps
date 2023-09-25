@@ -153,8 +153,6 @@ class ConsultationRepository extends EntityRepository
         }
 
         return $stmt->setParameter('infirmier', $infirmier);
-
-       
     }
 
 

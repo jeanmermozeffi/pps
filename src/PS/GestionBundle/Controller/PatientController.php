@@ -76,6 +76,7 @@ class PatientController extends Controller
             } elseif (
                 $user->hasRole('ROLE_ADMIN_LOCAL') ||
                 $user->hasRole('ROLE_RECEPTION') ||
+                $user->hasRole('ROLE_INFIRMIER') ||
                 $user->hasRole('ROLE_MEDECIN')
             ) 
 
@@ -471,7 +472,8 @@ class PatientController extends Controller
 
     private function checkAccess(Patient $patient)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if ($this->isGranted('ROLE_ADMIN')) 
+        {
             $this->denyAccessUnlessGranted('ROLE_EDIT_PATIENT', $patient);
         }
     }
@@ -489,10 +491,9 @@ class PatientController extends Controller
             $patient = $em->getRepository(Patient::class)->findPatient($this->getUser()->getPersonne()->getId());
         }
 
-        $this->checkAccess($patient);
+        // $this->checkAccess($patient);
 
         $user = $this->getUser();
-        //print_r($patient); die();
 
         return $this->render('patient/info.html.twig', [
             'user'    => $user,
