@@ -227,62 +227,43 @@ class ConsultationController extends Controller
         }
 
 
-        $form         = $this->createCreateForm($consultation, $patient, false);
+        $form  = $this->createCreateForm($consultation, $patient, false);
 
-        //print_r($patient);
         $medecin = $em->getRepository('GestionBundle:Medecin')->findOneByPersonne($this->getUser()->getPersonne());
 
-        //print_r($medecin[0]);
         $consultation->setPatient($patient);
         $consultation->setMedecin($medecin);
         $consultation->setHopital($medecin->getHopital());
         $consultation->setRefConsultation($this->get('app.psm_util')->random(8));
         $consultation->setPrixConsultation(0);
 
-        //var_dump($medecin[0]->getHopital()->getNom());die();
-
         $form->handleRequest($request);
 
         if ($request->isMethod('POST')) {
 
-            //var_dump($consultation);die();
             if ($form->isSubmitted() && $form->isValid()) {
 
                 $fonctionnels = $form->get('fonctionnels')->getData();
                 $physiques = $form->get('physiques')->getData();
-
                 $personnels = $form->get('personnels')->getData();
                 $familiaux = $form->get('familiaux')->getData();
-
                 $affections = $form->get('affections')->getData();
-
-
-
-
-
 
                 foreach ($fonctionnels as $signe) {
                     $consultation->addSigne($signe);
                 }
 
-
                 foreach ($physiques as $signe) {
                     $consultation->addSigne($signe);
                 }
-
 
                 foreach ($personnels as $antecedent) {
                     $consultation->addAntecedent($antecedent);
                 }
 
-
                 foreach ($familiaux as $antecedent) {
                     $consultation->addAntecedent($antecedent);
                 }
-
-
-
-
 
 
                 /*foreach ($consultation->getAntecedents() as $antecedent) {
@@ -293,12 +274,12 @@ class ConsultationController extends Controller
                     $patient->addLigneAntecedent($_antecedent);
                 }*/
 
-
-
-                foreach ($affections as $affection) {
-                    if (!$repPatientAff->findOneByAffection($affection)) {
+                foreach ($affections as $affection) 
+                {
+                    $nomAffection = $affection->getAffection();
+                    if (!$repPatientAff->findOneByAffection($nomAffection)) {
                         $patientAffection = new PatientAffections();
-                        $patientAffection->setAffection($affection);
+                        $patientAffection->setAffection($nomAffection);
                         $patientAffection->setDate(new \DateTime());
                         $patientAffection->setCommentaire('');
                         $patientAffection->setVisible(1);
@@ -323,15 +304,8 @@ class ConsultationController extends Controller
                     'Consultation enregistrée avec succès!'
                 );
 
-                //$session->remove('patient');
-
-
-
-
                 $this->get('app.action_logger')
                     ->add('Nouvelle consultation', $patient);
-
-
 
                 return $this->redirectToRoute('admin_consultation_preview_print', ['id' => $patient->getId(), 'id1' => $consultation->getId()]);
             }

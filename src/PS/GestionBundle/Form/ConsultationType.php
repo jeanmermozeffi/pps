@@ -9,6 +9,7 @@ use PS\ParametreBundle\Entity\Assurance;
 use PS\GestionBundle\Entity\Patient;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use PS\GestionBundle\Entity\Medecin;
 use PS\ParametreBundle\Entity\Fichier;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -53,13 +54,6 @@ class ConsultationType extends AbstractType
         $specialites = $user->getPersonne()->getMedecin()->getSpecialites();
 
         $builder
-            /*->add('dateConsultation', 'date', [
-                'widget'   => 'single_text',
-                'format'   => 'dd-MM-yyyy',
-                'html5'    => false,
-                'attr'     => ['class' => 'datepicker'],
-                'disabled' => true,
-            ])*/
             ->add('motif', TextareaType::class)
              ->add('histoire', TextareaType::class, ['attr' => ['rows' => 8], 'label' => 'consultation.form.histoire', 'empty_data' => ''])
             ->add('diagnostique', TextareaType::class, [
@@ -75,7 +69,6 @@ class ConsultationType extends AbstractType
                 'label'=> 'consultation.form.tension'
             ])
             ->add('observation', Textareatype::class, ['empty_data'  => '', 'label' => 'consultation.form.observation', 'required' => false])
-            //->add('patient', PatientType::class)
             ->add('specialite', EntityType::class, [
                 'class'       => 'ParametreBundle:Specialite',
                 'choice_label'    => 'nom',
@@ -109,16 +102,7 @@ class ConsultationType extends AbstractType
                     return $e->getList($user, $patient);
                 },
 
-            ])  /*
-        ->add('affection', EntityType::class, array(
-        'class'=>'ParametreBundle:Affection',
-        'choice_label' => 'nom',
-        'empty_value' => "--- Choisir une affection ---",
-        'empty_data' => null,
-        'attr' => ['multiple' => 'datepicker']
-        ))*/
-            //->add('medecin', MedecinType::class)
-
+            ])  
            ->add('hospitalisation', TextareaType::class, [
                 'label' => 'consultation.form.hospitalisation', 
                 'empty_data' => '',
@@ -320,13 +304,6 @@ class ConsultationType extends AbstractType
                 }
                 return['Default', 'Consultation'];
             }
-            /*'validation_groups' => function (FormInterface $form) {
-                $data = $form->getData();
-                if ($form->has('withrendezvous') && $form->get('withrendezvous')->getData()) {
-                    return ['Default', 'Rdv'];
-                }
-                return ['Default'];
-            }*/
         ]);
 
     
