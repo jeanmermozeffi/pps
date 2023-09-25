@@ -248,6 +248,9 @@ class ConsultationController extends Controller
                 $personnels = $form->get('personnels')->getData();
                 $familiaux = $form->get('familiaux')->getData();
                 $affections = $form->get('affections')->getData();
+                // $fichiers = $form->get('fichiers')->getData();
+                // dump($fichiers);
+                // die();
 
                 foreach ($fonctionnels as $signe) {
                     $consultation->addSigne($signe);
@@ -490,7 +493,7 @@ class ConsultationController extends Controller
         $rowAction = new RowAction('Détails', 'admin_consultation_show');
 
 
-        $rowAction->manipulateRender(function ($action, $row) {
+        $rowAction->addManipulateRender(function ($action, $row) {
 
             $action->setRouteParameters([
                 'id1' => $row->getField('id'), 'id' => $row->getField('patient.id'),
@@ -503,7 +506,7 @@ class ConsultationController extends Controller
 
         /*if ($user->hasRole('ROLE_MEDECIN')) {
             $rowAction = new RowAction('Modifier', 'admin_consultation_edit');
-            $rowAction->manipulateRender(function ($action, $row) {
+            $rowAction->addManipulateRender(function ($action, $row) {
                 if (!$this->isGranted('ROLE_EDIT_CONSULTATION', $row->getEntity())) {
                     return;
                 }
@@ -519,7 +522,7 @@ class ConsultationController extends Controller
         }*/
 
         $rowAction = new RowAction('Imprimer', 'admin_consultation_preview_print');
-        $rowAction->manipulateRender(function ($action, $row) {
+        $rowAction->addManipulateRender(function ($action, $row) {
             if ($row->getField('statut') != -1) {
                 $action->setRouteParameters([
                     'id1' => $row->getField('id'), 'id' => $row->getField('patient.id'),
@@ -534,7 +537,7 @@ class ConsultationController extends Controller
 
         /*$rowAction = new RowAction('RDV', 'admin_consultation_rdv');
 
-        $rowAction->manipulateRender(function ($action, $row) {
+        $rowAction->addManipulateRender(function ($action, $row) {
             if ($row->getField('statut') != -1) {
                 $action->setRouteParameters([
                     'id' => $row->getField('id')
