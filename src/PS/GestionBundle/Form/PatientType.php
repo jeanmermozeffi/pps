@@ -58,7 +58,7 @@ class PatientType extends AbstractType
             ->add('nombreEnfant', IntegerType::class, ['required' => false, 'label' => 'patient.form.nombreEnfant'])
             //  ->add('ethnie', TextType::class, ['label' => 'patient.form.ethnie', 'required' => false,])
             ->add('matricule', TextType::class, ['label' => 'patient.form.matricule', 'required' => false, 'empty_data' => ''])
-            ->add('regime', TextareaType::class, ['label' => 'patient.form.regime', 'required' => false,])
+            ->add('regime', TextareaType::class, ['label' => 'Régime Alimentaire', 'required' => false,])
             
             ->add('adresse', TextareaType::class, ['required' => false, 'label' => 'patient.form.adresse'])
             ->add('lieuhabitation', TextareaType::class, ['label' => 'patient.form.lieuhabitation'])
