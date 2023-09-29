@@ -79,7 +79,7 @@ class DefaultController extends Controller
 
             $message = (new \Swift_Message($data['sujet']))
                ->setFrom($data['email'], $data['nom'])
-               ->setTo('info@santemousso.net')
+               ->setTo('info@passpostesante.ci')
                ->setBody($data['message'], 'text/plain');
 
             if ($this->get('mailer')->send($message)) {
@@ -107,7 +107,7 @@ class DefaultController extends Controller
 				$message = \Swift_Message::newInstance()
 					->setSubject('Demande de contact SANTEMOUSSO ')
 					->setFrom($request->request->get('contact')['email'])
-					->setTo('info@santemousso.net')
+					->setTo('info@passpostesante.ci')
 					->setBody($this->renderView('SiteBundle:Default:contactEmail.txt.twig', array('enquiry' => $enquiry)));
 				$this->get('mailer')->send($message);
 		

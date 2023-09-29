@@ -304,7 +304,7 @@ class ConsultationController extends Controller
 
                 $this->addFlash(
                     'message',
-                    'Consultation enregistrée avec succès!'
+                    'Fiche de consultation renseignée et validée avec succès !'
                 );
 
                 $this->get('app.action_logger')
@@ -788,7 +788,7 @@ class ConsultationController extends Controller
 
             $this->addFlash(
                 'edit_consultation',
-                'Consultation modifiée avec succès!'
+                'Fiche de consultation modifiée et validée avec succès !'
             );
 
             return $this->redirectToRoute('admin_consultation_show', ['id1' => $consultation->getId(), 'id' => $patient->getId()]);

@@ -38,7 +38,7 @@
                                         <div type="button" class="pull-left titre">
                                             {{ _html.text('patient.info_title') }}
                                         </div>
-                                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ADMIN_LOCAL') or is_granted('ROLE_ADMIN_SUP') or is_granted('ROLE_RECEPTION') %}
+                                        {# {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ADMIN_LOCAL') or is_granted('ROLE_ADMIN_SUP') or is_granted('ROLE_RECEPTION') %} #}
                                         
                                             {% if is_granted('ROLE_EDIT_PATIENT', patient) %}
                                             <a href="{{ path ('admin_gestion_patient_modifier', {'id': patient.id}) }}"
@@ -55,7 +55,7 @@
                                                     {{ _html.text('Imprimer le badge') }}
                                                 </a>
                                            {% endif %}
-                                        {% endif %}
+                                        {# {% endif %} #}
                                     </div>
 
                                     <div class="col-md-6">

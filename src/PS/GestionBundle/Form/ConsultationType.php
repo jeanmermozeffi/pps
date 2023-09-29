@@ -54,8 +54,10 @@ class ConsultationType extends AbstractType
         $specialites = $user->getPersonne()->getMedecin()->getSpecialites();
 
         $builder
-            ->add('motif', TextareaType::class)
-             ->add('histoire', TextareaType::class, ['attr' => ['rows' => 8], 'label' => 'consultation.form.histoire', 'empty_data' => ''])
+            ->add('motif', TextareaType::class, [
+                'label' => 'Motif de Consultation'
+            ])
+            ->add('histoire', TextareaType::class, ['attr' => ['rows' => 8], 'label' => 'consultation.form.histoire', 'empty_data' => ''])
             ->add('diagnostique', TextareaType::class, [
                 'label' => 'consultation.form.diagnostique',
                 'empty_data' => ''

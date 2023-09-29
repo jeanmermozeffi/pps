@@ -292,7 +292,7 @@ class InfirmierController extends Controller
 
 
             $smsManager  = $this->get('app.ps_sms');
-            $smsManager->send(sprintf("Bonjour, Vous avez un patient (%s %s) en attente\nPASS MOUSSO", $nom, $prenom),  $medecin->getPersonne()->getContact());
+            $smsManager->send(sprintf("Bonjour, Vous avez un patient (%s %s) en attente\nPPS", $nom, $prenom),  $medecin->getPersonne()->getContact());
 
             $action = new HistoriqueConsultation();
             $action->setLibHistorique($edit ? HistoriqueConsultation::ACTION_CONSTANTE_EDIT : HistoriqueConsultation::ACTION_CONSTANTE_CREATE);

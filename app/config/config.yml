@@ -212,7 +212,7 @@ fos_user:
     firewall_name: main
     from_email:
         address:        info@pass-sante.net
-        sender_name:    PASS SANTE MOUSSO
+        sender_name:    PASS POSTE SANTE
     user_class: PS\UtilisateurBundle\Entity\Utilisateur
     group:
         group_class: PS\UtilisateurBundle\Entity\Groupe
@@ -234,7 +234,7 @@ fos_user:
         email:
             from_email:
                 address:        info@pass-sante.net
-                sender_name:    PASS SANTE MOUSSO
+                sender_name:    PASS POSTE SANTE
 
 
 lexik_jwt_authentication:

@@ -110,7 +110,7 @@ home:
       section0:
         title: Presentation
         content: >
-          <strong>PASS SANTE MOUSSO</strong> is a jewel (bracelet, medallion) and/or a connected card associated with an online platform.
+          <strong>PASS POSTE SANTE</strong> is a jewel (bracelet, medallion) and/or a connected card associated with an online platform.
           It allows its owner to take his personal and medical data with him everywhere and make it available, if necessary, to medical and emergency personnel.
           It is digital personalized medical record, a tool for response to emergency care.
 
@@ -182,7 +182,7 @@ home:
             label: Access to medical prescriptions and medical history of the patients
 
     innovation:
-      titl0: PASS SANTE MOUSSO
+      titl0: PASS POSTE SANTE
       title: Medical innovation
       section0:
         virsion: >

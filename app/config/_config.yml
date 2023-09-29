@@ -214,7 +214,7 @@ fos_user:
         email:
             from_email:
                 address: info@pass-sante.net
-                sender_name: PASS SANTE MOUSSO
+                sender_name: PASS POSTE SANTE
 
 lexik_jwt_authentication:
     private_key_path: "%jwt_private_key_path%"

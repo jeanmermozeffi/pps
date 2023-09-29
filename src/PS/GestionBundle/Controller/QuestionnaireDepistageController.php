@@ -538,7 +538,7 @@ class QuestionnaireDepistageController extends Controller
 
 
                 $smsManager = $this->get('app.ps_sms');
-                $_message    = "Bonjour\nVous avez une demande de dépistage en cours pour le COVID-19: \nVeuillez vous connectez à votre espace Médecin\nPASS MOUSSO(https://santemousso.net)";
+                $_message    = "Bonjour\nVous avez une demande de dépistage en cours pour le COVID-19: \nVeuillez vous connectez à votre espace Médecin\nPPS(https://santemousso.net)";
                 
 
                 $this->get('app.action_logger')->add('Soumission questionnaire', $patient, true);

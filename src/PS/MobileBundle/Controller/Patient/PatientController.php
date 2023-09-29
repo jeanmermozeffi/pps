@@ -152,13 +152,13 @@ class PatientController extends Controller
                         $numeroParent = $telephone->getNumero();
                         if ($numeroParent != $contact) {
                             $smsManager->send(
-                                "Urgence possible concernant {$nomComplet}. Contactez le {$contact}\nPASS MOUSSO",
+                                "Urgence possible concernant {$nomComplet}. Contactez le {$contact}\nPASS POSTE",
                                 $numeroParent
                             );
 
                             if ($localisation ) {
                                 $smsManager->send(
-                                    "Localisation estimée de {$nomComplet}: {$localisation}\nPASS MOUSSO",
+                                    "Localisation estimée de {$nomComplet}: {$localisation}\nPASS POSTE ",
                                     $numeroParent
                                 );
                             }

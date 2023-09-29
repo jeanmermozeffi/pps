@@ -250,7 +250,7 @@ class AfterLoginRedirect implements AuthenticationSuccessHandlerInterface
 
         $message = (new \Swift_Message($message))
             ->setSubject('Code de vérification accès PASS SANTE')
-            ->setFrom('info@santemousso.net')
+            ->setFrom('info@passpostesante.ci')
             ->setTo($email)
             ->setBody($message, 'text/plain');
 

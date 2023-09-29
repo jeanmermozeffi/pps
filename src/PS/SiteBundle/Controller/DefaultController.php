@@ -57,7 +57,7 @@ class DefaultController extends Controller
             } else if (in_array($categorie, [2, 3])) {
                 $to = 'dg@mcm-ci.com';
             } else {
-                $to = ['info@santemousso.net', 'dg@mcm-ci.com'];
+                $to = ['info@passpostesante.ci', 'dg@mcm-ci.com'];
             }
 
             
