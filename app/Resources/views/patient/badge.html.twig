@@ -5,7 +5,7 @@
     <style>
       {% block page_css %}
         @page :first {
-            background-image: url("{{ absolute_url(asset('public/img/recto_web.png')) }}");
+            background-image: url("{{ absolute_url(asset('public/img/carte web_recto.png')) }}");
             background-repeat: no-repeat;
            
             footer: html_footer;
@@ -16,7 +16,7 @@
         }
         
         @page {
-            background-image: url("{{ absolute_url(asset('public/img/verso_web.png')) }}");
+            background-image: url("{{ absolute_url(asset('public/img/carte web_verso.png')) }}");
           
             background-repeat: no-repeat;
             /*background*/
@@ -140,7 +140,7 @@
         <div style="">
             <table style="width:100%;border:none;font-weight: bold;padding-top:20">
                 <tr>
-                    <td style="width:100%;padding-top:0px;font-size:35px"><span style="color:#29614B">{{ patient.personne.nom }}<br>{{ patient.personne.prenom }}</span></td>
+                    <td style="width:100%;padding-top:0px;font-size:35px"><span style="color:#29614B">{{ (patient.personne.nom)|upper }}<br>{{ (patient.personne.prenom )|upper}}</span></td>
                 </tr>
             </table>
          </div>
@@ -148,9 +148,16 @@
             <div style="width:100%;text-align:center;"  class="padding-top:2cm;">
                 <table style="width:100%;border:none;font-weight: bold;">
                     <tr>
-                        <td style="width:33.33%;padding-top:50px"><span style="color:#000;font-size:18px;">ID</span><br> <span style="font-size:30px;">{{ patient.identifiant }}</span></td>
-                        <td style="width:33.33%;font-size:18px;padding-top:50px;"><span style="color:#000;font-size:18px;">PIN</span><br> <span style="font-size:30px;">{{ patient.pin }}</span></td>
-                        <td style="width:33.33%;font-size:18px;padding-top:50px;"><span style="color:#000;font-size:18px;">GROUPE  SANGUIN</span><br> <span style="font-size:30px;">{{ patient.groupeSanguin.libelle | default('') }}</span></td>
+                        <td style="width:33.33%;padding-top:50px">
+                          <span style="color:#000;font-size:25px;">ID</span><br> 
+                          <span style="font-size:40px;">{{ patient.identifiant }}</span>
+                        </td>
+                        <td style="width:33.33%;font-size:18px;padding-top:50px;">
+                          <span style="color:#000;font-size:25px;">PIN</span><br> 
+                          <span style="font-size:40px;">{{ patient.pin }}</span>
+                        </td>
+                        {# <td style="width:33.33%;font-size:18px;padding-top:50px;"><span style="color:#000;font-size:18px;">GROUPE  SANGUIN</span><br> <span style="font-size:30px;">{{ patient.groupeSanguin.libelle | default('') }}</span>
+                        </td> #}
                     </tr>
                 </table>
                  
@@ -159,8 +166,14 @@
         <div style="padding-top:35px;">
             <table style="width:100%;border:none;font-weight: bold;">
                 <tr>
-                    <td style="width:50%;"><span style="color:#000;font-size:18px;">Etablie le</span><br><span style="font-size:30px">{{ 'now' | date('d/m/Y') }}</span></td>
-                    <td style="width:50%;padding-top:0px;font-size:18px;"><span style="color:#000;font-size:18px;">AGENCE</span><br> <span style="font-size:30px;">{{ patient.ville.nom|default('ABIDJAN') }}</span></td>
+                    <td style="width:50%;"><span style="color:#000;font-size:18px;">Etablie le</span><br><span style="font-size:30px">{{ 'now' | date('d/m/Y') }}</span>
+                    </td>
+                    <td style="width:50%;padding-top:0px;font-size:18px;">
+                    {# <span style="color:#000;font-size:18px;">AGENCE</span> #}
+                    <br> 
+                    {# <span style="font-size:30px;">{{ patient.ville.nom|default('ABIDJAN') }}</span> #}
+                    <span style="font-size:30px;">{{ ('LA POSTE CI') }}</span>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -171,9 +184,9 @@
         <div class="footer" style="padding-left:2.7cm">
             <div style="border:1px solid #000;width:90%;margin:0 auto"></div>
             <div style="text-align:center;font-weight:bold;font-size:15px;margin-top:5px;color:#29614B;padding-top:0px;">
-                Cette carte est strictement personnelle et n'est valable qu'après avoir été complétée.<br>
+                Cette carte est strictement personnelle.<br>
                 Toute personne trouvant la carte est priée de la deposer à l'agence postale la plus proche. 
-                25 20 00 68 44 / 25 20 00 69 50 / infos@laposte.ci<br>
+                (+225) 25 20 00 68 44 / 25 20 00 69 50 / infos@laposte.ci<br>
             </div>
         </div>
     </htmlpagefooter>
