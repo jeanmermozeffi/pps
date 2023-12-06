@@ -134,13 +134,13 @@
     </style>
   </head>
   <body style="font-size:12px;">
-    <h1 style="font-size:35px;font-weight:bold;color:#000;position:absolute;left:3.3cm;top:0.45cm;color:#fff">{{ 'Carte de santé numérique' | upper }}</h1>
+    <h1 style="font-size:45px; font-weight:bold; color:#000; position:absolute; left:3.3cm; top:0.45cm;color:#fff">{{ 'Carte de santé numérique' | upper }}</h1>
     
     <div style="position:absolute;left:2.8cm;top: 1.3cm;">
         <div style="">
             <table style="width:100%;border:none;font-weight: bold;padding-top:20">
                 <tr>
-                    <td style="width:100%;padding-top:0px;font-size:35px"><span style="color:#29614B">{{ (patient.personne.nom)|upper }}<br>{{ (patient.personne.prenom )|upper}}</span></td>
+                    <td style="width:100%;padding-top:0px;font-size:45px"><span style="color:#29614B">{{ (patient.personne.nom)|upper }}<br>{{ (patient.personne.prenom )|upper}}</span></td>
                 </tr>
             </table>
          </div>
@@ -149,12 +149,12 @@
                 <table style="width:100%;border:none;font-weight: bold;">
                     <tr>
                         <td style="width:33.33%;padding-top:50px">
-                          <span style="color:#000;font-size:25px;">ID</span><br> 
-                          <span style="font-size:40px;">{{ patient.identifiant }}</span>
+                          <span style="color:#000;font-size:30px;">ID</span><br> 
+                          <span style="font-size:45px;">{{ patient.identifiant }}</span>
                         </td>
                         <td style="width:33.33%;font-size:18px;padding-top:50px;">
-                          <span style="color:#000;font-size:25px;">PIN</span><br> 
-                          <span style="font-size:40px;">{{ patient.pin }}</span>
+                          <span style="color:#000;font-size:30px;">PIN</span><br> 
+                          <span style="font-size:45px;">{{ patient.pin }}</span>
                         </td>
                         {# <td style="width:33.33%;font-size:18px;padding-top:50px;"><span style="color:#000;font-size:18px;">GROUPE  SANGUIN</span><br> <span style="font-size:30px;">{{ patient.groupeSanguin.libelle | default('') }}</span>
                         </td> #}
@@ -166,13 +166,13 @@
         <div style="padding-top:35px;">
             <table style="width:100%;border:none;font-weight: bold;">
                 <tr>
-                    <td style="width:50%;"><span style="color:#000;font-size:18px;">Etablie le</span><br><span style="font-size:30px">{{ 'now' | date('d/m/Y') }}</span>
+                    <td style="width:50%;"><span style="color:#000;font-size:30px;">Etablie le</span><br><span style="font-size:45px">{{ 'now' | date('d/m/Y') }}</span>
                     </td>
                     <td style="width:50%;padding-top:0px;font-size:18px;">
                     {# <span style="color:#000;font-size:18px;">AGENCE</span> #}
                     <br> 
                     {# <span style="font-size:30px;">{{ patient.ville.nom|default('ABIDJAN') }}</span> #}
-                    <span style="font-size:30px;">{{ ('LA POSTE CI') }}</span>
+                    <span style="font-size:45px;">{{ ('LA POSTE CI') }}</span>
                     </td>
                 </tr>
             </table>
