@@ -76,9 +76,10 @@ class BadgeEdittionController extends Controller
 
         $mpdf->shrink_tables_to_fit = 1;
         $mpdf->WriteHTML($htmlContent);
+        $mpdf->Output('Badge_All_Selected_Patients.pdf', 'I');
 
         // Envoyez le PDF en réponse
-        return new Response($mpdf->Output('Badge_All_Selected_Patients.pdf', 'I'));
+        return new Response();
         
         // Retournez une réponse JSON pour indiquer le succès ou l'échec de l'opération
         // return new JsonResponse(['success' => true]);
