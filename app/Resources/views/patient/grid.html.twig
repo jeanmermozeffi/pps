@@ -27,13 +27,6 @@
                 </div>
 
             </div>
-
-
-
-
-
-
-
             <div class="box-body">
                 {% if is_granted('ROLE_ADMIN_SUP') or is_granted('ROLE_ADMIN_LOCAL') %}
                 <a href="{{ path('admin_gestion_patient_new') }}" class="btn btn-success">{{ _html.text('btn.new') }}</a>

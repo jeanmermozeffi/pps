@@ -1,0 +1,116 @@
+{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+
+{% block page_content %}
+<div class="box">
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-2">
+      <button type="button" class="btn btn-block btn-success" id="submit-selected">
+        Imprimer la selection
+      </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Liste des patients</h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <table id="example1" class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>N°</th>
+          <th>
+            <label>
+                <input type="checkbox" class="flat-red checkbox-all" value="{{-1}}" id="checkbox-all">
+            </label>
+          </th>
+          <th>Nom</th>
+          <th>Prénoms</th>
+          <th>ID</th>
+          <th>Âges</th>
+          <th>Genre</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for patient in patients %}
+        <tr>
+          <td>{{loop.index}}</td>
+          <td>
+            <label>
+                <input type="checkbox" class="flat-red checkbox-badge" value="{{patient.id}}">
+            </label>
+          </td>
+          <td>{{(patient.personne.nom)|upper}}</td>
+          <td>{{(patient.personne.prenom)|upper}}</td>
+          <td>
+          {{(patient.identifiant)|upper}}
+          </td>
+          <td>{{(patient.personne.getAge)|upper}}</td>
+          <td>
+          {% if patient.sexe is same as 'F' %}
+          {{('Femme')|upper}}
+          {% else %}
+          {{('Homme')|upper}}
+          {% endif %}
+          </td>
+          <td>
+          <button type="button" class="btn btn-block btn-success">Imprimer</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>N°</th>
+          <th>
+            <label>
+                <input type="checkbox" class="flat-red">
+            </label>
+          </th>
+          <th>Nom</th>
+          <th>Prénoms</th>
+          <th>ID</th>
+          <th>Âges</th>
+          <th>Genre</th>
+          <th>Actions</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <!-- /.box-body -->
+</div>
+<!-- /.box -->
+
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+<script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
+<script src="{{ asset('bundles/avanzuadmintheme/js/notify.js') }}"></script>
+<script src="{{ asset('public/admin/js/badge-edition.js') }}"></script>
+<script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging': true,
+      'lengthChange': false,
+      'searching': false,
+      'ordering': true,
+      'info': true,
+      'autoWidth': false
+    })
+  })  
+</script>
+{% endblock %}
+
+{% block page_title %}
+Impression :: Badges
+{% endblock %}
+
+{% block page_subtitle %}
+{% endblock %}

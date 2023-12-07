@@ -83,3 +83,5 @@ index:
     defaults: { _controller: GestionBundle:Site:index }
 
 
+gestion_admin_gestion_badge:
+    resource: "@GestionBundle/Resources/config/routing/badge_edition.yml"

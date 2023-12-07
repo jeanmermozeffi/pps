@@ -30,6 +30,7 @@ use PS\GestionBundle\Service\RowAction;
 use Symfony\Component\Form\FormError;
 use PS\ParametreBundle\Entity\Image;
 use Doctrine\ORM\QueryBuilder;
+use PS\GestionBundle\Service\CustomCheckboxColumn;
 use PS\MobileBundle\Form\PhotoType;
 use PS\ParametreBundle\Entity\Pass;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -78,17 +79,15 @@ class PatientController extends Controller
                 $user->hasRole('ROLE_RECEPTION') ||
                 $user->hasRole('ROLE_INFIRMIER') ||
                 $user->hasRole('ROLE_MEDECIN')
-            ) 
-
-            {
+            ) {
                 $hopital = $user->getHopital()->getId();
 
                 $qb->leftjoin('_personne.personneHopital', 'pp')
-                // ->join('UtilisateurBundle:PersonneHopital', 'p0', 'WITH', 'p0.personne = _personne.id')
-                // ->join('UtilisateurBundle:UtilisateurHopital', 'h', 'WITH', 'h.utilisateur = :user')
-                ->andWhere('pp.hopital = :hopital')
-                // ->andWhere('h.hopital = :hopital OR p0.hopital = :hopital')
-                ->setParameter('hopital', $hopital);
+                    // ->join('UtilisateurBundle:PersonneHopital', 'p0', 'WITH', 'p0.personne = _personne.id')
+                    // ->join('UtilisateurBundle:UtilisateurHopital', 'h', 'WITH', 'h.utilisateur = :user')
+                    ->andWhere('pp.hopital = :hopital')
+                    // ->andWhere('h.hopital = :hopital OR p0.hopital = :hopital')
+                    ->setParameter('hopital', $hopital);
                 // ->setParameter('user', $user);
             }
 
@@ -117,7 +116,39 @@ class PatientController extends Controller
             return $qb;
         });
 
+
         $grid->setSource($source);
+
+        // $grid->getColumn('select-js')->manipulateRenderCell(function($value) 
+        // {
+        //     return '<label class="">
+        //                         <div class="icheckbox_flat-green checked" aria-checked="true" aria-disabled="false" style="position: relative;">
+        //                         <input type="checkbox" class="flat-red" checked="" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+        //                     </label>';
+        // });
+
+
+        // Ajoutez une colonne de case à cocher pour la sélection
+        $checkboxColumn = new CustomCheckboxColumn([
+            'id'           => 'select-checkbox',  // Identifiant unique pour la colonne
+            'title'        => 'Sélection',        // Titre de la colonne
+            'select_field' => 'id',               // Champ à utiliser pour la valeur de la case à cocher
+        ]);
+        // $grid->addColumn($checkboxColumn);
+
+        // Manipulez le rendu de la cellule de la colonne de case à cocher
+        $checkboxColumn->manipulateRenderCell(function ($value, $row, $router) {
+            $rowId = $row->getField('id');
+
+            $checkboxHtml = sprintf(
+                '<input type="checkbox" class="profile-checkbox" value="%s" name="%s[]">',
+                htmlspecialchars($rowId),
+                'selected_profiles'
+            );
+
+            return $checkboxHtml;
+        });
+
         $grid->addColumn(new RankColumn(array('title' => 'N°')), 1);
         $grid->getColumn('sexe')->manipulateRenderCell(function ($value) {
             if ($value == 'M') {
@@ -472,8 +503,7 @@ class PatientController extends Controller
 
     private function checkAccess(Patient $patient)
     {
-        if ($this->isGranted('ROLE_ADMIN')) 
-        {
+        if ($this->isGranted('ROLE_ADMIN')) {
             $this->denyAccessUnlessGranted('ROLE_EDIT_PATIENT', $patient);
         }
     }

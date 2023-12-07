@@ -1,0 +1,4 @@
+admin_gestion_badge:
+    resource: "@GestionBundle/Controller/BadgeEdittionController.php"
+    type: annotation
+    

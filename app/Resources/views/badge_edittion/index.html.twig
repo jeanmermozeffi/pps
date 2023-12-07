@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BadgeEdittion index{% endblock %}
+
+{% block body %}
+    <h1>BadgeEdittion index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>DateImpression</th>
+                <th>Statut</th>
+                <th>Motif</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for badge_edittion in badge_edittions %}
+            <tr>
+                <td>{{ badge_edittion.id }}</td>
+                <td>{{ badge_edittion.dateImpression ? badge_edittion.dateImpression|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ badge_edittion.statut ? 'Yes' : 'No' }}</td>
+                <td>{{ badge_edittion.motif }}</td>
+                <td>
+                    <a href="{{ path('app_badge_edittion_show', {'id': badge_edittion.id}) }}">show</a>
+                    <a href="{{ path('app_badge_edittion_edit', {'id': badge_edittion.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_badge_edittion_new') }}">Create new</a>
+{% endblock %}
