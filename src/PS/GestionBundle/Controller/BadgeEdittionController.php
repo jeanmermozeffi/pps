@@ -128,7 +128,7 @@ class BadgeEdittionController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="app_badge_edittion_show", methods={"GET"})
+     * @Route("/{id}/show", name="app_badge_edittion_show", methods={"GET"})
      */
     public function show(BadgeEdittion $badgeEdittion): Response
     {
@@ -158,7 +158,7 @@ class BadgeEdittionController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="app_badge_edittion_delete", methods={"POST"})
+     * @Route("/{id}/delete", name="app_badge_edittion_delete", methods={"POST"})
      */
     public function delete(Request $request, BadgeEdittion $badgeEdittion, BadgeEdittionRepository $badgeEdittionRepository): Response
     {
