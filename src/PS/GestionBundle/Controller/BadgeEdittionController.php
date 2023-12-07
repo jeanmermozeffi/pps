@@ -29,7 +29,7 @@ class BadgeEdittionController extends Controller
     }
 
     /**
-     * @Route("/impresion", name="app_badge_edittion_print", methods={"POST"}, options={"expose"=true})
+     * @Route("/impresion", name="app_badge_edittion_print", methods={"GET", "POST"}, options={"expose"=true})
      */
     public function print(Request $request): Response
     {
