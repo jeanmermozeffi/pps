@@ -110,27 +110,22 @@ class BadgeEditionPatient
 
         foreach ($selectedPatients as $index => $patient) {
             $vars = ['patient' => $patient];
-            // $template = 'patient/badge.html.twig';
+            $template = 'patient/badge.html.twig';
             $templateRecto = 'patient/badge_recto.html.twig';
             $templateVerso = 'patient/badge_verso.html.twig';
 
-            $template = ($index % 2 == 0) ? $templateRecto : $templateVerso;
+            // $template = ($index % 2 == 0) ? $templateRecto : $templateVerso;
 
             // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
             if ($loader->exists($templateRecto) && $loader->exists($templateVerso)) {
-                // $htmlRecto = $this->twig->render($templateRecto, $vars);
-                // $htmlVerso = $this->twig->render($templateVerso);
-                $htmlContent = $this->twig->render($template, $vars);
+                $htmlRecto = $this->twig->render($templateRecto, $vars);
+                $htmlVerso = $this->twig->render($templateVerso);
 
-                $mpdf->WriteHTML($htmlContent);
-                // $mpdf->AddPage();
-                // $mpdf->WriteHTML($htmlVerso);
+                $mpdf->WriteHTML($htmlRecto);
 
                 if ($index < $count - 1) {
                     $mpdf->AddPage();
                 }
-
-                // $mpdf->WriteHTML($templateVerso);
 
                 $mpdf->showImageErrors = true;
 
@@ -138,24 +133,11 @@ class BadgeEditionPatient
                 ++$received;
                 $numberOfPagesGenerated = $mpdf->page;
             }
-
-            // // Ajouter une page blanche pour le verso après chaque patient
-            // if ($index < $count - 1) {
-            //     $mpdf->AddPage();
-
-            //     // // Si le numéro de page actuel est pair, ajoutez une page blanche supplémentaire
-            //     // if (($index + 1) % 2 == 0) {
-            //     //     $mpdf->AddPage();
-            //     // }
-            // }
         }
 
-        // Utilisez WriteHTML en dehors de la boucle pour convertir tout le contenu en un seul PDF
-        // $mpdf->WriteHTML($htmlContent);
-
         if ($received >= 1) {
-            // $mpdf->Output('Badge_All_Selected_Patients.pdf', 'I');
-            $mpdf->Output('Badge_Patient_' . $patient->getId() . '.pdf', 'F');
+            $mpdf->Output('Badge_All_Selected_Patients.pdf', 'I');
+            // $mpdf->Output('Badge_Patient_' . $patient->getId() . '.pdf', 'F');
         }
     }
 
