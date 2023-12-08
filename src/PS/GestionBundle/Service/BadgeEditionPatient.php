@@ -124,8 +124,8 @@ class BadgeEditionPatient
 
                 $htmlContent = $this->twig->render($template, $vars);
 
-                $mpdf->WriteHTML($htmlRecto,  false, false);
-                $mpdf->WriteHTML($htmlVerso, false, false);
+                $mpdf->WriteHTML($htmlRecto);
+                $mpdf->WriteHTML($htmlVerso);
 
                 if ($index < $count - 1) {
                     $mpdf->AddPage();
