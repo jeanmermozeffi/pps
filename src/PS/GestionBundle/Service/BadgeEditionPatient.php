@@ -139,15 +139,19 @@ class BadgeEditionPatient
                 $numberOfPagesGenerated = $mpdf->page;
             }
 
-            // Ajouter une page blanche pour le verso après chaque patient
-            if ($index < $count - 1) {
+            if (--$count > 0) {
                 $mpdf->AddPage();
-
-                // // Si le numéro de page actuel est pair, ajoutez une page blanche supplémentaire
-                // if (($index + 1) % 2 == 0) {
-                //     $mpdf->AddPage();
-                // }
             }
+
+            // // Ajouter une page blanche pour le verso après chaque patient
+            // if ($index < $count - 1) {
+            //     $mpdf->AddPage();
+
+            //     // // Si le numéro de page actuel est pair, ajoutez une page blanche supplémentaire
+            //     // if (($index + 1) % 2 == 0) {
+            //     //     $mpdf->AddPage();
+            //     // }
+            // }
         }
 
         // Utilisez WriteHTML en dehors de la boucle pour convertir tout le contenu en un seul PDF
