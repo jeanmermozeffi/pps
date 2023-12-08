@@ -114,12 +114,20 @@ class BadgeEditionPatient
             $templateRecto = 'patient/badge_recto.html.twig';
             $templateVerso = 'patient/badge_verso.html.twig';
 
-            $template = ($index % 2 == 0) ? $templateVerso : $templateVerso;
+            if (--$count > 0) {
+                $mpdf->AddPage();
+            }
+
+            $template = ($index % 2 == 0) ? $templateRecto : $templateVerso;
+
+            if ($index == 1) {
+                $template = $templateRecto;
+            }
 
             // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
             if ($loader->exists($templateRecto) && $loader->exists($templateVerso)) {
-                $htmlRecto = $this->twig->render($templateRecto, $vars);
-                $htmlVerso = $this->twig->render($templateVerso);
+                // $htmlRecto = $this->twig->render($templateRecto, $vars);
+                // $htmlVerso = $this->twig->render($templateVerso);
                 $htmlContent = $this->twig->render($template, $vars);
 
                 $mpdf->WriteHTML($htmlContent);
@@ -137,10 +145,6 @@ class BadgeEditionPatient
                 // Ajouter une page blanche pour le verso
                 ++$received;
                 $numberOfPagesGenerated = $mpdf->page;
-            }
-
-            if (--$count > 0) {
-                $mpdf->AddPage();
             }
 
             // // Ajouter une page blanche pour le verso après chaque patient
