@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+
 /**
  * @Route("admin/badge/edittion")
  */
@@ -33,57 +34,56 @@ class BadgeEdittionController extends Controller
      */
     public function print(Request $request): Response
     {
-        $data = json_decode($request->getContent(), true);
+        $badgesEditor  = $this->get('app.badges_editor');
+        $session = $request->getSession();
+        $redirectRoute = 'app_badge_edittion_dashboard';
 
-        $patientsIds = $data['selectedValues'];
+        if ($request->isXmlHttpRequest()) {
+            $redirectRoute = 'app_badge_edittion_print';
+
+            $data = json_decode($request->getContent(), true);
+            $patientsIds = $data['selectedValues'];
+
+            // Vérifiez si le tableau $patientsIds est vide
+            if (empty($patientsIds)) {
+                $redirect = $this->generateUrl('app_badge_edittion_dashboard');
+                $message = 'Veuillez sélectionner des patients';
+                $statut = false;
+
+                $response = compact('statut', 'redirect', 'message');
+                return new JsonResponse($response);
+            }
+
+            $session->set('patientsIds', $patientsIds);
+            $statut = true;
+            $message = "Vous avez imprimé tous les clients sélectionnés !";
+
+            $redirect = $this->generateUrl($redirectRoute);
+
+            $response = compact('statut', 'redirect', 'message');
+            return new JsonResponse($response);
+        }
+
+        $patientsIds = $session->get('patientsIds');
+
+        // Vérifiez si le tableau $patientsIds est vide
+        if (empty($patientsIds)) {
+            $this->addFlash("pvc", "Veuillez sélectionner des patients");
+            return $this->redirectToRoute('app_badge_edittion_dashboard');
+        }
 
         // Récupérez les entités Patient à partir des identifiants sélectionnés
         $selectedPatients = $this->getDoctrine()
             ->getRepository(Patient::class)
-            ->findBy(['id' => $data['selectedValues']]);
+            ->findBy(['id' => $patientsIds]);
 
+        $badgesEditor->printCartePVC($selectedPatients);
 
-        // Générez le contenu HTML pour chaque patient
-        $htmlContent = '';
-        foreach ($selectedPatients as $patient) {
-            $vars = ['patient' => $patient];
-            $template = 'patient/badge.html.twig';
-            $htmlContent .= $this->renderView($template, $vars);
-        }
+        $redirect = $this->generateUrl($redirectRoute);
 
-        // Utilisez mPDF pour générer un PDF unique
-        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
-        $fontDirs = $defaultConfig['fontDir'];
-        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
-        $fontData = $defaultFontConfig['fontdata'];
-
-        $mpdf = new \Mpdf\Mpdf([
-            'mode' => 'utf-8',
-            'orientation' => 'P',
-            'fontDir' => array_merge($fontDirs, [$this->getParameter('bundle_dir') . '/public/fonts/montserrat/']),
-            'fontdata' => $fontData + [
-                'Montserrat' => [
-                    'B' => 'Montserrat-Bold.ttf',
-                    'R' => 'Montserrat-Regular.ttf',
-                    'L' => 'Montserrat-Light.ttf',
-                ],
-            ],
-            'default_font' => 'Montserrat',
-            'img_dpi' => 300,
-            'dpi' => 300,
-            'format' => 'A4',
-        ]);
-
-        $mpdf->shrink_tables_to_fit = 1;
-        $mpdf->WriteHTML($htmlContent);
-        $mpdf->Output('Badge_All_Selected_Patients.pdf', 'I');
-
-        // Envoyez le PDF en réponse
-        return new Response();
-        
-        // Retournez une réponse JSON pour indiquer le succès ou l'échec de l'opération
-        // return new JsonResponse(['success' => true]);
+        return $this->redirectToRoute($redirect);
     }
+
 
     /**
      * @Route("/dashboard", name="app_badge_edittion_dashboard", methods={"GET"})
@@ -102,7 +102,7 @@ class BadgeEdittionController extends Controller
         );
 
         return $this->render('badge_edittion/dashboard.html.twig', [
-            'patients' =>$patients,
+            'patients' => $patients,
         ]);
     }
 
@@ -162,7 +162,7 @@ class BadgeEdittionController extends Controller
      */
     public function delete(Request $request, BadgeEdittion $badgeEdittion, BadgeEdittionRepository $badgeEdittionRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$badgeEdittion->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $badgeEdittion->getId(), $request->request->get('_token'))) {
             $badgeEdittionRepository->remove($badgeEdittion, true);
         }
 

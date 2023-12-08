@@ -2,8 +2,13 @@
 # https://symfony.com/doc/current/service_container.html
 parameters:
     #parameter_name: value
+    # parameter_bag: Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface
+
 
 services:
+  parameter_bag:
+      class: Symfony\Component\DependencyInjection\ParameterBag\ParameterBag
+
   app.form.registration:
     class: PS\UtilisateurBundle\Form\RegistrationType
     tags: 
@@ -329,3 +334,8 @@ services:
     #service_name:
     #    class: AppBundle\Directory\ClassName
     #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+
+  app.badges_editor:
+    class: PS\GestionBundle\Service\BadgeEditionPatient
+    arguments: ['@twig', '@doctrine.orm.entity_manager', '@parameter_bag']
+    autowire: true
