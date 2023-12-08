@@ -121,7 +121,7 @@ class BadgeEditionPatient
                 $mpdf->WriteHTML($html);
                 
                 if (--$count > 0) {
-                    $mpdf->AddPage();
+                    // $mpdf->AddPage();
                 }
 
                 $mpdf->showImageErrors = true;
