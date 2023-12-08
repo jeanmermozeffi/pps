@@ -120,10 +120,10 @@ class BadgeEditionPatient
                 $numberOfPagesGenerated = $mpdf->page;
                 
                 
-                if ($numberOfPagesGenerated % 2 == 0) 
-                {
-                    $mpdf->AddPage();
-                }
+                // if ($numberOfPagesGenerated % 2 == 0) 
+                // {
+                //     $mpdf->AddPage();
+                // }
                 // Ajouter une page blanche pour le verso
                 ++$received;
             }
@@ -133,7 +133,7 @@ class BadgeEditionPatient
         // $mpdf->WriteHTML($htmlContent);
 
         if ($received >= 1) {
-            $mpdf->Output('Badge_All_Selected_Patients.pdf', 'I');
+            $mpdf->Output('Badge_All_Selected_Patients.pdf', 'F');
         }
     }
 
