@@ -111,6 +111,10 @@ class BadgeEditionPatient
 
             //on stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
             if ($loader->exists($template)) {
+                if (--$count > 0) {
+                    $mpdf->AddPage();
+                }
+
                 $htmlContent = $this->twig->render($template, $vars);
 
                 //writeHTML va tout simplement prendre la vue stockée dans la variable $html pour la convertir en format PDF
@@ -120,9 +124,6 @@ class BadgeEditionPatient
 
                 ++$received;
                 // // On verifie la taille pour ne pas ajouter une page vierge
-                if (--$count > 0 && ($count % 2 )== 0) {
-                    $mpdf->AddPage();
-                }
             }
         }
 
