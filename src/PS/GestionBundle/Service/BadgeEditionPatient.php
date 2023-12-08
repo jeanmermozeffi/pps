@@ -71,7 +71,7 @@ class BadgeEditionPatient
         // Utilisez $bundleDir comme nécessaire
         // $fontDir = $bundleDir . '/public/fonts/montserrat/';
         // $options['fontDir'] = $fontDir;
-        
+
         $options = [];
         $loader = $this->twig->getLoader();
         $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
@@ -123,10 +123,11 @@ class BadgeEditionPatient
                 // $htmlVerso = $this->twig->render($templateVerso);
 
                 $htmlContent = $this->twig->render($template, $vars);
-                
+
                 $mpdf->WriteHTML($htmlContent);
 
                 if ($index < $count - 1) {
+                    $mpdf->SetPageTemplate($templateVerso);
                     $mpdf->AddPage('NEXT-ODD');
                 }
 
