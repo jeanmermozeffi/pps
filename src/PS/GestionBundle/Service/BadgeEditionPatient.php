@@ -119,15 +119,16 @@ class BadgeEditionPatient
                 $html = $this->twig->render($templateResto, $vars);
 
                 $mpdf->WriteHTML($html);
-                $numberOfPagesGenerated = $mpdf->page;
                 
-                
-                // if ($numberOfPagesGenerated % 2 == 0) 
-                // {
-                //     $mpdf->AddPage();
-                // }
+                if (--$count > 0) {
+                    $mpdf->AddPage();
+                }
+
+                $mpdf->showImageErrors = true;
+
                 // Ajouter une page blanche pour le verso
                 ++$received;
+                $numberOfPagesGenerated = $mpdf->page;
             }
         }
 
