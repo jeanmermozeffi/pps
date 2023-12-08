@@ -127,16 +127,21 @@ class BadgeEditionPatient
                 $mpdf->WriteHTML($htmlRecto);
                 $mpdf->WriteHTML($htmlVerso);
 
-                if ($index < $count - 1) {
-                    $mpdf->AddPage();
-                }
-
-
                 $mpdf->showImageErrors = true;
 
                 // Ajouter une page blanche pour le verso
                 ++$received;
                 $numberOfPagesGenerated = $mpdf->page;
+            }
+
+            // Ajouter une page blanche pour le verso après chaque patient
+            if ($index < $count - 1) {
+                $mpdf->AddPage();
+
+                // Si le numéro de page actuel est pair, ajoutez une page blanche supplémentaire
+                if (($index + 1) % 2 == 0) {
+                    $mpdf->AddPage();
+                }
             }
         }
 
