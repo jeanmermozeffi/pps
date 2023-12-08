@@ -114,10 +114,6 @@ class BadgeEditionPatient
             $templateRecto = 'patient/badge_recto.html.twig';
             $templateVerso = 'patient/badge_verso.html.twig';
 
-            if (--$count > 0) {
-                $mpdf->AddPage();
-            }
-
             $template = ($index % 2 == 0) ? $templateRecto : $templateVerso;
 
             if ($index == 1) {
