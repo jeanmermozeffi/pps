@@ -116,10 +116,6 @@ class BadgeEditionPatient
 
             $template = ($index % 2 == 0) ? $templateRecto : $templateVerso;
 
-            if ($index == 1) {
-                $template = $templateRecto;
-            }
-
             // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
             if ($loader->exists($templateRecto) && $loader->exists($templateVerso)) {
                 // $htmlRecto = $this->twig->render($templateRecto, $vars);
@@ -130,7 +126,7 @@ class BadgeEditionPatient
                 // $mpdf->AddPage();
                 // $mpdf->WriteHTML($htmlVerso);
 
-                if (--$count > 0) {
+                if ($index < $count - 1) {
                     $mpdf->AddPage();
                 }
 
@@ -158,7 +154,8 @@ class BadgeEditionPatient
         // $mpdf->WriteHTML($htmlContent);
 
         if ($received >= 1) {
-            $mpdf->Output('Badge_All_Selected_Patients.pdf', 'I');
+            // $mpdf->Output('Badge_All_Selected_Patients.pdf', 'I');
+            $mpdf->Output('Badge_Patient_' . $patient->getId() . '.pdf', 'F');
         }
     }
 
