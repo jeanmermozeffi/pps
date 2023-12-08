@@ -130,9 +130,9 @@ class BadgeEditionPatient
                 // $mpdf->AddPage();
                 // $mpdf->WriteHTML($htmlVerso);
 
-                // if (--$count > 0) {
-                //     $mpdf->AddPage();
-                // }
+                if (--$count > 0) {
+                    $mpdf->AddPage();
+                }
 
                 // $mpdf->WriteHTML($templateVerso);
 
