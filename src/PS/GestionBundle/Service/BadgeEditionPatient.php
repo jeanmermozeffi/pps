@@ -133,7 +133,7 @@ class BadgeEditionPatient
         // $mpdf->WriteHTML($htmlContent);
 
         if ($received >= 1) {
-            $mpdf->Output('Badge_All_Selected_Patients.pdf', 'F');
+            $mpdf->Output('Badge_All_Selected_Patients.pdf', 'I');
         }
     }
 
