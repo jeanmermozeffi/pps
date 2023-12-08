@@ -114,7 +114,7 @@ class BadgeEditionPatient
             $templateRecto = 'patient/badge_recto.html.twig';
             $templateVerso = 'patient/badge_verso.html.twig';
 
-            $template = ($index % 2 == 0) ? $templateRecto : $templateVerso;
+            $template = ($index % 2 == 0) ? $templateVerso : $templateVerso;
 
             // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
             if ($loader->exists($templateRecto) && $loader->exists($templateVerso)) {
