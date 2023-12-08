@@ -127,7 +127,7 @@ class BadgeEditionPatient
                 $mpdf->WriteHTML($htmlContent);
 
                 if ($index < $count - 1) {
-                    $mpdf->AddPage();
+                    $mpdf->AddPage('NEXT-ODD');
                 }
 
 
