@@ -119,10 +119,13 @@ class BadgeEditionPatient
                 $mpdf->WriteHTML($html);
                 $numberOfPagesGenerated = $mpdf->page;
                 
-                // Ajouter une page blanche pour le verso
-                if ($numberOfPagesGenerated % 2 == 0) {
+                
+                if ($numberOfPagesGenerated % 2 == 0) 
+                {
                     $mpdf->AddPage();
                 }
+                // Ajouter une page blanche pour le verso
+                ++$received;
             }
         }
 
