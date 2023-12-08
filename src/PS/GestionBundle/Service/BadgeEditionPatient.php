@@ -90,7 +90,6 @@ class BadgeEditionPatient
             'fontDir' => array_merge($fontDirs, [
                 $options['fontDir'] ?? []
             ]),
-            'mirrorMargins' => true,
             'fontdata' => $fontData + [
                 'Montserrat' => [
                     'B' => 'Montserrat-Bold.ttf',
@@ -116,8 +115,8 @@ class BadgeEditionPatient
             $templateVerso = 'patient/badge_verso.html.twig';
 
             // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
-            if ($loader->exists($templateResto)) {
-                $html = $this->twig->render($templateResto, $vars);
+            if ($loader->exists($templateVerso)) {
+                $html = $this->twig->render($templateVerso, $vars);
 
                 $mpdf->WriteHTML($html);
                 
@@ -125,7 +124,7 @@ class BadgeEditionPatient
                     // $mpdf->AddPage();
                 }
 
-                $mpdf->WriteHTML($templateVerso);
+                // $mpdf->WriteHTML($templateVerso);
 
                 $mpdf->showImageErrors = true;
 
