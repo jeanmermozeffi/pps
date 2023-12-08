@@ -124,12 +124,7 @@ class BadgeEditionPatient
 
                 $htmlContent = $this->twig->render($template, $vars);
 
-                if ($index == 1) {
-                    $mpdf->WriteHTML($htmlRecto);
-                    $mpdf->WriteHTML($htmlVerso);
-                } else {
-                    $mpdf->WriteHTML($htmlContent);
-                }
+                $mpdf->WriteHTML($htmlRecto);
 
                 $mpdf->showImageErrors = true;
 
@@ -142,10 +137,10 @@ class BadgeEditionPatient
             if ($index < $count - 1) {
                 $mpdf->AddPage();
 
-                // Si le numéro de page actuel est pair, ajoutez une page blanche supplémentaire
-                if (($index + 1) % 2 == 0) {
-                    $mpdf->AddPage();
-                }
+                // // Si le numéro de page actuel est pair, ajoutez une page blanche supplémentaire
+                // if (($index + 1) % 2 == 0) {
+                //     $mpdf->AddPage();
+                // }
             }
         }
 
