@@ -124,11 +124,12 @@ class BadgeEditionPatient
 
                 $htmlContent = $this->twig->render($template, $vars);
                 
+                $mpdf->WriteHTML($htmlContent);
+
                 if ($index < $count - 1) {
                     $mpdf->AddPage();
                 }
 
-                $mpdf->WriteHTML($htmlContent);
 
                 $mpdf->showImageErrors = true;
 
