@@ -65,14 +65,14 @@ class BadgeEditionPatient
 
     public function printCartePVC(?array $selectedPatients)
     {
-        $options = [];
         // Accédez à votre paramètre
         // $bundleDir = $this->parameterBag->get('bundle_dir');
 
         // Utilisez $bundleDir comme nécessaire
         // $fontDir = $bundleDir . '/public/fonts/montserrat/';
         // $options['fontDir'] = $fontDir;
-
+        
+        $options = [];
         $loader = $this->twig->getLoader();
         $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
         $fontDirs = $defaultConfig['fontDir'];
@@ -100,6 +100,7 @@ class BadgeEditionPatient
         ]);
 
         $mpdf->shrink_tables_to_fit = 1;
+
         $count = count($selectedPatients);
         $received = 0;
         $initialPageCount = $mpdf->page;
@@ -109,23 +110,25 @@ class BadgeEditionPatient
         $htmlContent = ''; // Initialisez la variable en dehors de la boucle
 
         foreach ($selectedPatients as $index => $patient) {
-            $vars = ['patient' => $patient];
-            $template = 'patient/badge.html.twig';
+            // $template = 'patient/badge.html.twig';
             $templateRecto = 'patient/badge_recto.html.twig';
             $templateVerso = 'patient/badge_verso.html.twig';
 
-            // $template = ($index % 2 == 0) ? $templateRecto : $templateVerso;
+            $template = ($index % 2 == 0) ? $templateRecto : $templateVerso;
 
             // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
             if ($loader->exists($templateRecto) && $loader->exists($templateVerso)) {
-                $htmlRecto = $this->twig->render($templateRecto, $vars);
-                $htmlVerso = $this->twig->render($templateVerso);
+                $vars = ['patient' => $patient];
+                // $htmlRecto = $this->twig->render($templateRecto, $vars);
+                // $htmlVerso = $this->twig->render($templateVerso);
 
-                $mpdf->WriteHTML($htmlRecto);
-
+                $htmlContent = $this->twig->render($template, $vars);
+                
                 if ($index < $count - 1) {
                     $mpdf->AddPage();
                 }
+
+                $mpdf->WriteHTML($htmlContent);
 
                 $mpdf->showImageErrors = true;
 
