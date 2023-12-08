@@ -104,77 +104,25 @@ class BadgeEditionPatient
         $received = 0;
 
         // Générez le contenu HTML pour chaque patient
-        // $htmlContent = '';
+        $htmlContent = ''; // Initialisez la variable en dehors de la boucle
+
         foreach ($selectedPatients as $patient) {
             $vars = ['patient' => $patient];
             $template = 'patient/badge.html.twig';
 
-            //on stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
+            // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
             if ($loader->exists($template)) {
-                if (--$count > 0) {
+                $htmlContent .= $this->twig->render($template, $vars);
+                
+                // Ajouter une page blanche pour le verso
+                if (++$received % 2 == 0) {
                     $mpdf->AddPage();
                 }
-
-                $htmlContent = $this->twig->render($template, $vars);
-
-                //writeHTML va tout simplement prendre la vue stockée dans la variable $html pour la convertir en format PDF
-                $mpdf->WriteHTML($htmlContent);
-
-                $mpdf->showImageErrors = true;
-
-                ++$received;
-                // // On verifie la taille pour ne pas ajouter une page vierge
             }
         }
 
-        // foreach ($patients as $id) {
-        //     $editedCard = $patient->getEditPatientCards()->first();
-
-
-        //     if ($patient && !$editedCard) {
-        //         $editedCard = $this->createNewCard($patient);
-        //     }
-
-        //     if ($patient && !$editedCard->isStatut()) {
-
-        //         $date = $editedCard->getDateEdition()->format('d/m/Y');
-        //         $hopital = $patient->getHopitals()->first();
-
-        //         if ($hopital) {
-        //             $type = $hopital->getTypeHopital();
-        //             $entite = strtoupper($type->getLibelle() . ' ' . $hopital->getNomHopital());
-        //         } else {
-        //             $entite = 'PASS SANTE MOUSSO';
-        //         }
-
-        //         $vars = [
-        //             'name' => strtoupper($patient->getNomComplet()),
-        //             'identifiant' => strtoupper($patient->getIdentifiant()),
-        //             'pin' => $patient->getPin(),
-        //             'hopital' => $entite,
-        //             'date' => $date,
-        //         ];
-
-        //         //on stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
-        //         if ($loader->exists('/hopital/patient/print_file/master-card.html.twig')) {
-        //             $html = $this->twig->render('/hopital/patient/print_file/master-card.html.twig', [
-        //                 'patient' => $vars,
-        //             ]);
-        //         }
-
-        //         //writeHTML va tout simplement prendre la vue stockée dans la variable $html pour la convertir en format PDF
-        //         $mpdf->WriteHTML($html);
-
-        //         // On verifie la taille pour ne pas ajouter une page vierge
-        //         if (--$count > 0) {
-        //             $mpdf->AddPage();
-        //         }
-        //         $mpdf->showImageErrors = true;
-
-        //         ++$received;
-        //         $this->updateCardStatut($editedCard);
-        //     }
-        // }
+        // Utilisez WriteHTML en dehors de la boucle pour convertir tout le contenu en un seul PDF
+        $mpdf->WriteHTML($htmlContent);
 
         if ($received >= 1) {
             $mpdf->Output('Badge_All_Selected_Patients.pdf', 'I');
