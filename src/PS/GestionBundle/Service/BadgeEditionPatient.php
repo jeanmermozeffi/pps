@@ -113,7 +113,7 @@ class BadgeEditionPatient
             // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
             if ($loader->exists($template)) {
                 $htmlContent .= $this->twig->render($template, $vars);
-                
+
                 // Ajouter une page blanche pour le verso
                 if (++$received % 2 == 0) {
                     $mpdf->AddPage();
@@ -122,7 +122,7 @@ class BadgeEditionPatient
         }
 
         // Utilisez WriteHTML en dehors de la boucle pour convertir tout le contenu en un seul PDF
-        $mpdf->WriteHTML($htmlContent);
+        $mpdf->WriteHTML($this->twig->render($htmlContent));
 
         if ($received >= 1) {
             $mpdf->Output('Badge_All_Selected_Patients.pdf', 'I');
