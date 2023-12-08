@@ -15,7 +15,9 @@
         footer: html_footer;
       }
 
-      @page :last {
+      @page :last {}
+
+      @page {
         background-image: url("{{ absolute_url(asset('public/img/carte web_verso.png')) }}");
 
         background-repeat: no-repeat;
@@ -201,7 +203,7 @@
         </div>
       </div>
     </htmlpagefooter>
-    {# <htmlpagefooter name="empty"></htmlpagefooter> #}
+    <htmlpagefooter name="html_empty"></htmlpagefooter>
   </body>
 
 </html>
