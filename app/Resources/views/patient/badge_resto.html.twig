@@ -12,11 +12,30 @@
       @page :first {
         background-image: url("{{ absolute_url(asset('public/img/carte web_recto.png')) }}");
         background-repeat: no-repeat;
-
         footer: html_footer;
       }
 
-      /* @page :last {} */
+      @page :last {
+        background-image: url("{{ absolute_url(asset('public/img/carte web_verso.png')) }}");
+
+        background-repeat: no-repeat;
+        /*background*/
+        margin-footer: 0.2cm;
+        footer: html_empty;
+        /*header: html_headerContent;*/
+
+        margin-top: 0cm;
+        margin-header: 0cm;
+        margin-left: 0cm;
+        margin-right: 0cm margin-bottom: 0cm;
+        /*background: ...
+        background-image: ...
+        background-position ...
+        background-repeat ...
+        background-color ...
+        background-gradient: ...*/
+      }
+
       .clearfix:after,
       {
       % endblock %
