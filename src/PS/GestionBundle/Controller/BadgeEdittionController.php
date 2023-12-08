@@ -79,9 +79,7 @@ class BadgeEdittionController extends Controller
 
         $badgesEditor->printCartePVC($selectedPatients);
 
-        $redirect = $this->generateUrl($redirectRoute);
-
-        return $this->redirectToRoute($redirect);
+        return $this->redirectToRoute('app_badge_edittion_dashboard');
     }
 
 
