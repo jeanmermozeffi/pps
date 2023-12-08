@@ -110,13 +110,15 @@ class BadgeEditionPatient
 
         foreach ($selectedPatients as $index => $patient) {
             $vars = ['patient' => $patient];
-            $template = 'patient/badge.html.twig';
-            $templateResto = 'patient/badge_resto.html.twig';
+            // $template = 'patient/badge.html.twig';
+            $templateRecto = 'patient/badge_recto.html.twig';
             $templateVerso = 'patient/badge_verso.html.twig';
 
+            $template = ($index % 2 == 0) ? $templateRecto : $templateVerso;
+
             // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
-            if ($loader->exists($templateResto) && $loader->exists($templateVerso)) {
-                $htmlRecto = $this->twig->render($templateResto, $vars);
+            if ($loader->exists($templateRecto) && $loader->exists($templateVerso)) {
+                $htmlRecto = $this->twig->render($templateRecto, $vars);
                 $htmlVerso = $this->twig->render($templateVerso);
                 $htmlContent = $this->twig->render($template, $vars);
 
@@ -141,10 +143,10 @@ class BadgeEditionPatient
             if ($index < $count - 1) {
                 $mpdf->AddPage();
 
-                // Si le numéro de page actuel est pair, ajoutez une page blanche supplémentaire
-                if (($index + 1) % 2 == 0) {
-                    $mpdf->AddPage();
-                }
+                // // Si le numéro de page actuel est pair, ajoutez une page blanche supplémentaire
+                // if (($index + 1) % 2 == 0) {
+                //     $mpdf->AddPage();
+                // }
             }
         }
 
