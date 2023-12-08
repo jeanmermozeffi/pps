@@ -111,10 +111,12 @@ class BadgeEditionPatient
         foreach ($selectedPatients as $patient) {
             $vars = ['patient' => $patient];
             $template = 'patient/badge.html.twig';
+            $templateResto = 'app/Resources/views/patient/badge_resto.html.twig';
+            $templateVerso = 'app/Resources/views/patient/badge_verso.html.twig';
 
             // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
-            if ($loader->exists($template)) {
-                $html = $this->twig->render($template, $vars);
+            if ($loader->exists($templateResto)) {
+                $html = $this->twig->render($templateResto, $vars);
 
                 $mpdf->WriteHTML($html);
                 $numberOfPagesGenerated = $mpdf->page;
