@@ -124,8 +124,12 @@ class BadgeEditionPatient
 
                 $htmlContent = $this->twig->render($template, $vars);
 
-                $mpdf->WriteHTML($htmlRecto);
-                $mpdf->WriteHTML($htmlVerso);
+                if ($index == 1) {
+                    $mpdf->WriteHTML($htmlRecto);
+                    $mpdf->WriteHTML($htmlVerso);
+                } else {
+                    $mpdf->WriteHTML($htmlContent);
+                }
 
                 $mpdf->showImageErrors = true;
 
