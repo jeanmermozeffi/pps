@@ -104,33 +104,27 @@ class BadgeEditionPatient
         $received = 0;
 
         // Générez le contenu HTML pour chaque patient
-        $htmlContent = '';
+        // $htmlContent = '';
         foreach ($selectedPatients as $patient) {
             $vars = ['patient' => $patient];
             $template = 'patient/badge.html.twig';
 
             //on stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
             if ($loader->exists($template)) {
-                $html = $mpdf->WriteHTML($this->twig->render($template, $vars));
-                $htmlContent .= $html;
+                $htmlContent = $this->twig->render($template, $vars);
 
-                // On verifie la taille pour ne pas ajouter une page vierge
+                //writeHTML va tout simplement prendre la vue stockée dans la variable $html pour la convertir en format PDF
+                $mpdf->WriteHTML($htmlContent);
+
+                // // On verifie la taille pour ne pas ajouter une page vierge
                 if (--$count > 0) {
                     $mpdf->AddPage();
                 }
+                $mpdf->showImageErrors = true;
+
+                ++$received;
             }
-
-            // // On verifie la taille pour ne pas ajouter une page vierge
-            // if (--$count > 0) {
-            //     $mpdf->AddPage();
-            // }
-            $mpdf->showImageErrors = true;
-
-            ++$received;
         }
-
-        //writeHTML va tout simplement prendre la vue stockée dans la variable $html pour la convertir en format PDF
-        $mpdf->WriteHTML($htmlContent);
 
         // foreach ($patients as $id) {
         //     $editedCard = $patient->getEditPatientCards()->first();
