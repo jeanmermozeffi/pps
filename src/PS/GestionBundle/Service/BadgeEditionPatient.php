@@ -102,6 +102,8 @@ class BadgeEditionPatient
         $mpdf->shrink_tables_to_fit = 1;
         $count = count($selectedPatients);
         $received = 0;
+        $initialPageCount = $mpdf->page;
+        // $finalPageCount
 
         // Générez le contenu HTML pour chaque patient
         $htmlContent = ''; // Initialisez la variable en dehors de la boucle
@@ -112,20 +114,38 @@ class BadgeEditionPatient
 
             // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
             if ($loader->exists($template)) {
-                $htmlContent .= $this->twig->render($template, $vars);
+                $html = $this->twig->render($template, $vars);
 
+                $mpdf->WriteHTML($html);
+                $numberOfPagesGenerated = $mpdf->page;
+                
                 // Ajouter une page blanche pour le verso
-                if (++$received % 2 == 0) {
+                if ($numberOfPagesGenerated % 2 == 0) {
                     $mpdf->AddPage();
                 }
             }
         }
 
         // Utilisez WriteHTML en dehors de la boucle pour convertir tout le contenu en un seul PDF
-        $mpdf->WriteHTML($this->twig->render($htmlContent));
+        // $mpdf->WriteHTML($htmlContent);
 
         if ($received >= 1) {
             $mpdf->Output('Badge_All_Selected_Patients.pdf', 'I');
         }
+    }
+
+    public function getNumberPageOfPdf($pdfContent)
+    {
+        $numberOfPages = 0;
+        // Utilisez la méthode Output sans le paramètre 'I' pour obtenir le PDF sous forme de chaîne
+        // $pdfContent = $mpdf->Output('Badge_All_Selected_Patients.pdf', 'S');
+
+        // Obtenez le nombre de pages en utilisant une expression régulière
+        if (preg_match_all('/\/Type\s*\/Page\b/', $pdfContent, $matches)) {
+            $numberOfPages = count($matches[0]);
+            echo 'Nombre de pages : ' . $numberOfPages;
+        }
+
+        return $numberOfPages;
     }
 }
