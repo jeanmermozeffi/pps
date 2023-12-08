@@ -108,26 +108,25 @@ class BadgeEditionPatient
         // Générez le contenu HTML pour chaque patient
         $htmlContent = ''; // Initialisez la variable en dehors de la boucle
 
-        foreach ($selectedPatients as $patient) {
+        foreach ($selectedPatients as $index => $patient) {
             $vars = ['patient' => $patient];
             $template = 'patient/badge.html.twig';
             $templateResto = 'patient/badge_resto.html.twig';
             $templateVerso = 'patient/badge_verso.html.twig';
 
             // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
-            if ($loader->exists($templateResto) && $loader->exists($templateVerso)) 
-            {
+            if ($loader->exists($templateResto) && $loader->exists($templateVerso)) {
                 $htmlRecto = $this->twig->render($templateResto, $vars);
                 $htmlVerso = $this->twig->render($templateVerso);
-                $html = $this->twig->render($htmlRecto . $htmlVerso);
+                $htmlContent = $this->twig->render($template, $vars);
 
-                $mpdf->WriteHTML($html);
+                $mpdf->WriteHTML($htmlContent);
                 // $mpdf->AddPage();
                 // $mpdf->WriteHTML($htmlVerso);
-                
-                if (--$count > 0) {
-                    $mpdf->AddPage();
-                }
+
+                // if (--$count > 0) {
+                //     $mpdf->AddPage();
+                // }
 
                 // $mpdf->WriteHTML($templateVerso);
 
@@ -136,6 +135,16 @@ class BadgeEditionPatient
                 // Ajouter une page blanche pour le verso
                 ++$received;
                 $numberOfPagesGenerated = $mpdf->page;
+            }
+
+            // Ajouter une page blanche pour le verso après chaque patient
+            if ($index < $count - 1) {
+                $mpdf->AddPage();
+
+                // Si le numéro de page actuel est pair, ajoutez une page blanche supplémentaire
+                if (($index + 1) % 2 == 0) {
+                    $mpdf->AddPage();
+                }
             }
         }
 
