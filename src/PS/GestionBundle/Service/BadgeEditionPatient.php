@@ -117,9 +117,9 @@ class BadgeEditionPatient
                 $mpdf->WriteHTML($htmlContent);
 
                 // // On verifie la taille pour ne pas ajouter une page vierge
-                if (--$count > 0) {
-                    $mpdf->AddPage();
-                }
+                // if (--$count > 0) {
+                //     $mpdf->AddPage();
+                // }
                 $mpdf->showImageErrors = true;
 
                 ++$received;
