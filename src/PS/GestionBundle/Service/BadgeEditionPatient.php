@@ -65,50 +65,52 @@ class BadgeEditionPatient
 
     public function printCartePVC(?array $selectedPatients)
     {
-        $options = [];
-        // Accédez à votre paramètre
-        // $bundleDir = $this->parameterBag->get('bundle_dir');
 
-        // Utilisez $bundleDir comme nécessaire
-        // $fontDir = $bundleDir . '/public/fonts/montserrat/';
-        // $options['fontDir'] = $fontDir;
-
-        $loader = $this->twig->getLoader();
-        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
-        $fontDirs = $defaultConfig['fontDir'];
-
-        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
-        $fontData = $defaultFontConfig['fontdata'];
-
-        $mpdf = new \Mpdf\Mpdf([
-            'orientation' => $options['orientation'] ?? 'P',
-            'mode' => 'utf-8',
-            'default_font' => 'Montserrat',
-            'img_dpi' => 300,
-            'dpi' => 300,
-            'format' => [85, 55],
-            'fontDir' => array_merge($fontDirs, [
-                $options['fontDir'] ?? []
-            ]),
-            'fontdata' => $fontData + [
-                'Montserrat' => [
-                    'B' => 'Montserrat-Bold.ttf',
-                    'R' => 'Montserrat-Regular.ttf',
-                    'L' => 'Montserrat-Light.ttf',
-                ],
-            ],
-        ]);
-
-        $mpdf->shrink_tables_to_fit = 1;
         $count = count($selectedPatients);
         $received = 0;
-        $initialPageCount = $mpdf->page;
+        // $initialPageCount = $mpdf->page;
         // $finalPageCount
 
         // Générez le contenu HTML pour chaque patient
         $htmlContent = ''; // Initialisez la variable en dehors de la boucle
 
         foreach ($selectedPatients as $patient) {
+            $options = [];
+            // Accédez à votre paramètre
+            // $bundleDir = $this->parameterBag->get('bundle_dir');
+
+            // Utilisez $bundleDir comme nécessaire
+            // $fontDir = $bundleDir . '/public/fonts/montserrat/';
+            // $options['fontDir'] = $fontDir;
+
+            $loader = $this->twig->getLoader();
+            $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+            $fontDirs = $defaultConfig['fontDir'];
+
+            $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+            $fontData = $defaultFontConfig['fontdata'];
+
+            $mpdf = new \Mpdf\Mpdf([
+                'orientation' => $options['orientation'] ?? 'P',
+                'mode' => 'utf-8',
+                'default_font' => 'Montserrat',
+                'img_dpi' => 300,
+                'dpi' => 300,
+                'format' => [85, 55],
+                'fontDir' => array_merge($fontDirs, [
+                    $options['fontDir'] ?? []
+                ]),
+                'fontdata' => $fontData + [
+                    'Montserrat' => [
+                        'B' => 'Montserrat-Bold.ttf',
+                        'R' => 'Montserrat-Regular.ttf',
+                        'L' => 'Montserrat-Light.ttf',
+                    ],
+                ],
+            ]);
+
+            $mpdf->shrink_tables_to_fit = 1;
+
             $vars = ['patient' => $patient];
             $template = 'patient/badge.html.twig';
             $templateResto = 'patient/badge_resto.html.twig';
@@ -119,9 +121,9 @@ class BadgeEditionPatient
                 $html = $this->twig->render($templateResto, $vars);
 
                 $mpdf->WriteHTML($html);
-                
+
                 if (--$count > 0) {
-                    $mpdf->AddPage();
+                    // $mpdf->AddPage();
                 }
 
                 $mpdf->showImageErrors = true;
