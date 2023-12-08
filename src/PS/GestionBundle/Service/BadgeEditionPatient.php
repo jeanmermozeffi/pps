@@ -121,6 +121,7 @@ class BadgeEditionPatient
                 $htmlVerso = $this->twig->render($templateVerso);
 
                 $mpdf->WriteHTML($htmlRecto);
+                $mpdf->AddPage();
                 $mpdf->WriteHTML($htmlVerso);
                 
                 if (--$count > 0) {
