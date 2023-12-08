@@ -113,12 +113,17 @@ class BadgeEditionPatient
             if ($loader->exists($template)) {
                 $html = $mpdf->WriteHTML($this->twig->render($template, $vars));
                 $htmlContent .= $html;
+
+                // On verifie la taille pour ne pas ajouter une page vierge
+                if (--$count > 0) {
+                    $mpdf->AddPage();
+                }
             }
 
-            // On verifie la taille pour ne pas ajouter une page vierge
-            if (--$count > 0) {
-                $mpdf->AddPage();
-            }
+            // // On verifie la taille pour ne pas ajouter une page vierge
+            // if (--$count > 0) {
+            //     $mpdf->AddPage();
+            // }
             $mpdf->showImageErrors = true;
 
             ++$received;
