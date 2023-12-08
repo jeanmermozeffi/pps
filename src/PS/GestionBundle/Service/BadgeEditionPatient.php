@@ -115,8 +115,8 @@ class BadgeEditionPatient
             $templateVerso = 'patient/badge_verso.html.twig';
 
             // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
-            if ($loader->exists($templateVerso)) {
-                $html = $this->twig->render($templateVerso, $vars);
+            if ($loader->exists($templateResto)) {
+                $html = $this->twig->render($templateResto, $vars);
 
                 $mpdf->WriteHTML($html);
                 
