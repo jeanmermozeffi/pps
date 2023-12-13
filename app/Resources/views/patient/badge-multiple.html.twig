@@ -55,27 +55,28 @@
         }
 
 		.outer_container {
-            width: 100%;
-            /* margin: 0 auto; */
+            width: 85mm; /* Ajustez la largeur en fonction de votre format de PDF */
+            height: 55mm; /* Ajustez la hauteur en fonction de votre format de PDF */
+            margin: 0 auto;
             background: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat center fixed;
             background-size: cover;
-            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
+
 
         .inner_container {
             width: 100%;
             margin: 0 auto;
         }
 
-        /* .inner_container img {
+        .inner_container img {
             max-width: 100%;
             margin-left: 50px;
             margin-top: 35px;
             height: 100%;
-        } */
+        }
 
 			.clearfix:after,
 			{
@@ -95,10 +96,6 @@
 				position: absolute;
 				bottom: 100px;
 			}
-
-			/*@page :first {
-   header: html_headerContent;
-}*/
 
 			.table {
 				width: 100%;
@@ -148,15 +145,6 @@
 			.table-bordered thead td,
 			.table-bordered thead th {
 				border-bottom-width: 1px;
-			}
-
-
-			@media all {
-				/*.content { display: block; page-break-inside: avoid; }*/
-			}
-
-			.content {
-				/*margin-top: 18cm;*/
 			}
 
 			.table-responsive.table-bordered {
