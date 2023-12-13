@@ -26,10 +26,6 @@
 			}
 
 			@page chapter2 {
-				odd-header-name: html_Chapter2HeaderOdd;
-				even-header-name: html_Chapter2HeaderEven;
-				odd-footer-name: html_Chapter2FooterOdd;
-				even-footer-name: html_Chapter2FooterEven;
 				background-image: url("{{ absolute_url(asset('public/img/carte_web_verso.png')) }}");
 				background-repeat: no-repeat;
 				margin-footer: 0.3cm;
@@ -221,7 +217,7 @@
 				(+225) 25 20 00 68 44 / 25 20 00 69 50 / infos@laposte.ci<br>
 			</div>
 		</div>
-		<pagebreak />
+		{# <pagebreak /> #}
 		<htmlpageheader name="Chapter2HeaderOdd">
         	<div style="text-align: right;">Chapter 2</div>
     	</htmlpageheader>
