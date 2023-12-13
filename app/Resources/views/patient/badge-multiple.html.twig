@@ -1,195 +1,207 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Badge {{ patient.identifiant }}</title>
-    <style>
-      {% block page_css %}
-        @page odd {
-            /*footer: html_pageFooter;*/
-        }
-        
-        @page {
 
-          margin-footer: 0.3cm;
-          /*footer: html_empty;
+	<head>
+		<title>Badge {{ patient.identifiant }}</title>
+		<style>
+			{
+				% block page_css %
+			}
+
+			@page odd {
+				/*footer: html_pageFooter;*/
+			}
+
+			@page {
+				background-image: url("{{ absolute_url(asset('public/img/carte_web_recto.png')) }}");
+				background-repeat: no-repeat;
+				margin-footer: 0.3cm;
+				/*footer: html_empty;
           /*header: html_headerContent;*/
-          
-          margin-top: 0cm;
-          margin-header: 0cm;
-          margin-left: 0cm;
-           margin-right: 0cm
-          /*background: ...
+
+				margin-top: 0cm;
+				margin-header: 0cm;
+				margin-left: 0cm;
+				margin-right: 0cm
+					/*background: ...
   background-image: ...
   background-position ...
   background-repeat ...
   background-color ...
   background-gradient: ...*/
-        }
-        .clearfix:after,
-        {% endblock %} .clearfix:before {
-          content: " ";
-          display: table;
-        }
+			}
 
-        .clearfix:after {
-          clear: both;
-        }
+			.clearfix:after,
+			{
+			% endblock %
+			}
 
-        .mention {
-  position: absolute;
-  bottom: 100px;
-}
+			.clearfix:before {
+				content: " ";
+				display: table;
+			}
 
-        /*@page :first {
+			.clearfix:after {
+				clear: both;
+			}
+
+			.mention {
+				position: absolute;
+				bottom: 100px;
+			}
+
+			/*@page :first {
    header: html_headerContent;
 }*/
 
-        .table {
-          width: 100%;
-          max-width: 100%;
-          border-collapse: collapse;
+			.table {
+				width: 100%;
+				max-width: 100%;
+				border-collapse: collapse;
 
-        }
-        .table {
-          page-break-before: auto;
-        }
+			}
 
-        body {
-          font-family: Montserrat;
-        }
+			.table {
+				page-break-before: auto;
+			}
 
-        .table td,
-        .table th {
-          padding: 2px;
-          vertical-align: top;
-          border-top: 1px solid #191919;
-        }
+			body {
+				font-family: Montserrat;
+			}
 
-        .table thead th {
-          vertical-align: bottom;
-          border-bottom: 2px solid #191919;
-        }
+			.table td,
+			.table th {
+				padding: 2px;
+				vertical-align: top;
+				border-top: 1px solid #191919;
+			}
 
-        .table tbody + tbody {
-          border-top: 1px solid #191919;
-        }
+			.table thead th {
+				vertical-align: bottom;
+				border-bottom: 2px solid #191919;
+			}
 
-        .table .table {
-          background-color: #fff;
-        }
+			.table tbody+tbody {
+				border-top: 1px solid #191919;
+			}
 
-        .table-sm td,
-        .table-sm th {
-          padding: 0.3rem;
-        }
+			.table .table {
+				background-color: #fff;
+			}
 
-        .table-bordered {
-          border: 1px solid #191919;
-        }
+			.table-sm td,
+			.table-sm th {
+				padding: 0.3rem;
+			}
 
-        .table-bordered td,
-        .table-bordered th {
-          border: 1px solid #191919;
-        }
+			.table-bordered {
+				border: 1px solid #191919;
+			}
 
-        .table-bordered thead td,
-        .table-bordered thead th {
-          border-bottom-width: 1px;
-        }
+			.table-bordered td,
+			.table-bordered th {
+				border: 1px solid #191919;
+			}
+
+			.table-bordered thead td,
+			.table-bordered thead th {
+				border-bottom-width: 1px;
+			}
 
 
-        @media all {
-          /*.content { display: block; page-break-inside: avoid; }*/
-        }
+			@media all {
+				/*.content { display: block; page-break-inside: avoid; }*/
+			}
 
-        .content {
-          /*margin-top: 18cm;*/
-        }
+			.content {
+				/*margin-top: 18cm;*/
+			}
 
-        .table-responsive.table-bordered {
-          border: 0;
-        }
+			.table-responsive.table-bordered {
+				border: 0;
+			}
 
-        .double_underline {
-            text-decoration:underline;
-            border-bottom: 1px solid #000;
-            text-align: center;
-        }
-        
-        .mention {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            right:25px;
-        }
-    </style>
-  </head>
-  <body style="font-size:12px;">
-    <div class="clearfix">
-        <div style="width:15%;text-align:center;float:left;"  class="">
-            <img src="{{ absolute_url(asset('public/img/CNRAO.png')) }}" height="50px" style="max-width:100%" />
-        </div>
-         <div style="width:85%;text-align:center;float:right;background-color:#F79926;padding:5px 0;font-family:Montserrat"  class="">
-            <h1 style="font-size:23px;color:#fff;margin:0;">{{ 'Le carnet de santé numérique' | upper }}</h1>
-        </div>
-    </div>
-    <h2 style="color:#53B347;text-align:center;margin-top:-8px;font-size:16px;margin-bottom:0">CNRAO - PASS SANTE</h2>
-    <div>
-        <div style="padding-left:10px">
-            <table style="width:100%;border:none;font-weight: bold;padding-top:10px">
-                <tr>
-                    <td style="width:100%;padding-top:12px;font-size:21px"><span style="color:#000">{{ patient.personne.nomComplet }}</span></td>
-                </tr>
-            </table>
-         </div>
-        <div class="clearfix">
-            <div style="width:80%;text-align:center;float:left;padding-left:10px;padding-top:0px"  class="">
-                 
-                <table style="width:100%;border:none;font-weight: bold;">
-                    <tr>
-                        <td style="width:50%;padding-top:5px"> <span style="font-size:18px;">{{ patient.identifiant}}</span><br> <span style="color:#F79926;font-size:12px;">ID</span></td>
-                         <td style="width:50%;font-size:18px;padding-top:5px;"> <span style="font-size:18px;">{{ patient.pin}}</span><br> <span style="color:#F79926;font-size:12px;">PIN</span></td>
-                    </tr>
-                </table>
-                 <table style="width:100%;border:none;font-weight: bold;">
-                     <tr>
-                        <td style="width:50%;padding-top:5px;font-size:18px;"> <span style="font-size:18px;">{{ patient.fichePatientCancer.numeroDossier|default('') }}</span><br> <span style="color:#F79926;font-size:12px;">N° DOSSIER PATIENT</span></td>
-                         <td style="width:50%;padding-top:5px;font-size:18px;"> <span style="font-size:18px;">{{ patient.ville.nom|default('') }}</span><br> <span style="color:#F79926;font-size:12px;">VILLE</span></td>
-                    </tr>
-                </table>
-                
-               
-            </div>
-           
-             <div style="width:15%;margin-top:-3px;text-align:right;"  class="">
-               <img src="{{ absolute_url(asset('public/img/qrcode_cnrao.png')) }}" height="100px" style="max-width:100%" />
-            </div>
-        </div>
-             <div style="padding-right:10px;">
-                <table style="width:100%;border:none;font-weight: bold;">
-                     <tr>
-                        <td>&nbsp;</td>
-                        <td style="width:50%;text-align:right"><span style="color:#F79926;font-size:12px;">DATE D'EMISSION </span><br><span style="font-size:18px">{{ 'now' | date('d-m-Y') }}</span></td>
-                    </tr>
-                </table>
-            </div>
-    
-    </div>
-    <div class="mention">
-     <div style="border:2px solid #53B347;width:60%;margin:0 auto"></div>
-        <div style="text-align:center;font-weight:bold;font-size:10px;margin-top:2px;">
-            Cette carte est strictement personnelle et n'est valable qu'après avoir été complétée.<br>
-            Toute personne trouvant la carte est priée de la retourner<br>
-            à COCODY, derrière le CHU, en entrant par la Faculté de Médecine. Tél:0768262662
-      </div>
-    </div>
-    <pagebreak />
-    <div>
-        <div style="width:300px;margin:0 auto;">
-            
-             <img src="{{ absolute_url(asset('public/img/logo_VERSO_CNRAO.png')) }}" height="300px" style="max-width:100%;margin-left:50px;margin-top:35px" />
-        </div>
-    </div>
-    
-  </body>
+			.double_underline {
+				text-decoration: underline;
+				border-bottom: 1px solid #000;
+				text-align: center;
+			}
+
+			.mention {
+				position: absolute;
+				bottom: 10px;
+				left: 10px;
+				right: 25px;
+			}
+
+		</style>
+	</head>
+
+	<body style="font-size:12px;">
+		<h1 style="font-size:38px; font-weight:bold; color:#000; position:absolute; left:3.1cm; top:0.45cm;color:#fff">{{ 'Carte de santé numérique' | upper }}</h1>
+
+		<div style="position:absolute;left:2.8cm;top: 1.3cm;">
+			<div style="">
+				<table style="width:100%;border:none;font-weight: bold;padding-top:20">
+					<tr>
+						<td style="width:100%;padding-top:0px;font-size:45px"><span style="color:#29614B">{{ (patient.personne.nom)|upper }}<br>{{ (patient.personne.prenom )|upper}}</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="clearfix">
+				<div style="width:100%;text-align:center;" class="padding-top:2cm;">
+					<table style="width:100%;border:none;font-weight: bold;">
+						<tr>
+							<td style="width:33.33%;padding-top:50px">
+								<span style="color:#000;font-size:30px;">ID</span><br>
+								<span style="font-size:37px;">{{ patient.identifiant }}</span>
+							</td>
+							<td style="width:33.33%;font-size:18px;padding-top:50px;">
+								<span style="color:#000;font-size:30px;">PIN</span><br>
+								<span style="font-size:37px;">{{ patient.pin }}</span>
+							</td>
+							{# <td style="width:33.33%;font-size:18px;padding-top:50px;"><span style="color:#000;font-size:18px;">GROUPE SANGUIN</span><br> <span
+									style="font-size:30px;">{{ patient.groupeSanguin.libelle | default('') }}</span>
+							</td> #}
+						</tr>
+					</table>
+
+				</div>
+			</div>
+			<div style="padding-top:35px;">
+				<table style="width:100%;border:none;font-weight: bold;">
+					<tr>
+						<td style="width:50%;"><span style="color:#000;font-size:30px;">Etablie le</span>
+							<br>
+							<span style="font-size:37px">{{ 'now' | date('d/m/Y') }}</span>
+						</td>
+						<td style="width:50%; padding-top:0px;font-size:30px;">
+							<span style="color:#000;font-size:30px;"></span>
+							<br>
+							{# <span style="font-size:30px;">{{ patient.ville.nom|default('ABIDJAN') }}</span> #}
+							<span style="font-size:37px;">{{ ('LA POSTE CI') }}</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="mention">
+			<div style="border:2px solid #53B347;width:60%;margin:0 auto"></div>
+			<div style="text-align:center;font-weight:bold;font-size:17px;margin-top:5px;color:#000;padding-top:0px;">
+				Cette carte est strictement personnelle. Toute personne trouvant<br>
+				la carte est priée de la deposer à l'agence postale la plus proche.
+				<br>
+				(+225) 25 20 00 68 44 / 25 20 00 69 50 / infos@laposte.ci<br>
+			</div>
+		</div>
+		<pagebreak />
+		<div>
+			<div style="width:300px;margin:0 auto;">
+
+				<img src="{{ absolute_url(asset('public/img/carte_web_verso.png')) }}" height="300px" style="max-width:100%;margin-left:50px;margin-top:35px" />
+			</div>
+		</div>
+	</body>
+
 </html>

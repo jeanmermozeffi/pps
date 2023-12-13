@@ -1,199 +1,211 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Badge</title>
-    {# <title>Badge {{ patient.identifiant }}</title> #}
-    <style>
-      {% block page_css %}
-        @page :first {
-            background-image: url("{{ absolute_url(asset('public/img/carte_web_recto.png')) }}");
-            background-repeat: no-repeat;
-           
-            footer: html_footer;
-        }
 
-        @page :last {
-            
-        }
-        
-        @page {
-            background-image: url("{{ absolute_url(asset('public/img/carte_web_verso.png')) }}");
-          
-            background-repeat: no-repeat;
-            /*background*/
-          margin-footer: 0.2cm;
-          footer: html_empty;
-          /*header: html_headerContent;*/
-          
-          margin-top: 0cm;
-          margin-header: 0cm;
-          margin-left: 0cm;
-           margin-right: 0cm
-           margin-bottom: 0cm;
-          /*background: ...
+	<head>
+		<title>Badge</title>
+		{# <title>Badge {{ patient.identifiant }}</title> #}
+		<style>
+			{
+				% block page_css %
+			}
+
+			@page :first {
+				background-image: url("{{ absolute_url(asset('public/img/carte_web_recto.png')) }}");
+				background-repeat: no-repeat;
+
+				footer: html_footer;
+			}
+
+			@page :last {}
+
+			@page {
+				background-image: url("{{ absolute_url(asset('public/img/carte_web_verso.png')) }}");
+
+				background-repeat: no-repeat;
+				/*background*/
+				margin-footer: 0.2cm;
+				footer: html_empty;
+				/*header: html_headerContent;*/
+
+				margin-top: 0cm;
+				margin-header: 0cm;
+				margin-left: 0cm;
+				margin-right: 0cm margin-bottom: 0cm;
+				/*background: ...
   background-image: ...
   background-position ...
   background-repeat ...
   background-color ...
   background-gradient: ...*/
-        }
-        .clearfix:after,
-        {% endblock %} .clearfix:before {
-          content: " ";
-          display: table;
-        }
+			}
 
-        .clearfix:after {
-          clear: both;
-        }
+			.clearfix:after,
+			{
+			% endblock %
+			}
 
-        .mention {
-  position: absolute;
-  bottom: 100px;
-}
+			.clearfix:before {
+				content: " ";
+				display: table;
+			}
 
-        /*@page :first {
+			.clearfix:after {
+				clear: both;
+			}
+
+			.mention {
+				position: absolute;
+				bottom: 100px;
+			}
+
+			/*@page :first {
    header: html_headerContent;
 }*/
 
-        .table {
-          width: 100%;
-          max-width: 100%;
-          border-collapse: collapse;
+			.table {
+				width: 100%;
+				max-width: 100%;
+				border-collapse: collapse;
 
-        }
-        .table {
-          page-break-before: auto;
-        }
+			}
 
-        body {
-          font-family: Montserrat;
-        }
+			.table {
+				page-break-before: auto;
+			}
 
-        .table td,
-        .table th {
-          padding: 2px;
-          vertical-align: top;
-          border-top: 1px solid #191919;
-        }
+			body {
+				font-family: Montserrat;
+			}
 
-        .table thead th {
-          vertical-align: bottom;
-          border-bottom: 2px solid #191919;
-        }
+			.table td,
+			.table th {
+				padding: 2px;
+				vertical-align: top;
+				border-top: 1px solid #191919;
+			}
 
-        .table tbody + tbody {
-          border-top: 1px solid #191919;
-        }
+			.table thead th {
+				vertical-align: bottom;
+				border-bottom: 2px solid #191919;
+			}
 
-        .table .table {
-          background-color: #fff;
-        }
+			.table tbody+tbody {
+				border-top: 1px solid #191919;
+			}
 
-        .table-sm td,
-        .table-sm th {
-          padding: 0.3rem;
-        }
+			.table .table {
+				background-color: #fff;
+			}
 
-        .table-bordered {
-          border: 1px solid #191919;
-        }
+			.table-sm td,
+			.table-sm th {
+				padding: 0.3rem;
+			}
 
-        .table-bordered td,
-        .table-bordered th {
-          border: 1px solid #191919;
-        }
+			.table-bordered {
+				border: 1px solid #191919;
+			}
 
-        .table-bordered thead td,
-        .table-bordered thead th {
-          border-bottom-width: 1px;
-        }
+			.table-bordered td,
+			.table-bordered th {
+				border: 1px solid #191919;
+			}
 
-        @media all {
-          /*.content { display: block; page-break-inside: avoid; }*/
-        }
+			.table-bordered thead td,
+			.table-bordered thead th {
+				border-bottom-width: 1px;
+			}
 
-        .content {
-          /*margin-top: 18cm;*/
-        }
+			@media all {
+				/*.content { display: block; page-break-inside: avoid; }*/
+			}
 
-        .table-responsive.table-bordered {
-          border: 0;
-        }
+			.content {
+				/*margin-top: 18cm;*/
+			}
 
-        .double_underline {
-            text-decoration:underline;
-            border-bottom: 1px solid #000;
-            text-align: center;
-        }
-        
-        .mention {
-            position: absolute;
-            bottom: 25px;
-            left: 10px;
-        }
-    </style>
-  </head>
-  <body style="font-size:12px;">
-    <h1 style="font-size:38px; font-weight:bold; color:#000; position:absolute; left:3.1cm; top:0.45cm;color:#fff">{{ 'Carte de santé numérique' | upper }}</h1>
-    
-    <div style="position:absolute;left:2.8cm;top: 1.3cm;">
-        <div style="">
-            <table style="width:100%;border:none;font-weight: bold;padding-top:20">
-                <tr>
-                    <td style="width:100%;padding-top:0px;font-size:45px"><span style="color:#29614B">{{ (patient.personne.nom)|upper }}<br>{{ (patient.personne.prenom )|upper}}</span></td>
-                </tr>
-            </table>
-         </div>
-        <div class="clearfix">
-            <div style="width:100%;text-align:center;"  class="padding-top:2cm;">
-                <table style="width:100%;border:none;font-weight: bold;">
-                    <tr>
-                        <td style="width:33.33%;padding-top:50px">
-                          <span style="color:#000;font-size:30px;">ID</span><br> 
-                          <span style="font-size:37px;">{{ patient.identifiant }}</span>
-                        </td>
-                        <td style="width:33.33%;font-size:18px;padding-top:50px;">
-                          <span style="color:#000;font-size:30px;">PIN</span><br> 
-                          <span style="font-size:37px;">{{ patient.pin }}</span>
-                        </td>
-                        {# <td style="width:33.33%;font-size:18px;padding-top:50px;"><span style="color:#000;font-size:18px;">GROUPE  SANGUIN</span><br> <span style="font-size:30px;">{{ patient.groupeSanguin.libelle | default('') }}</span>
-                        </td> #}
-                    </tr>
-                </table>
-                 
-            </div>
-        </div>
-        <div style="padding-top:35px;">
-            <table style="width:100%;border:none;font-weight: bold;">
-                <tr>
-                    <td style="width:50%;"><span style="color:#000;font-size:30px;">Etablie le</span>
-                    <br>
-                    <span style="font-size:37px">{{ 'now' | date('d/m/Y') }}</span>
-                    </td>
-                    <td style="width:50%; padding-top:0px;font-size:30px;">
-                    <span style="color:#000;font-size:30px;"></span>
-                    <br> 
-                    {# <span style="font-size:30px;">{{ patient.ville.nom|default('ABIDJAN') }}</span> #}
-                    <span style="font-size:37px;">{{ ('LA POSTE CI') }}</span>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <pagebreak />
-    
-    <htmlpagefooter name="footer">
-        <div class="footer" style="padding-left:2.7cm">
-            <div style="border:1px solid #29614B; width:90%;margin:0 auto"></div>
-            <div style="text-align:center;font-weight:bold;font-size:17px;margin-top:5px;color:#000;padding-top:0px;">
-                Cette carte est strictement personnelle. Toute personne trouvant<br>
-                la carte est priée de la deposer à l'agence postale la plus proche.
-                <br>
-                (+225) 25 20 00 68 44 / 25 20 00 69 50 / infos@laposte.ci<br>
-            </div>
-        </div>
-    </htmlpagefooter>
-    <htmlpagefooter name="empty"></htmlpagefooter>
-  </body>
+			.table-responsive.table-bordered {
+				border: 0;
+			}
+
+			.double_underline {
+				text-decoration: underline;
+				border-bottom: 1px solid #000;
+				text-align: center;
+			}
+
+			.mention {
+				position: absolute;
+				bottom: 25px;
+				left: 10px;
+			}
+
+		</style>
+	</head>
+
+	<body style="font-size:12px;">
+		<h1 style="font-size:38px; font-weight:bold; color:#000; position:absolute; left:3.1cm; top:0.45cm;color:#fff">{{ 'Carte de santé numérique' | upper }}</h1>
+
+		<div style="position:absolute;left:2.8cm;top: 1.3cm;">
+			<div style="">
+				<table style="width:100%;border:none;font-weight: bold;padding-top:20">
+					<tr>
+						<td style="width:100%;padding-top:0px;font-size:45px"><span style="color:#29614B">{{ (patient.personne.nom)|upper }}<br>{{ (patient.personne.prenom )|upper}}</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="clearfix">
+				<div style="width:100%;text-align:center;" class="padding-top:2cm;">
+					<table style="width:100%;border:none;font-weight: bold;">
+						<tr>
+							<td style="width:33.33%;padding-top:50px">
+								<span style="color:#000;font-size:30px;">ID</span><br>
+								<span style="font-size:37px;">{{ patient.identifiant }}</span>
+							</td>
+							<td style="width:33.33%;font-size:18px;padding-top:50px;">
+								<span style="color:#000;font-size:30px;">PIN</span><br>
+								<span style="font-size:37px;">{{ patient.pin }}</span>
+							</td>
+							{# <td style="width:33.33%;font-size:18px;padding-top:50px;"><span style="color:#000;font-size:18px;">GROUPE SANGUIN</span><br> <span
+									style="font-size:30px;">{{ patient.groupeSanguin.libelle | default('') }}</span>
+							</td> #}
+						</tr>
+					</table>
+
+				</div>
+			</div>
+			<div style="padding-top:35px;">
+				<table style="width:100%;border:none;font-weight: bold;">
+					<tr>
+						<td style="width:50%;"><span style="color:#000;font-size:30px;">Etablie le</span>
+							<br>
+							<span style="font-size:37px">{{ 'now' | date('d/m/Y') }}</span>
+						</td>
+						<td style="width:50%; padding-top:0px;font-size:30px;">
+							<span style="color:#000;font-size:30px;"></span>
+							<br>
+							{# <span style="font-size:30px;">{{ patient.ville.nom|default('ABIDJAN') }}</span> #}
+							<span style="font-size:37px;">{{ ('LA POSTE CI') }}</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<pagebreak />
+
+		<htmlpagefooter name="footer">
+			<div class="footer" style="padding-left:2.7cm">
+				<div style="border:1px solid #29614B; width:90%;margin:0 auto"></div>
+				<div style="text-align:center;font-weight:bold;font-size:17px;margin-top:5px;color:#000;padding-top:0px;">
+					Cette carte est strictement personnelle. Toute personne trouvant<br>
+					la carte est priée de la deposer à l'agence postale la plus proche.
+					<br>
+					(+225) 25 20 00 68 44 / 25 20 00 69 50 / infos@laposte.ci<br>
+				</div>
+			</div>
+		</htmlpagefooter>
+		<htmlpagefooter name="empty"></htmlpagefooter>
+	</body>
+
 </html>
