@@ -43,10 +43,6 @@
 				page-break-before: right;
 				page: chapter2;
 			}
-			div.noheader {
-				page-break-before: right;
-				page: noheader;
-			}
 
 			.page-container {
 				position: relative;
@@ -225,11 +221,10 @@
 				(+225) 25 20 00 68 44 / 25 20 00 69 50 / infos@laposte.ci<br>
 			</div>
 		</div>
-		{# <pagebreak /> #}
+		<pagebreak />
 		<htmlpageheader name="Chapter2HeaderOdd">
         	<div style="text-align: right;">Chapter 2</div>
     	</htmlpageheader>
-		<div class="chapter2">Text of Chapter 2</div>
 		{# <div class="outer_container" name="empty"></div> #}
 	</body>
 
