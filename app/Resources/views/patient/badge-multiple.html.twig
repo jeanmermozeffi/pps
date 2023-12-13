@@ -31,16 +31,6 @@
   background-gradient: ...*/
 			}
 
-
-		.html_empty {
-            width: 100%;
-            margin: 0 auto;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
 			.clearfix:after,
 			{
 			% endblock %
@@ -154,7 +144,7 @@
 			<div style="">
 				<table style="width:100%;border:none;font-weight: bold;padding-top:20">
 					<tr>
-						<td style="width:100%;padding-top:0px;font-size:45px"><span style="color:#29614B">{{ (patient.personne.nom)|upper }}<br>{{ (patient.personne.prenom )|upper}}</span>
+						<td style="width:100%; padding-top:0px;font-size:45px"><span style="color:#29614B">{{ (patient.personne.nom)|upper }}<br>{{ (patient.personne.prenom )|upper}}</span>
 						</td>
 					</tr>
 				</table>
@@ -207,7 +197,7 @@
 		</div>
 		<pagebreak />
 		<div>
-			<div class="html_empty" name="empty" style="width: 100%; margin: 0 auto; background: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat center center fixed; background-size: cover; height: 100vh;">
+			<div class="html_empty" name="empty" style="width: 100%; margin: 0 auto; background: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat; background-size: cover;">
 			</div>
 		</div>
 	</body>
