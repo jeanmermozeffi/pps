@@ -106,6 +106,7 @@ class BadgeEditionPatient
         $initialPageCount = $mpdf->page;
 
         $template = '/patient/badge-multiple.html.twig';
+        $template = '/patient/badge.html.twig';
         // Générez le contenu HTML pour chaque patient
         foreach ($selectedPatients as $index => $patient) {
 
