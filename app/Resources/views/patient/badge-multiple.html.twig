@@ -31,16 +31,26 @@
   background-gradient: ...*/
 			}
 
-			/* @page {
-				background-image: url("{{ absolute_url(asset('public/img/carte_web_verso.png')) }}");
-				background-repeat: no-repeat;
-				margin-footer: 0.2cm;
-				footer: html_empty;
-				margin-top: 0cm;
-				margin-header: 0cm;
-				margin-left: 0cm;
-				margin-right: 0cm margin-bottom: 0cm;
-			} */
+			@page {
+            background-image: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}');
+            background-repeat: no-repeat;
+            margin-footer: 0.2cm;
+            footer: html_empty;
+            margin-top: 0cm;
+            margin-header: 0cm;
+            margin-left: 0cm;
+            margin-right: 0cm;
+            margin-bottom: 0cm;
+        }
+
+		.html_empty {
+            width: 100%;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
 			.clearfix:after,
 			{
@@ -207,12 +217,13 @@
 			</div>
 		</div>
 		<pagebreak />
-		<div class="html_empty" name="empty" style="width: 100%; margin: 0 auto; background: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat center center fixed; background-size: cover; height: 100vh; display: flex; align-items: center; justify-content: center;">
-		</div>
-
+		<div class="html_empty" name="empty">
+        <!-- Le contenu de votre div ici -->
+        <p>Ceci est le contenu de votre PDF.</p>
+    	</div>
+		
 		{# <div>
-			<div class="html_empty" name="empty" style="width: 100%; margin:0 auto;">
-				<img src="{{ absolute_url(asset('public/img/carte_web_verso.png')) }}" height="100%" style="max-width:100%; margin-left:50px; margin-top:35px" />
+			<div class="html_empty" name="empty" style="width: 100%; margin: 0 auto; background: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat center center fixed; background-size: cover; height: 100vh; display: flex; align-items: center; justify-content: center;">
 			</div>
 		</div> #}
 	</body>
