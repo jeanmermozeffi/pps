@@ -99,33 +99,34 @@ class BadgeEditionPatient
             ],
         ]);
 
+        $mpdf->shrink_tables_to_fit = 1;
+
         $count = count($selectedPatients);
         $received = 0;
         $initialPageCount = $mpdf->page;
 
+        $template = 'patient/badge.html.twig';
         // Générez le contenu HTML pour chaque patient
         foreach ($selectedPatients as $index => $patient) {
-            $mpdf->shrink_tables_to_fit = 1;
+
             // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
-            // if ($loader->exists($template)) {
-            $vars = ['patient' => $patient];
+            if ($loader->exists($template)) {
+                $vars = ['patient' => $patient];
 
+                $htmlContent = $this->twig->render($template, $vars);
 
-            $mpdf->showImageErrors = true;
+                $mpdf->showImageErrors = true;
 
-            $template = 'patient/badge.html.twig';
-            $htmlContent = $this->twig->render($template, $vars);
-            $mpdf->WriteHTML($htmlContent);
-
-            // Ajouter une page blanche pour le verso
-            ++$received;
-            $numberOfPagesGenerated = $mpdf->page;
-            // }
+                // Ajouter une page blanche pour le verso
+                ++$received;
+                $numberOfPagesGenerated = $mpdf->page;
+            }
 
             // Ajouter une page blanche pour le verso après chaque patient
             // if ($index < $count - 1) {
             //     $mpdf->AddPage();
             // }
+            $mpdf->WriteHTML($htmlContent);
             $mpdf->AddPage();
         }
 
