@@ -4,30 +4,55 @@
 	<head>
 		<title>Badge {{ patient.identifiant }}</title>
 		<style>
+			body {
+				margin: 0;
+				padding: 0;
+				font-size: 12px;
+				font-family: Montserrat;
+			}
+
 			{
 				% block page_css %
 			}
 
-			@page odd {
-				/*footer: html_pageFooter;*/
-			}
-
-			@page {
+			/* @page {
 				background-image: url("{{ absolute_url(asset('public/img/carte_web_recto.png')) }}");
 				background-repeat: no-repeat;
 				margin-footer: 0.3cm;
-				/* footer: #info-content; */
 				margin-top: 0cm;
 				margin-header: 0cm;
 				margin-left: 0cm;
 				margin-right: 0cm
-					/*background: ...
-  background-image: ...
-  background-position ...
-  background-repeat ...
-  background-color ...
-  background-gradient: ...*/
-			}
+			} */
+
+			.page-container {
+            position: relative;
+            width: 85mm; /* Ajustez la largeur en fonction de votre format de PDF */
+            height: 55mm; /* Ajustez la hauteur en fonction de votre format de PDF */
+            background: url('{{ absolute_url(asset('public/img/carte_web_recto.png')) }}') no-repeat center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header {
+            font-size: 38px;
+            font-weight: bold;
+            color: #fff;
+            position: absolute;
+            left: 3.1cm;
+            top: 0.45cm;
+        }
+
+		.content-container {
+            position: absolute;
+            left: 2.8cm;
+            top: 1.3cm;
+            width: 100%;
+            text-align: center;
+        }
 
 		.outer_container {
             width: 100%;
@@ -84,10 +109,6 @@
 
 			.table {
 				page-break-before: auto;
-			}
-
-			body {
-				font-family: Montserrat;
 			}
 
 			.table td,
@@ -159,53 +180,57 @@
 	</head>
 
 	<body style="font-size:12px;">
-		<h1 style="font-size:38px; font-weight:bold; color:#000; position:absolute; left:3.1cm; top:0.45cm;color:#fff">{{ 'Carte de santé numérique' | upper }}
-		</h1>
+		<div class="page-container">
+			<div class="header">{{ 'Carte de santé numérique' | upper }}</div>
+			<div class="content-container">
+				<h1 style="font-size:38px; font-weight:bold; color:#000; position:absolute; left:3.1cm; top:0.45cm;color:#fff">{{ 'Carte de santé numérique' | upper }}
+				</h1>
+				<div style="position:absolute;left:2.8cm;top: 1.3cm;">
+					<div style="">
+						<table style="width:100%;border:none;font-weight: bold;padding-top:20">
+							<tr>
+								<td style="width:100%; padding-top:0px;font-size:45px"><span style="color:#29614B">{{ (patient.personne.nom)|upper }}<br>{{ (patient.personne.prenom )|upper}}</span>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="clearfix">
+						<div style="width:100%;text-align:center;" class="padding-top:2cm;">
+							<table style="width:100%;border:none;font-weight: bold;">
+								<tr>
+									<td style="width:33.33%;padding-top:50px">
+										<span style="color:#000;font-size:30px;">ID</span><br>
+										<span style="font-size:37px;">{{ patient.identifiant }}</span>
+									</td>
+									<td style="width:33.33%;font-size:18px;padding-top:50px;">
+										<span style="color:#000;font-size:30px;">PIN</span><br>
+										<span style="font-size:37px;">{{ patient.pin }}</span>
+									</td>
+									{# <td style="width:33.33%;font-size:18px;padding-top:50px;"><span style="color:#000;font-size:18px;">GROUPE SANGUIN</span><br> <span
+											style="font-size:30px;">{{ patient.groupeSanguin.libelle | default('') }}</span>
+									</td> #}
+								</tr>
+							</table>
 
-		<div style="position:absolute;left:2.8cm;top: 1.3cm;">
-			<div style="">
-				<table style="width:100%;border:none;font-weight: bold;padding-top:20">
-					<tr>
-						<td style="width:100%; padding-top:0px;font-size:45px"><span style="color:#29614B">{{ (patient.personne.nom)|upper }}<br>{{ (patient.personne.prenom )|upper}}</span>
-						</td>
-					</tr>
-				</table>
-			</div>
-			<div class="clearfix">
-				<div style="width:100%;text-align:center;" class="padding-top:2cm;">
-					<table style="width:100%;border:none;font-weight: bold;">
-						<tr>
-							<td style="width:33.33%;padding-top:50px">
-								<span style="color:#000;font-size:30px;">ID</span><br>
-								<span style="font-size:37px;">{{ patient.identifiant }}</span>
-							</td>
-							<td style="width:33.33%;font-size:18px;padding-top:50px;">
-								<span style="color:#000;font-size:30px;">PIN</span><br>
-								<span style="font-size:37px;">{{ patient.pin }}</span>
-							</td>
-							{# <td style="width:33.33%;font-size:18px;padding-top:50px;"><span style="color:#000;font-size:18px;">GROUPE SANGUIN</span><br> <span
-									style="font-size:30px;">{{ patient.groupeSanguin.libelle | default('') }}</span>
-							</td> #}
-						</tr>
-					</table>
-
+						</div>
+					</div>
+					<div style="padding-top:35px;">
+						<table style="width:100%;border:none;font-weight: bold;">
+							<tr>
+								<td style="width:50%;"><span style="color:#000;font-size:30px;">Etablie le</span>
+									<br>
+									<span style="font-size:37px">{{ 'now' | date('d/m/Y') }}</span>
+								</td>
+								<td style="width:50%; padding-top:0px;font-size:30px;">
+									<span style="color:#000;font-size:30px;"></span>
+									<br>
+									{# <span style="font-size:30px;">{{ patient.ville.nom|default('ABIDJAN') }}</span> #}
+									<span style="font-size:37px;">{{ ('LA POSTE CI') }}</span>
+								</td>
+							</tr>
+						</table>
+					</div>
 				</div>
-			</div>
-			<div style="padding-top:35px;">
-				<table style="width:100%;border:none;font-weight: bold;">
-					<tr>
-						<td style="width:50%;"><span style="color:#000;font-size:30px;">Etablie le</span>
-							<br>
-							<span style="font-size:37px">{{ 'now' | date('d/m/Y') }}</span>
-						</td>
-						<td style="width:50%; padding-top:0px;font-size:30px;">
-							<span style="color:#000;font-size:30px;"></span>
-							<br>
-							{# <span style="font-size:30px;">{{ patient.ville.nom|default('ABIDJAN') }}</span> #}
-							<span style="font-size:37px;">{{ ('LA POSTE CI') }}</span>
-						</td>
-					</tr>
-				</table>
 			</div>
 		</div>
 		<div class="mention">
@@ -219,9 +244,7 @@
 		</div>
 		<pagebreak />
 		<div class="outer_container" name="empty">
-			{# <div class="inner_container">
-				<img src="{{ absolute_url(asset('public/img/logo_VERSO_CNRAO.png')) }}" alt="Logo" />
-			</div> #}
+			
 		</div>
 	</body>
 
