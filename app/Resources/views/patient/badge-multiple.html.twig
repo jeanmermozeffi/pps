@@ -39,6 +39,15 @@
 				margin-right: 0cm;
 			}
 
+			div.chapter2 {
+				page-break-before: right;
+				page: chapter2;
+			}
+			div.noheader {
+				page-break-before: right;
+				page: noheader;
+			}
+
 			.page-container {
 				position: relative;
 				width: 85mm;
@@ -216,7 +225,7 @@
 				(+225) 25 20 00 68 44 / 25 20 00 69 50 / infos@laposte.ci<br>
 			</div>
 		</div>
-		<pagebreak />
+		{# <pagebreak /> #}
 		<htmlpageheader name="Chapter2HeaderOdd" style="display:none">
         	<div style="text-align: right;">Chapter 2</div>
     	</htmlpageheader>
