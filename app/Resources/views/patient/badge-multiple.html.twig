@@ -39,7 +39,8 @@
 				width: 100%; /* Ajustez la largeur en fonction de votre format de PDF */
 				height: 100%; /* Ajustez la hauteur en fonction de votre format de PDF */
 				margin: 0 auto;
-				background: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat center fixed;
+				background-image: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}');
+				background-repeat: no-repeat;
 				background-size: cover;
 				/* display: flex;
 				align-items: center;
