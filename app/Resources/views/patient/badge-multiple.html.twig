@@ -47,14 +47,14 @@
             margin: 0 auto;
             background: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat center fixed;
             background-size: cover;
-            height: 100vh;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .inner_container {
-            width: 300px;
+            width: 100%;
             margin: 0 auto;
         }
 
@@ -232,7 +232,7 @@
 		<pagebreak />
 		<div class="outer_container" name="empty">
 			<div class="inner_container">
-				<img src="{{ absolute_url(asset('public/img/logo_VERSO_CNRAO.png')) }}" alt="Logo" />
+				{# <img src="{{ absolute_url(asset('public/img/logo_VERSO_CNRAO.png')) }}" alt="Logo" /> #}
 			</div>
 		</div>
 	</body>
