@@ -12,11 +12,11 @@
 				/*footer: html_pageFooter;*/
 			}
 
-			@page :first {
+			@page {
 				background-image: url("{{ absolute_url(asset('public/img/carte_web_recto.png')) }}");
 				background-repeat: no-repeat;
 				margin-footer: 0.3cm;
-				/*footer: html_empty;
+				footer: #html_header;
           /*header: html_headerContent;*/
 
 				margin-top: 0cm;
@@ -207,7 +207,7 @@
 		</div>
 		<pagebreak />
 		<div>
-			<div class="html_empty" name="empty" style="width: 100%; margin: 0 auto; background: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat center center fixed; background-size: cover; height: 100vh; display: flex; align-items: center; justify-content: center;">
+			<div class="html_empty" name="empty" style="width: 100%; margin: 0 auto; background: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat center center fixed; background-size: cover; height: 100vh;">
 			</div>
 		</div>
 	</body>
