@@ -110,11 +110,9 @@ class BadgeEditionPatient
         $htmlContent = ''; // Initialisez la variable en dehors de la boucle
 
         foreach ($selectedPatients as $index => $patient) {
-            // $template = 'patient/badge.html.twig';
+            $template = 'patient/badge.html.twig';
             $templateRecto = 'patient/badge_recto.html.twig';
             $templateVerso = 'patient/badge_verso.html.twig';
-
-            $template = ($index % 2 == 0) ? $templateRecto : $templateVerso;
 
             // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
             if ($loader->exists($templateRecto) && $loader->exists($templateVerso)) {
@@ -124,7 +122,7 @@ class BadgeEditionPatient
 
                 $htmlContent = $this->twig->render($template, $vars);
 
-                $mpdf->WriteHTML($htmlRecto);
+                
 
                 $mpdf->showImageErrors = true;
 
@@ -144,9 +142,10 @@ class BadgeEditionPatient
             }
         }
 
+        $mpdf->WriteHTML($htmlContent);
+
         if ($received >= 1) {
             $mpdf->Output('Badge_All_Selected_Patients.pdf', 'I');
-            // $mpdf->Output('Badge_Patient_' . $patient->getId() . '.pdf', 'F');
         }
     }
 
