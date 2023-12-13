@@ -108,11 +108,10 @@ class BadgeEditionPatient
         // Générez le contenu HTML pour chaque patient
         foreach ($selectedPatients as $index => $patient) {
             $template = 'patient/badge.html.twig';
-            $templateRecto = 'patient/badge_recto.html.twig';
-            $templateVerso = 'patient/badge_verso.html.twig';
 
             // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
-            if ($loader->exists($templateRecto) && $loader->exists($templateVerso)) {
+            if ($loader->exists($template))
+            {
                 $vars = ['patient' => $patient];
 
                 $htmlContent = $this->twig->render($template, $vars);
@@ -125,12 +124,13 @@ class BadgeEditionPatient
             }
 
             // Ajouter une page blanche pour le verso après chaque patient
-            if ($index < $count - 1) {
-                $mpdf->AddPage();
-            }
+            // if ($index < $count - 1) {
+            //     $mpdf->AddPage();
+            // }
+            $mpdf->WriteHTML($htmlContent);
+            $mpdf->AddPage();
         }
 
-        $mpdf->WriteHTML($htmlContent);
 
         if ($received >= 1) {
             $mpdf->Output('Badge_All_Selected_Patients.pdf', 'I');
