@@ -23,7 +23,20 @@
 				margin-header: 0cm;
 				margin-left: 0cm;
 				margin-right: 0cm;
-				page-break-before: right;
+			}
+
+			@page chapter2 {
+				odd-header-name: html_Chapter2HeaderOdd;
+				even-header-name: html_Chapter2HeaderEven;
+				odd-footer-name: html_Chapter2FooterOdd;
+				even-footer-name: html_Chapter2FooterEven;
+				background-image: url("{{ absolute_url(asset('public/img/carte_web_verso.png')) }}");
+				background-repeat: no-repeat;
+				margin-footer: 0.3cm;
+				margin-top: 0cm;
+				margin-header: 0cm;
+				margin-left: 0cm;
+				margin-right: 0cm;
 			}
 
 			.page-container {
@@ -203,8 +216,11 @@
 				(+225) 25 20 00 68 44 / 25 20 00 69 50 / infos@laposte.ci<br>
 			</div>
 		</div>
-		<pagebreak />
-		<div class="outer_container" name="empty"></div>
+		{# <pagebreak /> #}
+		<htmlpageheader name="Chapter2HeaderOdd" style="display:none">
+        	<div style="text-align: right;">Chapter 2</div>
+    	</htmlpageheader>
+		{# <div class="outer_container" name="empty"></div> #}
 	</body>
 
 </html>
