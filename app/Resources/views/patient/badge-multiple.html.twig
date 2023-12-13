@@ -15,7 +15,7 @@
 				% block page_css %
 			}
 
-			/* @page {
+			@page {
 				background-image: url("{{ absolute_url(asset('public/img/carte_web_recto.png')) }}");
 				background-repeat: no-repeat;
 				margin-footer: 0.3cm;
@@ -23,36 +23,7 @@
 				margin-header: 0cm;
 				margin-left: 0cm;
 				margin-right: 0cm
-			} */
-
-			.page-container {
-            position: relative;
-            width: 85mm; /* Ajustez la largeur en fonction de votre format de PDF */
-            height: 55mm; /* Ajustez la hauteur en fonction de votre format de PDF */
-            background: url('{{ absolute_url(asset('public/img/carte_web_recto.png')) }}') no-repeat center fixed;
-            background-size: cover;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .header {
-            font-size: 38px;
-            font-weight: bold;
-            color: #fff;
-            position: absolute;
-            left: 3.1cm;
-            top: 0.45cm;
-        }
-
-		.content-container {
-            position: absolute;
-            left: 2.8cm;
-            top: 1.3cm;
-            width: 100%;
-            text-align: center;
-        }
+			}
 
 		.outer_container {
             width: 100%; /* Ajustez la largeur en fonction de votre format de PDF */
