@@ -38,12 +38,12 @@
 			.outer_container {
 				width: 100%; /* Ajustez la largeur en fonction de votre format de PDF */
 				height: 100%; /* Ajustez la hauteur en fonction de votre format de PDF */
-				/* margin: 0 auto; */
+				margin: 0 auto;
 				background: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat center fixed;
 				background-size: cover;
-				display: flex;
+				/* display: flex;
 				align-items: center;
-				justify-content: center;
+				justify-content: center; */
 			}
 
 
@@ -144,15 +144,9 @@
 	</head>
 
 	<body>
-		<div class="page-container">
-			<div class="header">{{ 'Carte de santé numérique' | upper }}</div>
-			<div class="content-container">
-				<!-- Votre contenu ici -->
-			</div>
-		</div>
-		{# <h1 style="font-size:38px; font-weight:bold; color:#000; position:absolute; left:3.1cm; top:0.45cm;color:#fff">{{ 'Carte de santé numérique' | upper }}
+		<h1 style="font-size:38px; font-weight:bold; color:#000; position:absolute; left:3.1cm; top:0.45cm; color:#fff">{{ 'Carte de santé numérique' | upper }}
 		</h1>
-		<div style="position:absolute;left:2.8cm;top: 1.3cm;">
+		<div style="position:absolute; left:2.8cm; top: 1.3cm;">
 			<div style="">
 				<table style="width:100%;border:none;font-weight: bold;padding-top:20">
 					<tr>
@@ -175,7 +169,7 @@
 							</td>
 							{# <td style="width:33.33%;font-size:18px;padding-top:50px;"><span style="color:#000;font-size:18px;">GROUPE SANGUIN</span><br> <span
 									style="font-size:30px;">{{ patient.groupeSanguin.libelle | default('') }}</span>
-							</td> 
+							</td> #}
 						</tr>
 					</table>
 
@@ -191,13 +185,13 @@
 						<td style="width:50%; padding-top:0px;font-size:30px;">
 							<span style="color:#000;font-size:30px;"></span>
 							<br>
-							{# <span style="font-size:30px;">{{ patient.ville.nom|default('ABIDJAN') }}</span> 
+							{# <span style="font-size:30px;">{{ patient.ville.nom|default('ABIDJAN') }}</span> #}
 							<span style="font-size:37px;">{{ ('LA POSTE CI') }}</span>
 						</td>
 					</tr>
 				</table>
 			</div>
-		</div> #}
+		</div>
 		<div class="mention">
 			<div style="border:2px solid #53B347; width:60%;margin:0 auto"></div>
 			<div style="text-align:center;font-weight:bold; font-size:17px; margin-top:5px; color:#000;padding-top:0px;">
