@@ -105,7 +105,7 @@ class BadgeEditionPatient
         $received = 0;
         $initialPageCount = $mpdf->page;
 
-        $template = 'patient/badge.html.twig';
+        $template = '/patient/badge-multiple.html.twig';
         // Générez le contenu HTML pour chaque patient
         foreach ($selectedPatients as $index => $patient) {
 
@@ -117,22 +117,19 @@ class BadgeEditionPatient
 
                 $mpdf->showImageErrors = true;
 
-                // Ajouter une page blanche pour le verso
-                ++$received;
                 $numberOfPagesGenerated = $mpdf->page;
-            }
+                $mpdf->WriteHTML($htmlContent);
 
-            // Ajouter une page blanche pour le verso après chaque patient
-            // if ($index < $count - 1) {
-            //     $mpdf->AddPage();
-            // }
-            $mpdf->WriteHTML($htmlContent);
-            $mpdf->AddPage();
+                // Ajouter une page blanche pour le verso
+                if (++$received < $count) {
+                    $mpdf->AddPage();
+                }
+            }
         }
 
 
         if ($received >= 1) {
-            $mpdf->Output('Badge_All_Selected_Patients.pdf', 'I');
+            $mpdf->Output('BADGE ' . $patient->getIdentifiant() . '.pdf', 'I');
         }
     }
 
