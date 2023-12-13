@@ -26,6 +26,7 @@
 			}
 
 			@page chapter2 {
+				odd-header-name: html_Chapter2HeaderOdd;
 				background-image: url("{{ absolute_url(asset('public/img/carte_web_verso.png')) }}");
 				background-repeat: no-repeat;
 				margin-footer: 0.3cm;
@@ -217,8 +218,8 @@
 				(+225) 25 20 00 68 44 / 25 20 00 69 50 / infos@laposte.ci<br>
 			</div>
 		</div>
-		{# <pagebreak /> #}
-		<htmlpageheader name="Chapter2HeaderOdd">
+		<pagebreak />
+		<htmlpageheader name="chapter2">
         	<div style="text-align: right;">Chapter 2</div>
     	</htmlpageheader>
 		{# <div class="outer_container" name="empty"></div> #}
