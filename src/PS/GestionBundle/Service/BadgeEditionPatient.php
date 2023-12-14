@@ -106,7 +106,6 @@ class BadgeEditionPatient
 
         $template = '/patient/badge-multiple.html.twig';
         // $template = '/patient/badge.html.twig';
-        $template = '/patient/test-badge.html.twig';
         // Générez le contenu HTML pour chaque patient
         foreach ($selectedPatients as $index => $patient) {
             // On stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
