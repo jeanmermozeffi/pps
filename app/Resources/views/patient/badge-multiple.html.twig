@@ -25,22 +25,6 @@
 				margin-right: 0cm;
 			}
 
-			@page chapter2 {
-				odd-header-name: html_Chapter2HeaderOdd;
-				background-image: url("{{ absolute_url(asset('public/img/carte_web_verso.png')) }}");
-				background-repeat: no-repeat;
-				margin-footer: 0.3cm;
-				margin-top: 0cm;
-				margin-header: 0cm;
-				margin-left: 0cm;
-				margin-right: 0cm;
-			}
-
-			div.chapter2 {
-				page-break-before: right;
-				page: chapter2;
-			}
-
 			.page-container {
 				position: relative;
 				width: 85mm;
@@ -219,8 +203,7 @@
 			</div>
 		</div>
 		<pagebreak />
-		<div class="chapter2">Text of Chapter 2</div>
-		{# <div class="outer_container" name="empty"></div> #}
+		<div class="outer_container" name="empty"></div>
 	</body>
 
 </html>
