@@ -1,56 +1,50 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html>
 <head>
-	<style th:replace="inc/bootstrap :: inc"></style>
-
-	<style>
-		#header {
-			display: block;
-			position: running(header);
-		}
-		#footer {
-			display: block;
-			position: running(footer);
-		}
-
-		#content {
-			page-break-after: always;
-		}
-
-		.pagenumber:before {
-			content: counter(page);
-		}
-
-		.pagecount:before {
-			content: counter(pages);
-		}
-
-		@page {
-			@top-center { content: element(header) }
-		}
-
-		@page {
-			@bottom-center { content: element(footer) }
-		}
-
-		@page {
-			margin-bottom: 5cm;
-			margin-left: 3.5cm;
-			margin-right: 0.5cm;
-		}
-	</style>
+<style>
+    @page {
+        size: auto;
+        /* odd-header-name: html_myHeader1;
+        even-header-name: html_myHeader2;
+        odd-footer-name: html_myFooter1;
+        even-footer-name: html_myFooter2; */
+    }
+    @page chapter2 {
+        background-image: url("{{ absolute_url(asset('public/img/carte_web_recto.png')) }}") no-repeat 0 0;
+        odd-header-name: html_Chapter2HeaderOdd;
+        even-header-name: html_Chapter2HeaderEven;
+        odd-footer-name: html_Chapter2FooterOdd;
+        even-footer-name: html_Chapter2FooterEven;
+    }
+    @page noheader {
+        background-image: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat 0 0;
+        /* odd-header-name: _blank;
+        even-header-name: _blank;
+        odd-footer-name: _blank;
+        even-footer-name: _blank; */
+    }
+    div.chapter2 {
+        page-break-after: right;
+        page: chapter2;
+    }
+    div.noheader {
+        /* page-break-before: recto; */
+        page: noheader;
+    }
+</style>
 </head>
+
 <body>
-	<div id="header">
-		Put your header content here...
-	</div>
-	<div id="footer">
-		Put your footer content here... <br />
-		Page <span class="pagenumber"></span> of <span class="pagecount"></span>
-	</div>
-	<div id="content">
-		Put your page content here...
-	</div>
+    <htmlpageheader name="Chapter2HeaderOdd" style="display:none">
+        {# <div style="text-align: right;">Chapter 2</div> #}
+    </htmlpageheader>
+
+    <htmlpagefooter name="Chapter2FooterOdd" style="display:none">
+        {# <div style="text-align: right;">Chapter 2 Footer</div> #}
+    </htmlpagefooter>
+
+    <div class="chapter2"></div>
+
+    <div class="noheader"></div>
+
 </body>
 </html>

@@ -97,6 +97,7 @@ class BadgeEditionPatient
                     'L' => 'Montserrat-Light.ttf',
                 ],
             ],
+            'mirrorMargins' => true
         ]);
 
         $mpdf->shrink_tables_to_fit = 1;
