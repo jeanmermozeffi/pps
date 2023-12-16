@@ -108,7 +108,6 @@ class BadgeEditionPatient
         $template = '/patient/badge-multiple.html.twig';
         // $template = '/patient/badge.html.twig';
         // $template = '/patient/test-badge.html.twig';
-        $test_template = '/patient/test-badge.html.twig';
         
         // Générez le contenu HTML pour chaque patient
         foreach ($selectedPatients as $index => $patient) {
@@ -116,7 +115,7 @@ class BadgeEditionPatient
             if ($loader->exists($template)) {
                 $vars = ['patient' => $patient];
 
-                $htmlContent = $this->twig->render($test_template, $vars);
+                $htmlContent = $this->twig->render($template, $vars);
 
                 $mpdf->showImageErrors = true;
 
