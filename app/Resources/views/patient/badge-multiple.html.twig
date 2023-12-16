@@ -17,8 +17,7 @@
 			}
 
 			@page {
-				background-image: url("{{ absolute_url(asset('public/img/carte_web_recto.png')) }}") no-repeat 0 0;
-				background-image-resize: 6;
+				size: auto;
 				margin-footer: 0.3cm;
 				margin-top: 0cm;
 				margin-header: 0cm;
@@ -36,18 +35,25 @@
 				justify-content: center;
 			}
 
-			@page noheader {
-				background-image: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat 0 0;
-				page-break-after: left;
-				/* odd-header-name: _blank;
-				even-header-name: _blank;
-				odd-footer-name: _blank;
-				even-footer-name: _blank; */
+			@page recto {
+				background-image: url("{{ absolute_url(asset('public/img/carte_web_recto.png')) }}") no-repeat 0 0;
+				background-image-resize: 6;
 			}
 
-			div.noheader {
+			@page verso {
+				background-image: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat 0 0;
+				background-image-resize: 6;
+				page-break-after: left;
+			}
+
+			div.recto {
+				page-break-before: right;
+				page: recto;
+			}
+
+			div.verso {
 				page-break-before: avoid;
-				page: noheader;
+				page: verso;
 			}
 
         .inner_container {
@@ -147,7 +153,7 @@
 	</head>
 
 	<body>
-		{# <div class="content"> #}
+		<div class="recto">
 			<h1 style="font-size:38px; font-weight:bold; color:#000; position:absolute; left:3.1cm; top:0.45cm; color:#fff">{{ 'Carte de santé numérique' | upper }}
 			</h1>
 			<div style="position:absolute; left:2.8cm; top: 1.3cm;">
@@ -196,18 +202,18 @@
 					</table>
 				</div>
 			</div>
-		{# </div> #}
-		<div class="mention">
-			<div style="border:2px solid #53B347; width:60%;margin:0 auto"></div>
-			<div style="text-align:center;font-weight:bold; font-size:17px; margin-top:5px; color:#000;padding-top:0px;">
-				Cette carte est strictement personnelle. Toute personne trouvant<br>
-				la carte est priée de la deposer à l'agence postale la plus proche.
-				<br>
-				(+225) 25 20 00 68 44 / 25 20 00 69 50 / infos@laposte.ci<br>
+			<div class="mention">
+				<div style="border:2px solid #53B347; width:60%;margin:0 auto"></div>
+				<div style="text-align:center;font-weight:bold; font-size:17px; margin-top:5px; color:#000;padding-top:0px;">
+					Cette carte est strictement personnelle. Toute personne trouvant<br>
+					la carte est priée de la deposer à l'agence postale la plus proche.
+					<br>
+					(+225) 25 20 00 68 44 / 25 20 00 69 50 / infos@laposte.ci<br>
+				</div>
 			</div>
 		</div>
 		{# <pagebreak /> #}
-		<div class="noheader"></div>
+		<div class="verso"></div>
 	</body>
 
 </html>
