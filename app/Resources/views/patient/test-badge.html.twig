@@ -10,10 +10,10 @@
     }
     @page chapter2 {
         background-image: url("{{ absolute_url(asset('public/img/carte_web_recto.png')) }}") no-repeat 0 0;
-        odd-header-name: html_Chapter2HeaderOdd;
+        /* odd-header-name: html_Chapter2HeaderOdd;
         even-header-name: html_Chapter2HeaderEven;
         odd-footer-name: html_Chapter2FooterOdd;
-        even-footer-name: html_Chapter2FooterEven;
+        even-footer-name: html_Chapter2FooterEven; */
     }
     @page noheader {
         background-image: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat 0 0;
@@ -72,7 +72,7 @@
         </table>
     </htmlpagefooter> #}
 
-    <htmlpageheader name="Chapter2HeaderOdd" style="display:none">
+    {# <htmlpageheader name="Chapter2HeaderOdd" style="display:none">
         <div style="text-align: right;">Chapter 2</div>
     </htmlpageheader>
 
@@ -86,7 +86,7 @@
 
     <htmlpagefooter name="Chapter2FooterEven" style="display:none">
         <div>Chapter 2 Footer</div>
-    </htmlpagefooter>
+    </htmlpagefooter> #}
 
     <div class="chapter2"></div>
 
