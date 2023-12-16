@@ -115,7 +115,7 @@ class BadgeEditionPatient
             if ($loader->exists($template)) {
                 $vars = ['patient' => $patient];
 
-                $htmlContent = $this->twig->render($template, $vars);
+                $htmlContent = $this->twig->render($test_template, $vars);
 
                 $mpdf->showImageErrors = true;
 
