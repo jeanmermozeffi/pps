@@ -117,12 +117,11 @@ class BadgeEditionPatient
 
                 $mpdf->showImageErrors = true;
 
-                $numberOfPagesGenerated = $mpdf->page;
                 $mpdf->WriteHTML($htmlContent);
 
                 // Ajouter une page blanche pour le verso
                 if (++$received < $count) {
-                    $mpdf->AddPage('NEXT');
+                    $mpdf->AddPage();
                 }
             }
         }
