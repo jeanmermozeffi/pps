@@ -123,7 +123,7 @@ class BadgeEditionPatient
 
                 // Ajouter une page blanche pour le verso
                 if (++$received < $count) {
-                    // $mpdf->AddPage();
+                    $mpdf->AddPage();
                 }
             }
         }
