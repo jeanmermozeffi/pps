@@ -18,6 +18,8 @@
 
 			@page {
 				size: auto;
+				background-image: url("{{ absolute_url(asset('public/img/carte_web_recto.png')) }}") no-repeat 0 0;
+				background-image-resize: 6;
 				margin-footer: 0.3cm;
 				margin-top: 0cm;
 				margin-header: 0cm;
@@ -25,22 +27,14 @@
 				margin-right: 0cm;
 			}
 
-			.page-container {
-				position: relative;
-				width: 85mm;
-				height: 55mm;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-			}
-
-			@page recto {
+			/* @page recto {
+				size: auto;
 				background-image: url("{{ absolute_url(asset('public/img/carte_web_recto.png')) }}") no-repeat 0 0;
 				background-image-resize: 6;
-			}
+			} */
 
 			@page verso {
+				size: auto;
 				background-image: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat 0 0;
 				background-image-resize: 6;
 				page-break-after: left;
