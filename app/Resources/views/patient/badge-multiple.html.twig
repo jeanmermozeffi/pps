@@ -24,7 +24,6 @@
 				margin-header: 0cm;
 				margin-left: 0cm;
 				margin-right: 0cm;
-				size: 8.5in 11in;
 			}
 
 			.page-container {
@@ -38,14 +37,13 @@
 			}
 
 			.outer_container {
-				size: 8.5in 11in;
 				background-image: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat 0 0;
-				background-image-resize: 6;
-				margin-footer: 0.3cm;
-				margin-top: 0cm;
-				margin-header: 0cm;
-				margin-left: 0cm;
-				margin-right: 0cm;
+				width: 900px;
+				height: 900px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
 			}
 
 
@@ -196,7 +194,7 @@
 				</div>
 			</div>
 		{# </div> #}
-		<div class="mention" style="">
+		<div class="mention" style="page-break-after:always">
 			<div style="border:2px solid #53B347; width:60%;margin:0 auto"></div>
 			<div style="text-align:center;font-weight:bold; font-size:17px; margin-top:5px; color:#000;padding-top:0px;">
 				Cette carte est strictement personnelle. Toute personne trouvant<br>
@@ -205,8 +203,8 @@
 				(+225) 25 20 00 68 44 / 25 20 00 69 50 / infos@laposte.ci<br>
 			</div>
 		</div>
-		<pagebreak />
-		<div class="outer_container" name=""></div>
+		{# <pagebreak /> #}
+		<div class="outer_container" name="" style="page-break-after:avoid"></div>
 	</body>
 
 </html>
