@@ -8,8 +8,6 @@
 		<title>Badge {{ patient.identifiant }}</title>
 		<style>
 			body {
-				/* margin: 0;
-				padding: 0; */
 				font-size: 12px;
 				font-family: Montserrat;
 			}
@@ -19,8 +17,6 @@
 			}
 
 			@page {
-				background-image: url("{{ absolute_url(asset('public/img/carte_web_recto.png')) }}") no-repeat 0 0;
-				background-repeat: no-repeat;
 				background-image-resize: 6;
 				margin-footer: 0.3cm;
 				margin-top: 0cm;
@@ -29,10 +25,6 @@
 				margin-right: 0cm;
 				width: 85mm;
             	height: 55mm; 
-			}
-
-			.content {
-				
 			}
 
 			.page-container {
@@ -46,7 +38,7 @@
 			}
 
 			.outer_container {
-				background-image: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}');
+				background-image: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat 0 0;
 			}
 
 
