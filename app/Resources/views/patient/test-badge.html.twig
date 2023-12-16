@@ -3,17 +3,9 @@
 <style>
     @page {
         size: auto;
-        /* odd-header-name: html_myHeader1;
-        even-header-name: html_myHeader2;
-        odd-footer-name: html_myFooter1;
-        even-footer-name: html_myFooter2; */
     }
     @page chapter2 {
         background-image: url("{{ absolute_url(asset('public/img/carte_web_recto.png')) }}") no-repeat 0 0;
-        odd-header-name: html_Chapter2HeaderOdd;
-        even-header-name: html_Chapter2HeaderEven;
-        odd-footer-name: html_Chapter2FooterOdd;
-        even-footer-name: html_Chapter2FooterEven;
     }
     @page noheader {
         background-image: url('{{ absolute_url(asset('public/img/carte_web_verso.png')) }}') no-repeat 0 0;
@@ -23,11 +15,11 @@
         even-footer-name: _blank; */
     }
     div.chapter2 {
-        page-break-after: left;
+        page-break-after: avoid;
         page: chapter2;
     }
     div.noheader {
-        /* page-break-before: recto; */
+        page-break-before: avoid;
         page: noheader;
     }
 </style>
