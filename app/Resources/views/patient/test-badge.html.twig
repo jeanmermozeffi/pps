@@ -9,6 +9,7 @@
         even-footer-name: html_myFooter2;
     }
     @page chapter2 {
+        background-image: url("{{ absolute_url(asset('public/img/carte_web_recto.png')) }}") no-repeat 0 0;
         odd-header-name: html_Chapter2HeaderOdd;
         even-header-name: html_Chapter2HeaderEven;
         odd-footer-name: html_Chapter2FooterOdd;
@@ -32,7 +33,6 @@
 </head>
 
 <body>
-
     <htmlpageheader name="myHeader1" style="display:none">
         <div style="text-align: right; border-bottom: 1px solid #000000; font-weight: bold; font-size: 10pt;">
             My document
@@ -94,4 +94,4 @@
     <div class="noheader">No-Header page</div>
 
 </body>
-</html>'
+</html>
