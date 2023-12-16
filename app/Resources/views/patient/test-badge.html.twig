@@ -1,214 +1,97 @@
-<!DOCTYPE html>
 <html>
+<head>
+<style>
+    @page {
+        size: auto;
+        odd-header-name: html_myHeader1;
+        even-header-name: html_myHeader2;
+        odd-footer-name: html_myFooter1;
+        even-footer-name: html_myFooter2;
+    }
+    @page chapter2 {
+        odd-header-name: html_Chapter2HeaderOdd;
+        even-header-name: html_Chapter2HeaderEven;
+        odd-footer-name: html_Chapter2FooterOdd;
+        even-footer-name: html_Chapter2FooterEven;
+    }
+    @page noheader {
+        odd-header-name: _blank;
+        even-header-name: _blank;
+        odd-footer-name: _blank;
+        even-footer-name: _blank;
+    }
+    div.chapter2 {
+        page-break-before: right;
+        page: chapter2;
+    }
+    div.noheader {
+        page-break-before: right;
+        page: noheader;
+    }
+</style>
+</head>
 
-    <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Badge {{ patient.identifiant }}</title>
-        <style>
-            {
-                % block page_css %
-            }
+<body>
 
-            @page odd {
-                /*footer: html_pageFooter;*/
-            }
-
-            @page {
-                
-                margin-footer: 0.3cm;
-                /*footer: html_empty;
-          /*header: html_headerContent;*/
-
-                margin-top: 0cm;
-                margin-header: 0cm;
-                margin-left: 0cm;
-                margin-right: 0cm
-                    /*background: ...
-  background-image: ...
-  background-position ...
-  background-repeat ...
-  background-color ...
-  background-gradient: ...*/
-            }
-
-            .clearfix:after,
-            {
-            % endblock %
-            }
-
-            .clearfix:before {
-                content: " ";
-                display: table;
-            }
-
-            .clearfix:after {
-                clear: both;
-            }
-
-            .mention {
-                position: absolute;
-                bottom: 100px;
-            }
-
-            /*@page :first {
-   header: html_headerContent;
-}*/
-
-            .table {
-                width: 100%;
-                max-width: 100%;
-                border-collapse: collapse;
-
-            }
-
-            .table {
-                page-break-before: auto;
-            }
-
-            body {
-                font-family: Montserrat;
-            }
-
-            .table td,
-            .table th {
-                padding: 2px;
-                vertical-align: top;
-                border-top: 1px solid #191919;
-            }
-
-            .table thead th {
-                vertical-align: bottom;
-                border-bottom: 2px solid #191919;
-            }
-
-            .table tbody+tbody {
-                border-top: 1px solid #191919;
-            }
-
-            .table .table {
-                background-color: #fff;
-            }
-
-            .table-sm td,
-            .table-sm th {
-                padding: 0.3rem;
-            }
-
-            .table-bordered {
-                border: 1px solid #191919;
-            }
-
-            .table-bordered td,
-            .table-bordered th {
-                border: 1px solid #191919;
-            }
-
-            .table-bordered thead td,
-            .table-bordered thead th {
-                border-bottom-width: 1px;
-            }
-
-
-            @media all {
-                /*.content { display: block; page-break-inside: avoid; }*/
-            }
-
-            .content {
-                /*margin-top: 18cm;*/
-            }
-
-            .table-responsive.table-bordered {
-                border: 0;
-            }
-
-            .double_underline {
-                text-decoration: underline;
-                border-bottom: 1px solid #000;
-                text-align: center;
-            }
-
-            .mention {
-                position: absolute;
-                bottom: 10px;
-                left: 10px;
-                right: 25px;
-            }
-
-        </style>
-    </head>
-
-    <body style="font-size:12px;">
-        <div class="clearfix">
-            <div style="width:15%;text-align:center;float:left;" class="">
-                <img src="{{ absolute_url(asset('public/img/CNRAO.png')) }}" height="50px" style="max-width:100%" />
-            </div>
-            <div style="width:85%;text-align:center;float:right;background-color:#F79926;padding:5px 0;font-family:Montserrat" class="">
-                <h1 style="font-size:23px;color:#fff;margin:0;">{{ 'Le carnet de santé numérique' | upper }}</h1>
-            </div>
+    <htmlpageheader name="myHeader1" style="display:none">
+        <div style="text-align: right; border-bottom: 1px solid #000000; font-weight: bold; font-size: 10pt;">
+            My document
         </div>
-        <h2 style="color:#53B347;text-align:center;margin-top:-8px;font-size:16px;margin-bottom:0">CNRAO - PASS SANTE</h2>
-        <div>
-            <div style="padding-left:10px">
-                <table style="width:100%;border:none;font-weight: bold;padding-top:10px">
-                    <tr>
-                        <td style="width:100%;padding-top:12px;font-size:21px"><span style="color:#000">{{ patient.personne.nomComplet }}</span></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="clearfix">
-                <div style="width:80%;text-align:center;float:left;padding-left:10px;padding-top:0px" class="">
+    </htmlpageheader>
 
-                    <table style="width:100%;border:none;font-weight: bold;">
-                        <tr>
-                            <td style="width:50%;padding-top:5px"> <span style="font-size:18px;">{{ patient.identifiant}}</span><br> <span style="color:#F79926;font-size:12px;">ID</span>
-                            </td>
-                            <td style="width:50%;font-size:18px;padding-top:5px;"> <span style="font-size:18px;">{{ patient.pin}}</span><br> <span
-                                    style="color:#F79926;font-size:12px;">PIN</span></td>
-                        </tr>
-                    </table>
-                    <table style="width:100%;border:none;font-weight: bold;">
-                        <tr>
-                            <td style="width:50%;padding-top:5px;font-size:18px;"> <span style="font-size:18px;">{{ patient.fichePatientCancer.numeroDossier|default('') }}</span><br> <span
-                                    style="color:#F79926;font-size:12px;">N° DOSSIER PATIENT</span></td>
-                            <td style="width:50%;padding-top:5px;font-size:18px;"> <span style="font-size:18px;">{{ patient.ville.nom|default('') }}</span><br> <span
-                                    style="color:#F79926;font-size:12px;">VILLE</span></td>
-                        </tr>
-                    </table>
-
-
-                </div>
-
-                <div style="width:15%;margin-top:-3px;text-align:right;" class="">
-                    <img src="{{ absolute_url(asset('public/img/qrcode_cnrao.png')) }}" height="100%" style="max-width:100%" />
-                </div>
-            </div>
-            <div style="padding-right:10px;">
-                <table style="width:100%;border:none;font-weight: bold;">
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td style="width:50%;text-align:right"><span style="color:#F79926;font-size:12px;">DATE D'EMISSION </span><br><span
-                                style="font-size:18px">{{ 'now' | date('d-m-Y') }}</span></td>
-                    </tr>
-                </table>
-            </div>
-
+    <htmlpageheader name="myHeader2" style="display:none">
+        <div style="border-bottom: 1px solid #000000; font-weight: bold;  font-size: 10pt;">
+            My document
         </div>
-        <div class="mention">
-            <div style="border:2px solid #53B347;width:60%;margin:0 auto"></div>
-            <div style="text-align:center;font-weight:bold;font-size:10px;margin-top:2px;">
-                Cette carte est strictement personnelle et n'est valable qu'après avoir été complétée.<br>
-                Toute personne trouvant la carte est priée de la retourner<br>
-                à COCODY, derrière le CHU, en entrant par la Faculté de Médecine. Tél:0768262662
-            </div>
-        </div>
-        <pagebreak />
-        <div>
-            <div style="width: 100px; margin:0 auto;">
-                <img src="{{ absolute_url(asset('public/img/carte_web_verso.png')) }}" height="300px" style="max-width:100%;margin-left:50px;margin-top:35px" />
-            </div>
-        </div>
+    </htmlpageheader>
 
-    </body>
+    <htmlpagefooter name="myFooter1" style="display:none">
+        <table width="100%">
+            <tr>
+                <td width="33%">
+                    <span style="font-weight: bold; font-style: italic;">{DATE j-m-Y}</span>
+                </td>
+                <td width="33%" align="center" style="font-weight: bold; font-style: italic;">
+                    {PAGENO}/{nbpg}
+                </td>
+                <td width="33%" style="text-align: right;">
+                    My document
+                </td>
+            </tr>
+        </table>
+    </htmlpagefooter>
 
-</html>
+    <htmlpagefooter name="myFooter2" style="display:none">
+        <table width="100%">
+            <tr>
+                <td width="33%">My document</td>
+                <td width="33%" align="center">{PAGENO}/{nbpg}</td>
+                <td width="33%" style="text-align: right;">{DATE j-m-Y}</td>
+            </tr>
+        </table>
+    </htmlpagefooter>
+
+    <htmlpageheader name="Chapter2HeaderOdd" style="display:none">
+        <div style="text-align: right;">Chapter 2</div>
+    </htmlpageheader>
+
+    <htmlpageheader name="Chapter2HeaderEven" style="display:none">
+        <div>Chapter 2</div>
+    </htmlpageheader>
+
+    <htmlpagefooter name="Chapter2FooterOdd" style="display:none">
+        <div style="text-align: right;">Chapter 2 Footer</div>
+    </htmlpagefooter>
+
+    <htmlpagefooter name="Chapter2FooterEven" style="display:none">
+        <div>Chapter 2 Footer</div>
+    </htmlpagefooter>
+
+    Hello World
+
+    <div class="chapter2">Text of Chapter 2</div>
+
+    <div class="noheader">No-Header page</div>
+
+</body>
+</html>'
