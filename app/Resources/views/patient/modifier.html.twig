@@ -60,10 +60,11 @@
                                     <div class="col-md-6">
 
                                         <div class="box-body">
-                                            {% if app.request.attributes.get('_route') == 'admin_gestion_patient_new' %}
-                                            {{ form_row(edit_form.email) }}
-                                                
+                                        {# app.request.attributes.get('_route') == 'admin_gestion_patient_new' #}
+                                            {% if edit_form.email is defined %}
+                                                {{ form_row(edit_form.email) }}
                                             {% endif %}
+
                                             {# {{ form_row(edit_form.identifiant) }}
                                             {{ form_row(edit_form.pin) }} #}
                                             {{ form_row(edit_form.personne.nom) }}

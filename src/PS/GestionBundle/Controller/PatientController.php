@@ -179,7 +179,7 @@ class PatientController extends Controller
         });
         $grid->addRowAction($rowAction);
 
-        $rowAction = new RowAction('Modifier', 'admin_gestion_patient_edit');
+        $rowAction = new RowAction('Modifier', 'admin_gestion_patient_modifier');
         $rowAction->addManipulateRender(function ($action, $row) {
             $action->setAttributes(['class' => 'btn btn-primary btn-sm', 'ajax' => false]);
             $action->setTitle('<i class="fa fa-edit"></i>');
@@ -313,8 +313,6 @@ class PatientController extends Controller
 
                 //$patient->getPersonne()->setCorporate($this->getUser()->getPersonne()->getCorporate());
                 $em->persist($_patient);
-                // dump($_patient);
-                // die();
                 $this->createUser($_patient, false, $form->get('telephones')->getData());
 
                 /*if (null !== $authUser) {
@@ -435,8 +433,6 @@ class PatientController extends Controller
                 $this->buildSms($additionalContact, $nom, $username, $password, $identifiant, $pin, $contact);
             }
         }
-
-
 
         if ($resent && $utilisateur && $personne->getSmsContact()) {
             $utilisateur->setPlainPassword($password);
@@ -677,14 +673,13 @@ class PatientController extends Controller
         //M1kha1l$
 
         if ($request->isMethod('GET')) {
-            //var_dump($request->query->get("id"));die();
             $form        = $request->request->get('patient_recherche');
             $identifiant = $request->query->get("id");
 
             if ($identifiant != '') {
                 //$count = $em->getRepository(Patient::class)->findByPass($identifiant);
                 $patient = $em->getRepository(Patient::class)->findByIdentifiant($identifiant);
-                //var_dump($patient[0]->getId());die();
+                
                 if (!$patient) {
                     $this->addFlash(
                         'patient',
@@ -716,11 +711,22 @@ class PatientController extends Controller
         $deleteForm = $this->createDeleteForm($patient);
         $currentPatient = $this->getPatient();
         $isAssociated = ($currentPatient && ($patient != $currentPatient));
-        $editForm = $this->createEditForm($patient, $isAssociated);
-        $editForm->remove('email');
-        $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        $editForm = $this->createEditForm($patient, $isAssociated);
+        // $editForm->remove('email');
+
+        $editForm->handleRequest($request);
+        $personne = $editForm->get('personne')->getData();
+        $utilisateur = $personne->getUtilisateur();
+
+        $email = $personne->getUtilisateur()->getEmail();
+        $editForm->get('email')->setData($email);
+
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
+            $email = $patient->getEmail();
+
+            $utilisateur->setEmail($email);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('admin_gestion_patient_index');
@@ -746,6 +752,9 @@ class PatientController extends Controller
     {
         $em             = $this->getDoctrine()->getManager();
         $currentPatient = $this->getPatient();
+
+        $email = $patient->getPersonne()->getUtilisateur()->getEmail();
+        $patient->setEmail($email);
 
         $isAssociated = ($currentPatient && ($patient != $currentPatient));
 
@@ -976,8 +985,6 @@ class PatientController extends Controller
         $total  = 0;
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-
-                //dump('mmmmm');
 
                 $fichier = $this->get('app.psm_logo_uploader')
                     ->upload($form->get('file')->getData(), null, $path, 'patient_psm');
