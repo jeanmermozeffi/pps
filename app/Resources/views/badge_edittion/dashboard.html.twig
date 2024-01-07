@@ -5,9 +5,9 @@
   <div class="box-body">
     <div class="row">
       <div class="col-md-2">
-      <button type="button" class="btn btn-block btn-success" id="submit-selected">
-        Imprimer la selection
-      </button>
+        <button type="button" class="btn btn-block btn-success" id="submit-selected">
+          Imprimer la selection
+        </button>
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@
           <th>N°</th>
           <th>
             <label>
-                <input type="checkbox" class="flat-red checkbox-all" value="{{-1}}" id="checkbox-all">
+              <input type="checkbox" class="flat-red checkbox-all" value="{{-1}}" id="checkbox-all">
             </label>
           </th>
           <th>Nom</th>
@@ -32,6 +32,9 @@
           <th>ID</th>
           <th>Âges</th>
           <th>Genre</th>
+          <th>Badge</th>
+          <th>Email</th>
+          <th>SMS</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -41,24 +44,44 @@
           <td>{{loop.index}}</td>
           <td>
             <label>
-                <input type="checkbox" class="flat-red checkbox-badge" value="{{patient.id}}">
+              <input type="checkbox" class="flat-red checkbox-badge" value="{{patient.id}}">
             </label>
           </td>
           <td>{{(patient.personne.nom)|upper}}</td>
           <td>{{(patient.personne.prenom)|upper}}</td>
           <td>
-          {{(patient.identifiant)|upper}}
+            {{(patient.identifiant)|upper}}
           </td>
           <td>{{(patient.personne.getAge)|upper}}</td>
           <td>
-          {% if patient.sexe is same as 'F' %}
-          {{('Femme')|upper}}
-          {% else %}
-          {{('Homme')|upper}}
-          {% endif %}
+            {% if patient.sexe is same as 'F' %}
+            {{('Femme')|upper}}
+            {% else %}
+            {{('Homme')|upper}}
+            {% endif %}
           </td>
           <td>
-          <button type="button" class="btn btn-block btn-success">Imprimer</button>
+          <button type="button" class="btn btn-block btn-info">Imprimer</button>
+          </td>
+          <td>
+          <button type="button" class="btn btn-block btn-success">NON</button>
+          </td>
+          <td>
+          <button type="button" class="btn btn-block btn-primary">Envoyer</button>
+          </td>
+          <td>
+            <div class="btn-group">
+              <button type="button" class="btn btn-success btn-flat">Menu Action</button>
+              <button type="button" class="btn btn-success btn-flat dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li class=""><a href="#">Imprimer Badge</a></li>
+                <li class=""><a href="#">SMS de Retrait</a></li>
+                <li><a href="#">Email de Retrait</a></li>
+              </ul>
+            </div>
           </td>
         </tr>
         {% endfor %}
@@ -68,7 +91,7 @@
           <th>N°</th>
           <th>
             <label>
-                <input type="checkbox" class="flat-red">
+              <input type="checkbox" class="flat-red">
             </label>
           </th>
           <th>Nom</th>
@@ -76,15 +99,15 @@
           <th>ID</th>
           <th>Âges</th>
           <th>Genre</th>
+          <th>Badge</th>
+          <th>Email</th>
+          <th>SMS</th>
           <th>Actions</th>
         </tr>
       </tfoot>
     </table>
   </div>
-  <!-- /.box-body -->
 </div>
-<!-- /.box -->
-
 
 {% endblock %}
 
