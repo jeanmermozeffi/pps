@@ -2,8 +2,10 @@
 
 namespace PS\GestionBundle\Entity;
 
-use App\Repository\BadgeEdittionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use PS\GestionBundle\Entity\Patient;
+use App\Repository\BadgeEdittionRepository;
+use PS\UtilisateurBundle\Entity\Utilisateur;
 
 /**
  * @ORM\Entity(repositoryClass=BadgeEdittionRepository::class)
