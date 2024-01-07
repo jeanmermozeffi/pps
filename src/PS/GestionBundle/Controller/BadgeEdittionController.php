@@ -166,4 +166,49 @@ class BadgeEdittionController extends Controller
 
         return $this->redirectToRoute('app_badge_edittion_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+     * @Route("/{id}/impresion-badge", name="app_badge_impresion", methods={"GET", "POST"})
+     */
+    public function printBadgeAction(Request $request, Patient $patient)
+    {
+        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+
+        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+
+        $mpdf = new \Mpdf\Mpdf([
+            'mode' => 'utf-8',
+            'orientation' => 'P',
+            'fontDir' => array_merge($fontDirs, [$this->getParameter('bundle_dir') . '/public/fonts/montserrat/']),
+            'fontdata' => $fontData + [
+                'Montserrat' => [
+                    'B' => 'Montserrat-Bold.ttf',
+                    'R' => 'Montserrat-Regular.ttf',
+                    'L' => 'Montserrat-Light.ttf',
+                ],
+            ],
+            'default_font' => 'Montserrat',
+            'img_dpi' => 300,
+            'dpi' => 300,
+            'format' => [85, 55],
+        ]);
+
+
+        $mpdf->shrink_tables_to_fit = 1;
+
+        $vars = [
+            'patient' => $patient
+        ];
+
+        $template = 'patient/badge.html.twig';
+
+        $mpdf->WriteHTML($this->renderView($template, $vars));
+
+        $mpdf->Output('BADGE ' . $patient->getIdentifiant() . '.pdf', 'I');
+
+        return new Response();
+    }
 }
