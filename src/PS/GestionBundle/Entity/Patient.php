@@ -2,17 +2,20 @@
 
 namespace PS\GestionBundle\Entity;
 
-use APY\DataGridBundle\Grid\Mapping as GRID;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
-use JMS\Serializer\Annotation\SerializedName;
-use JMS\Serializer\Annotation\VirtualProperty;
-use JMS\Serializer\Annotation\ExclusionPolicy;
-use PS\GestionBundle\Validator\Constraints as PSAssert;
+use JMS\Serializer\Annotation\Exclude;
+use PS\GestionBundle\Entity\BadgeEdittion;
+use Doctrine\Common\Collections\Collection;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 use PS\ParametreBundle\Entity\LigneAttribut;
+use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\VirtualProperty;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use PS\GestionBundle\Validator\Constraints as PSAssert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -423,6 +426,11 @@ class Patient
      */
     private $questionnaires;
 
+    /**
+     * @ORM\OneToMany(targetEntity=BadgeEdittion::class, mappedBy="patient")
+     */
+    private $badgeEdittions;
+
 
 
     /**
@@ -451,6 +459,7 @@ class Patient
         $this->consultations      = new \Doctrine\Common\Collections\ArrayCollection();
         $this->questionnaires         = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setRegime('');
+        $this->badgeEdittions = new ArrayCollection();
     }
 
     
@@ -1810,5 +1819,35 @@ class Patient
     public function getUtilisateur()
     {
         return $this->getPersonne()->getUtilisateur();
+    }
+
+     /**
+     * @return Collection<int, BadgeEdittion>
+     */
+    public function getBadgeEdittions(): Collection
+    {
+        return $this->badgeEdittions;
+    }
+
+    public function addBadgeEdittion(BadgeEdittion $badgeEdittion): self
+    {
+        if (!$this->badgeEdittions->contains($badgeEdittion)) {
+            $this->badgeEdittions[] = $badgeEdittion;
+            $badgeEdittion->setPatient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBadgeEdittion(BadgeEdittion $badgeEdittion): self
+    {
+        if ($this->badgeEdittions->removeElement($badgeEdittion)) {
+            // set the owning side to null (unless already changed)
+            if ($badgeEdittion->getPatient() === $this) {
+                $badgeEdittion->setPatient(null);
+            }
+        }
+
+        return $this;
     }
 }

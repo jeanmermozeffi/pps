@@ -100,7 +100,7 @@ class BadgeEdittionController extends Controller
         $patients = $this->get('knp_paginator')->paginate(
             $listePatients,
             $request->query->get('page', 1) /*page number*/,
-            50/*limit per page*/
+            100/*limit per page*/
         );
 
         return $this->render('badge_edittion/dashboard.html.twig', [
@@ -176,6 +176,10 @@ class BadgeEdittionController extends Controller
      */
     public function printBadgeAction(Request $request, Patient $patient)
     {
+        $user = $this->getUser();
+
+        $em = $this->getDoctrine()->getManager();
+
         $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
         $fontDirs = $defaultConfig['fontDir'];
 
@@ -213,6 +217,16 @@ class BadgeEdittionController extends Controller
 
         $mpdf->Output('BADGE ' . $patient->getIdentifiant() . '.pdf', 'I');
 
+        $badge = new BadgeEdittion();
+
+        $badge->setPatient($patient)
+            ->setUtilisateur($user)
+            ->setStatut(true)
+            ->setMotif(sprintf('Nouvelle impression de Badge %s', $patient->getIdentifiant()));
+
+        $em->persist($badge);
+        $em->flush();
+
         return new Response();
     }
 
@@ -248,7 +262,6 @@ class BadgeEdittionController extends Controller
 
             $em->persist($historiqueBadge);
             $em->flush();
-            
         } else {
             $message = sprintf("Echec d'envoie du message de validationdu retrait à %s", $nomComplet);
         }

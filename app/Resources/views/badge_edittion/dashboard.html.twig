@@ -40,6 +40,11 @@
       </thead>
       <tbody>
         {% for patient in patients %}
+        {% set badges = patient.badgeEdittions %}
+        {% if badges is not empty %}
+        {% set last_badge = true %}
+        {% endif %}
+        
         <tr>
           <td>{{loop.index}}</td>
           <td>
@@ -61,17 +66,31 @@
             {% endif %}
           </td>
           <td>
-          <button type="button" class="btn btn-block btn-info">Imprimer</button>
+          {% if badges|length > 0 %}
+          <button type="button" class="btn btn-block btn-info">
+            Éffectuer
+          </button>
+          {% else %}
+          <button type="button" class="btn btn-block btn-danger">
+            Non Éffectuer
+          </button>
+          {% endif %}
           </td>
           <td>
           <button type="button" class="btn btn-block btn-success">NON</button>
           </td>
           <td>
-          <button type="button" class="btn btn-block btn-primary">Envoyer</button>
+          <button type="button" class="btn btn-block btn-primary">
+          {% if last_badge is defined and last_badge == true %}
+            OUI
+          {% else %}
+            NON
+          {% endif %}
+          </button>
           </td>
           <td>
             <div class="btn-group">
-              <button type="button" class="btn btn-success btn-flat">Actions</button>
+              {# <button type="button" class="btn btn-success btn-flat">Actions</button> #}
               <button type="button" class="btn btn-success btn-flat dropdown-toggle" data-toggle="dropdown">
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>

@@ -11,11 +11,12 @@
 
 namespace PS\GestionBundle\Service;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Twig\Environment;
 use PS\GestionBundle\Entity\Patient;
+use Doctrine\ORM\EntityManagerInterface;
+use PS\GestionBundle\Entity\BadgeEdittion;
 use PS\GestionBundle\Repository\PatientRepository;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Twig\Environment;
 
 /**
  * FonctionnaliteInterface is the interface implemented by all fonctionnalite.
@@ -45,18 +46,18 @@ class BadgeEditionPatient
     {
     }
 
-    public function updateCardStatut(?EditPatientCard $editPatientCard)
+    public function updateCardStatut(?BadgeEdittion $editPatientCard)
     {
         $editPatientCard->setStatut(true);
         $this->repoeditedCard->add($editPatientCard);
     }
 
-    public function createNewCard(?Patient $patient): ?EditPatientCard
+    public function createNewCard(?Patient $patient): ?BadgeEdittion
     {
-        $editedCard = new EditPatientCard();
-        $editedCard->setDateEdition(new \DateTime())
-            ->setMotif(EditPatientCard::NEW_CART)
-            ->setStatut(false)
+        $editedCard = new BadgeEdittion();
+        $editedCard->setDateImpression(new \DateTime())
+            ->setMotif(BadgeEdittion::NEW_CART)
+            ->setStatut(true)
             ->setPatient($patient);
         $this->repoeditedCard->add($editedCard);
 

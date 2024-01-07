@@ -46,6 +46,11 @@ class BadgeEdittion
      */
     private $motif;
 
+    public function __construct()
+    {
+        $this->dateImpression = new \DateTime('now');
+    }
+
     public function getId(): ?int
     {
         return $this->id;
