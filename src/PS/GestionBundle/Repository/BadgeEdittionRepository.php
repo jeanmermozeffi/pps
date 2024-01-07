@@ -1,43 +1,14 @@
 <?php
 
-namespace App\Repository;
+namespace PS\GestionBundle\Repository;
 
-use App\Entity\BadgeEdittion;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityRepository;
+use PS\GestionBundle\Entity\BadgeEdittion;
 
 /**
- * @extends ServiceEntityRepository<BadgeEdittion>
- *
- * @method BadgeEdittion|null find($id, $lockMode = null, $lockVersion = null)
- * @method BadgeEdittion|null findOneBy(array $criteria, array $orderBy = null)
- * @method BadgeEdittion[]    findAll()
- * @method BadgeEdittion[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class BadgeEdittionRepository extends ServiceEntityRepository
+class BadgeEdittionRepository extends EntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, BadgeEdittion::class);
-    }
-
-    public function add(BadgeEdittion $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    public function remove(BadgeEdittion $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
 
 //    /**
 //     * @return BadgeEdittion[] Returns an array of BadgeEdittion objects

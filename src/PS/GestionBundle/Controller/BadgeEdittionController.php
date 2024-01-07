@@ -5,6 +5,8 @@ namespace PS\GestionBundle\Controller;
 
 use PS\GestionBundle\Entity\BadgeEdittion;
 use App\Repository\BadgeEdittionRepository;
+use DateTime;
+use PS\GestionBundle\Entity\HistoriqueMessageBadge;
 use PS\GestionBundle\Entity\Patient;
 use PS\GestionBundle\Form\BadgeEdittionType;
 use Symfony\Component\HttpFoundation\Request;
@@ -90,8 +92,10 @@ class BadgeEdittionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $patientRepositoty = $em->getRepository(Patient::class);
+        $historiqueMsgRepositoty = $em->getRepository(HistoriqueMessageBadge::class);
 
         $listePatients = $patientRepositoty->findAll();
+
 
         $patients = $this->get('knp_paginator')->paginate(
             $listePatients,
@@ -208,6 +212,58 @@ class BadgeEdittionController extends Controller
         $mpdf->WriteHTML($this->renderView($template, $vars));
 
         $mpdf->Output('BADGE ' . $patient->getIdentifiant() . '.pdf', 'I');
+
+        return new Response();
+    }
+
+    /**
+     * @Route("/{id}/validation-message-retrait-badge", name="app_badge_message_retrait", methods={"GET", "POST"})
+     */
+    public function sendValidationMessage(Request $request, Patient $patient)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $sender = 'COMPTE PSM';
+        $smsMtarget  = $this->get('app.mtarget_sms');
+        $personne = $patient->getPersonne();
+        $nomComplet = strtoupper($personne->getNomComplet());
+        $contact = $personne->getSmsContact();
+
+        $date = new \DateTime();
+        $dateString = $date->format('d/m/Y');
+
+
+
+        $msg = sprintf("107609/AB-000680\n%s,\nVootre Carte de Santé PPS est désormais disponible le %s et prête à être retirée à notre siège à Marcory, au KM4.\nVous pouvez venir la récupérer à tout moment pendant nos heures d'ouverture.\nCordialement,", $nomComplet, $dateString);
+
+        $test = $smsMtarget->sendSms($contact, $msg, $sender);
+
+        if ($test['success'] == true) {
+            $message = sprintf("Message de validationdu retrait envoyé avec succès à %s", $nomComplet);
+
+            $historiqueBadge = new HistoriqueMessageBadge();
+            $historiqueBadge->setMessage($message)
+                ->setPatient($patient)
+                ->setStatut($test['success'] == true);
+
+            $em->persist($historiqueBadge);
+            $em->flush();
+            
+        } else {
+            $message = sprintf("Echec d'envoie du message de validationdu retrait à %s", $nomComplet);
+        }
+
+        $this->addFlash('success', $message);
+
+        return $this->redirectToRoute('app_badge_edittion_dashboard');
+    }
+
+    /**
+     * @Route("/{id}/validation-email-retrait-badge", name="app_badge_email_retrait", methods={"GET", "POST"})
+     */
+    public function sendValidationEmail(Request $request, Patient $patient)
+    {
+
 
         return new Response();
     }

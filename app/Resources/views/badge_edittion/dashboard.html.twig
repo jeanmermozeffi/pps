@@ -71,15 +71,17 @@
           </td>
           <td>
             <div class="btn-group">
-              <button type="button" class="btn btn-success btn-flat">Menu Action</button>
+              <button type="button" class="btn btn-success btn-flat">Actions</button>
               <button type="button" class="btn btn-success btn-flat dropdown-toggle" data-toggle="dropdown">
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
               </button>
               <ul class="dropdown-menu" role="menu">
-                <li class=""><a href="#">Imprimer Badge</a></li>
-                <li class=""><a href="#">SMS de Retrait</a></li>
-                <li><a href="#">Email de Retrait</a></li>
+                <li class="">
+                  <a href="{{ path ('app_badge_impresion', {'id': patient.id}) }}">Imprimer Badge</a>
+                </li>
+                <li class=""><a href="{{ path ('app_badge_message_retrait', {'id': patient.id}) }}">SMS de Retrait</a></li>
+                <li><a href="{{ path ('app_badge_email_retrait', {'id': patient.id}) }}">Email de Retrait</a></li>
               </ul>
             </div>
           </td>
