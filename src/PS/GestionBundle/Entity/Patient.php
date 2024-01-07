@@ -14,6 +14,7 @@ use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\VirtualProperty;
 use Doctrine\Common\Collections\ArrayCollection;
+use PS\GestionBundle\Entity\HistoriqueMessageBadge;
 use Symfony\Component\Validator\Constraints as Assert;
 use PS\GestionBundle\Validator\Constraints as PSAssert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -65,7 +66,7 @@ class Patient
     private $poids;
 
 
-     /**
+    /**
      * @Expose
      * @ORM\Column(type="string",length=25, nullable=true, unique=true)
      * @GRID\Column(title="patient.form.matricule", visible=false)
@@ -431,6 +432,11 @@ class Patient
      */
     private $badgeEdittions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=HistoriqueMessageBadge::class, mappedBy="patient")
+     */
+    private $historiqueBadges;
+
 
 
     /**
@@ -460,9 +466,10 @@ class Patient
         $this->questionnaires         = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setRegime('');
         $this->badgeEdittions = new ArrayCollection();
+        $this->historiqueBadges = new ArrayCollection();
     }
 
-    
+
     public function getContact()
     {
         return $this->getPersonne()->getContact();
@@ -846,7 +853,7 @@ class Patient
     {
         return $this->pays;
     }
-    
+
     /**
      * Get pays
      *
@@ -856,7 +863,7 @@ class Patient
     {
         return $this->email;
     }
-    
+
     /**
      * Get pays
      *
@@ -1643,7 +1650,7 @@ class Patient
     }
 
 
-     /**
+    /**
      * Set ethnie
      *
      * @param string $ethnie
@@ -1821,7 +1828,7 @@ class Patient
         return $this->getPersonne()->getUtilisateur();
     }
 
-     /**
+    /**
      * @return Collection<int, BadgeEdittion>
      */
     public function getBadgeEdittions(): Collection
@@ -1845,6 +1852,36 @@ class Patient
             // set the owning side to null (unless already changed)
             if ($badgeEdittion->getPatient() === $this) {
                 $badgeEdittion->setPatient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HistoriqueMessageBadge>
+     */
+    public function getHistoriqueBadges(): Collection
+    {
+        return $this->historiqueBadges;
+    }
+
+    public function addHistoriqueBadges(HistoriqueMessageBadge $historiqueBadge): self
+    {
+        if (!$this->historiqueBadges->contains($historiqueBadge)) {
+            $this->historiqueBadges[] = $historiqueBadge;
+            $historiqueBadge->setPatient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistoriqueBadges(HistoriqueMessageBadge $historiqueBadge): self
+    {
+        if ($this->historiqueBadges->removeElement($historiqueBadge)) {
+            // set the owning side to null (unless already changed)
+            if ($historiqueBadge->getPatient() === $this) {
+                $historiqueBadge->setPatient(null);
             }
         }
 
