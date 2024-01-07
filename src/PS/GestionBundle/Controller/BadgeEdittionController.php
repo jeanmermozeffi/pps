@@ -96,7 +96,7 @@ class BadgeEdittionController extends Controller
         $patients = $this->get('knp_paginator')->paginate(
             $listePatients,
             $request->query->get('page', 1) /*page number*/,
-            50/*limit per page*/
+            100/*limit per page*/
         );
 
         return $this->render('badge_edittion/dashboard.html.twig', [
