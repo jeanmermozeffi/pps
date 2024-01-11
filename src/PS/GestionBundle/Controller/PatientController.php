@@ -405,7 +405,6 @@ class PatientController extends Controller
         $inscription->setPatient($patient);
 
         if (!$utilisateur) {
-
             $utilisateur = $userManager->createUser();
             $utilisateur->setRoles(['ROLE_CUSTOMER']);
             $utilisateur->setEnabled(true);
@@ -435,7 +434,6 @@ class PatientController extends Controller
         }
 
         if ($resent && $utilisateur && $personne->getSmsContact()) {
-            $utilisateur->setPlainPassword($password);
             $userManager->updateUser($utilisateur, false);
 
             if ($additionalContact) {
