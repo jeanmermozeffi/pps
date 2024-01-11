@@ -30,6 +30,11 @@ admin_gestion_patient_new:
     defaults: { _controller: "GestionBundle:Patient:new", id: null }
     methods:  [GET, POST]
 
+admin_gestion_patient_reset_password:
+    path:     /resete/password/{id}
+    defaults: { _controller: "GestionBundle:Patient:resetPassword", id: null }
+    methods:  [GET, POST]
+
 admin_gestion_patient_edit:
     path:     /{id}/edit
     defaults: { _controller: "GestionBundle:Patient:edit" }

@@ -99,15 +99,9 @@ class PatientController extends Controller
                     $value = trim($filters['nom_complet']->getValue());
                     $parts = array_map('trim', explode(' ', $value, 2));
 
-
-
                     $qb->orWhere("CONCAT(_personne.nom, ' ', _personne.prenom) LIKE :nom2");
                     $qb->setParameter('nom2', '%' . $value . '%');
 
-
-
-                    /*$qb->setParameter('nom1', '%'.$nom.'%');
-                    $qb->setParameter('nom2', '%'.$prenom.'%');*/
                 }
             }
 
@@ -183,6 +177,15 @@ class PatientController extends Controller
         $rowAction->addManipulateRender(function ($action, $row) {
             $action->setAttributes(['class' => 'btn btn-primary btn-sm', 'ajax' => false]);
             $action->setTitle('<i class="fa fa-edit"></i>');
+            $action->setRouteParameters(['id' => $row->getField('id')]);
+            return $action;
+        });
+        $grid->addRowAction($rowAction);
+
+        $rowAction = new RowAction('ResetPassword', 'admin_gestion_patient_reset_password');
+        $rowAction->addManipulateRender(function ($action, $row) {
+            $action->setAttributes(['class' => 'btn btn-primary btn-sm', 'ajax' => false]);
+            $action->setTitle('<i class="fa fa-key"></i>');
             $action->setRouteParameters(['id' => $row->getField('id')]);
             return $action;
         });
@@ -677,7 +680,7 @@ class PatientController extends Controller
             if ($identifiant != '') {
                 //$count = $em->getRepository(Patient::class)->findByPass($identifiant);
                 $patient = $em->getRepository(Patient::class)->findByIdentifiant($identifiant);
-                
+
                 if (!$patient) {
                     $this->addFlash(
                         'patient',
@@ -720,8 +723,7 @@ class PatientController extends Controller
         $email = $personne->getUtilisateur()->getEmail();
         $editForm->get('email')->setData($email);
 
-        if ($editForm->isSubmitted() && $editForm->isValid())
-        {
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
             $email = $patient->getEmail();
 
             $utilisateur->setEmail($email);
@@ -1489,5 +1491,75 @@ class PatientController extends Controller
         $mpdf->Output('BADGE ' . $patient->getIdentifiant() . '.pdf', 'I');
 
         return new Response();
+    }
+
+    public function resetPasswordAction(Request $request, Patient $patient)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        if (!$patient) {
+            $this->get('app.action_logger')
+            ->add("Le patient n'existe pas dans la base de données.", $patient);
+        }
+        $this->checkAccess($patient);
+
+        $email = $patient->getPersonne()->getUtilisateur()->getEmail();
+        $patient->setEmail($email);
+
+        $utilisateur = $this->resetUserPassword($patient);
+        $em->persist($utilisateur);
+        $em->flush();
+
+        $this->get('app.action_logger')
+            ->add('Réinitialisation du mot de passe du profil effectuée avec succès.', $patient);
+
+        return $this->redirectToRoute('admin_gestion_patient_info', ['id' => $patient->getId()]);
+    }
+
+    /**
+     * @param Patient $patient
+     * @todo Fonction à deplacer un service
+     */
+    private function resetUserPassword(Patient $patient)
+    {
+        $smsMtarget  = $this->get('app.mtarget_sms');
+        $util = $this->get('app.psm_util');
+
+        $sender = 'COMPTE PSM';
+        $authUser = $this->getUser();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $personne    = $patient->getPersonne();
+        $email    = $patient->getEmail();
+        $contact = $personne->getSmsContact();
+       
+        $userManager = $this->get('fos_user.user_manager');
+        $password = $util->random(8, ['alphabet' => true]);
+        
+        $nomComplet =  strtoupper($personne->getNomComplet());
+
+        $utilisateur = $userManager->findUserBy(['personne' => $personne]);
+
+        $utilisateur->setPlainPassword($password);
+       
+        if ($utilisateur && $personne->getSmsContact()) 
+        {
+            $username = $utilisateur->getUsername();
+
+            $userManager->updateUser($utilisateur, false);
+
+            $msg = sprintf(
+                "%s\nVos accès au profil médical PPS viennent d'être réinitialisés. Vos nouvelles informations de connexion sont les suivantes:\nLogin: %s\nMot de Passe: %s\nhttps://passpostesante.ci/login",
+                $nomComplet,
+                $username,
+                $password
+            );
+
+            $smsMtarget->sendSms($contact, $msg, $sender);
+        }
+
+        return $utilisateur;
     }
 }
