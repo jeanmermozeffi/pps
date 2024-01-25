@@ -500,7 +500,7 @@ class PatientController extends Controller
 
     private function checkAccess(Patient $patient)
     {
-        if ($this->isGranted('ROLE_ADMIN')) {
+        if (!$this->getUser()->hasRole('ROLE_ADMIN')) {
             $this->denyAccessUnlessGranted('ROLE_EDIT_PATIENT', $patient);
         }
     }
@@ -752,8 +752,14 @@ class PatientController extends Controller
     {
         $em             = $this->getDoctrine()->getManager();
         $currentPatient = $this->getPatient();
+        
+        if ($patient->getPersonne()->getUtilisateur()) {
+            $email = $patient->getPersonne()->getUtilisateur()->getEmail();
+        } else {
+            $email = '';
+        }
 
-        $email = $patient->getPersonne()->getUtilisateur()->getEmail();
+        
         $patient->setEmail($email);
 
         $isAssociated = ($currentPatient && ($patient != $currentPatient));
